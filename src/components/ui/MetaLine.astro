@@ -1,0 +1,68 @@
+---
+/**
+ * Linha de metadados em IBM Plex Mono: `M / 021 — TRABALHO — 24:18`.
+ * Itens vazios são descartados.
+ */
+type Part = { text: string; href?: string; accent?: boolean };
+
+interface Props {
+  items: Array<string | Part | undefined | false>;
+  class?: string;
+}
+
+const { items, class: className } = Astro.props;
+const parts: Part[] = items
+  .filter((item): item is string | Part => Boolean(item))
+  .map((item) => (typeof item === 'string' ? { text: item } : item));
+---
+
+<p class:list={['meta label', className]}>
+  {
+    parts.map((part, i) => (
+      <>
+        {i > 0 && (
+          <span class="meta__sep" aria-hidden="true">
+            /
+          </span>
+        )}
+        {part.href ? (
+          <a href={part.href} class:list={['meta__item', { 'meta__item--accent': part.accent }]}>
+            {part.text}
+          </a>
+        ) : (
+          <span class:list={['meta__item', { 'meta__item--accent': part.accent }]}>{part.text}</span>
+        )}
+      </>
+    ))
+  }
+</p>
+
+<style>
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    column-gap: 0.7em;
+    row-gap: 0.2em;
+    color: var(--fg-muted);
+  }
+
+  .meta__sep {
+    color: var(--red);
+  }
+
+  .meta__item--accent {
+    color: var(--fg);
+    font-weight: 600;
+  }
+
+  a.meta__item {
+    text-decoration: none;
+    position: relative;
+    z-index: 2;
+  }
+
+  a.meta__item:hover {
+    color: var(--red);
+  }
+</style>

@@ -1,0 +1,142 @@
+---
+import SectionHeader from '@/components/ui/SectionHeader.astro';
+import Button from '@/components/ui/Button.astro';
+import Headline from '@/components/ui/Headline.astro';
+import { newsletter } from '@/config/site';
+
+interface Props {
+  /** Número da seção no índice da página; `null` oculta. */
+  index?: number | null;
+}
+
+const { index = 6 } = Astro.props;
+const enabled = newsletter.action.length > 0;
+---
+
+<section class="newsletter tex-black on-dark" aria-labelledby="newsletter-titulo">
+  <div class="container">
+    <SectionHeader index={index ?? undefined} label="Newsletter" />
+    <div class="newsletter__grid">
+      <div>
+        <Headline id="newsletter-titulo" text={newsletter.title} size="xl" class="newsletter__title" />
+        <p class="newsletter__pitch">{newsletter.pitch}</p>
+      </div>
+
+      <form
+        class="newsletter__form"
+        action={enabled ? newsletter.action : undefined}
+        method={newsletter.method}
+        data-newsletter
+        data-enabled={enabled ? 'true' : 'false'}
+      >
+        <label class="label newsletter__label" for="newsletter-email">Seu e-mail</label>
+        <div class="newsletter__row">
+          <input
+            id="newsletter-email"
+            class="newsletter__input"
+            type="email"
+            name={newsletter.fieldName}
+            autocomplete="email"
+            inputmode="email"
+            placeholder="nome@exemplo.com"
+            required
+          />
+          <Button type="submit" icon="arrow-right">Assinar</Button>
+        </div>
+        <p class="newsletter__status label" role="status" aria-live="polite" data-newsletter-status>
+          Grátis. Sem spam. Cancele quando quiser.
+        </p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLFormElement>('[data-newsletter]').forEach((form) => {
+    form.addEventListener('submit', (event) => {
+      if (form.dataset.enabled === 'true') return;
+      event.preventDefault();
+      const status = form.querySelector<HTMLElement>('[data-newsletter-status]');
+      if (status) status.textContent = 'As inscrições abrem em breve. Obrigado pelo interesse.';
+    });
+  });
+</script>
+
+<style>
+  .newsletter {
+    padding-block: var(--section-y);
+  }
+
+  .newsletter__grid {
+    display: grid;
+    gap: var(--space-xl) var(--column-gap);
+    margin-top: var(--space-lg);
+  }
+
+  .newsletter :global(.newsletter__title) {
+    max-width: 8ch;
+  }
+
+  .newsletter__pitch {
+    margin-top: var(--space-md);
+    color: var(--fg-muted);
+    font-size: var(--text-lg);
+    max-width: 40ch;
+  }
+
+  .newsletter__form {
+    display: grid;
+    gap: var(--space-sm);
+    align-content: end;
+  }
+
+  .newsletter__label {
+    color: var(--fg-muted);
+  }
+
+  .newsletter__row {
+    display: grid;
+    gap: var(--space-sm);
+  }
+
+  .newsletter__input {
+    width: 100%;
+    min-height: 56px;
+    padding: 0 0 4px;
+    border: 0;
+    border-bottom: 1px solid var(--paper);
+    border-radius: 0;
+    background: transparent;
+    color: var(--paper);
+    font-size: 1.25rem;
+  }
+
+  .newsletter__input::placeholder {
+    color: #77726b;
+  }
+
+  .newsletter__input:focus-visible {
+    outline: none;
+    border-bottom-color: var(--red-on-dark);
+    box-shadow: 0 1px 0 0 var(--red-on-dark);
+  }
+
+  .newsletter__status {
+    color: var(--fg-muted);
+    font-size: var(--label-sm);
+  }
+
+  @media (min-width: 720px) {
+    .newsletter__row {
+      grid-template-columns: 1fr auto;
+      align-items: end;
+    }
+  }
+
+  @media (min-width: 1080px) {
+    .newsletter__grid {
+      grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
+      align-items: end;
+    }
+  }
+</style>

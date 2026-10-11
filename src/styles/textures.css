@@ -1,0 +1,58 @@
+/*
+ * Texturas oficiais (manual, seção 6): papel, concreto, grunge vermelho e halftone.
+ * Todas são procedurais (SVG feTurbulence) — sem arquivos pesados, nítidas em qualquer tela.
+ * Regra: textura é camada, nunca protagonista. Evitar atrás de texto longo.
+ */
+
+@layer tokens {
+  :root {
+    --tex-grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.86' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .13 0 0 0 0 .11 0 0 0 0 .09 0 0 0 .75 -.29'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+
+    --tex-fiber: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='600'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.006 .11' numOctaves='3' seed='4' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .35 0 0 0 0 .3 0 0 0 0 .24 0 0 0 .3 -.13'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23f)'/%3E%3C/svg%3E");
+
+    --tex-concrete: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='c'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.018' numOctaves='5' seed='9' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .2 0 0 0 0 .19 0 0 0 0 .18 0 0 0 1.4 -.62'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23c)'/%3E%3C/svg%3E");
+
+    --tex-grunge: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='420' height='420'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.028' numOctaves='5' seed='21' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .05 0 0 0 0 .02 0 0 0 0 .02 0 0 0 2.7 -1.62'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+
+    --tex-scratch: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='s'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.7 .02' numOctaves='2' seed='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .91 0 0 0 0 .89 0 0 0 0 .85 0 0 0 4 -2.9'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23s)'/%3E%3C/svg%3E");
+  }
+}
+
+@layer components {
+  /* Papel: fundo padrão com grão e fibra discretos */
+  .tex-paper {
+    background-color: var(--paper);
+    background-image: var(--tex-grain), var(--tex-fiber);
+  }
+
+  .tex-paper-light {
+    background-color: var(--paper-light);
+    background-image: var(--tex-grain);
+  }
+
+  /* Concreto: para blocos de colagem e áreas vazias */
+  .tex-concrete {
+    background-color: #cfcac2;
+    background-image: var(--tex-grain), var(--tex-concrete);
+  }
+
+  /* Grunge vermelho: tiras e recortes. Nunca como fundo de seção inteira. */
+  .tex-grunge {
+    background-color: var(--red);
+    background-image: var(--tex-scratch), var(--tex-grunge), var(--tex-grain);
+    color: var(--paper);
+  }
+
+  /* Preto vídeo com grão */
+  .tex-black {
+    background-color: var(--black);
+    background-image: var(--tex-grain);
+    color: var(--paper);
+  }
+
+  /* Halftone: retícula de impressão, usada como borda/transição */
+  .tex-halftone {
+    background-image: radial-gradient(circle, currentColor 0 34%, transparent 36%);
+    background-size: 7px 7px;
+  }
+}

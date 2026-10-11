@@ -1,0 +1,65 @@
+---
+/**
+ * Sistema de logo (manual, seção 5).
+ *  - bar:   MARGEM|  (principal)
+ *  - slash: MARGEM/  (títulos e peças editoriais)
+ *  - mono:  M|       (uso reduzido)
+ *  - seal:  selo preto com MARGEM| em papel (vídeo / marca-d'água)
+ * A barra é sempre vermelho queimado; o texto acompanha o fundo.
+ */
+interface Props {
+  variant?: 'bar' | 'slash' | 'mono' | 'seal';
+  class?: string;
+}
+
+const { variant = 'bar', class: className } = Astro.props;
+const word = variant === 'mono' ? 'M' : 'MARGEM';
+---
+
+<span class:list={['logo', `logo--${variant}`, className]} aria-label="MARGEM" role="img">
+  <span class="logo__word" aria-hidden="true">{word}</span>
+  {
+    variant === 'slash' ? (
+      <span class="logo__slash" aria-hidden="true">/</span>
+    ) : (
+      <span class="logo__bar" aria-hidden="true" />
+    )
+  }
+</span>
+
+<style>
+  .logo {
+    display: inline-flex;
+    align-items: center;
+    font-family: var(--font-display);
+    line-height: 1;
+    letter-spacing: -0.01em;
+    color: currentColor;
+    white-space: nowrap;
+  }
+
+  .logo__word {
+    /* Bebas tem respiro superior; compensa para alinhar com a barra */
+    padding-top: 0.06em;
+  }
+
+  .logo__bar {
+    display: inline-block;
+    width: 0.15em;
+    height: 0.74em;
+    margin-left: 0.09em;
+    background: var(--red);
+  }
+
+  .logo__slash {
+    color: var(--red);
+    margin-left: 0.02em;
+    padding-top: 0.06em;
+  }
+
+  .logo--seal {
+    background: var(--black);
+    color: var(--paper);
+    padding: 0.32em 0.42em 0.28em;
+  }
+</style>

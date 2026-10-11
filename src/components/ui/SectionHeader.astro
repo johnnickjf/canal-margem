@@ -1,0 +1,104 @@
+---
+import Icon from './Icon.astro';
+import { padIndex } from '@/lib/format';
+
+/**
+ * Cabeçalho de seção no padrão das pranchas do manual:
+ * marcador vermelho + rótulo mono espaçado, linha fina, título opcional e link à direita.
+ */
+interface Props {
+  label: string;
+  index?: number;
+  title?: string;
+  id?: string;
+  link?: { href: string; label: string };
+  class?: string;
+}
+
+const { label, index, title, id, link, class: className } = Astro.props;
+---
+
+<header class:list={['section-header', className]}>
+  <div class="section-header__bar">
+    <p class="section-header__label label">
+      <span class="section-header__mark" aria-hidden="true"></span>
+      {index !== undefined && <span class="section-header__index">{padIndex(index)}</span>}
+      <span>{label}</span>
+    </p>
+    {
+      link && (
+        <a class="section-header__link label" href={link.href}>
+          {link.label}
+          <Icon name="arrow-right" size={16} />
+        </a>
+      )
+    }
+  </div>
+  {title && <h2 class="section-header__title" id={id}>{title}</h2>}
+  <slot />
+</header>
+
+<style>
+  .section-header {
+    margin-bottom: var(--space-lg);
+  }
+
+  .section-header__bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0 var(--space-md);
+    min-height: 44px;
+    padding-bottom: var(--space-sm);
+    border-bottom: var(--rule);
+  }
+
+  .section-header__label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.9em;
+    font-weight: 600;
+    letter-spacing: var(--tracking-wide);
+  }
+
+  .section-header__mark {
+    width: 14px;
+    height: 7px;
+    background: var(--red);
+  }
+
+  .section-header__index {
+    color: var(--fg-muted);
+    font-weight: 500;
+  }
+
+  .section-header__link {
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6em;
+    min-height: 44px;
+    text-decoration: none;
+    color: var(--fg);
+    transition: color var(--dur) var(--ease);
+  }
+
+  .section-header__link:hover {
+    color: var(--red);
+  }
+
+  .section-header__link :global(.icon) {
+    transition: transform var(--dur) var(--ease);
+  }
+
+  .section-header__link:hover :global(.icon) {
+    transform: translateX(3px);
+  }
+
+  .section-header__title {
+    margin-top: var(--space-lg);
+    font-size: var(--display-lg);
+    max-width: 14ch;
+  }
+</style>

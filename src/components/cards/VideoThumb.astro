@@ -1,0 +1,262 @@
+---
+import Logo from '@/components/brand/Logo.astro';
+import Photo from '@/components/ui/Photo.astro';
+import { parseHeadline } from '@/lib/headline';
+import { episodeCode } from '@/lib/format';
+import { tornClipPath } from '@/lib/torn';
+import type { PhotoKey } from '@/data/photos';
+
+/**
+ * Thumbnail no padrão do manual (seção 11 e prancha P02):
+ * foto forte + título curto em Bebas + destaque vermelho + selo + lower third.
+ * Tipografia escala com o próprio contêiner (container queries), então a mesma
+ * composição serve para destaque grande e card pequeno.
+ */
+interface Props {
+  title: string;
+  episode: number;
+  cover: PhotoKey;
+  temaName: string;
+  dek?: string;
+  orientation?: '16/9' | '9/16';
+  sizes?: string;
+  eager?: boolean;
+  seed?: number;
+  /** Mostra o título sobre a imagem. Desligue quando o título já estiver logo abaixo. */
+  overlay?: boolean;
+}
+
+const {
+  title,
+  episode,
+  cover,
+  temaName,
+  dek,
+  orientation = '16/9',
+  sizes,
+  eager = false,
+  seed = episode,
+  overlay = true,
+} = Astro.props;
+
+const { before, highlight, after } = parseHeadline(title);
+const vertical = orientation === '9/16';
+const patchClip = tornClipPath('right', { seed: seed * 3 + 1, depth: 5, steps: 22 });
+---
+
+<div class:list={['thumb', { 'thumb--vertical': vertical }]} aria-hidden="true">
+  <Photo
+    photo={cover}
+    ratio={orientation}
+    sizes={sizes ?? (vertical ? '(min-width: 1080px) 22vw, 60vw' : '(min-width: 1080px) 50vw, 100vw')}
+    widths={vertical ? [360, 540, 720] : [480, 800, 1200, 1600]}
+    eager={eager}
+    class="thumb__photo"
+  />
+
+  <span class="thumb__seal"><Logo variant="seal" /></span>
+
+  {
+    overlay && (
+      <span class="thumb__title" style={`clip-path: ${patchClip}`}>
+        {before}
+        {highlight && <span class="thumb__hl">{highlight}</span>}
+        {after}
+      </span>
+    )
+  }
+
+  <span class="thumb__lower">
+    <span class="thumb__lower-mark"></span>
+    <span class="thumb__lower-text">
+      <span class="thumb__lower-tema">{temaName}</span>
+      {dek && !vertical && <span class="thumb__lower-dek">{dek}</span>}
+    </span>
+    <span class="thumb__lower-code">{episodeCode(episode)}</span>
+  </span>
+
+  <span class="thumb__play">
+    <svg viewBox="0 0 24 24" width="100%" height="100%"><path d="M8 5v14l11-7z" fill="currentColor"></path></svg>
+  </span>
+</div>
+
+<style>
+  .thumb {
+    position: relative;
+    container-type: inline-size;
+    overflow: hidden;
+    background: var(--black);
+  }
+
+  .thumb :global(.thumb__photo img) {
+    transition:
+      filter var(--dur-slow) var(--ease),
+      transform 700ms var(--ease-out);
+  }
+
+  :global(a:hover) .thumb :global(.thumb__photo img),
+  :global(:focus-visible) .thumb :global(.thumb__photo img),
+  :global([data-card]:hover) .thumb :global(.thumb__photo img) {
+    filter: var(--photo-filter-hover);
+    transform: scale(1.03);
+  }
+
+  /* Selo / marca-d'água: topo esquerdo, margem de segurança */
+  .thumb__seal {
+    position: absolute;
+    top: 4.5cqi;
+    left: 4.5cqi;
+    z-index: 2;
+    font-size: max(13px, 3.4cqi);
+  }
+
+  .thumb--vertical .thumb__seal {
+    top: 6cqi;
+    left: 6cqi;
+    font-size: max(13px, 7cqi);
+  }
+
+  /* Título em retalho de papel */
+  .thumb__title {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    z-index: 2;
+    max-width: 62%;
+    padding: 2.2cqi 5cqi 1.6cqi 4.5cqi;
+    transform: translateY(-58%);
+    background-color: var(--paper-light);
+    background-image: var(--tex-grain);
+    color: var(--charcoal);
+    font-family: var(--font-display);
+    font-size: 8.4cqi;
+    line-height: 0.9;
+    text-transform: uppercase;
+    text-wrap: balance;
+  }
+
+  .thumb--vertical .thumb__title {
+    top: auto;
+    bottom: 30cqi;
+    max-width: 92%;
+    padding: 4cqi 8cqi 3cqi 6cqi;
+    transform: none;
+    font-size: 15cqi;
+  }
+
+  .thumb__hl {
+    color: var(--paper-light);
+    background: var(--red);
+    padding: 0.05em 0.1em 0;
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+  }
+
+  /* Lower third: tema + episódio, no máximo 2 linhas */
+  .thumb__lower {
+    position: absolute;
+    left: 4.5cqi;
+    right: 4.5cqi;
+    bottom: 4cqi;
+    z-index: 2;
+    display: flex;
+    align-items: stretch;
+    background-color: var(--paper-light);
+    background-image: var(--tex-grain);
+    color: var(--charcoal);
+  }
+
+  .thumb--vertical .thumb__lower {
+    left: 6cqi;
+    right: 6cqi;
+    bottom: 6cqi;
+  }
+
+  .thumb__lower-mark {
+    width: max(4px, 1cqi);
+    background: var(--red);
+    flex-shrink: 0;
+  }
+
+  .thumb__lower-text {
+    display: grid;
+    align-content: center;
+    gap: 0.25em;
+    min-width: 0;
+    flex: 1;
+    padding: 1.3cqi 2.2cqi 1.1cqi;
+  }
+
+  .thumb__lower-tema {
+    font-family: var(--font-display);
+    font-size: max(13px, 3.4cqi);
+    line-height: 0.95;
+    text-transform: uppercase;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .thumb--vertical .thumb__lower-tema {
+    font-size: max(13px, 6.6cqi);
+    padding-block: 1.5cqi;
+  }
+
+  .thumb__lower-dek {
+    font-family: var(--font-mono);
+    font-size: max(9px, 1.5cqi);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .thumb__lower-code {
+    display: grid;
+    place-items: center;
+    padding: 0 2.2cqi;
+    border-left: 1px solid rgb(31 31 31 / 0.3);
+    font-family: var(--font-display);
+    font-size: max(13px, 3.4cqi);
+    white-space: nowrap;
+  }
+
+  .thumb--vertical .thumb__lower-code {
+    font-size: max(13px, 6cqi);
+    padding: 0 3cqi;
+  }
+
+  .thumb__play {
+    position: absolute;
+    top: 4.5cqi;
+    right: 4.5cqi;
+    z-index: 2;
+    display: grid;
+    place-items: center;
+    width: max(34px, 7cqi);
+    aspect-ratio: 1;
+    padding: 1.8cqi;
+    background: var(--red);
+    color: var(--paper-light);
+    opacity: 0;
+    transform: translateY(-6px);
+    transition:
+      opacity var(--dur) var(--ease),
+      transform var(--dur) var(--ease);
+  }
+
+  .thumb--vertical .thumb__play {
+    width: max(34px, 13cqi);
+    padding: 3cqi;
+    top: 6cqi;
+    right: 6cqi;
+  }
+
+  :global(a:hover) .thumb__play,
+  :global([data-card]:hover) .thumb__play,
+  :global([data-card]:focus-within) .thumb__play {
+    opacity: 1;
+    transform: none;
+  }
+</style>

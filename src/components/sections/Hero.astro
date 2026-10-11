@@ -1,0 +1,348 @@
+---
+import Button from '@/components/ui/Button.astro';
+import Headline from '@/components/ui/Headline.astro';
+import Photo from '@/components/ui/Photo.astro';
+import { hero } from '@/config/site';
+import { getLatestEpisode, routes } from '@/lib/content';
+import { episodeCode, formatDateMono } from '@/lib/format';
+import { plainHeadline } from '@/lib/headline';
+import { tornClipPath, tornStripClipPath } from '@/lib/torn';
+
+const latest = await getLatestEpisode();
+
+const photoClip = tornClipPath('left', { seed: 21, depth: 3.2, steps: 64 });
+const stripClip = tornStripClipPath({ seed: 5, depth: 7, steps: 36 });
+const scrapClip = tornClipPath('top', { seed: 13, depth: 9, steps: 18 });
+---
+
+<section class="hero" aria-labelledby="hero-title">
+  <div class="hero__text">
+    <p class="hero__eyebrow label">
+      <span class="hero__eyebrow-mark" aria-hidden="true"></span>
+      Política / Economia / Pessoas
+    </p>
+
+    <Headline as="h1" id="hero-title" text={hero.headline} size="2xl" class="hero__title" />
+
+    <span class="dash hero__dash" aria-hidden="true"></span>
+
+    <p class="hero__sub">{hero.subheadline}</p>
+
+    <div class="hero__actions">
+      <Button href="/videos" icon="arrow-right">Ver vídeos</Button>
+      <Button href="/manifesto" variant="outline">Ler manifesto</Button>
+    </div>
+
+    {
+      latest && (
+        <a class="hero__latest" href={routes.video(latest)}>
+          <span class="label hero__latest-tag">Novo</span>
+          <span class="hero__latest-body">
+            <span class="label hero__latest-meta">
+              {episodeCode(latest.data.episode)} — {formatDateMono(latest.data.publishedAt)} — {latest.data.duration}
+            </span>
+            <span class="hero__latest-title">{plainHeadline(latest.data.title)}</span>
+          </span>
+        </a>
+      )
+    }
+  </div>
+
+  <div class="hero__media">
+    <div class="hero__photo" style={`clip-path: ${photoClip}`}>
+      <Photo
+        photo="metro-interior"
+        ratio="fill"
+        eager
+        sizes="(min-width: 1080px) 50vw, 100vw"
+        widths={[640, 960, 1400, 1900]}
+      />
+    </div>
+
+    <div class="hero__strip tex-grunge" style={`clip-path: ${stripClip}`} aria-hidden="true">
+      <p class="hero__stack">
+        {hero.stack.map((word) => <span>{word}</span>)}
+      </p>
+      <span class="hero__strip-dash"></span>
+    </div>
+
+    <p class="hero__scrap tex-concrete" style={`clip-path: ${scrapClip}`}>
+      A vida real<br />também é<br />política.
+    </p>
+  </div>
+</section>
+
+<style>
+  .hero {
+    --hero-h: min(calc(100svh - var(--header-h) - 36px), 920px);
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    border-bottom: var(--rule-strong);
+    overflow: clip;
+  }
+
+  /* ---------- texto ---------- */
+  .hero__text {
+    position: relative;
+    z-index: 2;
+    container-type: inline-size;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: var(--space-xl) var(--gutter) var(--space-lg);
+  }
+
+  .hero__eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.9em;
+    font-weight: 600;
+    letter-spacing: var(--tracking-wide);
+    margin-bottom: var(--space-lg);
+  }
+
+  .hero__eyebrow-mark {
+    width: 14px;
+    height: 7px;
+    background: var(--red);
+  }
+
+  /* Duas linhas fixas ("O QUE OS NÚMEROS / NÃO CONTAM"), dimensionadas pela largura da coluna */
+  .hero :global(.hero__title) {
+    font-size: min(10.25rem, 17cqi);
+    text-wrap: nowrap;
+  }
+
+  .hero__dash {
+    width: 72px;
+    height: 6px;
+    margin-top: var(--space-md);
+  }
+
+  .hero__sub {
+    margin-top: var(--space-md);
+    font-family: var(--font-mono);
+    font-size: clamp(1rem, 0.9rem + 0.45vw, 1.25rem);
+    letter-spacing: 0.08em;
+  }
+
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+    margin-top: var(--space-lg);
+  }
+
+  .hero__latest {
+    display: flex;
+    align-items: stretch;
+    gap: var(--space-sm);
+    margin-top: var(--space-xl);
+    padding-top: var(--space-md);
+    border-top: var(--rule);
+    width: 100%;
+    max-width: 520px;
+    text-decoration: none;
+  }
+
+  .hero__latest-tag {
+    align-self: start;
+    padding: 4px 8px 3px;
+    background: var(--charcoal);
+    color: var(--paper);
+    font-size: var(--label-sm);
+  }
+
+  .hero__latest-body {
+    display: grid;
+    gap: 6px;
+  }
+
+  .hero__latest-meta {
+    color: var(--fg-muted);
+    font-size: var(--label-sm);
+  }
+
+  .hero__latest-title {
+    font-family: var(--font-display);
+    font-size: 1.625rem;
+    line-height: 1;
+    text-transform: uppercase;
+    transition: color var(--dur) var(--ease);
+  }
+
+  .hero__latest:hover .hero__latest-title {
+    color: var(--red);
+  }
+
+  /* ---------- colagem ---------- */
+  .hero__media {
+    position: relative;
+    height: clamp(400px, 105vw, 640px);
+  }
+
+  .hero__photo {
+    position: absolute;
+    inset: 0;
+  }
+
+  .hero__photo :global(.photo) {
+    height: 100%;
+  }
+
+  .hero__strip {
+    position: absolute;
+    top: -2%;
+    right: 4%;
+    bottom: 12%;
+    width: clamp(124px, 31%, 230px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: var(--space-md);
+    padding: var(--space-lg) var(--space-sm);
+  }
+
+  .hero__stack {
+    display: grid;
+    font-family: var(--font-display);
+    font-size: clamp(1.3rem, 0.75rem + 1.6vw, 2.5rem);
+    line-height: 0.92;
+    text-transform: uppercase;
+    color: var(--paper-light);
+    transform: rotate(-4deg);
+  }
+
+  .hero__strip-dash {
+    width: 44px;
+    height: 5px;
+    background: var(--paper-light);
+    transform: rotate(-4deg);
+  }
+
+  .hero__scrap {
+    display: none;
+  }
+
+  /* ---------- desktop ---------- */
+  @media (min-width: 1080px) {
+    .hero {
+      grid-template-columns: minmax(0, 1.12fr) minmax(0, 1fr);
+      min-height: var(--hero-h);
+    }
+
+    .hero__text {
+      justify-content: center;
+      padding-left: max(var(--gutter), calc((100vw - var(--page-max)) / 2 + var(--gutter)));
+      padding-right: var(--space-lg);
+      padding-block: var(--space-2xl) var(--space-xl);
+    }
+
+    .hero__media {
+      height: auto;
+      min-height: 100%;
+    }
+
+    .hero__scrap {
+      display: block;
+      position: absolute;
+      left: -9%;
+      bottom: 9%;
+      z-index: 3;
+      padding: 1.4rem 1.6rem 1rem;
+      font-family: var(--font-display);
+      font-size: 1.875rem;
+      line-height: 0.95;
+      text-transform: uppercase;
+      color: var(--charcoal);
+      transform: rotate(-2.5deg);
+    }
+
+    .hero__scrap::after {
+      content: '';
+      display: block;
+      width: 36px;
+      height: 4px;
+      margin-top: 0.7rem;
+      background: var(--red);
+    }
+  }
+
+  /* ---------- entrada ---------- */
+  @media (prefers-reduced-motion: no-preference) {
+    .hero__eyebrow,
+    .hero :global(.hero__title),
+    .hero__dash,
+    .hero__sub,
+    .hero__actions,
+    .hero__latest {
+      animation: hero-rise var(--dur-slow) var(--ease) both;
+    }
+
+    .hero :global(.hero__title) {
+      animation-name: hero-unmask;
+      animation-duration: 520ms;
+      animation-delay: 60ms;
+    }
+
+    .hero__dash { animation-delay: 260ms; }
+    .hero__sub { animation-delay: 300ms; }
+    .hero__actions { animation-delay: 360ms; }
+    .hero__latest { animation-delay: 420ms; }
+
+    .hero__photo :global(.photo) {
+      animation: hero-wipe 700ms var(--ease-out) 80ms both;
+    }
+
+    .hero__strip {
+      animation: hero-drop 450ms var(--ease) 420ms both;
+    }
+
+    .hero__scrap {
+      animation: hero-fade 350ms var(--ease) 600ms both;
+    }
+  }
+
+  @keyframes hero-rise {
+    from {
+      opacity: 0;
+      transform: translateY(14px);
+    }
+  }
+
+  @keyframes hero-unmask {
+    from {
+      clip-path: inset(0 0 100% 0);
+      transform: translateY(0.12em);
+    }
+    to {
+      clip-path: inset(-10% -20% -10% 0);
+      transform: none;
+    }
+  }
+
+  @keyframes hero-wipe {
+    from {
+      clip-path: inset(0 0 0 100%);
+    }
+    to {
+      clip-path: inset(0 0 0 0);
+    }
+  }
+
+  @keyframes hero-drop {
+    from {
+      transform: translateY(-24px);
+      opacity: 0;
+    }
+  }
+
+  @keyframes hero-fade {
+    from {
+      opacity: 0;
+      transform: rotate(-2.5deg) translateY(10px);
+    }
+  }
+</style>

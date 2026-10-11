@@ -1,0 +1,131 @@
+---
+import Icon from './Icon.astro';
+import { site } from '@/config/site';
+
+/**
+ * "Envie para quem precisa ver isso" — compartilhamento sem scripts de terceiros.
+ * Usa a Web Share API quando disponível; senão, links diretos e copiar link.
+ */
+interface Props {
+  title: string;
+  path: string;
+  cta?: string;
+}
+
+const { title, path, cta = 'Envie para quem precisa ver isso.' } = Astro.props;
+const url = new URL(path, Astro.site ?? site.url).toString();
+const text = `${title} — ${site.name}`;
+
+const targets = [
+  { label: 'WhatsApp', href: `https://wa.me/?text=${encodeURIComponent(`${text} ${url}`)}` },
+  { label: 'X', href: `https://x.com/intent/post?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}` },
+  { label: 'Bluesky', href: `https://bsky.app/intent/compose?text=${encodeURIComponent(`${text} ${url}`)}` },
+  { label: 'LinkedIn', href: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}` },
+];
+---
+
+<div class="share" data-share data-url={url} data-title={text}>
+  <p class="share__cta">{cta}</p>
+  <ul class="share__list" role="list">
+    <li class="share__native" hidden>
+      <button type="button" class="share__btn share__btn--primary" data-share-native>Compartilhar</button>
+    </li>
+    {
+      targets.map((target) => (
+        <li>
+          <a class="share__btn" href={target.href} target="_blank" rel="noopener">
+            {target.label}
+          </a>
+        </li>
+      ))
+    }
+    <li>
+      <button type="button" class="share__btn" data-share-copy>
+        <Icon name="link" size={16} />
+        <span data-share-copy-label>Copiar link</span>
+      </button>
+    </li>
+  </ul>
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-share]').forEach((root) => {
+    const url = root.dataset.url ?? location.href;
+    const title = root.dataset.title ?? document.title;
+
+    const nativeButton = root.querySelector<HTMLButtonElement>('[data-share-native]');
+    if (nativeButton && 'share' in navigator) {
+      nativeButton.parentElement?.removeAttribute('hidden');
+      nativeButton.addEventListener('click', () => {
+        navigator.share({ title, url }).catch(() => {});
+      });
+    }
+
+    const copyButton = root.querySelector<HTMLButtonElement>('[data-share-copy]');
+    const copyLabel = root.querySelector<HTMLElement>('[data-share-copy-label]');
+    copyButton?.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(url);
+        if (copyLabel) copyLabel.textContent = 'Link copiado';
+      } catch {
+        if (copyLabel) copyLabel.textContent = 'Não foi possível copiar';
+      }
+      setTimeout(() => {
+        if (copyLabel) copyLabel.textContent = 'Copiar link';
+      }, 2400);
+    });
+  });
+</script>
+
+<style>
+  .share {
+    display: grid;
+    gap: var(--space-sm);
+    padding-block: var(--space-md);
+    border-block: var(--rule);
+  }
+
+  .share__cta {
+    font-family: var(--font-display);
+    font-size: var(--display-xs);
+    line-height: 1;
+    text-transform: uppercase;
+  }
+
+  .share__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+  }
+
+  .share__btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5em;
+    min-height: 40px;
+    padding: 0 0.9rem;
+    border: 1px solid var(--line);
+    font-family: var(--font-mono);
+    font-size: var(--label);
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition:
+      background-color var(--dur-fast) var(--ease),
+      border-color var(--dur-fast) var(--ease),
+      color var(--dur-fast) var(--ease);
+  }
+
+  .share__btn:hover {
+    background: var(--charcoal);
+    border-color: var(--charcoal);
+    color: var(--paper);
+  }
+
+  .share__btn--primary {
+    background: var(--red);
+    border-color: var(--red);
+    color: var(--paper-light);
+  }
+</style>

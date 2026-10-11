@@ -1,0 +1,322 @@
+---
+import type { GetStaticPaths } from 'astro';
+import { getEntry, render } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Headline from '@/components/ui/Headline.astro';
+import MetaLine from '@/components/ui/MetaLine.astro';
+import Prose from '@/components/ui/Prose.astro';
+import ShareBar from '@/components/ui/ShareBar.astro';
+import SectionHeader from '@/components/ui/SectionHeader.astro';
+import Button from '@/components/ui/Button.astro';
+import Icon from '@/components/ui/Icon.astro';
+import VideoPlayer from '@/components/video/VideoPlayer.astro';
+import VideoFacts from '@/components/video/VideoFacts.astro';
+import CutCard from '@/components/cards/CutCard.astro';
+import ArticleCard from '@/components/cards/ArticleCard.astro';
+import Newsletter from '@/components/sections/Newsletter.astro';
+import { ctas } from '@/config/site';
+import { getArticles, getCutsOf, getEpisodes, getTema, getVideos, routes, type Video } from '@/lib/content';
+import { durationToISO, episodeCode } from '@/lib/format';
+import { plainHeadline } from '@/lib/headline';
+import { getPhoto, photoUrl } from '@/data/photos';
+
+export const getStaticPaths = (async () => {
+  const videos = await getVideos();
+  return videos.map((video) => ({ params: { slug: video.id }, props: { video } }));
+}) satisfies GetStaticPaths;
+
+interface Props {
+  video: Video;
+}
+
+const { video } = Astro.props;
+const { data } = video;
+const isCut = data.format === 'corte';
+const { Content } = await render(video);
+
+const tema = await getTema(data.tema.id);
+const parent = data.parent ? await getEntry(data.parent) : undefined;
+const cuts = isCut ? [] : await getCutsOf(video);
+const related = (await getArticles()).filter((a) => a.data.episode?.id === video.id);
+
+// Navegação entre episódios (ordem cronológica: anterior = mais antigo).
+const episodes = await getEpisodes();
+const position = episodes.findIndex((e) => e.id === video.id);
+const newer = position > 0 ? episodes[position - 1] : undefined;
+const older = position >= 0 ? episodes[position + 1] : undefined;
+
+const title = plainHeadline(data.title);
+const path = routes.video(video);
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'VideoObject',
+  name: `${title} — ${episodeCode(data.episode)}`,
+  description: data.dek,
+  thumbnailUrl: photoUrl(getPhoto(data.cover), 1280, 720),
+  uploadDate: data.publishedAt.toISOString(),
+  duration: durationToISO(data.duration),
+  ...(data.youtubeId ? { embedUrl: `https://www.youtube-nocookie.com/embed/${data.youtubeId}` } : {}),
+};
+---
+
+<BaseLayout
+  title={`${title} — ${episodeCode(data.episode)}`}
+  description={data.dek}
+  image={data.cover}
+  type="video.episode"
+  publishedAt={data.publishedAt}
+  jsonLd={jsonLd}
+>
+  <article class="episode">
+    <div class="container">
+      <nav class="episode__crumbs" aria-label="Você está em">
+        <MetaLine
+          items={[
+            { text: 'Vídeos', href: '/videos' },
+            { text: tema.data.name, href: routes.tema(tema.id) },
+            { text: isCut ? `${episodeCode(data.episode)} — corte` : episodeCode(data.episode), accent: true },
+          ]}
+        />
+      </nav>
+
+      <div class:list={['episode__stage', { 'episode__stage--vertical': isCut }]}>
+        <VideoPlayer
+          title={data.title}
+          episode={data.episode}
+          cover={data.cover}
+          temaName={tema.data.name}
+          dek={data.dek}
+          youtubeId={data.youtubeId}
+          orientation={isCut ? '9/16' : '16/9'}
+        />
+
+        {
+          isCut && (
+            <div class="episode__cut-intro">
+              <Headline as="h1" text={data.title} size="xl" />
+              <p class="episode__dek">{data.dek}</p>
+              {parent && (
+                <div class="episode__parent">
+                  <p class="label episode__parent-label">Este corte é parte de {episodeCode(parent.data.episode)}</p>
+                  <Headline as="p" text={parent.data.title} size="sm" />
+                  <Button href={routes.video(parent)} icon="arrow-right">
+                    {ctas.watch}
+                  </Button>
+                </div>
+              )}
+              <ShareBar title={title} path={path} />
+            </div>
+          )
+        }
+      </div>
+
+      {
+        !isCut && (
+          <div class="episode__grid">
+            <div class="episode__main">
+              <Headline as="h1" text={data.title} size="xl" />
+              <p class="episode__dek">{data.dek}</p>
+              <Prose>
+                <Content />
+              </Prose>
+              <ShareBar title={title} path={path} />
+            </div>
+            <aside class="episode__aside" aria-label="Ficha do episódio">
+              <VideoFacts video={video} temaName={tema.data.name} />
+            </aside>
+          </div>
+        )
+      }
+    </div>
+  </article>
+
+  {
+    cuts.length > 0 && (
+      <section class="section" aria-labelledby="cortes-episodio">
+        <div class="container">
+          <SectionHeader label="Cortes deste episódio" />
+          <h2 id="cortes-episodio" class="visually-hidden">
+            Cortes deste episódio
+          </h2>
+          <ul class="episode__cuts" role="list">
+            {cuts.map((cut) => (
+              <li>
+                <CutCard video={cut} />
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    )
+  }
+
+  {
+    related.length > 0 && (
+      <section class="section" aria-labelledby="analise-relacionada">
+        <div class="container">
+          <SectionHeader label="Leia a análise" />
+          <h2 id="analise-relacionada" class="visually-hidden">
+            Análise relacionada
+          </h2>
+          {related.map((article) => (
+            <ArticleCard article={article} variant="lead" />
+          ))}
+        </div>
+      </section>
+    )
+  }
+
+  {
+    !isCut && (newer || older) && (
+      <nav class="section pager" aria-label="Outros episódios">
+        <div class="container pager__grid">
+          {older ? (
+            <a class="pager__link" href={routes.video(older)}>
+              <span class="label pager__dir">
+                <Icon name="arrow-left" size={16} /> Anterior — {episodeCode(older.data.episode)}
+              </span>
+              <Headline as="span" text={older.data.title} size="sm" />
+            </a>
+          ) : (
+            <span />
+          )}
+          {newer && (
+            <a class="pager__link pager__link--next" href={routes.video(newer)}>
+              <span class="label pager__dir">
+                Próximo — {episodeCode(newer.data.episode)} <Icon name="arrow-right" size={16} />
+              </span>
+              <Headline as="span" text={newer.data.title} size="sm" />
+            </a>
+          )}
+        </div>
+      </nav>
+    )
+  }
+
+  <Newsletter index={null} />
+</BaseLayout>
+
+<style>
+  .episode {
+    padding-block: var(--space-lg) var(--section-y);
+  }
+
+  .episode__crumbs {
+    margin-bottom: var(--space-md);
+  }
+
+  .episode__stage--vertical {
+    display: grid;
+    gap: var(--space-xl) var(--column-gap);
+    justify-items: start;
+  }
+
+  .episode__cut-intro {
+    display: grid;
+    gap: var(--space-md);
+    align-content: start;
+    max-width: 560px;
+  }
+
+  .episode__parent {
+    display: grid;
+    gap: var(--space-sm);
+    justify-items: start;
+    padding: var(--space-md);
+    background: var(--paper-light);
+    border-left: 4px solid var(--red);
+  }
+
+  .episode__parent-label {
+    color: var(--fg-muted);
+  }
+
+  .episode__grid {
+    display: grid;
+    gap: var(--space-xl) var(--column-gap);
+    margin-top: var(--space-xl);
+  }
+
+  .episode__main {
+    display: grid;
+    gap: var(--space-lg);
+    align-content: start;
+  }
+
+  .episode__dek {
+    font-size: var(--text-lg);
+    line-height: 1.5;
+    max-width: 52ch;
+  }
+
+  .episode__cuts {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: var(--space-lg) var(--column-gap);
+  }
+
+  .pager {
+    border-top: var(--rule);
+  }
+
+  .pager__grid {
+    display: grid;
+    gap: var(--space-lg);
+  }
+
+  .pager__link {
+    display: grid;
+    gap: var(--space-sm);
+    padding: var(--space-md) 0;
+    border-top: var(--rule-strong);
+    text-decoration: none;
+    transition: color var(--dur) var(--ease);
+  }
+
+  .pager__link:hover {
+    color: var(--red);
+  }
+
+  .pager__dir {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6em;
+    color: var(--fg-muted);
+  }
+
+  @media (min-width: 720px) {
+    .pager__grid {
+      grid-template-columns: 1fr 1fr;
+      column-gap: var(--column-gap);
+    }
+
+    .pager__link--next {
+      text-align: right;
+      justify-items: end;
+    }
+  }
+
+  @media (min-width: 900px) {
+    .episode__stage--vertical {
+      grid-template-columns: auto minmax(0, 1fr);
+      align-items: start;
+    }
+
+    .episode__stage--vertical :global(.player) {
+      width: 380px;
+    }
+  }
+
+  @media (min-width: 1080px) {
+    .episode__grid {
+      grid-template-columns: minmax(0, 8fr) minmax(0, 4fr);
+    }
+
+    .episode__aside {
+      position: sticky;
+      top: calc(var(--header-h) + var(--space-md));
+      align-self: start;
+    }
+  }
+</style>

@@ -1,0 +1,71 @@
+---
+import SectionHeader from '@/components/ui/SectionHeader.astro';
+import VideoCard from '@/components/cards/VideoCard.astro';
+import { getFeaturedEpisodes } from '@/lib/content';
+
+const [lead, ...rest] = await getFeaturedEpisodes(3);
+---
+
+{
+  lead && (
+    <section class="section featured" aria-labelledby="destaques">
+      <div class="container">
+        <SectionHeader index={1} label="Vídeos em destaque" link={{ href: '/videos', label: 'Todos os vídeos' }} />
+        <h2 id="destaques" class="visually-hidden">Vídeos em destaque</h2>
+
+        <div class="featured__grid">
+          <div class="featured__lead" data-reveal>
+            <VideoCard video={lead} size="lead" sizes="(min-width: 1080px) 62vw, 100vw" />
+          </div>
+          <div class="featured__side" data-reveal-group>
+            {rest.map((video) => (
+              <div class="featured__item" data-reveal>
+                <VideoCard video={video} sizes="(min-width: 1080px) 30vw, 100vw" />
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+<style>
+  .featured__grid {
+    display: grid;
+    gap: var(--space-xl) var(--column-gap);
+  }
+
+  .featured__side {
+    display: grid;
+    gap: var(--space-lg);
+    align-content: start;
+  }
+
+  .featured__item + .featured__item {
+    padding-top: var(--space-lg);
+    border-top: var(--rule);
+  }
+
+  @media (min-width: 720px) and (max-width: 1079px) {
+    .featured__side {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .featured__item + .featured__item {
+      padding-top: 0;
+      border-top: 0;
+    }
+  }
+
+  @media (min-width: 1080px) {
+    .featured__grid {
+      grid-template-columns: minmax(0, 8fr) minmax(0, 4fr);
+    }
+
+    .featured__side {
+      padding-left: var(--column-gap);
+      border-left: var(--rule);
+    }
+  }
+</style>

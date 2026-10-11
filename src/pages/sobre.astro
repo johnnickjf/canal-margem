@@ -1,0 +1,348 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHeader from '@/components/layout/PageHeader.astro';
+import SectionHeader from '@/components/ui/SectionHeader.astro';
+import Photo from '@/components/ui/Photo.astro';
+import Icon from '@/components/ui/Icon.astro';
+import { contact, site, socials } from '@/config/site';
+import { photos, type Photo as PhotoData } from '@/data/photos';
+import { voice } from '@/data/manifesto';
+
+const is = ['Crítica', 'Clara', 'Humana', 'Popular sem ser simplista', 'Objetiva', 'Contextual', 'Curiosa', 'Documental'];
+const isNot = ['Partidária', 'Panfletária', 'Acadêmica demais', 'Agressiva por padrão', 'Clickbait vazio', 'Professoral'];
+
+const credits: PhotoData[] = [...new Map(Object.values(photos as Record<string, PhotoData>).map((p) => [p.credit, p])).values()].sort((a, b) =>
+  a.credit.localeCompare(b.credit, 'pt-BR'),
+);
+---
+
+<BaseLayout title="Sobre" description={site.positioning} image="escada-metro">
+  <PageHeader label="Sobre a MARGEM" title="Mesmas pessoas. [Outras perguntas.]" lede={site.positioning} />
+
+  <section class="section" aria-labelledby="o-que-e">
+    <div class="container about-grid">
+      <div class="about-grid__photo">
+        <Photo photo="escada-metro" ratio="4/5" sizes="(min-width: 1080px) 40vw, 100vw" credit />
+      </div>
+      <div class="about-grid__text">
+        <h2 id="o-que-e" class="about-grid__title">O que é</h2>
+        <p>
+          A MARGEM é um espaço de análise sobre política, economia e vida cotidiana. Trabalho, renda, cidade,
+          poder, desigualdade e democracia explicados a partir da vida real — com dados, contexto e perguntas que
+          nem sempre cabem no centro do debate.
+        </p>
+        <p>
+          Publicamos episódios em vídeo, cortes curtos para redes sociais e análises escritas. Todo conteúdo segue
+          o mesmo método: começa por uma pergunta concreta, apresenta o dado e o contexto, traz um exemplo do dia a
+          dia, considera o melhor contraponto e só então chega a uma interpretação.
+        </p>
+        <p>
+          Temos ponto de vista, e dizemos qual é: o de quem vive de salário, depende de serviço público e mora
+          longe de onde as decisões são tomadas. Não temos vínculo com partidos.
+        </p>
+
+        <div class="traits">
+          <div>
+            <h3 class="label traits__heading">A MARGEM é</h3>
+            <ul role="list">{is.map((item) => <li>{item}</li>)}</ul>
+          </div>
+          <div>
+            <h3 class="label traits__heading traits__heading--not">A MARGEM não é</h3>
+            <ul role="list" class="traits__not">{isNot.map((item) => <li>{item}</li>)}</ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section voice" aria-labelledby="voz">
+    <div class="container">
+      <SectionHeader label="Voz editorial" />
+      <h2 id="voz" class="visually-hidden">Voz editorial</h2>
+      <ul class="voice__list" role="list">
+        {voice.map((word) => <li>{word}</li>)}
+      </ul>
+      <p class="voice__line label">Análise com contexto. Linguagem acessível. Ponto de vista claro.</p>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="canais">
+    <div class="container">
+      <SectionHeader label="Canais" />
+      <h2 id="canais" class="visually-hidden">Canais</h2>
+      <ul class="channels" role="list">
+        {
+          socials.map((social) => (
+            <li>
+              <a class="channel" href={social.href} rel="me noopener" target="_blank">
+                <span class="channel__name">
+                  {social.label}
+                  <Icon name="arrow-up-right" size={20} />
+                </span>
+                <span class="channel__desc">{social.description}</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" id="contato" aria-labelledby="contato-titulo">
+    <div class="container contact">
+      <SectionHeader label="Contato" />
+      <h2 id="contato-titulo" class="contact__title">Fale com a <span class="hl">redação</span></h2>
+      <div class="contact__grid">
+        <a class="contact__card" href={`mailto:${contact.email}`}>
+          <span class="label">Redação, parcerias e imprensa</span>
+          <span class="contact__mail">{contact.email}</span>
+        </a>
+        <a class="contact__card" href={`mailto:${contact.pautas}`}>
+          <span class="label">Sugestões de pauta, dados e correções</span>
+          <span class="contact__mail">{contact.pautas}</span>
+        </a>
+      </div>
+      <p class="contact__note">
+        Encontrou um erro? Corrigimos publicamente e registramos a correção na própria peça.
+      </p>
+    </div>
+  </section>
+
+  <section class="section" id="creditos" aria-labelledby="creditos-titulo">
+    <div class="container">
+      <SectionHeader label="Créditos de imagem" />
+      <h2 id="creditos-titulo" class="visually-hidden">Créditos de imagem</h2>
+      <p class="credits__intro">
+        Fotografias documentais publicadas sob a licença Unsplash. Agradecemos aos fotógrafos:
+      </p>
+      <ul class="credits" role="list">
+        {
+          credits.map((photo) => (
+            <li>
+              {photo.creditUrl ? (
+                <a href={photo.creditUrl} rel="noopener" target="_blank">
+                  {photo.credit}
+                </a>
+              ) : (
+                photo.credit
+              )}
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .about-grid {
+    display: grid;
+    gap: var(--space-xl) var(--column-gap);
+  }
+
+  .about-grid__photo {
+    max-width: 560px;
+  }
+
+  .about-grid__text {
+    display: grid;
+    gap: var(--space-md);
+    align-content: start;
+    font-size: var(--text-md);
+    max-width: 62ch;
+  }
+
+  .about-grid__title {
+    font-size: var(--display-lg);
+  }
+
+  .traits {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-lg);
+    margin-top: var(--space-lg);
+  }
+
+  .traits__heading {
+    padding-bottom: var(--space-xs);
+    margin-bottom: var(--space-xs);
+    border-bottom: 2px solid var(--charcoal);
+    font-weight: 600;
+  }
+
+  .traits__heading--not {
+    border-bottom-color: var(--concrete);
+  }
+
+  .traits li {
+    padding-block: 0.4rem;
+    border-bottom: var(--rule);
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+
+  .traits__not li {
+    color: var(--fg-muted);
+    text-decoration: line-through;
+    text-decoration-color: var(--red);
+    text-decoration-thickness: 2px;
+  }
+
+  .voice__list {
+    display: flex;
+    flex-wrap: wrap;
+    border-top: var(--rule-strong);
+  }
+
+  .voice__list li {
+    flex: 1 1 auto;
+    padding: var(--space-md) var(--space-md) var(--space-md) 0;
+    font-family: var(--font-display);
+    font-size: var(--display-md);
+    line-height: 1;
+    text-transform: uppercase;
+  }
+
+  .voice__list li::after {
+    content: '';
+    display: block;
+    width: 32px;
+    height: 4px;
+    margin-top: 10px;
+    background: var(--red);
+  }
+
+  .voice__line {
+    margin-top: var(--space-md);
+    color: var(--fg-muted);
+  }
+
+  .channels {
+    display: grid;
+    border-top: var(--rule-strong);
+  }
+
+  .channel {
+    display: grid;
+    gap: var(--space-xs);
+    padding-block: var(--space-md);
+    border-bottom: var(--rule);
+    text-decoration: none;
+  }
+
+  .channel__name {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4em;
+    font-family: var(--font-display);
+    font-size: var(--display-sm);
+    line-height: 1;
+    text-transform: uppercase;
+    transition: color var(--dur) var(--ease);
+  }
+
+  .channel:hover .channel__name {
+    color: var(--red);
+  }
+
+  .channel__desc {
+    color: var(--fg-muted);
+    max-width: 60ch;
+  }
+
+  .contact__title {
+    font-size: var(--display-xl);
+  }
+
+  .contact__grid {
+    display: grid;
+    gap: var(--space-md) var(--column-gap);
+    margin-top: var(--space-xl);
+  }
+
+  .contact__card {
+    display: grid;
+    gap: var(--space-sm);
+    padding: var(--space-md);
+    border: 1px solid var(--charcoal);
+    text-decoration: none;
+    transition:
+      background-color var(--dur) var(--ease),
+      color var(--dur) var(--ease);
+  }
+
+  .contact__card .label {
+    color: var(--fg-muted);
+  }
+
+  .contact__card:hover {
+    background: var(--charcoal);
+    color: var(--paper);
+  }
+
+  .contact__card:hover .label {
+    color: var(--concrete);
+  }
+
+  .contact__mail {
+    font-family: var(--font-display);
+    font-size: clamp(1.75rem, 1.3rem + 1.6vw, 2.75rem);
+    line-height: 1;
+    text-transform: uppercase;
+    overflow-wrap: anywhere;
+  }
+
+  .contact__note {
+    margin-top: var(--space-md);
+    color: var(--fg-muted);
+  }
+
+  .credits__intro {
+    color: var(--fg-muted);
+    max-width: 60ch;
+  }
+
+  .credits {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 0 var(--column-gap);
+    margin-top: var(--space-md);
+  }
+
+  .credits li {
+    padding-block: 0.5rem;
+    border-bottom: var(--rule);
+    font-size: var(--text-sm);
+  }
+
+  .credits a {
+    text-decoration-color: var(--red);
+  }
+
+  @media (min-width: 720px) {
+    .channels {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      column-gap: var(--column-gap);
+    }
+
+    .contact__grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (min-width: 1080px) {
+    .about-grid {
+      grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    }
+
+    .about-grid__text {
+      padding-left: var(--space-xl);
+    }
+
+    .channels {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+</style>

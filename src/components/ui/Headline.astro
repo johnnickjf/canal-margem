@@ -1,0 +1,63 @@
+---
+import { parseHeadline } from '@/lib/headline';
+
+/**
+ * Título editorial em Bebas Neue. O trecho entre [colchetes] recebe o vermelho
+ * e `\n` força uma quebra de linha (útil para composições fixas, como o hero).
+ * `marker` aplica o destaque como faixa (fundo vermelho, texto papel), como nas thumbnails.
+ */
+interface Props {
+  text: string;
+  as?: 'h1' | 'h2' | 'h3' | 'h4' | 'p' | 'span';
+  size?: '2xl' | 'xl' | 'lg' | 'md' | 'sm' | 'xs';
+  marker?: boolean;
+  class?: string;
+  id?: string;
+}
+
+const { text, as: Tag = 'h2', size = 'md', marker = false, class: className, id } = Astro.props;
+const { before, highlight, after } = parseHeadline(text);
+
+const lines = (value: string) => value.split('\n');
+---
+
+<Tag id={id} class:list={['headline', `headline--${size}`, className]}>
+  {lines(before).map((line, i) => <>{i > 0 && <br />}{line}</>)}{
+    highlight && (
+      <span class:list={['headline__hl', { 'headline__hl--marker': marker }]}>
+        {lines(highlight).map((line, i) => <>{i > 0 && <br />}{line}</>)}
+      </span>
+    )
+  }{lines(after).map((line, i) => <>{i > 0 && <br />}{line}</>)}
+</Tag>
+
+<style>
+  .headline {
+    font-family: var(--font-display);
+    font-weight: 400;
+    text-transform: uppercase;
+    line-height: 0.9;
+    letter-spacing: 0.002em;
+    text-wrap: balance;
+  }
+
+  .headline--2xl { font-size: var(--display-2xl); line-height: 0.84; }
+  .headline--xl { font-size: var(--display-xl); line-height: 0.86; }
+  .headline--lg { font-size: var(--display-lg); line-height: 0.88; }
+  .headline--md { font-size: var(--display-md); }
+  .headline--sm { font-size: var(--display-sm); line-height: 0.95; }
+  .headline--xs { font-size: var(--display-xs); line-height: 1; }
+
+  .headline__hl {
+    color: var(--accent-text, var(--red));
+  }
+
+  .headline__hl--marker {
+    color: var(--paper-light);
+    background: var(--red);
+    padding: 0.04em 0.12em 0;
+    margin-inline: -0.04em;
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+  }
+</style>

@@ -1,0 +1,316 @@
+---
+import type { GetStaticPaths } from 'astro';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Photo from '@/components/ui/Photo.astro';
+import SectionHeader from '@/components/ui/SectionHeader.astro';
+import MetaLine from '@/components/ui/MetaLine.astro';
+import Icon from '@/components/ui/Icon.astro';
+import VideoCard from '@/components/cards/VideoCard.astro';
+import CutCard from '@/components/cards/CutCard.astro';
+import ArticleCard from '@/components/cards/ArticleCard.astro';
+import Newsletter from '@/components/sections/Newsletter.astro';
+import { getContentByTema, getTemas, routes, type Tema } from '@/lib/content';
+import { padIndex } from '@/lib/format';
+import { tornClipPath } from '@/lib/torn';
+
+export const getStaticPaths = (async () => {
+  const temas = await getTemas();
+  return temas.map((tema, i) => ({
+    params: { slug: tema.id },
+    props: {
+      tema,
+      prev: temas[i - 1] ?? temas.at(-1)!,
+      next: temas[i + 1] ?? temas[0],
+    },
+  }));
+}) satisfies GetStaticPaths;
+
+interface Props {
+  tema: Tema;
+  prev: Tema;
+  next: Tema;
+}
+
+const { tema, prev, next } = Astro.props;
+const { data } = tema;
+const { episodes, cuts, articles } = await getContentByTema(tema.id);
+const isEmpty = episodes.length + cuts.length + articles.length === 0;
+const photoClip = tornClipPath('bottom', { seed: data.order * 9, depth: 4, steps: 70 });
+---
+
+<BaseLayout title={data.name} description={`${data.question} ${data.summary}`} image={data.cover}>
+  <header class="tema-hero">
+    <div class="tema-hero__photo" style={`clip-path: ${photoClip}`}>
+      <Photo photo={data.cover} ratio="fill" eager sizes="100vw" widths={[800, 1280, 1920]} credit />
+    </div>
+    <div class="container tema-hero__content">
+      <MetaLine items={[{ text: 'Temas', href: '/temas' }, { text: padIndex(data.order), accent: true }]} />
+      <h1 class="tema-hero__title">{data.name}</h1>
+      <p class="tema-hero__q">{data.question}</p>
+    </div>
+  </header>
+
+  <div class="container tema-intro">
+    <p class="tema-intro__summary">{data.summary}</p>
+    <MetaLine
+      items={[
+        `${padIndex(episodes.length)} episódios`,
+        `${padIndex(cuts.length)} cortes`,
+        `${padIndex(articles.length)} análises`,
+      ]}
+    />
+  </div>
+
+  {
+    episodes.length > 0 && (
+      <section class="section" aria-labelledby="tema-videos">
+        <div class="container">
+          <SectionHeader label="Episódios" />
+          <h2 id="tema-videos" class="visually-hidden">Episódios</h2>
+          <ul class="tema-grid" role="list">
+            {episodes.map((video) => (
+              <li>
+                <VideoCard video={video} sizes="(min-width: 1080px) 30vw, 100vw" />
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    )
+  }
+
+  {
+    articles.length > 0 && (
+      <section class="section" aria-labelledby="tema-analises">
+        <div class="container">
+          <SectionHeader label="Análises" />
+          <h2 id="tema-analises" class="visually-hidden">Análises</h2>
+          <ul class="tema-grid" role="list">
+            {articles.map((article) => (
+              <li>
+                <ArticleCard article={article} />
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    )
+  }
+
+  {
+    cuts.length > 0 && (
+      <section class="section" aria-labelledby="tema-cortes">
+        <div class="container">
+          <SectionHeader label="Cortes" />
+          <h2 id="tema-cortes" class="visually-hidden">Cortes</h2>
+          <ul class="tema-cuts" role="list">
+            {cuts.map((cut) => (
+              <li>
+                <CutCard video={cut} />
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    )
+  }
+
+  {
+    isEmpty && (
+      <section class="section">
+        <div class="container tema-empty">
+          <p class="tema-empty__title">Pauta em apuração.</p>
+          <p class="tema-empty__text">
+            Ainda não publicamos sobre este tema. Tem uma história, um dado ou uma pergunta que deveria estar aqui?
+          </p>
+          <a class="tema-empty__link label" href="/sobre#contato">
+            Sugira uma pauta <Icon name="arrow-right" size={16} />
+          </a>
+        </div>
+      </section>
+    )
+  }
+
+  <nav class="tema-pager" aria-label="Outros temas">
+    <div class="container tema-pager__grid">
+      <a href={routes.tema(prev.id)} class="tema-pager__link">
+        <span class="label"><Icon name="arrow-left" size={14} /> Tema anterior</span>
+        <span class="tema-pager__name">{prev.data.name}</span>
+      </a>
+      <a href={routes.tema(next.id)} class="tema-pager__link tema-pager__link--next">
+        <span class="label">Próximo tema <Icon name="arrow-right" size={14} /></span>
+        <span class="tema-pager__name">{next.data.name}</span>
+      </a>
+    </div>
+  </nav>
+
+  <Newsletter index={null} />
+</BaseLayout>
+
+<style>
+  .tema-hero {
+    position: relative;
+    display: grid;
+    min-height: min(78svh, 720px);
+    color: var(--paper-light);
+    isolation: isolate;
+  }
+
+  .tema-hero__photo {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+  }
+
+  .tema-hero__photo::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgb(13 13 13 / 0.15) 0%, rgb(13 13 13 / 0.75) 85%);
+    pointer-events: none;
+  }
+
+  .tema-hero__content {
+    align-self: end;
+    display: grid;
+    gap: var(--space-sm);
+    padding-block: var(--space-2xl) calc(var(--space-xl) + 2vw);
+    --fg-muted: rgb(242 238 231 / 0.8);
+    --fg: var(--paper-light);
+  }
+
+  .tema-hero__title {
+    font-size: var(--display-2xl);
+    line-height: 0.84;
+  }
+
+  .tema-hero__q {
+    font-family: var(--font-display);
+    font-size: var(--display-md);
+    line-height: 0.95;
+    text-transform: uppercase;
+    max-width: 18ch;
+  }
+
+  .tema-hero__q::before {
+    content: '';
+    display: block;
+    width: 56px;
+    height: 5px;
+    margin-bottom: var(--space-sm);
+    background: var(--red);
+  }
+
+  .tema-intro {
+    display: grid;
+    gap: var(--space-md);
+    padding-block: var(--space-xl) 0;
+  }
+
+  .tema-intro__summary {
+    font-size: var(--text-lg);
+    max-width: 52ch;
+  }
+
+  .tema-grid {
+    display: grid;
+    gap: var(--space-xl) var(--column-gap);
+  }
+
+  .tema-cuts {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: var(--space-lg) var(--column-gap);
+  }
+
+  .tema-empty {
+    display: grid;
+    gap: var(--space-md);
+    justify-items: start;
+  }
+
+  .tema-empty__title {
+    font-family: var(--font-display);
+    font-size: var(--display-lg);
+    line-height: 0.9;
+    text-transform: uppercase;
+  }
+
+  .tema-empty__text {
+    max-width: 48ch;
+    color: var(--fg-muted);
+  }
+
+  .tema-empty__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6em;
+    min-height: 44px;
+    border-bottom: 1px solid var(--charcoal);
+    text-decoration: none;
+  }
+
+  .tema-empty__link:hover {
+    color: var(--red);
+    border-color: var(--red);
+  }
+
+  .tema-pager {
+    border-top: var(--rule-strong);
+  }
+
+  .tema-pager__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .tema-pager__link {
+    display: grid;
+    gap: var(--space-xs);
+    padding-block: var(--space-lg);
+    text-decoration: none;
+  }
+
+  .tema-pager__link .label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5em;
+    color: var(--fg-muted);
+  }
+
+  .tema-pager__link--next {
+    justify-items: end;
+    text-align: right;
+    padding-left: var(--column-gap);
+    border-left: var(--rule);
+  }
+
+  .tema-pager__name {
+    font-family: var(--font-display);
+    font-size: var(--display-sm);
+    line-height: 1;
+    text-transform: uppercase;
+    transition: color var(--dur) var(--ease);
+  }
+
+  .tema-pager__link:hover .tema-pager__name {
+    color: var(--red);
+  }
+
+  @media (min-width: 720px) {
+    .tema-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .tema-intro {
+      grid-template-columns: 1fr auto;
+      align-items: end;
+    }
+  }
+
+  @media (min-width: 1080px) {
+    .tema-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+</style>

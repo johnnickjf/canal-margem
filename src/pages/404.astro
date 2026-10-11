@@ -1,0 +1,79 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Button from '@/components/ui/Button.astro';
+import Photo from '@/components/ui/Photo.astro';
+import { tornClipPath } from '@/lib/torn';
+
+const clip = tornClipPath('left', { seed: 404, depth: 4, steps: 50 });
+---
+
+<BaseLayout title="Página não encontrada" noindex>
+  <section class="nf">
+    <div class="nf__text container">
+      <p class="label nf__code">Erro 404</p>
+      <h1 class="nf__title">Essa página ficou<br /><span class="hl">à margem.</span></h1>
+      <p class="nf__lede">
+        O endereço pode ter mudado ou nunca ter existido. Tente a busca ou volte para o começo.
+      </p>
+      <div class="nf__actions">
+        <Button href="/" icon="arrow-right">Página inicial</Button>
+        <Button href="/busca" variant="outline">Buscar</Button>
+      </div>
+    </div>
+    <div class="nf__photo" style={`clip-path: ${clip}`}>
+      <Photo photo="faixa-pedestre" ratio="fill" sizes="(min-width: 1080px) 45vw, 100vw" />
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .nf {
+    display: grid;
+    min-height: 72vh;
+    border-bottom: var(--rule-strong);
+  }
+
+  .nf__text {
+    display: grid;
+    gap: var(--space-md);
+    align-content: center;
+    justify-items: start;
+    padding-block: var(--space-2xl);
+  }
+
+  .nf__code {
+    color: var(--red);
+    font-weight: 600;
+  }
+
+  .nf__title {
+    font-size: var(--display-xl);
+  }
+
+  .nf__lede {
+    max-width: 40ch;
+    font-size: var(--text-lg);
+  }
+
+  .nf__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+    margin-top: var(--space-sm);
+  }
+
+  .nf__photo {
+    min-height: 320px;
+  }
+
+  @media (min-width: 1080px) {
+    .nf {
+      grid-template-columns: 1.2fr 1fr;
+    }
+
+    .nf__text {
+      max-width: none;
+      padding-left: max(var(--gutter), calc((100vw - var(--page-max)) / 2 + var(--gutter)));
+    }
+  }
+</style>

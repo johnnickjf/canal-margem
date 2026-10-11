@@ -1,0 +1,63 @@
+{
+  "brand": {
+    "name": "MARGEM",
+    "signature": "POLÍTICA / ECONOMIA / PESSOAS",
+    "tagline": "OUTRO PONTO DE VISTA É POSSÍVEL.",
+    "heroHeadline": "O QUE OS NÚMEROS NÃO CONTAM",
+    "heroSubheadline": "Análises para além do óbvio."
+  },
+  "colors": {
+    "paper": "#E8E2D9",
+    "paperLight": "#F2EEE7",
+    "burntRed": "#8F2D24",
+    "charcoal": "#1F1F1F",
+    "videoBlack": "#0D0D0D",
+    "concrete": "#9A9A9A",
+    "muted": "#66625D"
+  },
+  "fonts": {
+    "display": "Bebas Neue",
+    "body": "Inter",
+    "mono": "IBM Plex Mono"
+  },
+  "radius": {
+    "default": "0px",
+    "max": "4px"
+  },
+  "motion": {
+    "duration": "150ms-350ms",
+    "easing": "ease-out"
+  },
+  "content": {
+    "pillars": [
+      "Trabalho",
+      "Renda",
+      "Custo de vida",
+      "Habitação",
+      "Cidade",
+      "Serviços públicos",
+      "Democracia",
+      "Desigualdade",
+      "Tecnologia e trabalho",
+      "Tributação",
+      "Poder econômico",
+      "Vida cotidiana"
+    ],
+    "voice": [
+      "crítico",
+      "claro",
+      "humano",
+      "popular",
+      "objetivo",
+      "contextual"
+    ]
+  },
+  "video": {
+    "horizontal": "16:9",
+    "vertical": "9:16",
+    "openerSeconds": "1.5-3",
+    "watermarkPosition": "top-left",
+    "watermarkSafeMarginFullHD": "48px",
+    "captionMaxLines": 2
+  }
+}

@@ -1,0 +1,107 @@
+---
+import type { Tema } from '@/lib/content';
+
+/**
+ * Filtro por tema, progressivo: sem JS, cada opção é um link para a página do tema;
+ * com JS, filtra a lista na própria página (itens com `data-tema`).
+ */
+interface Props {
+  temas: Tema[];
+  target: string;
+  label?: string;
+}
+
+const { temas, target, label = 'Filtrar por tema' } = Astro.props;
+---
+
+<nav class="filter" aria-label={label} data-filter={target}>
+  <ul role="list" class="filter__list">
+    <li>
+      <a class="filter__chip" href="#" data-filter-value="" aria-current="true">Todos</a>
+    </li>
+    {
+      temas.map((tema) => (
+        <li>
+          <a class="filter__chip" href={`/temas/${tema.id}`} data-filter-value={tema.id}>
+            {tema.data.name}
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+  <p class="filter__status visually-hidden" role="status" aria-live="polite" data-filter-status></p>
+</nav>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-filter]').forEach((nav) => {
+    const list = document.querySelector<HTMLElement>(nav.dataset.filter ?? '');
+    if (!list) return;
+    const items = list.querySelectorAll<HTMLElement>('[data-tema]');
+    const chips = nav.querySelectorAll<HTMLAnchorElement>('[data-filter-value]');
+    const status = nav.querySelector<HTMLElement>('[data-filter-status]');
+    const available = new Set([...items].map((item) => item.dataset.tema));
+
+    // Esconde temas sem conteúdo nesta lista.
+    chips.forEach((chip) => {
+      const value = chip.dataset.filterValue;
+      if (value && !available.has(value)) chip.parentElement?.setAttribute('hidden', '');
+    });
+
+    const apply = (value: string) => {
+      let visible = 0;
+      items.forEach((item) => {
+        const show = !value || item.dataset.tema === value;
+        item.hidden = !show;
+        if (show) visible += 1;
+      });
+      chips.forEach((chip) => {
+        if (chip.dataset.filterValue === value) chip.setAttribute('aria-current', 'true');
+        else chip.removeAttribute('aria-current');
+      });
+      if (status) status.textContent = `${visible} ${visible === 1 ? 'resultado' : 'resultados'}`;
+    };
+
+    chips.forEach((chip) => {
+      chip.addEventListener('click', (event) => {
+        event.preventDefault();
+        apply(chip.dataset.filterValue ?? '');
+      });
+    });
+  });
+</script>
+
+<style>
+  .filter__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+  }
+
+  .filter__chip {
+    display: inline-flex;
+    align-items: center;
+    min-height: 40px;
+    padding: 0 0.9rem;
+    border: 1px solid var(--line);
+    font-family: var(--font-mono);
+    font-size: var(--label);
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition:
+      background-color var(--dur-fast) var(--ease),
+      border-color var(--dur-fast) var(--ease),
+      color var(--dur-fast) var(--ease);
+  }
+
+  .filter__chip:hover {
+    border-color: var(--charcoal);
+  }
+
+  .filter__chip[aria-current='true'] {
+    background: var(--charcoal);
+    border-color: var(--charcoal);
+    color: var(--paper);
+  }
+</style>

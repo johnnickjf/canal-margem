@@ -1,0 +1,138 @@
+---
+import Headline from '@/components/ui/Headline.astro';
+import MetaLine from '@/components/ui/MetaLine.astro';
+import Photo from '@/components/ui/Photo.astro';
+import { getTema, routes, type Article } from '@/lib/content';
+import { formatDateMono, readingTime } from '@/lib/format';
+
+interface Props {
+  article: Article;
+  variant?: 'lead' | 'default' | 'text';
+  headingLevel?: 'h2' | 'h3';
+  index?: number;
+}
+
+const { article, variant = 'default', headingLevel = 'h3', index } = Astro.props;
+const { data } = article;
+const tema = await getTema(data.tema.id);
+const minutes = readingTime(article.body);
+---
+
+<article class:list={['article-card', `article-card--${variant}`]} data-card>
+  {
+    variant !== 'text' && (
+      <Photo
+        photo={data.cover}
+        ratio={variant === 'lead' ? '4/5' : '3/2'}
+        sizes={variant === 'lead' ? '(min-width: 1080px) 40vw, 100vw' : '(min-width: 1080px) 30vw, 100vw'}
+        class="article-card__photo"
+      />
+    )
+  }
+  <div class="article-card__body">
+    {index !== undefined && <span class="article-card__index" aria-hidden="true">{String(index).padStart(2, '0')}</span>}
+    <MetaLine
+      items={[
+        { text: tema.data.name, accent: true },
+        formatDateMono(data.publishedAt),
+        `${minutes} min de leitura`,
+      ]}
+    />
+    <a class="article-card__link" href={routes.article(article)}>
+      <Headline as={headingLevel} text={data.title} size={variant === 'lead' ? 'xl' : 'sm'} />
+    </a>
+    <p class="article-card__dek">{data.dek}</p>
+    {variant === 'lead' && <p class="article-card__author label">Por {data.author}</p>}
+  </div>
+</article>
+
+<style>
+  .article-card {
+    position: relative;
+    display: grid;
+    gap: var(--space-md);
+    align-content: start;
+  }
+
+  .article-card__body {
+    display: grid;
+    gap: var(--space-sm);
+    align-content: start;
+  }
+
+  .article-card__index {
+    font-family: var(--font-display);
+    font-size: var(--display-sm);
+    line-height: 1;
+    color: var(--red);
+  }
+
+  .article-card__link {
+    text-decoration: none;
+  }
+
+  .article-card__link::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+  }
+
+  .article-card__link:focus-visible {
+    outline: none;
+  }
+
+  .article-card:has(.article-card__link:focus-visible) {
+    outline: 2px solid var(--red);
+    outline-offset: 6px;
+  }
+
+  .article-card:hover .article-card__link :global(.headline) {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 0.12em;
+    text-decoration-color: var(--red);
+  }
+
+  .article-card :global(.article-card__photo img) {
+    transition:
+      filter var(--dur-slow) var(--ease),
+      transform 700ms var(--ease-out);
+  }
+
+  .article-card:hover :global(.article-card__photo img) {
+    filter: var(--photo-filter-hover);
+    transform: scale(1.03);
+  }
+
+  .article-card__dek {
+    color: var(--fg-muted);
+    max-width: 54ch;
+  }
+
+  .article-card__author {
+    color: var(--fg-muted);
+    padding-top: var(--space-sm);
+    border-top: var(--rule);
+  }
+
+  /* Destaque: imagem e texto lado a lado no desktop */
+  .article-card--lead .article-card__dek {
+    font-size: var(--text-lg);
+    line-height: 1.5;
+    color: var(--fg);
+  }
+
+  @media (min-width: 900px) {
+    .article-card--lead {
+      grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+      gap: var(--column-gap);
+      align-items: end;
+    }
+
+    .article-card--lead .article-card__body {
+      padding-left: var(--space-md);
+      gap: var(--space-md);
+    }
+  }
+</style>

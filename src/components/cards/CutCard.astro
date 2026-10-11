@@ -1,0 +1,56 @@
+---
+import VideoThumb from './VideoThumb.astro';
+import MetaLine from '@/components/ui/MetaLine.astro';
+import { getTema, routes, type Video } from '@/lib/content';
+import { episodeCode } from '@/lib/format';
+import { plainHeadline } from '@/lib/headline';
+
+/** Corte vertical 9:16 (Shorts / Reels / TikTok). */
+interface Props {
+  video: Video;
+}
+
+const { video } = Astro.props;
+const { data } = video;
+const tema = await getTema(data.tema.id);
+---
+
+<article class="cut-card" data-card>
+  <a class="cut-card__link" href={routes.video(video)}>
+    <span class="visually-hidden">{plainHeadline(data.title)} — corte de {episodeCode(data.episode)}</span>
+    <VideoThumb
+      title={data.title}
+      episode={data.episode}
+      cover={data.cover}
+      temaName={tema.data.name}
+      orientation="9/16"
+      seed={data.episode * 7}
+    />
+  </a>
+  <MetaLine items={[{ text: 'Corte', accent: true }, data.duration]} />
+  <p class="cut-card__dek">{data.dek}</p>
+</article>
+
+<style>
+  .cut-card {
+    position: relative;
+    display: grid;
+    gap: var(--space-sm);
+    align-content: start;
+  }
+
+  .cut-card__link {
+    display: block;
+  }
+
+  .cut-card__link:focus-visible {
+    outline-offset: 4px;
+  }
+
+  .cut-card__dek {
+    font-size: var(--text-sm);
+    line-height: 1.5;
+    color: var(--fg-muted);
+    max-width: 30ch;
+  }
+</style>

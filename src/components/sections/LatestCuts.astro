@@ -1,0 +1,189 @@
+---
+import SectionHeader from '@/components/ui/SectionHeader.astro';
+import CutCard from '@/components/cards/CutCard.astro';
+import Icon from '@/components/ui/Icon.astro';
+import { getCuts } from '@/lib/content';
+
+interface Props {
+  limit?: number;
+  /** Número da seção no índice da página; `null` oculta. */
+  index?: number | null;
+}
+
+const { limit = 8, index = 2 } = Astro.props;
+const cuts = (await getCuts()).slice(0, limit);
+---
+
+{
+  cuts.length > 0 && (
+    <section class="cuts tex-black on-dark" aria-labelledby="cortes" data-scroller>
+      <div class="container">
+        <SectionHeader index={index ?? undefined} label="Últimos cortes">
+          <div class="cuts__intro">
+            <h2 id="cortes" class="cuts__title">
+              Mesmas pessoas.
+              <br />
+              <span class="hl">Outras perguntas.</span>
+            </h2>
+            <div class="cuts__aside">
+              <p class="cuts__lede">
+                Trechos de até um minuto para ver no caminho — e enviar para quem precisa ver isso.
+              </p>
+              <div class="cuts__controls" aria-label="Navegar pelos cortes" role="group">
+                <button type="button" class="cuts__btn" data-scroll="-1">
+                  <Icon name="arrow-left" />
+                  <span class="visually-hidden">Anteriores</span>
+                </button>
+                <button type="button" class="cuts__btn" data-scroll="1">
+                  <Icon name="arrow-right" />
+                  <span class="visually-hidden">Próximos</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </SectionHeader>
+      </div>
+
+      <div class="cuts__track" data-scroller-track tabindex="0" aria-label="Lista de cortes">
+        <ul role="list" class="cuts__list">
+          {cuts.map((video) => (
+            <li class="cuts__item">
+              <CutCard video={video} />
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )
+}
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-scroller]').forEach((root) => {
+    const track = root.querySelector<HTMLElement>('[data-scroller-track]');
+    if (!track) return;
+    const buttons = root.querySelectorAll<HTMLButtonElement>('[data-scroll]');
+
+    const update = () => {
+      const max = track.scrollWidth - track.clientWidth - 2;
+      buttons.forEach((btn) => {
+        const dir = Number(btn.dataset.scroll);
+        btn.disabled = dir < 0 ? track.scrollLeft <= 2 : track.scrollLeft >= max;
+      });
+    };
+
+    buttons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const item = track.querySelector<HTMLElement>('li');
+        const step = item ? item.offsetWidth + 24 : track.clientWidth * 0.8;
+        track.scrollBy({ left: step * Number(btn.dataset.scroll) * 2, behavior: 'smooth' });
+      });
+    });
+
+    track.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  });
+</script>
+
+<style>
+  .cuts {
+    padding-block: var(--section-y);
+  }
+
+  .cuts__intro {
+    display: grid;
+    gap: var(--space-lg);
+    margin-top: var(--space-lg);
+  }
+
+  .cuts__title {
+    font-size: var(--display-lg);
+    line-height: 0.9;
+  }
+
+  .cuts__aside {
+    display: grid;
+    gap: var(--space-md);
+    align-content: end;
+  }
+
+  .cuts__lede {
+    color: var(--fg-muted);
+    max-width: 38ch;
+  }
+
+  .cuts__controls {
+    display: flex;
+    gap: var(--space-xs);
+  }
+
+  .cuts__btn {
+    display: inline-grid;
+    place-items: center;
+    width: 52px;
+    height: 52px;
+    border: 1px solid var(--line);
+    color: var(--paper);
+    transition:
+      background-color var(--dur) var(--ease),
+      color var(--dur) var(--ease),
+      opacity var(--dur) var(--ease);
+  }
+
+  .cuts__btn:hover:not(:disabled) {
+    background: var(--paper);
+    color: var(--black);
+  }
+
+  .cuts__btn:disabled {
+    opacity: 0.3;
+    cursor: default;
+  }
+
+  .cuts__track {
+    position: relative;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: max(var(--gutter), calc((100vw - var(--page-max)) / 2 + var(--gutter)));
+    scrollbar-width: none;
+  }
+
+  .cuts__track::-webkit-scrollbar {
+    display: none;
+  }
+
+  .cuts__track:focus-visible {
+    outline-offset: -2px;
+  }
+
+  .cuts__list {
+    display: flex;
+    gap: var(--space-md);
+    width: max-content;
+    padding-inline: max(var(--gutter), calc((100vw - var(--page-max)) / 2 + var(--gutter)));
+  }
+
+  .cuts__item {
+    width: clamp(220px, 62vw, 300px);
+    scroll-snap-align: start;
+  }
+
+  @media (min-width: 720px) {
+    .cuts__intro {
+      grid-template-columns: 1fr 1fr;
+      align-items: end;
+    }
+
+    .cuts__aside {
+      justify-items: end;
+      text-align: right;
+    }
+  }
+
+  @media (min-width: 1080px) {
+    .cuts__item {
+      width: clamp(240px, 20vw, 300px);
+    }
+  }
+</style>

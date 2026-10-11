@@ -1,0 +1,103 @@
+/*
+ * MARGEM — design tokens
+ * Fonte: docs/brand/MARGEM_design_tokens.json + Manual de Marca v1.0.
+ * Regra de cor 80/15/5: papel domina, carvão estrutura, vermelho só como marca-texto.
+ */
+
+@layer tokens {
+  :root {
+    /* Paleta oficial */
+    --paper: #e8e2d9;
+    --paper-light: #f2eee7;
+    --paper-deep: #ddd5ca;
+    --red: #8f2d24;
+    --red-deep: #74231c;
+    /* Vermelho clareado só para texto sobre preto (contraste AA) */
+    --red-on-dark: #c0493c;
+    --charcoal: #1f1f1f;
+    --black: #0d0d0d;
+    --concrete: #9a9a9a;
+    --muted: #66625d;
+
+    /* Papéis semânticos */
+    --bg: var(--paper);
+    --bg-reading: var(--paper-light);
+    --fg: var(--charcoal);
+    --fg-muted: var(--muted);
+    --accent: var(--red);
+    --line: rgb(31 31 31 / 0.24);
+    --line-strong: var(--charcoal);
+    --line-on-dark: rgb(232 226 217 / 0.2);
+
+    /* Tipografia */
+    --font-display: 'Bebas Neue', 'Arial Narrow', sans-serif;
+    --font-body: 'Inter Variable', 'Inter', system-ui, sans-serif;
+    --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+
+    /* Escala fluida — display em Bebas, sempre caixa alta */
+    --display-2xl: clamp(4.25rem, 3rem + 7.6vw, 11.5rem);
+    --display-xl: clamp(3.5rem, 2.4rem + 5.4vw, 8rem);
+    --display-lg: clamp(2.75rem, 2rem + 3.4vw, 5.5rem);
+    --display-md: clamp(2.125rem, 1.7rem + 1.9vw, 3.5rem);
+    --display-sm: clamp(1.625rem, 1.4rem + 0.9vw, 2.25rem);
+    --display-xs: 1.375rem;
+
+    --text-lg: clamp(1.1875rem, 1.1rem + 0.35vw, 1.375rem);
+    --text-md: 1.0625rem;
+    --text-base: 1rem;
+    --text-sm: 0.875rem;
+    --label: 0.75rem;
+    --label-sm: 0.6875rem;
+
+    --tracking-label: 0.14em;
+    --tracking-wide: 0.24em;
+
+    /* Espaçamento (manual, seção 19) */
+    --space-2xs: 4px;
+    --space-xs: 8px;
+    --space-sm: 16px;
+    --space-md: 24px;
+    --space-lg: 40px;
+    --space-xl: 64px;
+    --space-2xl: 96px;
+    --space-3xl: 144px;
+    --section-y: clamp(var(--space-xl), 4rem + 4vw, var(--space-3xl));
+
+    /* Layout — grid editorial de 12 colunas */
+    --page-max: 1440px;
+    --gutter: clamp(16px, 2.4vw, 40px);
+    --column-gap: clamp(16px, 1.8vw, 28px);
+    --measure: 66ch;
+
+    /* Forma */
+    --radius: 0px;
+    --radius-max: 4px;
+    --rule: 1px solid var(--line);
+    --rule-strong: 1px solid var(--line-strong);
+
+    /* Movimento: curto, sem bounce */
+    --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+    --dur-fast: 150ms;
+    --dur: 250ms;
+    --dur-slow: 350ms;
+
+    /* Camadas */
+    --z-header: 50;
+    --z-menu: 60;
+    --z-skip: 100;
+
+    /* Altura do cabeçalho fixo (usada em scroll-margin e sticky) */
+    --header-h: 64px;
+
+    /* Tratamento fotográfico documental */
+    --photo-filter: grayscale(0.92) sepia(0.06) contrast(1.1) brightness(0.97);
+    --photo-filter-hover: grayscale(0.6) sepia(0.04) contrast(1.08) brightness(1);
+  }
+
+  @media (min-width: 960px) {
+    :root {
+      --header-h: 72px;
+    }
+  }
+}

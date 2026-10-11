@@ -1,0 +1,76 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHeader from '@/components/layout/PageHeader.astro';
+import SectionHeader from '@/components/ui/SectionHeader.astro';
+import TemaFilter from '@/components/ui/TemaFilter.astro';
+import VideoCard from '@/components/cards/VideoCard.astro';
+import LatestCuts from '@/components/sections/LatestCuts.astro';
+import { getEpisodes, getTemas } from '@/lib/content';
+import { padIndex } from '@/lib/format';
+
+const [episodes, temas] = await Promise.all([getEpisodes(), getTemas()]);
+const [lead, ...rest] = episodes;
+---
+
+<BaseLayout
+  title="Vídeos"
+  description="Episódios e cortes da MARGEM: política, economia e vida cotidiana com dados, contexto e olhar humano."
+  image="estacao-lotada"
+>
+  <PageHeader
+    label="Vídeos"
+    title="Realidade contra [discurso]"
+    lede="Episódios longos para entender com calma e cortes curtos para levar a conversa adiante. Toda semana, uma pergunta concreta."
+    aside={`${padIndex(episodes.length)} episódios`}
+  />
+
+  {
+    lead && (
+      <section class="section" aria-label="Episódio mais recente">
+        <div class="container">
+          <SectionHeader label="Mais recente" />
+          <VideoCard video={lead} size="lead" headingLevel="h2" eager sizes="(min-width: 1080px) 90vw, 100vw" />
+        </div>
+      </section>
+    )
+  }
+
+  <section class="section archive" aria-labelledby="arquivo">
+    <div class="container">
+      <SectionHeader label="Arquivo de episódios" />
+      <h2 id="arquivo" class="visually-hidden">Arquivo de episódios</h2>
+      <TemaFilter temas={temas} target="#lista-episodios" />
+      <ul id="lista-episodios" class="archive__grid" role="list" data-reveal-group>
+        {
+          rest.map((video) => (
+            <li data-tema={video.data.tema.id} data-reveal>
+              <VideoCard video={video} sizes="(min-width: 1080px) 30vw, (min-width: 720px) 45vw, 100vw" />
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <LatestCuts limit={12} index={null} />
+</BaseLayout>
+
+<style>
+  .archive__grid {
+    display: grid;
+    gap: var(--space-xl) var(--column-gap);
+    margin-top: var(--space-lg);
+  }
+
+  @media (min-width: 720px) {
+    .archive__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 1080px) {
+    .archive__grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+</style>

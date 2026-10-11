@@ -1,0 +1,34 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Hero from '@/components/sections/Hero.astro';
+import FeaturedVideos from '@/components/sections/FeaturedVideos.astro';
+import LatestCuts from '@/components/sections/LatestCuts.astro';
+import ThemesIndex from '@/components/sections/ThemesIndex.astro';
+import ManifestoTeaser from '@/components/sections/ManifestoTeaser.astro';
+import LatestAnalyses from '@/components/sections/LatestAnalyses.astro';
+import Newsletter from '@/components/sections/Newsletter.astro';
+import AboutContact from '@/components/sections/AboutContact.astro';
+import { site, socials } from '@/config/site';
+
+// Ordem das seções conforme o manual (seção 18).
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: site.name,
+  url: site.url,
+  slogan: site.tagline,
+  description: site.positioning,
+  sameAs: socials.map((s) => s.href),
+};
+---
+
+<BaseLayout jsonLd={jsonLd}>
+  <Hero />
+  <FeaturedVideos />
+  <LatestCuts />
+  <ThemesIndex />
+  <ManifestoTeaser />
+  <LatestAnalyses />
+  <Newsletter />
+  <AboutContact />
+</BaseLayout>

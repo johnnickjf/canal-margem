@@ -1,0 +1,287 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Headline from '@/components/ui/Headline.astro';
+import Photo from '@/components/ui/Photo.astro';
+import Button from '@/components/ui/Button.astro';
+import { editorialFormula, manifesto } from '@/data/manifesto';
+import { keyPhrases, site } from '@/config/site';
+import { padIndex } from '@/lib/format';
+import { tornClipPath, tornStripClipPath } from '@/lib/torn';
+
+const stripClip = tornStripClipPath({ seed: 77, depth: 4, steps: 30 });
+const photoClip = tornClipPath('right', { seed: 31, depth: 3, steps: 60 });
+---
+
+<BaseLayout
+  title="Manifesto"
+  description="Por que a MARGEM existe: política a partir da vida real, economia como gente, pergunta antes da conclusão e contraponto honesto."
+  image="maos"
+>
+  <article class="manifesto-page">
+    <header class="opening container">
+      <p class="label opening__label">
+        <span class="opening__mark" aria-hidden="true"></span>Manifesto editorial
+      </p>
+      <Headline as="h1" text={manifesto.title} size="2xl" class="opening__title" />
+      <div class="opening__grid">
+        <div class="opening__photo" style={`clip-path: ${photoClip}`}>
+          <Photo photo="maos" ratio="4/5" eager sizes="(min-width: 1080px) 34vw, 100vw" credit />
+        </div>
+        <p class="opening__text">{manifesto.opening}</p>
+      </div>
+    </header>
+
+    <ol class="theses container" role="list">
+      {
+        manifesto.theses.map((thesis, i) => (
+          <li class="thesis" data-reveal>
+            <span class="thesis__num">{padIndex(i + 1)}</span>
+            <h2 class="thesis__title">{thesis.title}</h2>
+            <p class="thesis__body">{thesis.body}</p>
+          </li>
+        ))
+      }
+    </ol>
+
+    <section class="method tex-black on-dark" aria-labelledby="metodo">
+      <div class="container">
+        <p class="label method__label">Como construímos cada análise</p>
+        <h2 id="metodo" class="method__title">Argumento antes da <span class="hl">conclusão</span></h2>
+        <ol class="method__steps" role="list">
+          {
+            editorialFormula.map((step, i) => (
+              <li>
+                <span class="method__num">{padIndex(i + 1)}</span>
+                <span class="method__step">{step}</span>
+              </li>
+            ))
+          }
+        </ol>
+      </div>
+    </section>
+
+    <section class="phrases container" aria-label="Frases-chave">
+      <div class="phrases__strip tex-grunge" style={`clip-path: ${stripClip}`}>
+        <ul role="list">
+          {keyPhrases.map((phrase) => <li>{phrase}</li>)}
+        </ul>
+      </div>
+      <div class="phrases__closing">
+        <p class="phrases__motto">{site.motto}</p>
+        <p class="phrases__sign">
+          {manifesto.closing}
+        </p>
+        <div class="phrases__actions">
+          <Button href="/videos" icon="arrow-right">Ver vídeos</Button>
+          <Button href="/sobre" variant="outline">Sobre a MARGEM</Button>
+        </div>
+      </div>
+    </section>
+  </article>
+</BaseLayout>
+
+<style>
+  .opening {
+    padding-block: var(--space-xl) var(--section-y);
+  }
+
+  .opening__label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.9em;
+    font-weight: 600;
+    letter-spacing: var(--tracking-wide);
+    padding-bottom: var(--space-sm);
+    margin-bottom: var(--space-xl);
+    border-bottom: var(--rule);
+    width: 100%;
+  }
+
+  .opening__mark {
+    width: 14px;
+    height: 7px;
+    background: var(--red);
+  }
+
+  .manifesto-page :global(.opening__title) {
+    max-width: 10ch;
+  }
+
+  .opening__grid {
+    display: grid;
+    gap: var(--space-xl) var(--column-gap);
+    margin-top: var(--space-xl);
+  }
+
+  .opening__text {
+    font-size: clamp(1.375rem, 1.1rem + 1vw, 2rem);
+    line-height: 1.4;
+    font-weight: 500;
+    max-width: 30ch;
+    text-wrap: pretty;
+  }
+
+  /* ---------- teses ---------- */
+  .theses {
+    border-top: var(--rule-strong);
+    padding-bottom: var(--section-y);
+  }
+
+  .thesis {
+    display: grid;
+    grid-template-columns: 3rem minmax(0, 1fr);
+    gap: var(--space-xs) var(--space-md);
+    padding-block: var(--space-lg);
+    border-bottom: var(--rule);
+  }
+
+  .thesis__num {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    line-height: 1;
+    color: var(--red);
+  }
+
+  .thesis__title {
+    font-size: var(--display-md);
+  }
+
+  .thesis__body {
+    grid-column: 2;
+    max-width: 58ch;
+    font-size: var(--text-md);
+    color: var(--fg);
+  }
+
+  /* ---------- método ---------- */
+  .method {
+    padding-block: var(--section-y);
+  }
+
+  .method__label {
+    color: var(--fg-muted);
+  }
+
+  .method__title {
+    margin-top: var(--space-md);
+    font-size: var(--display-lg);
+    max-width: 14ch;
+  }
+
+  .method__steps {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin-top: var(--space-xl);
+    border-top: var(--rule);
+  }
+
+  .method__steps li {
+    display: grid;
+    gap: var(--space-xs);
+    padding: var(--space-md) var(--space-sm) var(--space-md) 0;
+    border-bottom: var(--rule);
+  }
+
+  .method__num {
+    font-family: var(--font-mono);
+    font-size: var(--label);
+    color: var(--red-on-dark);
+  }
+
+  .method__step {
+    font-family: var(--font-display);
+    font-size: var(--display-sm);
+    line-height: 1;
+    text-transform: uppercase;
+  }
+
+  /* ---------- frases ---------- */
+  .phrases {
+    display: grid;
+    gap: var(--space-xl) var(--column-gap);
+    padding-block: var(--section-y);
+  }
+
+  .phrases__strip {
+    padding: var(--space-xl) var(--space-lg);
+  }
+
+  .phrases__strip ul {
+    display: grid;
+    gap: 0.5rem;
+    transform: rotate(-2deg);
+  }
+
+  .phrases__strip li {
+    font-family: var(--font-display);
+    font-size: clamp(1.75rem, 1.2rem + 1.6vw, 2.75rem);
+    line-height: 0.95;
+    text-transform: uppercase;
+    color: var(--paper-light);
+  }
+
+  .phrases__closing {
+    display: grid;
+    gap: var(--space-lg);
+    align-content: center;
+  }
+
+  .phrases__motto {
+    font-size: var(--text-lg);
+    line-height: 1.5;
+    max-width: 36ch;
+  }
+
+  .phrases__sign {
+    font-family: var(--font-display);
+    font-size: var(--display-lg);
+    line-height: 0.9;
+    text-transform: uppercase;
+  }
+
+  .phrases__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+  }
+
+  @media (min-width: 720px) {
+    .method__steps {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .method__steps li:not(:nth-child(4n + 1)) {
+      padding-left: var(--space-sm);
+      border-left: var(--rule);
+    }
+  }
+
+  @media (min-width: 1080px) {
+    .opening__grid {
+      grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+      align-items: end;
+    }
+
+    .opening__text {
+      padding-left: var(--space-xl);
+    }
+
+    .thesis {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 5fr) minmax(0, 6fr);
+      align-items: baseline;
+      padding-block: var(--space-xl);
+    }
+
+    .thesis__body {
+      grid-column: 3;
+    }
+
+    .phrases {
+      grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    }
+
+    .phrases__closing {
+      padding-left: var(--space-xl);
+    }
+  }
+</style>

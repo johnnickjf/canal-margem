@@ -1,0 +1,137 @@
+---
+import { getPhoto, photoUrl, type PhotoKey } from '@/data/photos';
+
+/**
+ * Foto documental com tratamento da marca (dessaturação, contraste, grão).
+ * O enquadramento é feito pelo contêiner via `ratio`; a imagem cobre a área.
+ */
+interface Props {
+  photo: PhotoKey;
+  /** `fill` ocupa a altura do contêiner pai; `auto` usa a proporção natural. */
+  ratio?: '16/9' | '9/16' | '4/5' | '3/2' | '1/1' | '21/9' | 'auto' | 'fill';
+  /** Larguras geradas para o srcset. */
+  widths?: number[];
+  sizes?: string;
+  eager?: boolean;
+  /** `none` mantém a cor original (uso pontual). */
+  treatment?: 'documental' | 'none';
+  credit?: boolean;
+  alt?: string;
+  class?: string;
+}
+
+const {
+  photo: key,
+  ratio = '3/2',
+  widths = [480, 800, 1200, 1600],
+  sizes = '100vw',
+  eager = false,
+  treatment = 'documental',
+  credit = false,
+  alt,
+  class: className,
+} = Astro.props;
+
+const photo = getPhoto(key);
+const fixedRatio = ratio !== 'auto' && ratio !== 'fill';
+const [w, h] = fixedRatio ? ratio.split('/').map(Number) : [0, 0];
+const heightFor = (width: number) => (w && h ? Math.round((width * h) / w) : undefined);
+
+const srcset = widths.map((width) => `${photoUrl(photo, width, heightFor(width))} ${width}w`).join(', ');
+const fallbackWidth = widths[Math.min(1, widths.length - 1)];
+---
+
+<figure
+  class:list={['photo', `photo--${treatment}`, { 'photo--fill': ratio === 'fill', 'photo--natural': ratio === 'auto' }, className]}
+  style={fixedRatio ? `aspect-ratio: ${ratio}` : undefined}
+>
+  <img
+    src={photoUrl(photo, fallbackWidth, heightFor(fallbackWidth))}
+    srcset={srcset}
+    sizes={sizes}
+    alt={alt ?? photo.alt}
+    width={fallbackWidth}
+    height={heightFor(fallbackWidth)}
+    loading={eager ? 'eager' : 'lazy'}
+    decoding="async"
+    fetchpriority={eager ? 'high' : undefined}
+    style={photo.focus ? `object-position: ${photo.focus}` : undefined}
+  />
+  {
+    credit && (
+      <figcaption class="photo__credit">
+        Foto:{' '}
+        {photo.creditUrl ? (
+          <a href={photo.creditUrl} rel="noopener" target="_blank">
+            {photo.credit}
+          </a>
+        ) : (
+          photo.credit
+        )}
+      </figcaption>
+    )
+  }
+</figure>
+
+<style>
+  .photo {
+    position: relative;
+    overflow: hidden;
+    background: var(--charcoal);
+    isolation: isolate;
+  }
+
+  .photo--natural img {
+    height: auto;
+  }
+
+  .photo--fill {
+    height: 100%;
+  }
+
+  .photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition:
+      filter var(--dur-slow) var(--ease),
+      transform 600ms var(--ease-out);
+  }
+
+  .photo--documental img {
+    filter: var(--photo-filter);
+  }
+
+  /* Grão sutil sobre a foto */
+  .photo--documental::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: var(--tex-grain);
+    mix-blend-mode: multiply;
+    opacity: 0.55;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .photo__credit {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    z-index: 2;
+    padding: 4px 8px;
+    background: rgb(13 13 13 / 0.72);
+    color: var(--paper);
+    font-family: var(--font-mono);
+    font-size: var(--label-sm);
+    letter-spacing: 0.06em;
+  }
+
+  .photo__credit a {
+    text-decoration: none;
+  }
+
+  .photo__credit a:hover {
+    text-decoration: underline;
+  }
+</style>

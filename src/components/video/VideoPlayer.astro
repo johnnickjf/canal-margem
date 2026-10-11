@@ -1,0 +1,155 @@
+---
+import VideoThumb from '@/components/cards/VideoThumb.astro';
+import { plainHeadline } from '@/lib/headline';
+import type { PhotoKey } from '@/data/photos';
+
+/**
+ * Player com fachada leve: carrega o YouTube (domínio sem cookies) só depois do clique.
+ * Sem `youtubeId`, mostra a thumbnail editorial como pôster e avisa a estreia.
+ */
+interface Props {
+  title: string;
+  episode: number;
+  cover: PhotoKey;
+  temaName: string;
+  dek?: string;
+  youtubeId?: string;
+  orientation?: '16/9' | '9/16';
+}
+
+const { title, episode, cover, temaName, dek, youtubeId, orientation = '16/9' } = Astro.props;
+const label = plainHeadline(title);
+---
+
+<div class:list={['player', { 'player--vertical': orientation === '9/16' }]} data-player={youtubeId}>
+  <VideoThumb
+    title={title}
+    episode={episode}
+    cover={cover}
+    temaName={temaName}
+    dek={dek}
+    orientation={orientation}
+    eager
+    sizes={orientation === '9/16' ? '(min-width: 720px) 380px, 90vw' : '(min-width: 1440px) 1360px, 100vw'}
+  />
+  {
+    youtubeId ? (
+      <button type="button" class="player__start" data-player-start>
+        <span class="player__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="28" height="28">
+            <path d="M8 5v14l11-7z" fill="currentColor" />
+          </svg>
+        </span>
+        <span class="player__label">Assistir: {label}</span>
+      </button>
+    ) : (
+      <p class="player__soon label">
+        <span class="player__soon-dot" aria-hidden="true" />
+        Estreia em breve no YouTube
+      </p>
+    )
+  }
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-player]').forEach((player) => {
+    const id = player.dataset.player;
+    const button = player.querySelector<HTMLButtonElement>('[data-player-start]');
+    if (!id || !button) return;
+
+    button.addEventListener('click', () => {
+      const iframe = document.createElement('iframe');
+      iframe.src = `https://www.youtube-nocookie.com/embed/${encodeURIComponent(id)}?autoplay=1&rel=0&cc_load_policy=1&hl=pt-BR`;
+      iframe.title = button.textContent?.trim() ?? 'Vídeo';
+      iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+      iframe.allowFullscreen = true;
+      iframe.className = 'player__frame';
+      player.append(iframe);
+      player.classList.add('is-playing');
+      iframe.focus();
+    });
+  });
+</script>
+
+<style>
+  .player {
+    position: relative;
+    background: var(--black);
+  }
+
+  .player--vertical {
+    max-width: 380px;
+  }
+
+  .player__start {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    display: grid;
+    place-items: center;
+    width: 100%;
+    cursor: pointer;
+  }
+
+  .player__icon {
+    display: grid;
+    place-items: center;
+    width: clamp(64px, 9vw, 104px);
+    aspect-ratio: 1;
+    background: var(--red);
+    color: var(--paper-light);
+    transition:
+      transform var(--dur) var(--ease),
+      background-color var(--dur) var(--ease);
+  }
+
+  .player__start:hover .player__icon {
+    background: var(--charcoal);
+    transform: scale(1.04);
+  }
+
+  .player__label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+
+  .player__start:focus-visible {
+    outline-offset: -6px;
+  }
+
+  .player__soon {
+    position: absolute;
+    top: clamp(12px, 2.4vw, 32px);
+    right: clamp(12px, 2.4vw, 32px);
+    z-index: 3;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6em;
+    padding: 6px 10px 5px;
+    background: var(--black);
+    color: var(--paper);
+    font-size: var(--label-sm);
+  }
+
+  .player__soon-dot {
+    width: 8px;
+    height: 8px;
+    background: var(--red);
+  }
+
+  .player :global(.player__frame) {
+    position: absolute;
+    inset: 0;
+    z-index: 4;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+
+  .player.is-playing .player__start {
+    display: none;
+  }
+</style>

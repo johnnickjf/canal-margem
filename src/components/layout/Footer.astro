@@ -1,0 +1,203 @@
+---
+import Logo from '@/components/brand/Logo.astro';
+import Icon from '@/components/ui/Icon.astro';
+import { contact, primaryNav, site, socials } from '@/config/site';
+import { getTemas, routes } from '@/lib/content';
+
+const temas = await getTemas();
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer tex-black on-dark">
+  <div class="container">
+    <div class="site-footer__motto">
+      <p class="label site-footer__eyebrow">
+        <span class="site-footer__mark" aria-hidden="true"></span>Regra-mãe
+      </p>
+      <p class="site-footer__quote">{site.motto}</p>
+    </div>
+
+    <div class="site-footer__grid">
+      <nav class="site-footer__col" aria-label="Rodapé">
+        <h2 class="label site-footer__heading">Navegação</h2>
+        <ul role="list">
+          <li><a href="/">Início</a></li>
+          {primaryNav.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
+          <li><a href="/busca">Busca</a></li>
+          <li><a href="/rss.xml">RSS</a></li>
+        </ul>
+      </nav>
+
+      <nav class="site-footer__col site-footer__col--temas" aria-label="Temas">
+        <h2 class="label site-footer__heading">Temas</h2>
+        <ul role="list">
+          {temas.map((tema) => <li><a href={routes.tema(tema.id)}>{tema.data.name}</a></li>)}
+        </ul>
+      </nav>
+
+      <div class="site-footer__col">
+        <h2 class="label site-footer__heading">Canais</h2>
+        <ul role="list">
+          {
+            socials.map((social) => (
+              <li>
+                <a href={social.href} rel="me noopener" target="_blank">
+                  {social.label}
+                  <Icon name="arrow-up-right" size={14} />
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <div class="site-footer__col">
+        <h2 class="label site-footer__heading">Contato</h2>
+        <ul role="list">
+          <li><a href={`mailto:${contact.email}`}>{contact.email}</a></li>
+          <li><a href={`mailto:${contact.pautas}`}>{contact.pautas}</a></li>
+        </ul>
+        <p class="site-footer__note">{site.shortDescription}</p>
+      </div>
+    </div>
+
+    <a class="site-footer__wordmark" href="/" aria-label="MARGEM — voltar ao início">
+      <Logo />
+    </a>
+
+    <div class="site-footer__base label">
+      <span>© {year} {site.name}</span>
+      <span>{site.tagline}</span>
+      <a href="/sobre#creditos">Créditos de imagem</a>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    padding-top: var(--space-2xl);
+  }
+
+  .site-footer__motto {
+    display: grid;
+    gap: var(--space-md);
+    padding-bottom: var(--space-xl);
+    border-bottom: var(--rule);
+  }
+
+  .site-footer__eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.9em;
+    color: var(--fg-muted);
+  }
+
+  .site-footer__mark {
+    width: 14px;
+    height: 7px;
+    background: var(--red);
+  }
+
+  .site-footer__quote {
+    font-family: var(--font-display);
+    font-size: var(--display-md);
+    line-height: 0.95;
+    text-transform: uppercase;
+    max-width: 22ch;
+  }
+
+  .site-footer__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-xl) var(--column-gap);
+    padding-block: var(--space-xl);
+  }
+
+  .site-footer__heading {
+    font-family: var(--font-mono);
+    color: var(--fg-muted);
+    margin-bottom: var(--space-md);
+  }
+
+  .site-footer__col ul {
+    display: grid;
+    gap: 0.45rem;
+  }
+
+  .site-footer__col a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4em;
+    font-size: 0.9375rem;
+    text-decoration: none;
+    color: var(--paper);
+    transition: color var(--dur-fast) var(--ease);
+  }
+
+  .site-footer__col a:hover {
+    color: var(--red-on-dark);
+  }
+
+  .site-footer__col--temas ul {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: var(--space-md);
+  }
+
+  .site-footer__col--temas {
+    grid-column: span 2;
+  }
+
+  .site-footer__note {
+    margin-top: var(--space-md);
+    font-size: var(--text-sm);
+    color: var(--fg-muted);
+    max-width: 30ch;
+  }
+
+  .site-footer__wordmark {
+    display: block;
+    color: var(--paper);
+    text-decoration: none;
+    font-size: clamp(5.5rem, 24.5vw, 22.5rem);
+    line-height: 0.8;
+    margin-top: var(--space-lg);
+    margin-left: -0.03em;
+    border-top: var(--rule);
+    padding-top: var(--space-lg);
+  }
+
+  .site-footer__base {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--space-xs) var(--space-lg);
+    padding-block: var(--space-lg);
+    margin-top: var(--space-md);
+    border-top: var(--rule);
+    color: var(--fg-muted);
+    font-size: var(--label-sm);
+  }
+
+  .site-footer__base a {
+    text-decoration: none;
+  }
+
+  .site-footer__base a:hover {
+    color: var(--paper);
+  }
+
+  @media (min-width: 720px) {
+    .site-footer__motto {
+      grid-template-columns: 1fr 3fr;
+      align-items: start;
+    }
+
+    .site-footer__grid {
+      grid-template-columns: 1fr 2fr 1fr 1.4fr;
+    }
+
+    .site-footer__col--temas {
+      grid-column: auto;
+    }
+  }
+</style>

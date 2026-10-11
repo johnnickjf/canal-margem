@@ -1,0 +1,327 @@
+---
+import type { GetStaticPaths } from 'astro';
+import { getEntry, render } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Headline from '@/components/ui/Headline.astro';
+import MetaLine from '@/components/ui/MetaLine.astro';
+import Photo from '@/components/ui/Photo.astro';
+import Prose from '@/components/ui/Prose.astro';
+import ShareBar from '@/components/ui/ShareBar.astro';
+import SectionHeader from '@/components/ui/SectionHeader.astro';
+import VideoCard from '@/components/cards/VideoCard.astro';
+import ArticleCard from '@/components/cards/ArticleCard.astro';
+import Newsletter from '@/components/sections/Newsletter.astro';
+import { getArticles, getTema, routes, type Article } from '@/lib/content';
+import { formatDateLong, readingTime, toISODate } from '@/lib/format';
+import { plainHeadline } from '@/lib/headline';
+import { site } from '@/config/site';
+import { getPhoto, photoUrl } from '@/data/photos';
+
+export const getStaticPaths = (async () => {
+  const articles = await getArticles();
+  return articles.map((article) => ({ params: { slug: article.id }, props: { article } }));
+}) satisfies GetStaticPaths;
+
+interface Props {
+  article: Article;
+}
+
+const { article } = Astro.props;
+const { data } = article;
+const { Content } = await render(article);
+const tema = await getTema(data.tema.id);
+const episode = data.episode ? await getEntry(data.episode) : undefined;
+const minutes = readingTime(article.body);
+const title = plainHeadline(data.title);
+
+const more = (await getArticles()).filter((a) => a.id !== article.id).slice(0, 3);
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: title,
+  description: data.dek,
+  image: photoUrl(getPhoto(data.cover), 1200, 630),
+  datePublished: data.publishedAt.toISOString(),
+  ...(data.updatedAt ? { dateModified: data.updatedAt.toISOString() } : {}),
+  author: { '@type': 'Organization', name: data.author },
+  publisher: { '@type': 'Organization', name: site.name },
+  inLanguage: 'pt-BR',
+};
+---
+
+<BaseLayout
+  title={title}
+  description={data.dek}
+  image={data.cover}
+  type="article"
+  publishedAt={data.publishedAt}
+  jsonLd={jsonLd}
+>
+  <div class="progress" aria-hidden="true" data-progress></div>
+
+  <article class="article">
+    <header class="article__header container">
+      <MetaLine
+        items={[
+          { text: 'Análises', href: '/analises' },
+          { text: tema.data.name, href: routes.tema(tema.id), accent: true },
+        ]}
+      />
+      <Headline as="h1" text={data.title} size="2xl" class="article__title" />
+      <p class="article__dek">{data.dek}</p>
+      <div class="article__byline">
+        <span class="label">Por {data.author}</span>
+        <span class="label article__muted">
+          <time datetime={toISODate(data.publishedAt)}>{formatDateLong(data.publishedAt)}</time>
+        </span>
+        <span class="label article__muted">{minutes} min de leitura</span>
+      </div>
+    </header>
+
+    <div class="article__cover container">
+      <Photo photo={data.cover} ratio="21/9" eager sizes="(min-width: 1440px) 1360px, 100vw" credit />
+    </div>
+
+    <div class="article__layout container">
+      <aside class="article__rail" aria-label="Sobre este texto">
+        <dl class="article__facts">
+          <div>
+            <dt class="label">Tema</dt>
+            <dd><a href={routes.tema(tema.id)}>{tema.data.name}</a></dd>
+          </div>
+          <div>
+            <dt class="label">Pergunta</dt>
+            <dd>{tema.data.question}</dd>
+          </div>
+        </dl>
+      </aside>
+
+      <div class="article__body">
+        <Prose dropcap>
+          <Content />
+        </Prose>
+
+        {
+          data.sources.length > 0 && (
+            <section class="article__sources" aria-labelledby="fontes">
+              <h2 id="fontes" class="label">Fontes consultadas</h2>
+              <ul role="list">
+                {data.sources.map((source) => (
+                  <li>
+                    {source.url ? (
+                      <a href={source.url} rel="noopener" target="_blank">
+                        {source.label}
+                      </a>
+                    ) : (
+                      source.label
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )
+        }
+
+        <ShareBar title={title} path={routes.article(article)} cta="Compartilhe com contexto." />
+      </div>
+    </div>
+  </article>
+
+  {
+    episode && (
+      <section class="section" aria-labelledby="assista">
+        <div class="container">
+          <SectionHeader label="Assista ao vídeo completo" />
+          <h2 id="assista" class="visually-hidden">
+            Assista ao vídeo completo
+          </h2>
+          <VideoCard video={episode} size="lead" sizes="(min-width: 1080px) 62vw, 100vw" />
+        </div>
+      </section>
+    )
+  }
+
+  {
+    more.length > 0 && (
+      <section class="section" aria-labelledby="mais">
+        <div class="container">
+          <SectionHeader label="Continue lendo" link={{ href: '/analises', label: 'Todas as análises' }} />
+          <h2 id="mais" class="visually-hidden">
+            Continue lendo
+          </h2>
+          <ul class="article__more" role="list">
+            {more.map((item, i) => (
+              <li>
+                <ArticleCard article={item} variant="text" index={i + 1} />
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    )
+  }
+
+  <Newsletter index={null} />
+</BaseLayout>
+
+<script>
+  const bar = document.querySelector<HTMLElement>('[data-progress]');
+  const body = document.querySelector<HTMLElement>('.article__body');
+  if (bar && body) {
+    let ticking = false;
+    const update = () => {
+      const rect = body.getBoundingClientRect();
+      const total = rect.height - window.innerHeight * 0.6;
+      const progress = Math.min(1, Math.max(0, -rect.top / Math.max(total, 1)));
+      bar.style.transform = `scaleX(${progress})`;
+      ticking = false;
+    };
+    window.addEventListener(
+      'scroll',
+      () => {
+        if (!ticking) {
+          requestAnimationFrame(update);
+          ticking = true;
+        }
+      },
+      { passive: true },
+    );
+    update();
+  }
+</script>
+
+<style>
+  .progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: calc(var(--z-header) + 1);
+    height: 3px;
+    background: var(--red);
+    transform: scaleX(0);
+    transform-origin: left;
+  }
+
+  .article {
+    padding-bottom: var(--section-y);
+  }
+
+  .article__header {
+    display: grid;
+    gap: var(--space-md);
+    padding-block: var(--space-xl) var(--space-lg);
+  }
+
+  .article :global(.article__title) {
+    max-width: 14ch;
+  }
+
+  .article__dek {
+    font-size: clamp(1.25rem, 1.1rem + 0.6vw, 1.625rem);
+    line-height: 1.45;
+    max-width: 48ch;
+  }
+
+  .article__byline {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs) var(--space-lg);
+    padding-top: var(--space-md);
+    border-top: var(--rule-strong);
+  }
+
+  .article__muted {
+    color: var(--fg-muted);
+  }
+
+  .article__cover {
+    margin-bottom: var(--space-xl);
+  }
+
+  .article__layout {
+    display: grid;
+    gap: var(--space-lg) var(--column-gap);
+  }
+
+  .article__facts {
+    display: grid;
+    gap: var(--space-md);
+    padding-top: var(--space-sm);
+    border-top: var(--rule-strong);
+  }
+
+  .article__facts dt {
+    color: var(--fg-muted);
+    font-size: var(--label-sm);
+    margin-bottom: 4px;
+  }
+
+  .article__facts dd {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+
+  .article__facts a {
+    text-decoration-color: var(--red);
+  }
+
+  .article__body {
+    display: grid;
+    gap: var(--space-xl);
+    min-width: 0;
+  }
+
+  .article__sources {
+    max-width: var(--measure);
+    padding-top: var(--space-md);
+    border-top: var(--rule-strong);
+  }
+
+  .article__sources h2 {
+    font-family: var(--font-mono);
+    font-weight: 600;
+    margin-bottom: var(--space-sm);
+  }
+
+  .article__sources li {
+    padding-block: 0.4rem;
+    font-size: var(--text-sm);
+    border-bottom: var(--rule);
+  }
+
+  .article__more {
+    display: grid;
+    gap: var(--space-lg) var(--column-gap);
+  }
+
+  @media (min-width: 720px) {
+    .article__more {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .article__more li + li {
+      padding-left: var(--column-gap);
+      border-left: var(--rule);
+    }
+  }
+
+  @media (min-width: 1080px) {
+    .article__layout {
+      grid-template-columns: minmax(0, 3fr) minmax(0, 9fr);
+    }
+
+    .article__rail {
+      position: sticky;
+      top: calc(var(--header-h) + var(--space-lg));
+      align-self: start;
+    }
+
+    .article__body {
+      padding-left: var(--space-lg);
+    }
+  }
+</style>

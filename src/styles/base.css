@@ -1,0 +1,261 @@
+@layer reset, tokens, base, layout, components, utilities;
+
+@import './tokens.css';
+@import './textures.css';
+
+/* ---------- reset ---------- */
+@layer reset {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  * {
+    margin: 0;
+  }
+
+  html {
+    -webkit-text-size-adjust: none;
+    text-size-adjust: none;
+  }
+
+  img,
+  picture,
+  video,
+  svg,
+  iframe {
+    display: block;
+    max-width: 100%;
+  }
+
+  input,
+  button,
+  textarea,
+  select {
+    font: inherit;
+    color: inherit;
+  }
+
+  button {
+    background: none;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+  }
+
+  ul[role='list'],
+  ol[role='list'] {
+    list-style: none;
+    padding: 0;
+  }
+
+  p,
+  h1,
+  h2,
+  h3,
+  h4,
+  li,
+  figcaption,
+  blockquote {
+    overflow-wrap: break-word;
+  }
+}
+
+/* ---------- base ---------- */
+@layer base {
+  html {
+    color-scheme: light;
+    scroll-padding-top: calc(var(--header-h) + var(--space-md));
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
+  body {
+    min-height: 100dvh;
+    background-color: var(--bg);
+    background-image: var(--tex-grain), var(--tex-fiber);
+    color: var(--fg);
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    line-height: 1.6;
+    font-feature-settings: 'ss01', 'cv11';
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    line-height: 0.92;
+    letter-spacing: 0.002em;
+    text-transform: uppercase;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  a {
+    color: inherit;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.2em;
+  }
+
+  strong {
+    font-weight: 600;
+  }
+
+  ::selection {
+    background: var(--red);
+    color: var(--paper-light);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--red);
+    outline-offset: 3px;
+  }
+
+  .on-dark :focus-visible,
+  :is(.tex-black, .tex-grunge) :focus-visible {
+    outline-color: var(--paper);
+  }
+
+  hr {
+    border: 0;
+    border-top: var(--rule);
+  }
+
+  [hidden] {
+    display: none !important;
+  }
+
+  /* Trava a rolagem da página enquanto um diálogo modal (menu) está aberto */
+  html:has(dialog[open]) {
+    overflow: hidden;
+  }
+}
+
+/* ---------- layout ---------- */
+@layer layout {
+  .container {
+    width: 100%;
+    max-width: var(--page-max);
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    column-gap: var(--column-gap);
+  }
+
+  @media (min-width: 720px) {
+    .grid {
+      grid-template-columns: repeat(8, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 1080px) {
+    .grid {
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+    }
+  }
+
+  .section {
+    padding-block: var(--section-y);
+  }
+
+  .section + .section {
+    border-top: var(--rule);
+  }
+
+  .on-dark {
+    --fg: var(--paper);
+    --fg-muted: #a8a29a;
+    --line: var(--line-on-dark);
+    --line-strong: var(--paper);
+    --accent-text: var(--red-on-dark);
+    color: var(--fg);
+  }
+}
+
+/* ---------- utilitários ---------- */
+@layer utilities {
+  .visually-hidden {
+    position: absolute !important;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .label {
+    font-family: var(--font-mono);
+    font-size: var(--label);
+    font-weight: 500;
+    letter-spacing: var(--tracking-label);
+    line-height: 1.4;
+    text-transform: uppercase;
+  }
+
+  .label-muted {
+    color: var(--fg-muted);
+  }
+
+  .mono {
+    font-family: var(--font-mono);
+  }
+
+  .hl {
+    color: var(--accent-text, var(--red));
+  }
+
+  /* Traço vermelho curto — assinatura gráfica do manual */
+  .dash {
+    display: block;
+    width: 40px;
+    height: 4px;
+    background: var(--red);
+  }
+
+  .lede {
+    font-size: var(--text-lg);
+    line-height: 1.5;
+    color: var(--fg);
+    max-width: 42ch;
+  }
+}
+
+/* ---------- movimento ---------- */
+@layer utilities {
+  @media (prefers-reduced-motion: no-preference) {
+    .js [data-reveal] {
+      opacity: 0;
+      transform: translateY(14px);
+      transition:
+        opacity var(--dur-slow) var(--ease),
+        transform var(--dur-slow) var(--ease);
+      transition-delay: calc(var(--reveal-i, 0) * 70ms);
+    }
+
+    .js [data-reveal].is-visible {
+      opacity: 1;
+      transform: none;
+    }
+  }
+}

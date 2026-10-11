@@ -1,0 +1,116 @@
+---
+import Headline from '@/components/ui/Headline.astro';
+
+/** Abertura padrão das páginas internas: rótulo mono, título grande e linha de apoio. */
+interface Props {
+  label: string;
+  title: string;
+  lede?: string;
+  /** Contagem ou informação curta à direita do rótulo (ex.: "12 episódios"). */
+  aside?: string;
+}
+
+const { label, title, lede, aside } = Astro.props;
+---
+
+<header class="page-header">
+  <div class="container">
+    <div class="page-header__bar label">
+      <span class="page-header__label">
+        <span class="page-header__mark" aria-hidden="true"></span>
+        {label}
+      </span>
+      {aside && <span class="page-header__aside">{aside}</span>}
+    </div>
+    <div class="page-header__body">
+      <Headline as="h1" text={title} size="2xl" class="page-header__title" />
+      {lede && <p class="page-header__lede">{lede}</p>}
+    </div>
+    <slot />
+  </div>
+</header>
+
+<style>
+  .page-header {
+    padding-top: var(--space-xl);
+    padding-bottom: var(--space-xl);
+    border-bottom: var(--rule-strong);
+  }
+
+  .page-header__bar {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--space-md);
+    padding-bottom: var(--space-sm);
+    border-bottom: var(--rule);
+    font-weight: 600;
+    letter-spacing: var(--tracking-wide);
+  }
+
+  .page-header__label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.9em;
+  }
+
+  .page-header__mark {
+    width: 14px;
+    height: 7px;
+    background: var(--red);
+  }
+
+  .page-header__aside {
+    color: var(--fg-muted);
+    font-weight: 500;
+  }
+
+  .page-header__body {
+    display: grid;
+    gap: var(--space-lg);
+    padding-top: var(--space-xl);
+  }
+
+  .page-header__lede {
+    font-size: var(--text-lg);
+    line-height: 1.5;
+    max-width: 44ch;
+  }
+
+  @media (min-width: 1080px) {
+    .page-header__body {
+      grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+      align-items: end;
+    }
+
+    .page-header__lede {
+      padding-bottom: 0.6rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .page-header :global(.page-header__title) {
+      animation: ph-unmask 520ms var(--ease) both;
+    }
+
+    .page-header__lede {
+      animation: ph-rise var(--dur-slow) var(--ease) 200ms both;
+    }
+  }
+
+  @keyframes ph-unmask {
+    from {
+      clip-path: inset(0 0 100% 0);
+      transform: translateY(0.1em);
+    }
+    to {
+      clip-path: inset(-10% -10% -10% -10%);
+    }
+  }
+
+  @keyframes ph-rise {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+  }
+</style>

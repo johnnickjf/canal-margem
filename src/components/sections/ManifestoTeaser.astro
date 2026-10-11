@@ -1,0 +1,123 @@
+---
+import SectionHeader from '@/components/ui/SectionHeader.astro';
+import Button from '@/components/ui/Button.astro';
+import Photo from '@/components/ui/Photo.astro';
+import { manifesto } from '@/data/manifesto';
+import { padIndex } from '@/lib/format';
+import { tornClipPath } from '@/lib/torn';
+
+const highlights = manifesto.theses.slice(0, 4);
+const topEdge = tornClipPath('top', { seed: 44, depth: 1.6, steps: 90 });
+---
+
+<section class="manifesto tex-paper-light" aria-labelledby="manifesto-titulo" style={`clip-path: ${topEdge}`}>
+  <div class="container">
+    <SectionHeader index={4} label="Manifesto" />
+
+    <div class="manifesto__grid">
+      <div class="manifesto__statement">
+        <h2 id="manifesto-titulo" class="manifesto__title" data-reveal>
+          A vida real
+          <br />
+          também é
+          <br />
+          <span class="manifesto__marker">política.</span>
+        </h2>
+        <p class="manifesto__opening" data-reveal>{manifesto.opening}</p>
+        <div data-reveal>
+          <Button href="/manifesto" icon="arrow-right">Ler manifesto</Button>
+        </div>
+      </div>
+
+      <div class="manifesto__side">
+        <Photo photo="maos" ratio="3/2" sizes="(min-width: 1080px) 40vw, 100vw" class="manifesto__photo" />
+        <ol class="manifesto__list" role="list" data-reveal-group>
+          {
+            highlights.map((thesis, i) => (
+              <li data-reveal>
+                <span class="manifesto__num">{padIndex(i + 1)}</span>
+                <span class="manifesto__thesis">{thesis.title}</span>
+              </li>
+            ))
+          }
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .manifesto {
+    padding-block: calc(var(--section-y) + 16px) var(--section-y);
+    border-bottom: var(--rule);
+  }
+
+  .manifesto__grid {
+    display: grid;
+    gap: var(--space-xl) var(--column-gap);
+  }
+
+  .manifesto__title {
+    font-size: var(--display-xl);
+    line-height: 0.86;
+  }
+
+  .manifesto__marker {
+    display: inline-block;
+    margin-top: 0.06em;
+    padding: 0.06em 0.12em 0;
+    background-color: var(--red);
+    background-image: var(--tex-scratch), var(--tex-grunge);
+    color: var(--paper-light);
+  }
+
+  .manifesto__opening {
+    margin-block: var(--space-lg);
+    font-size: var(--text-lg);
+    line-height: 1.55;
+    max-width: 44ch;
+  }
+
+  .manifesto__side {
+    display: grid;
+    gap: var(--space-lg);
+    align-content: start;
+  }
+
+  .manifesto__list {
+    border-top: var(--rule-strong);
+  }
+
+  .manifesto__list li {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-md);
+    padding-block: 0.9rem 0.7rem;
+    border-bottom: var(--rule);
+  }
+
+  .manifesto__num {
+    font-family: var(--font-mono);
+    font-size: var(--label);
+    color: var(--red);
+    font-weight: 600;
+  }
+
+  .manifesto__thesis {
+    font-family: var(--font-display);
+    font-size: var(--display-sm);
+    line-height: 1;
+    text-transform: uppercase;
+  }
+
+  @media (min-width: 1080px) {
+    .manifesto__grid {
+      grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+      align-items: start;
+    }
+
+    .manifesto__side {
+      padding-top: var(--space-sm);
+    }
+  }
+</style>

@@ -1,0 +1,79 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHeader from '@/components/layout/PageHeader.astro';
+import SectionHeader from '@/components/ui/SectionHeader.astro';
+import TemaFilter from '@/components/ui/TemaFilter.astro';
+import ArticleCard from '@/components/cards/ArticleCard.astro';
+import Newsletter from '@/components/sections/Newsletter.astro';
+import { getHomeArticles, getTemas } from '@/lib/content';
+import { padIndex } from '@/lib/format';
+
+const [articles, temas] = await Promise.all([getHomeArticles(Infinity), getTemas()]);
+const [lead, ...rest] = articles;
+---
+
+<BaseLayout
+  title="Análises"
+  description="Artigos e análises da MARGEM sobre trabalho, renda, cidade, tributação e democracia — com dados, contexto e contraponto."
+  image="maos"
+>
+  <PageHeader
+    label="Artigos e análises"
+    title="Economia é [gente]"
+    lede="Textos para ler com calma: o dado, o contexto, o exemplo concreto e o melhor argumento de quem discorda."
+    aside={`${padIndex(articles.length)} textos`}
+  />
+
+  {
+    lead && (
+      <section class="section" aria-label="Destaque">
+        <div class="container">
+          <ArticleCard article={lead} variant="lead" headingLevel="h2" />
+        </div>
+      </section>
+    )
+  }
+
+  {
+    rest.length > 0 && (
+      <section class="section" aria-labelledby="todas-analises">
+        <div class="container">
+          <SectionHeader label="Todas as análises" />
+          <h2 id="todas-analises" class="visually-hidden">
+            Todas as análises
+          </h2>
+          <TemaFilter temas={temas} target="#lista-analises" />
+          <ul id="lista-analises" class="list" role="list" data-reveal-group>
+            {rest.map((article) => (
+              <li data-tema={article.data.tema.id} data-reveal>
+                <ArticleCard article={article} />
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    )
+  }
+
+  <Newsletter index={null} />
+</BaseLayout>
+
+<style>
+  .list {
+    display: grid;
+    gap: var(--space-xl) var(--column-gap);
+    margin-top: var(--space-lg);
+  }
+
+  @media (min-width: 720px) {
+    .list {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 1080px) {
+    .list {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+</style>

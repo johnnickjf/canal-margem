@@ -1,0 +1,53 @@
+---
+import SectionHeader from '@/components/ui/SectionHeader.astro';
+import ArticleCard from '@/components/cards/ArticleCard.astro';
+import { getHomeArticles } from '@/lib/content';
+
+const [lead, ...rest] = await getHomeArticles(4);
+---
+
+{
+  lead && (
+    <section class="section analyses" aria-labelledby="analises-titulo">
+      <div class="container">
+        <SectionHeader index={5} label="Artigos e análises" link={{ href: '/analises', label: 'Todas as análises' }} />
+        <h2 id="analises-titulo" class="visually-hidden">Artigos e análises</h2>
+
+        <div data-reveal>
+          <ArticleCard article={lead} variant="lead" />
+        </div>
+
+        {rest.length > 0 && (
+          <ul class="analyses__list" role="list" data-reveal-group>
+            {rest.map((article, i) => (
+              <li data-reveal>
+                <ArticleCard article={article} variant="text" index={i + 2} />
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+    </section>
+  )
+}
+
+<style>
+  .analyses__list {
+    display: grid;
+    gap: var(--space-lg) var(--column-gap);
+    margin-top: var(--space-xl);
+    padding-top: var(--space-lg);
+    border-top: var(--rule-strong);
+  }
+
+  @media (min-width: 720px) {
+    .analyses__list {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .analyses__list li + li {
+      padding-left: var(--column-gap);
+      border-left: var(--rule);
+    }
+  }
+</style>

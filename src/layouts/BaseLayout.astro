@@ -1,0 +1,77 @@
+---
+import '@fontsource/bebas-neue/400.css';
+import '@fontsource-variable/inter/index.css';
+import '@fontsource/ibm-plex-mono/400.css';
+import '@fontsource/ibm-plex-mono/500.css';
+import '@fontsource/ibm-plex-mono/600.css';
+import '@/styles/base.css';
+
+import Seo, { type SeoProps } from '@/components/layout/Seo.astro';
+import Header from '@/components/layout/Header.astro';
+import Footer from '@/components/layout/Footer.astro';
+
+type Props = SeoProps & {
+  /** Classe aplicada ao <main>, para variações de página. */
+  mainClass?: string;
+};
+
+const { mainClass, ...seo } = Astro.props;
+---
+
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#E8E2D9" />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="alternate" type="application/rss+xml" title="MARGEM" href="/rss.xml" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <link rel="preconnect" href="https://images.unsplash.com" />
+    <script is:inline>
+      document.documentElement.classList.add('js');
+    </script>
+    <Seo {...seo} />
+    <slot name="head" />
+  </head>
+  <body>
+    <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+    <Header />
+    <main id="conteudo" class={mainClass} tabindex="-1">
+      <slot />
+    </main>
+    <Footer />
+
+    <script>
+      import '@/scripts/reveal';
+    </script>
+
+    <style>
+      .skip-link {
+        position: fixed;
+        top: 8px;
+        left: 8px;
+        z-index: var(--z-skip);
+        padding: 12px 16px;
+        background: var(--charcoal);
+        color: var(--paper);
+        font-family: var(--font-mono);
+        font-size: var(--label);
+        letter-spacing: var(--tracking-label);
+        text-transform: uppercase;
+        text-decoration: none;
+        transform: translateY(-160%);
+        transition: transform var(--dur) var(--ease);
+      }
+
+      .skip-link:focus {
+        transform: none;
+      }
+
+      main:focus {
+        outline: none;
+      }
+    </style>
+  </body>
+</html>

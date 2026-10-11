@@ -1,0 +1,158 @@
+---
+import { routes, type Video } from '@/lib/content';
+import { episodeCode, formatDateLong, toISODate } from '@/lib/format';
+
+/** Ficha técnica do episódio: dados, capítulos e fontes consultadas. */
+interface Props {
+  video: Video;
+  temaName: string;
+}
+
+const { video, temaName } = Astro.props;
+const { data } = video;
+---
+
+<div class="facts">
+  <dl class="facts__list">
+    <div>
+      <dt class="label">Episódio</dt>
+      <dd class="facts__code">{episodeCode(data.episode)}</dd>
+    </div>
+    <div>
+      <dt class="label">Publicado</dt>
+      <dd><time datetime={toISODate(data.publishedAt)}>{formatDateLong(data.publishedAt)}</time></dd>
+    </div>
+    <div>
+      <dt class="label">Duração</dt>
+      <dd>{data.duration}</dd>
+    </div>
+    <div>
+      <dt class="label">Tema</dt>
+      <dd><a href={routes.tema(data.tema.id)}>{temaName}</a></dd>
+    </div>
+  </dl>
+
+  {
+    data.chapters.length > 0 && (
+      <section class="facts__block" aria-labelledby="capitulos">
+        <h2 id="capitulos" class="label facts__heading">Capítulos</h2>
+        <ol class="facts__chapters" role="list">
+          {data.chapters.map((chapter) => (
+            <li>
+              <span class="facts__time">{chapter.time}</span>
+              <span>{chapter.label}</span>
+            </li>
+          ))}
+        </ol>
+      </section>
+    )
+  }
+
+  {
+    data.sources.length > 0 && (
+      <section class="facts__block" aria-labelledby="fontes">
+        <h2 id="fontes" class="label facts__heading">Fontes consultadas</h2>
+        <ul class="facts__sources" role="list">
+          {data.sources.map((source) => (
+            <li>
+              {source.url ? (
+                <a href={source.url} rel="noopener" target="_blank">
+                  {source.label}
+                </a>
+              ) : (
+                source.label
+              )}
+            </li>
+          ))}
+        </ul>
+      </section>
+    )
+  }
+
+  <p class="facts__note label">Legendas revisadas manualmente em todos os vídeos.</p>
+</div>
+
+<style>
+  .facts {
+    display: grid;
+    gap: var(--space-lg);
+    padding: var(--space-md);
+    background-color: var(--paper-light);
+    background-image: var(--tex-grain);
+    border-top: 4px solid var(--charcoal);
+  }
+
+  .facts__list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-md) var(--space-sm);
+  }
+
+  .facts__list dt {
+    color: var(--fg-muted);
+    font-size: var(--label-sm);
+    margin-bottom: 4px;
+  }
+
+  .facts__list dd {
+    font-weight: 500;
+  }
+
+  .facts__list a {
+    text-decoration-color: var(--red);
+  }
+
+  .facts__code {
+    font-family: var(--font-display);
+    font-size: 1.75rem;
+    line-height: 1;
+    font-weight: 400 !important;
+  }
+
+  .facts__heading {
+    padding-bottom: var(--space-xs);
+    margin-bottom: var(--space-xs);
+    border-bottom: var(--rule);
+    font-weight: 600;
+  }
+
+  .facts__chapters li {
+    display: grid;
+    grid-template-columns: 4.2em 1fr;
+    gap: var(--space-xs);
+    padding-block: 0.45rem;
+    font-size: var(--text-sm);
+    border-bottom: var(--rule);
+  }
+
+  .facts__time {
+    font-family: var(--font-mono);
+    color: var(--red);
+    font-size: var(--label);
+    padding-top: 2px;
+  }
+
+  .facts__sources li {
+    position: relative;
+    padding: 0.45rem 0 0.45rem 1rem;
+    font-size: var(--text-sm);
+    line-height: 1.45;
+    border-bottom: var(--rule);
+  }
+
+  .facts__sources li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.95rem;
+    width: 6px;
+    height: 2px;
+    background: var(--red);
+  }
+
+  .facts__note {
+    color: var(--fg-muted);
+    font-size: var(--label-sm);
+    letter-spacing: 0.06em;
+  }
+</style>

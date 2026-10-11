@@ -1,0 +1,118 @@
+---
+import VideoThumb from './VideoThumb.astro';
+import Headline from '@/components/ui/Headline.astro';
+import MetaLine from '@/components/ui/MetaLine.astro';
+import { getTema, routes, type Video } from '@/lib/content';
+import { episodeCode, formatDateMono } from '@/lib/format';
+
+/**
+ * Card de episódio — lido como página de revista, não como card de produto:
+ * sem sombra, sem raio, linha fina e muito respiro.
+ */
+interface Props {
+  video: Video;
+  size?: 'lead' | 'default' | 'compact';
+  headingLevel?: 'h2' | 'h3';
+  eager?: boolean;
+  sizes?: string;
+}
+
+const { video, size = 'default', headingLevel = 'h3', eager = false, sizes } = Astro.props;
+const { data } = video;
+const tema = await getTema(data.tema.id);
+const href = routes.video(video);
+---
+
+<article class:list={['video-card', `video-card--${size}`]} data-card>
+  <VideoThumb
+    title={data.title}
+    episode={data.episode}
+    cover={data.cover}
+    temaName={tema.data.name}
+    overlay={false}
+    eager={eager}
+    sizes={sizes}
+  />
+  <div class="video-card__body">
+    <MetaLine
+      items={[
+        { text: episodeCode(data.episode), accent: true },
+        tema.data.name,
+        data.duration,
+        size !== 'compact' && formatDateMono(data.publishedAt),
+      ]}
+    />
+    <a class="video-card__link" href={href}>
+      <Headline
+        as={headingLevel}
+        text={data.title}
+        size={size === 'lead' ? 'lg' : size === 'compact' ? 'xs' : 'sm'}
+      />
+    </a>
+    {size !== 'compact' && <p class="video-card__dek">{data.dek}</p>}
+  </div>
+</article>
+
+<style>
+  .video-card {
+    position: relative;
+    display: grid;
+    gap: var(--space-md);
+    align-content: start;
+  }
+
+  .video-card__body {
+    display: grid;
+    gap: var(--space-sm);
+  }
+
+  .video-card__link {
+    text-decoration: none;
+  }
+
+  /* Card inteiro clicável, mantendo um único link acessível */
+  .video-card__link::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+  }
+
+  .video-card__link :global(.headline) {
+    transition: color var(--dur) var(--ease);
+  }
+
+  .video-card:hover .video-card__link :global(.headline) {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 0.12em;
+    text-decoration-color: var(--red);
+  }
+
+  .video-card__link:focus-visible {
+    outline: none;
+  }
+
+  .video-card:has(.video-card__link:focus-visible) {
+    outline: 2px solid var(--red);
+    outline-offset: 6px;
+  }
+
+  .video-card__dek {
+    color: var(--fg-muted);
+    max-width: 52ch;
+  }
+
+  .video-card--lead .video-card__dek {
+    font-size: var(--text-lg);
+    color: var(--fg);
+  }
+
+  .video-card--compact {
+    gap: var(--space-sm);
+  }
+
+  .video-card--compact .video-card__body {
+    gap: var(--space-xs);
+  }
+</style>

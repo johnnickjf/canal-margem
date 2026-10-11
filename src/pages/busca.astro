@@ -1,0 +1,263 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Icon from '@/components/ui/Icon.astro';
+import { getTemas, routes } from '@/lib/content';
+
+const temas = await getTemas();
+---
+
+<BaseLayout title="Busca" description="Busque episódios, cortes, análises e temas da MARGEM.">
+  <section class="search container" aria-labelledby="busca-titulo">
+    <p class="label search__label"><span class="search__mark" aria-hidden="true"></span>Busca</p>
+    <h1 id="busca-titulo" class="visually-hidden">Busca</h1>
+
+    <form class="search__form" role="search" action="/busca" method="get" data-search-form>
+      <label for="q" class="visually-hidden">O que você procura?</label>
+      <input
+        id="q"
+        name="q"
+        type="search"
+        class="search__input"
+        placeholder="Aluguel, jornada, imposto…"
+        autocomplete="off"
+        spellcheck="false"
+        data-search-input
+      />
+      <button type="submit" class="search__submit">
+        <Icon name="search" size={28} />
+        <span class="visually-hidden">Buscar</span>
+      </button>
+    </form>
+
+    <p class="search__status label" role="status" aria-live="polite" data-search-status></p>
+
+    <ol class="search__results" role="list" data-search-results></ol>
+
+    <div class="search__suggest" data-search-suggest>
+      <p class="label search__suggest-label">Ou navegue por tema</p>
+      <ul role="list" class="search__temas">
+        {temas.map((tema) => <li><a href={routes.tema(tema.id)}>{tema.data.name}</a></li>)}
+      </ul>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  import { createSearch } from '@/scripts/search';
+
+  const form = document.querySelector<HTMLFormElement>('[data-search-form]');
+  const input = document.querySelector<HTMLInputElement>('[data-search-input]');
+  const list = document.querySelector<HTMLOListElement>('[data-search-results]');
+  const status = document.querySelector<HTMLElement>('[data-search-status]');
+  const suggest = document.querySelector<HTMLElement>('[data-search-suggest]');
+
+  if (form && input && list && status && suggest) {
+    const search = createSearch('/busca.json');
+
+    const escape = (value: string) =>
+      value.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]!);
+
+    const render = async (query: string) => {
+      const trimmed = query.trim();
+      suggest.hidden = trimmed.length > 0;
+      if (!trimmed) {
+        list.innerHTML = '';
+        status.textContent = '';
+        return;
+      }
+      const results = await search(trimmed);
+      status.textContent = results.length
+        ? `${results.length} ${results.length === 1 ? 'resultado' : 'resultados'} para “${trimmed}”`
+        : `Nada encontrado para “${trimmed}”. Tente outra palavra ou navegue pelos temas.`;
+      if (!results.length) suggest.hidden = false;
+      list.innerHTML = results
+        .map(
+          (item) => `
+          <li class="result">
+            <a href="${escape(item.url)}">
+              <span class="result__type">${escape(item.type)}</span>
+              <span class="result__title">${escape(item.title)}</span>
+              <span class="result__meta">${escape(item.meta)}</span>
+            </a>
+          </li>`,
+        )
+        .join('');
+    };
+
+    const initial = new URLSearchParams(location.search).get('q') ?? '';
+    input.value = initial;
+    render(initial);
+    input.focus();
+
+    let timer: number | undefined;
+    input.addEventListener('input', () => {
+      window.clearTimeout(timer);
+      timer = window.setTimeout(() => {
+        const url = new URL(location.href);
+        if (input.value) url.searchParams.set('q', input.value);
+        else url.searchParams.delete('q');
+        history.replaceState(null, '', url);
+        render(input.value);
+      }, 120);
+    });
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      render(input.value);
+    });
+  }
+</script>
+
+<style>
+  .search {
+    min-height: 70vh;
+    padding-block: var(--space-xl) var(--section-y);
+  }
+
+  .search__label {
+    display: flex;
+    align-items: center;
+    gap: 0.9em;
+    padding-bottom: var(--space-sm);
+    border-bottom: var(--rule);
+    font-weight: 600;
+    letter-spacing: var(--tracking-wide);
+  }
+
+  .search__mark {
+    width: 14px;
+    height: 7px;
+    background: var(--red);
+  }
+
+  .search__form {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    margin-top: var(--space-xl);
+    border-bottom: 2px solid var(--charcoal);
+  }
+
+  .search__input {
+    flex: 1;
+    min-width: 0;
+    padding: 0.1em 0 0;
+    border: 0;
+    background: transparent;
+    font-family: var(--font-display);
+    font-size: var(--display-xl);
+    line-height: 1;
+    text-transform: uppercase;
+    color: var(--charcoal);
+  }
+
+  .search__input::placeholder {
+    color: #b3aca2;
+  }
+
+  .search__input:focus-visible {
+    outline: none;
+  }
+
+  .search__form:focus-within {
+    border-bottom-color: var(--red);
+  }
+
+  .search__input::-webkit-search-cancel-button {
+    display: none;
+  }
+
+  .search__submit {
+    display: grid;
+    place-items: center;
+    width: 56px;
+    height: 56px;
+  }
+
+  .search__submit:hover {
+    color: var(--red);
+  }
+
+  .search__status {
+    margin-top: var(--space-md);
+    color: var(--fg-muted);
+    min-height: 1.4em;
+  }
+
+  .search__results {
+    margin-top: var(--space-lg);
+  }
+
+  .search__results :global(.result) {
+    border-bottom: var(--rule);
+  }
+
+  .search__results :global(.result a) {
+    display: grid;
+    gap: 4px;
+    padding-block: var(--space-md);
+    text-decoration: none;
+  }
+
+  .search__results :global(.result__type) {
+    font-family: var(--font-mono);
+    font-size: var(--label-sm);
+    font-weight: 600;
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    color: var(--red);
+  }
+
+  .search__results :global(.result__title) {
+    font-family: var(--font-display);
+    font-size: var(--display-sm);
+    line-height: 1;
+    text-transform: uppercase;
+  }
+
+  .search__results :global(.result a:hover .result__title) {
+    color: var(--red);
+  }
+
+  .search__results :global(.result__meta) {
+    font-family: var(--font-mono);
+    font-size: var(--label);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--fg-muted);
+  }
+
+  .search__suggest {
+    margin-top: var(--space-xl);
+  }
+
+  .search__suggest-label {
+    color: var(--fg-muted);
+    margin-bottom: var(--space-sm);
+  }
+
+  .search__temas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+  }
+
+  .search__temas a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 40px;
+    padding: 0 0.9rem;
+    border: 1px solid var(--line);
+    font-family: var(--font-mono);
+    font-size: var(--label);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+  }
+
+  .search__temas a:hover {
+    background: var(--charcoal);
+    border-color: var(--charcoal);
+    color: var(--paper);
+  }
+</style>

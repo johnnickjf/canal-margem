@@ -1,0 +1,110 @@
+---
+import Icon, { type IconName } from './Icon.astro';
+import type { HTMLAttributes } from 'astro/types';
+
+type Props = {
+  href?: string;
+  variant?: 'primary' | 'outline' | 'text';
+  icon?: IconName;
+  type?: 'button' | 'submit';
+  class?: string;
+} & Omit<HTMLAttributes<'a'> & HTMLAttributes<'button'>, 'type'>;
+
+const { href, variant = 'primary', icon, type = 'button', class: className, ...rest } = Astro.props;
+const Tag = href ? 'a' : 'button';
+---
+
+<Tag
+  class:list={['btn', `btn--${variant}`, className]}
+  href={href}
+  type={href ? undefined : type}
+  {...rest}
+>
+  <span class="btn__label"><slot /></span>
+  {icon && <Icon name={icon} size={18} class="btn__icon" />}
+</Tag>
+
+<style>
+  .btn {
+    --btn-fg: var(--paper-light);
+    --btn-bg: var(--red);
+    --btn-border: var(--red);
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.9em;
+    min-height: 52px;
+    padding: 0 1.5rem;
+    border: 1px solid var(--btn-border);
+    border-radius: var(--radius);
+    background: var(--btn-bg);
+    color: var(--btn-fg);
+    font-family: var(--font-body);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    line-height: 1;
+    transition:
+      background-color var(--dur) var(--ease),
+      color var(--dur) var(--ease),
+      border-color var(--dur) var(--ease);
+  }
+
+  .btn__label {
+    padding-top: 0.08em;
+  }
+
+  .btn :global(.btn__icon) {
+    transition: transform var(--dur) var(--ease);
+  }
+
+  .btn:hover :global(.btn__icon) {
+    transform: translateX(4px);
+  }
+
+  .btn--primary:hover {
+    --btn-bg: var(--charcoal);
+    --btn-border: var(--charcoal);
+  }
+
+  .btn--outline {
+    --btn-fg: var(--fg);
+    --btn-bg: transparent;
+    --btn-border: var(--line-strong);
+  }
+
+  .btn--outline:hover {
+    --btn-fg: var(--paper-light);
+    --btn-bg: var(--charcoal);
+    --btn-border: var(--charcoal);
+  }
+
+  :global(.on-dark) .btn--primary:hover {
+    --btn-bg: var(--paper);
+    --btn-border: var(--paper);
+    --btn-fg: var(--black);
+  }
+
+  :global(.on-dark) .btn--outline:hover {
+    --btn-fg: var(--black);
+    --btn-bg: var(--paper);
+    --btn-border: var(--paper);
+  }
+
+  .btn--text {
+    --btn-fg: var(--fg);
+    --btn-bg: transparent;
+    --btn-border: transparent;
+    min-height: 44px;
+    padding: 0;
+    border-bottom: 1px solid var(--line-strong);
+  }
+
+  .btn--text:hover {
+    --btn-fg: var(--red);
+    border-bottom-color: var(--red);
+  }
+</style>

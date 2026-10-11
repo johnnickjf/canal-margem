@@ -1,0 +1,365 @@
+---
+import Logo from '@/components/brand/Logo.astro';
+import Icon from '@/components/ui/Icon.astro';
+import { primaryNav, site } from '@/config/site';
+import { episodeCode, formatDateMono } from '@/lib/format';
+import { getLatestEpisode, routes } from '@/lib/content';
+
+const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+const isCurrent = (href: string) => path === href || path.startsWith(`${href}/`);
+
+const latest = await getLatestEpisode();
+---
+
+<div class="dateline">
+  <div class="container dateline__inner label">
+    <span>{site.signature.join(' / ')}</span>
+    {
+      latest && (
+        <a class="dateline__edition" href={routes.video(latest)}>
+          <span class="dateline__muted">Última edição</span>
+          <span>{episodeCode(latest.data.episode)}</span>
+          <span class="dateline__muted">{formatDateMono(latest.data.publishedAt)}</span>
+        </a>
+      )
+    }
+  </div>
+</div>
+
+<header class="site-header" data-header>
+  <div class="container site-header__inner">
+    <a class="site-header__logo" href="/" aria-label="MARGEM — página inicial">
+      <Logo />
+    </a>
+
+    <nav class="site-nav" aria-label="Principal">
+      <ul role="list">
+        {
+          primaryNav.map((item) => (
+            <li>
+              <a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <div class="site-header__actions">
+      <a
+        class="site-header__search"
+        href="/busca"
+        aria-current={isCurrent('/busca') ? 'page' : undefined}
+      >
+        <Icon name="search" size={20} />
+        <span class="site-header__search-label">Busca</span>
+      </a>
+      <button
+        class="site-header__menu"
+        type="button"
+        aria-haspopup="dialog"
+        aria-controls="menu"
+        data-menu-open
+      >
+        <Icon name="menu" size={24} />
+        <span class="visually-hidden">Abrir menu</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<dialog class="menu" id="menu" aria-label="Menu" data-menu>
+  <div class="menu__inner container">
+    <div class="menu__top">
+      <Logo />
+      <button class="menu__close" type="button" data-menu-close>
+        <Icon name="close" size={24} />
+        <span class="visually-hidden">Fechar menu</span>
+      </button>
+    </div>
+    <nav aria-label="Menu principal">
+      <ol class="menu__list" role="list">
+        {
+          [...primaryNav, { label: 'Busca', href: '/busca' }].map((item, i) => (
+            <li style={`--i: ${i}`}>
+              <a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>
+                <span class="menu__index label">{String(i + 1).padStart(2, '0')}</span>
+                <span class="menu__label">{item.label}</span>
+              </a>
+            </li>
+          ))
+        }
+      </ol>
+    </nav>
+    <p class="menu__tagline label">{site.tagline}</p>
+  </div>
+</dialog>
+
+<script>
+  const dialog = document.querySelector<HTMLDialogElement>('[data-menu]');
+  const openButton = document.querySelector<HTMLButtonElement>('[data-menu-open]');
+
+  openButton?.addEventListener('click', () => {
+    dialog?.showModal();
+    openButton.setAttribute('aria-expanded', 'true');
+  });
+
+  dialog?.addEventListener('close', () => {
+    openButton?.setAttribute('aria-expanded', 'false');
+  });
+
+  dialog?.addEventListener('click', (event) => {
+    const target = event.target as HTMLElement;
+    if (target.closest('[data-menu-close]') || target.closest('a')) dialog.close();
+  });
+
+  // Fecha o menu se a tela crescer para o layout de desktop.
+  matchMedia('(min-width: 960px)').addEventListener('change', (event) => {
+    if (event.matches && dialog?.open) dialog.close();
+  });
+</script>
+
+<style>
+  /* ---------- dateline ---------- */
+  .dateline {
+    border-bottom: var(--rule);
+    color: var(--fg);
+  }
+
+  .dateline__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-md);
+    min-height: 36px;
+    font-size: var(--label-sm);
+    letter-spacing: var(--tracking-wide);
+  }
+
+  .dateline__edition {
+    display: none;
+    gap: 1.2em;
+    text-decoration: none;
+  }
+
+  .dateline__edition:hover span:not(.dateline__muted) {
+    color: var(--red);
+  }
+
+  .dateline__muted {
+    color: var(--fg-muted);
+  }
+
+  @media (min-width: 720px) {
+    .dateline__edition {
+      display: inline-flex;
+    }
+  }
+
+  /* ---------- header ---------- */
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: var(--z-header);
+    background-color: var(--paper);
+    background-image: var(--tex-grain);
+    border-bottom: var(--rule-strong);
+  }
+
+  .site-header__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-lg);
+    height: var(--header-h);
+  }
+
+  .site-header__logo {
+    font-size: 2.125rem;
+    text-decoration: none;
+    color: var(--charcoal);
+  }
+
+  .site-nav {
+    display: none;
+    margin-left: auto;
+  }
+
+  .site-nav ul {
+    display: flex;
+    gap: clamp(var(--space-md), 2.6vw, var(--space-lg));
+  }
+
+  .site-nav a,
+  .site-header__search {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: color var(--dur-fast) var(--ease);
+  }
+
+  .site-nav a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 8px;
+    height: 2px;
+    background: var(--red);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--dur) var(--ease);
+  }
+
+  .site-nav a:hover::after,
+  .site-nav a[aria-current='page']::after {
+    transform: scaleX(1);
+  }
+
+  .site-header__actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+  }
+
+  .site-header__search {
+    gap: 0.6em;
+  }
+
+  .site-header__search:hover,
+  .site-header__search[aria-current='page'] {
+    color: var(--red);
+  }
+
+  .site-header__search-label {
+    display: none;
+  }
+
+  .site-header__menu {
+    display: inline-grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    margin-right: -10px;
+  }
+
+  @media (min-width: 960px) {
+    .site-nav {
+      display: block;
+    }
+
+    .site-header__menu {
+      display: none;
+    }
+
+    .site-header__actions {
+      padding-left: var(--space-lg);
+      border-left: var(--rule);
+      height: 28px;
+    }
+
+    .site-header__search-label {
+      display: inline;
+    }
+  }
+
+  /* ---------- menu mobile ---------- */
+  .menu {
+    width: 100%;
+    max-width: none;
+    height: 100%;
+    max-height: none;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background-color: var(--paper);
+    background-image: var(--tex-grain), var(--tex-fiber);
+    color: var(--charcoal);
+  }
+
+  .menu::backdrop {
+    background: var(--black);
+  }
+
+  .menu__inner {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+  }
+
+  .menu__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: var(--header-h);
+    font-size: 2.125rem;
+    border-bottom: var(--rule-strong);
+  }
+
+  .menu__close {
+    display: inline-grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    margin-right: -10px;
+  }
+
+  .menu__list {
+    padding-block: var(--space-md);
+  }
+
+  .menu__list li {
+    border-bottom: var(--rule);
+  }
+
+  .menu__list a {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-sm);
+    padding-block: 0.9rem 0.6rem;
+    text-decoration: none;
+  }
+
+  .menu__index {
+    color: var(--red);
+    min-width: 2.2em;
+  }
+
+  .menu__label {
+    font-family: var(--font-display);
+    font-size: clamp(2.75rem, 12vw, 4rem);
+    line-height: 0.9;
+    text-transform: uppercase;
+  }
+
+  .menu__list a[aria-current='page'] .menu__label {
+    color: var(--red);
+  }
+
+  .menu__tagline {
+    margin-top: auto;
+    padding-block: var(--space-lg);
+    color: var(--fg-muted);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .menu[open] .menu__list li {
+      animation: menu-in var(--dur-slow) var(--ease) both;
+      animation-delay: calc(var(--i) * 40ms + 60ms);
+    }
+  }
+
+  @keyframes menu-in {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+  }
+</style>

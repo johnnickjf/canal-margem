@@ -1,0 +1,251 @@
+---
+import SectionHeader from '@/components/ui/SectionHeader.astro';
+import Photo from '@/components/ui/Photo.astro';
+import Icon from '@/components/ui/Icon.astro';
+import { getTemaCounts, getTemas, routes } from '@/lib/content';
+import { padIndex } from '@/lib/format';
+
+/**
+ * Índice dos 12 pilares. No desktop, a foto ao lado acompanha o tema em foco
+ * (hover ou teclado) — como folhear o sumário de uma revista.
+ */
+interface Props {
+  index?: number;
+  headingLevel?: 'h2' | 'h3';
+}
+
+const { index = 3 } = Astro.props;
+const [temas, counts] = await Promise.all([getTemas(), getTemaCounts()]);
+---
+
+<section class="section temas" aria-labelledby="temas-titulo" data-temas>
+  <div class="container">
+    <SectionHeader index={index} label="Temas" link={{ href: '/temas', label: 'Ver todos os temas' }} />
+
+    <div class="temas__grid">
+      <div class="temas__intro">
+        <h2 id="temas-titulo" class="temas__title">
+          Política começa
+          <br />
+          na <span class="hl">vida real</span>
+        </h2>
+        <p class="temas__lede">
+          Doze pilares para olhar o Brasil a partir das condições materiais do dia a dia: trabalho, renda,
+          moradia, cidade, poder.
+        </p>
+
+        <div class="temas__preview" aria-hidden="true">
+          {
+            temas.map((tema, i) => (
+              <div class="temas__preview-item" data-preview={tema.id} data-active={i === 0 ? '' : undefined}>
+                <Photo photo={tema.data.cover} ratio="4/5" sizes="(min-width: 1080px) 34vw, 1px" />
+                <span class="temas__preview-q">{tema.data.question}</span>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+
+      <ol class="temas__list" role="list" data-reveal-group>
+        {
+          temas.map((tema) => {
+            const count = counts.get(tema.id) ?? 0;
+            return (
+              <li data-reveal>
+                <a class="temas__row" href={routes.tema(tema.id)} data-tema={tema.id}>
+                  <span class="temas__num">{padIndex(tema.data.order)}</span>
+                  <span class="temas__name">{tema.data.name}</span>
+                  <span class="temas__q">{tema.data.question}</span>
+                  <span class="temas__count label">
+                    {count > 0 ? `${padIndex(count)} ${count === 1 ? 'peça' : 'peças'}` : 'Em breve'}
+                  </span>
+                  <Icon name="arrow-right" class="temas__arrow" />
+                </a>
+              </li>
+            );
+          })
+        }
+      </ol>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-temas]').forEach((root) => {
+    const items = root.querySelectorAll<HTMLElement>('[data-preview]');
+    const activate = (id: string | undefined) => {
+      if (!id) return;
+      items.forEach((item) => item.toggleAttribute('data-active', item.dataset.preview === id));
+    };
+    root.querySelectorAll<HTMLElement>('[data-tema]').forEach((row) => {
+      const show = () => activate(row.dataset.tema);
+      row.addEventListener('mouseenter', show);
+      row.addEventListener('focus', show);
+    });
+  });
+</script>
+
+<style>
+  .temas__grid {
+    display: grid;
+    gap: var(--space-xl) var(--column-gap);
+  }
+
+  .temas__title {
+    font-size: var(--display-lg);
+  }
+
+  .temas__lede {
+    margin-top: var(--space-md);
+    max-width: 40ch;
+    color: var(--fg-muted);
+  }
+
+  .temas__preview {
+    display: none;
+  }
+
+  /* ---------- lista ---------- */
+  .temas__list {
+    border-top: var(--rule-strong);
+  }
+
+  .temas__list li {
+    border-bottom: var(--rule);
+  }
+
+  .temas__row {
+    position: relative;
+    display: grid;
+    grid-template-columns: 2.6rem minmax(0, 1fr) auto;
+    grid-template-areas:
+      'num name arrow'
+      'num q q';
+    column-gap: var(--space-sm);
+    row-gap: 2px;
+    align-items: baseline;
+    padding: 1rem 0 0.85rem;
+    text-decoration: none;
+    transition:
+      background-color var(--dur) var(--ease),
+      padding var(--dur) var(--ease);
+  }
+
+  .temas__num {
+    grid-area: num;
+    font-family: var(--font-display);
+    font-size: 1.75rem;
+    line-height: 1;
+    color: var(--red);
+  }
+
+  .temas__name {
+    grid-area: name;
+    font-family: var(--font-display);
+    font-size: clamp(1.875rem, 1.4rem + 1.4vw, 2.75rem);
+    line-height: 0.95;
+    text-transform: uppercase;
+  }
+
+  .temas__q {
+    grid-area: q;
+    font-size: var(--text-sm);
+    color: var(--fg-muted);
+  }
+
+  .temas__count {
+    display: none;
+    color: var(--fg-muted);
+    font-size: var(--label-sm);
+  }
+
+  .temas__row :global(.temas__arrow) {
+    grid-area: arrow;
+    align-self: center;
+    transition: transform var(--dur) var(--ease), color var(--dur) var(--ease);
+  }
+
+  .temas__row:hover,
+  .temas__row:focus-visible {
+    background-color: var(--paper-light);
+    padding-inline: var(--space-sm);
+  }
+
+  .temas__row:hover .temas__name,
+  .temas__row:focus-visible .temas__name {
+    color: var(--red);
+  }
+
+  .temas__row:hover :global(.temas__arrow) {
+    transform: translateX(4px);
+    color: var(--red);
+  }
+
+  .temas__row:focus-visible {
+    outline-offset: -2px;
+  }
+
+  @media (min-width: 720px) {
+    .temas__row {
+      grid-template-columns: 3.2rem minmax(0, 0.9fr) minmax(0, 1.3fr) auto 24px;
+      grid-template-areas: 'num name q count arrow';
+      column-gap: var(--space-md);
+      align-items: center;
+    }
+
+    .temas__count {
+      display: block;
+    }
+  }
+
+  /* ---------- desktop: prévia fotográfica fixa ---------- */
+  @media (min-width: 1080px) {
+    .temas__grid {
+      grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+    }
+
+    .temas__intro {
+      position: sticky;
+      top: calc(var(--header-h) + var(--space-lg));
+      align-self: start;
+    }
+
+    .temas__preview {
+      display: block;
+      position: relative;
+      margin-top: var(--space-lg);
+      aspect-ratio: 4 / 5;
+      max-height: 52vh;
+    }
+
+    .temas__preview-item {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity var(--dur-slow) var(--ease);
+    }
+
+    .temas__preview-item :global(.photo) {
+      height: 100%;
+    }
+
+    .temas__preview-item[data-active] {
+      opacity: 1;
+    }
+
+    .temas__preview-q {
+      position: absolute;
+      left: 0;
+      bottom: var(--space-md);
+      max-width: 88%;
+      z-index: 2;
+      padding: 0.8rem 1rem 0.6rem;
+      background: var(--red);
+      color: var(--paper-light);
+      font-family: var(--font-display);
+      font-size: 1.75rem;
+      line-height: 0.95;
+      text-transform: uppercase;
+    }
+  }
+</style>

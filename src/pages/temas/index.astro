@@ -1,0 +1,133 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHeader from '@/components/layout/PageHeader.astro';
+import Photo from '@/components/ui/Photo.astro';
+import { getTemaCounts, getTemas, routes } from '@/lib/content';
+import { padIndex } from '@/lib/format';
+
+const [temas, counts] = await Promise.all([getTemas(), getTemaCounts()]);
+---
+
+<BaseLayout
+  title="Temas"
+  description="Os doze pilares editoriais da MARGEM: trabalho, renda, custo de vida, habitação, cidade, serviços públicos, democracia, desigualdade, tecnologia, tributação, poder econômico e vida cotidiana."
+  image="avenida-paulista"
+>
+  <PageHeader
+    label="Temas"
+    title="Política começa na [vida real]"
+    lede="Doze pilares para entender o Brasil a partir do que se vive todo dia. Cada tema parte de uma pergunta concreta — e não de uma conclusão pronta."
+    aside={`${padIndex(temas.length)} pilares`}
+  />
+
+  <section class="section" aria-label="Lista de temas">
+    <div class="container">
+      <ol class="tema-grid" role="list" data-reveal-group>
+        {
+          temas.map((tema) => {
+            const count = counts.get(tema.id) ?? 0;
+            return (
+              <li class="tema-card" data-reveal>
+                <a href={routes.tema(tema.id)} class="tema-card__link">
+                  <Photo
+                    photo={tema.data.cover}
+                    ratio="4/5"
+                    sizes="(min-width: 1080px) 25vw, (min-width: 720px) 45vw, 100vw"
+                    widths={[400, 640, 900]}
+                  />
+                  <span class="tema-card__num">{padIndex(tema.data.order)}</span>
+                  <span class="tema-card__body">
+                    <span class="tema-card__name">{tema.data.name}</span>
+                    <span class="tema-card__q">{tema.data.question}</span>
+                    <span class="tema-card__count label">
+                      {count > 0 ? `${padIndex(count)} ${count === 1 ? 'publicação' : 'publicações'}` : 'Em breve'}
+                    </span>
+                  </span>
+                </a>
+              </li>
+            );
+          })
+        }
+      </ol>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .tema-grid {
+    display: grid;
+    gap: var(--space-xl) var(--column-gap);
+  }
+
+  .tema-card__link {
+    position: relative;
+    display: grid;
+    gap: var(--space-sm);
+    text-decoration: none;
+  }
+
+  .tema-card__link :global(img) {
+    transition:
+      filter var(--dur-slow) var(--ease),
+      transform 700ms var(--ease-out);
+  }
+
+  .tema-card__link:hover :global(img) {
+    filter: var(--photo-filter-hover);
+    transform: scale(1.03);
+  }
+
+  .tema-card__num {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    padding: 0.5rem 0.7rem 0.3rem;
+    background: var(--red);
+    color: var(--paper-light);
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    line-height: 1;
+  }
+
+  .tema-card__body {
+    display: grid;
+    gap: 6px;
+    padding-top: var(--space-xs);
+    border-top: var(--rule-strong);
+  }
+
+  .tema-card__name {
+    font-family: var(--font-display);
+    font-size: var(--display-sm);
+    line-height: 1;
+    text-transform: uppercase;
+    transition: color var(--dur) var(--ease);
+  }
+
+  .tema-card__link:hover .tema-card__name {
+    color: var(--red);
+  }
+
+  .tema-card__q {
+    color: var(--fg-muted);
+    font-size: var(--text-sm);
+  }
+
+  .tema-card__count {
+    margin-top: 4px;
+    font-size: var(--label-sm);
+  }
+
+  @media (min-width: 720px) {
+    .tema-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 1080px) {
+    .tema-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+</style>
