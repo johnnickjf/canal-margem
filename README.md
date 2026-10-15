@@ -3,6 +3,21 @@
 Política / Economia / Pessoas. Site estático em [Astro](https://astro.build), construído a partir do
 Manual de Marca v1.0 (`docs/brand/`).
 
+## Requisito permanente: SEO e descoberta por IA
+
+As páginas públicas destinadas à descoberta devem priorizar SEO para que motores de busca,
+indexadores e agentes de IA encontrem, leiam e compreendam o projeto e seu conteúdo de forma
+eficiente. **Esta regra nunca deve ser perdida ou enfraquecida**, inclusive na evolução para a
+plataforma Margem. Ela é um critério de aceitação de mudanças nas páginas, nos layouts, na
+navegação e na publicação.
+
+As [instruções permanentes do projeto](AGENTS.md) detalham os requisitos de HTML acessível,
+metadados, URLs canônicas, links rastreáveis, sitemap, `robots.txt` e dados estruturados,
+além das verificações necessárias antes de concluir alterações. Preserve esta referência
+ao reorganizar a documentação.
+
+## Desenvolvimento local
+
 ```bash
 pnpm install
 pnpm dev          # http://localhost:4321
