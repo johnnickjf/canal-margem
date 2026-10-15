@@ -1,7 +1,7 @@
 ---
 /**
- * Linha de metadados em IBM Plex Mono: `M / 021 — TRABALHO — 24:18`.
- * Itens vazios são descartados.
+ * Linha de metadados em IBM Plex Mono: `M / 021 / TRABALHO / 24:18`.
+ * Descarta strings vazias, undefined e false; objetos são mantidos mesmo sem texto.
  */
 type Part = { text: string; href?: string; accent?: boolean };
 

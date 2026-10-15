@@ -37,7 +37,9 @@ const fixedRatio = ratio !== 'auto' && ratio !== 'fill';
 const [w, h] = fixedRatio ? ratio.split('/').map(Number) : [0, 0];
 const heightFor = (width: number) => (w && h ? Math.round((width * h) / w) : undefined);
 
-const srcset = widths.map((width) => `${photoUrl(photo, width, heightFor(width))} ${width}w`).join(', ');
+const srcset = widths
+  .map((width) => `${photoUrl(photo, width, heightFor(width))} ${width}w`)
+  .join(', ');
 const fallbackWidth = widths[Math.min(1, widths.length - 1)];
 ---
 

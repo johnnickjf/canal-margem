@@ -1,6 +1,8 @@
 # MARGEM — Manual de Marca, Conteúdo e Handoff para Site
 Versão 1.0
 
+Este manual define a direção de marca e os requisitos editoriais e visuais. As listas de navegação, assets e exemplos de CSS são referências de projeto; o estado implementado, suas extensões e limitações estão na [auditoria do frontend](../systems/frontend.md).
+
 > **MARGEM** é uma marca editorial de opinião sobre política, economia e vida cotidiana.  
 > A identidade deve parecer **crítica, humana, contemporânea, documental e acessível** — nunca panfletária, partidária ou excessivamente “tech”.
 

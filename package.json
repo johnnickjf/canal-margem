@@ -5,14 +5,18 @@
   "private": true,
   "description": "Site editorial da MARGEM — política, economia e pessoas.",
   "engines": {
-    "node": ">=22.12.0"
+    "node": ">=22.13.0"
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "astro check && astro build",
+    "build": "pnpm check && astro build",
     "preview": "astro preview",
-    "check": "astro check",
-    "astro": "astro"
+    "check": "biome check . && astro check",
+    "astro": "astro",
+    "lint": "biome check .",
+    "lint:fix": "biome check --write .",
+    "format": "biome format --write .",
+    "format:check": "biome format ."
   },
   "dependencies": {
     "@astrojs/rss": "^4.0.19",
@@ -24,6 +28,8 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.10",
+    "@biomejs/biome": "2.5.15",
     "typescript": "^6.0.3"
-  }
+  },
+  "packageManager": "pnpm@11.22.0"
 }

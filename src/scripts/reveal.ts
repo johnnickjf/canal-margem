@@ -24,7 +24,11 @@ if ('IntersectionObserver' in window) {
     },
     { rootMargin: '0px 0px -8% 0px', threshold: 0.08 },
   );
-  targets.forEach((el) => observer.observe(el));
+  targets.forEach((el) => {
+    observer.observe(el);
+  });
 } else {
-  targets.forEach((el) => el.classList.add('is-visible'));
+  targets.forEach((el) => {
+    el.classList.add('is-visible');
+  });
 }

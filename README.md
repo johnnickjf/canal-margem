@@ -4,20 +4,36 @@ Política / Economia / Pessoas. Site estático em [Astro](https://astro.build), 
 Manual de Marca v1.0 (`docs/brand/`).
 
 ```bash
-npm install
-npm run dev       # http://localhost:4321
-npm run build     # checagem de tipos + build estático em dist/
-npm run preview   # serve o build localmente
+pnpm install
+pnpm dev          # http://localhost:4321
+pnpm check        # Biome + checagem do Astro
+pnpm build        # check + build estático em dist/
+pnpm preview      # serve o build localmente
 ```
 
-Requer Node 22.12 ou superior.
+Requer Node 22.13 ou superior e pnpm 11.22.0, fixado em `packageManager`.
+Se o pnpm ainda não estiver instalado, use `npm install --global pnpm@11.22.0`.
+
+O lockfile do projeto é `pnpm-lock.yaml`. Em CI, use `pnpm install --frozen-lockfile`.
+`pnpm-workspace.yaml` autoriza o script de instalação de `esbuild`, necessário à ferramenta de build.
 
 ---
+
+## Evolução para a plataforma Margem
+
+O contexto de produto, a arquitetura futura e o roadmap estão no [índice de documentação](docs/README.md).
+A [auditoria do frontend](docs/systems/frontend.md) descreve a base atual, o que pode ser reutilizado e as limitações.
+Esta primeira etapa organiza a documentação; indicadores e serviços de dados pertencem às fases seguintes.
 
 ## Estrutura
 
 ```text
-docs/brand/                 Manual de marca, tokens e pranchas de referência
+docs/                       Visão, UX, arquitetura, roadmap e índice de documentação
+  brand/                    Manual de marca, tokens e pranchas de referência
+  research/                 Investigações e hipóteses
+  adr/                      Decisões técnicas
+  data-sources/             Catálogo futuro de fontes
+  systems/                  Auditoria do frontend e documentação dos sistemas
 public/                     favicon (M|), robots.txt
 src/
   config/site.ts            Textos institucionais, navegação, canais, contato, newsletter, CTAs
@@ -43,9 +59,25 @@ src/
   pages/                    Rotas (home, vídeos, temas, análises, manifesto, sobre, busca, 404, RSS)
 ```
 
+## Formatação e lint
+
+```bash
+pnpm lint          # verifica lint, formatação e organização de imports
+pnpm lint:fix      # aplica correções seguras, formatação e organização de imports
+pnpm format        # formata os arquivos suportados
+pnpm format:check  # verifica formatação sem alterar arquivos
+```
+
+A configuração está em `biome.json`: dois espaços, largura alvo de 100 colunas e aspas simples em JavaScript/TypeScript e CSS. A extensão `biomejs.biome` está recomendada para o VS Code.
+
+O Biome verifica JS/TS, JSON/JSONC, CSS e SVG. Nos arquivos `.astro`, a configuração atual processa apenas o frontmatter entre `---`; markup, blocos `<script>` e estilos embutidos ficam fora dessa cobertura. As regras de imports/variáveis não usados e a organização automática de imports estão desativadas em `.astro`, por causa das referências nos templates. `astro check` continua no comando `pnpm check` e complementa essa cobertura.
+
+Referências: [configuração do Biome](https://biomejs.dev/reference/configuration/) e [importação de lockfiles no pnpm](https://pnpm.io/cli/import).
+
 ## Publicando conteúdo
 
-Todo conteúdo é Markdown com frontmatter validado. Um campo errado interrompe o build com uma mensagem clara.
+Vídeos e análises usam Markdown com frontmatter; os temas ficam em `src/content/temas.json`.
+Os schemas de `src/content.config.ts` validam campos e referências durante o build.
 
 ### Novo episódio — `src/content/videos/m022-slug.md`
 
@@ -72,8 +104,8 @@ Texto de apresentação do episódio.
 
 ### Novo corte
 
-Mesmo arquivo, com `format: corte` e `parent: <id-do-episódio>` (nome do arquivo sem `.md`).
-O corte herda a numeração `M / 022`.
+Crie outro arquivo Markdown com `format: corte` e `parent: <id-do-episódio>` (nome do arquivo sem `.md`).
+Preencha `episode` com o mesmo número do episódio de origem; o código não herda esse campo de `parent`.
 
 ### Nova análise — `src/content/analises/slug.md`
 
@@ -82,12 +114,13 @@ Campos: `title`, `dek`, `author`, `tema`, `publishedAt`, `cover`, e opcionalment
 
 ### Títulos
 
-Regra do manual: 2–5 palavras, caixa alta (automática), no máximo **um** trecho destacado entre `[colchetes]`.
-O schema rejeita mais de um destaque.
+O manual orienta títulos de 2–5 palavras, em caixa alta (aplicada pelo CSS), com no máximo um trecho
+destacado entre `[colchetes]`. O schema rejeita mais de um `[`; não valida a contagem de palavras
+nem o fechamento dos colchetes.
 
 ### Rascunhos
 
-`draft: true` mantém o item visível em `npm run dev` e fora do build de produção.
+`draft: true` mantém o item visível em `pnpm dev` e fora do build de produção.
 
 ## Imagens
 
@@ -99,30 +132,34 @@ As fotos atuais vêm do Unsplash (licença Unsplash) e os créditos aparecem em 
 
 ## Sistema visual
 
-- **Tokens** em `src/styles/tokens.css`, espelhando `docs/brand/MARGEM_design_tokens.json`.
+- **Tokens** em `src/styles/tokens.css`, baseados em `docs/brand/MARGEM_design_tokens.json`, com extensões para o site. Não há sincronização automática entre os arquivos.
 - **Cor 80/15/5**: papel domina, carvão estrutura, vermelho só como marca-texto.
-  `--red-on-dark` é uma variação clareada do vermelho apenas para texto sobre preto (contraste AA).
+  `--red-on-dark` é uma variação clareada para fundos escuros; não garante contraste AA para texto de tamanho normal. Ver [limites de contraste](docs/systems/frontend.md#contraste-do-vermelho-em-fundos-escuros).
 - **Tipografia** auto-hospedada via Fontsource: Bebas Neue (títulos), Inter (corpo/UI), IBM Plex Mono (labels, datas, `M / 000`).
 - **Texturas** procedurais em SVG (`textures.css`): papel, concreto, grunge vermelho e halftone — sem arquivos pesados.
 - **Bordas rasgadas** geradas em `src/lib/torn.ts` como `clip-path` determinístico por `seed`.
 - **Thumbnails** (`VideoThumb`) seguem a prancha P02 — selo, título em retalho, lower third e episódio — e
   escalam com container queries, servindo do card pequeno ao player.
-- **Movimento**: 150–350 ms, `ease-out`, sem bounce; tudo desativado com `prefers-reduced-motion`.
+- **Movimento**: tokens de 150–350 ms, com easing sem bounce. Há exceções locais, como a transição de 600 ms em `Photo`. `prefers-reduced-motion` desativa o reveal, a animação do menu e a rolagem suave; outras transições permanecem ativas.
 
 ## Configuração antes de publicar
 
 1. Domínio definitivo em `astro.config.mjs` (`site`), `src/config/site.ts` (`url`) e `public/robots.txt`.
 2. Perfis oficiais em `socials` e e-mails em `contact` (`src/config/site.ts`).
 3. Endpoint da newsletter em `newsletter.action` (Buttondown, Substack, Mailchimp ou próprio). Enquanto vazio,
-   o formulário não envia dados e informa que as inscrições abrem em breve.
+   o JavaScript bloqueia o envio e informa que as inscrições abrem em breve. Sem JavaScript, o formulário
+   pode enviar um POST para a página atual; revisar esse estado antes de publicar.
 4. `youtubeId` de cada episódio publicado.
 5. Revisar os textos de exemplo em `src/content/` — eles ilustram o formato e o tom, não são pautas apuradas.
 
 ## Acessibilidade
 
-Contraste WCAG AA, corpo mínimo 16px, foco visível em vermelho, link "Pular para o conteúdo", menu mobile em
-`<dialog>` nativo (foco preso e `Esc`), estados que não dependem só de cor, `alt` descritivo em todas as fotos e
-player do YouTube com legendas ativadas por padrão.
+O código inclui corpo base de 16px, foco visível, link "Pular para o conteúdo", menu mobile em `<dialog>`
+nativo e fotos com `alt`. Labels e alguns textos de UI usam tamanhos menores que 16px.
+O player solicita legendas ao YouTube; a exibição depende das legendas disponíveis no vídeo.
+
+O manual exige contraste WCAG AA e estados que não dependam só de cor. A conformidade de todos os estados
+ainda precisa de validação visual e assistiva; o build não comprova esses requisitos.
 
 ---
 

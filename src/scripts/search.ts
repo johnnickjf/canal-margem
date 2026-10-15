@@ -19,10 +19,18 @@ export function createSearch(endpoint: string) {
   const load = () =>
     (index ??= fetch(endpoint)
       .then((res) => res.json() as Promise<SearchItem[]>)
-      .then((items) => items.map((item) => ({ ...item, _title: normalize(item.title), _text: normalize(item.text) }))));
+      .then((items) =>
+        items.map((item) => ({
+          ...item,
+          _title: normalize(item.title),
+          _text: normalize(item.text),
+        })),
+      ));
 
   return async (query: string): Promise<SearchItem[]> => {
-    const terms = normalize(query).split(/\s+/).filter((t) => t.length > 1);
+    const terms = normalize(query)
+      .split(/\s+/)
+      .filter((t) => t.length > 1);
     if (!terms.length) return [];
     const items = await load();
 

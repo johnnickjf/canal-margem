@@ -42,7 +42,10 @@ function edge(rand: () => number, depth: number, steps: number): number[] {
   return values;
 }
 
-export function tornClipPath(side: Side, { seed = 7, depth = 3, steps = 48 }: TornOptions = {}): string {
+export function tornClipPath(
+  side: Side,
+  { seed = 7, depth = 3, steps = 48 }: TornOptions = {},
+): string {
   const offsets = edge(random(seed), depth, steps);
   const along = (i: number) => (i / steps) * 100;
   let points: string[];
@@ -56,18 +59,10 @@ export function tornClipPath(side: Side, { seed = 7, depth = 3, steps = 48 }: To
       ];
       break;
     case 'right':
-      points = [
-        '0% 0%',
-        ...offsets.map((o, i) => `${pct(100 - o)} ${pct(along(i))}`),
-        '0% 100%',
-      ];
+      points = ['0% 0%', ...offsets.map((o, i) => `${pct(100 - o)} ${pct(along(i))}`), '0% 100%'];
       break;
     case 'top':
-      points = [
-        ...offsets.map((o, i) => `${pct(along(i))} ${pct(o)}`),
-        '100% 100%',
-        '0% 100%',
-      ];
+      points = [...offsets.map((o, i) => `${pct(along(i))} ${pct(o)}`), '100% 100%', '0% 100%'];
       break;
     case 'bottom':
       points = [

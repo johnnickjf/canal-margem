@@ -1,4 +1,17 @@
-const MONTHS_SHORT = ['JAN', 'FEV', 'MAR', 'ABR', 'MAI', 'JUN', 'JUL', 'AGO', 'SET', 'OUT', 'NOV', 'DEZ'];
+const MONTHS_SHORT = [
+  'JAN',
+  'FEV',
+  'MAR',
+  'ABR',
+  'MAI',
+  'JUN',
+  'JUL',
+  'AGO',
+  'SET',
+  'OUT',
+  'NOV',
+  'DEZ',
+];
 
 const longDate = new Intl.DateTimeFormat('pt-BR', {
   day: 'numeric',
@@ -36,7 +49,10 @@ export function toISODate(date: Date): string {
 
 /** Tempo de leitura em minutos (média de 200 palavras/minuto em português). */
 export function readingTime(text = ''): number {
-  const words = text.replace(/[#>*_`\-[\]()]/g, ' ').split(/\s+/).filter(Boolean).length;
+  const words = text
+    .replace(/[#>*_`\-[\]()]/g, ' ')
+    .split(/\s+/)
+    .filter(Boolean).length;
   return Math.max(1, Math.round(words / 200));
 }
 

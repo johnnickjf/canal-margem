@@ -15,7 +15,15 @@ import CutCard from '@/components/cards/CutCard.astro';
 import ArticleCard from '@/components/cards/ArticleCard.astro';
 import Newsletter from '@/components/sections/Newsletter.astro';
 import { ctas } from '@/config/site';
-import { getArticles, getCutsOf, getEpisodes, getTema, getVideos, routes, type Video } from '@/lib/content';
+import {
+  getArticles,
+  getCutsOf,
+  getEpisodes,
+  getTema,
+  getVideos,
+  routes,
+  type Video,
+} from '@/lib/content';
 import { durationToISO, episodeCode } from '@/lib/format';
 import { plainHeadline } from '@/lib/headline';
 import { getPhoto, photoUrl } from '@/data/photos';
@@ -56,7 +64,9 @@ const jsonLd = {
   thumbnailUrl: photoUrl(getPhoto(data.cover), 1280, 720),
   uploadDate: data.publishedAt.toISOString(),
   duration: durationToISO(data.duration),
-  ...(data.youtubeId ? { embedUrl: `https://www.youtube-nocookie.com/embed/${data.youtubeId}` } : {}),
+  ...(data.youtubeId
+    ? { embedUrl: `https://www.youtube-nocookie.com/embed/${data.youtubeId}` }
+    : {}),
 };
 ---
 

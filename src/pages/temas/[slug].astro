@@ -19,6 +19,7 @@ export const getStaticPaths = (async () => {
     params: { slug: tema.id },
     props: {
       tema,
+      // biome-ignore lint/style/noNonNullAssertion: o callback de map só executa quando temas não está vazio.
       prev: temas[i - 1] ?? temas.at(-1)!,
       next: temas[i + 1] ?? temas[0],
     },

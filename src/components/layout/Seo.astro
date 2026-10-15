@@ -23,7 +23,9 @@ const {
   jsonLd,
 } = Astro.props as SeoProps;
 
-const fullTitle = title ? `${title} | ${site.name}` : `${site.name} — ${site.signature.join(' / ')}`;
+const fullTitle = title
+  ? `${title} | ${site.name}`
+  : `${site.name} — ${site.signature.join(' / ')}`;
 const canonical = new URL(Astro.url.pathname, Astro.site ?? site.url);
 const ogImage = photoUrl(getPhoto(image), 1200, 630);
 ---

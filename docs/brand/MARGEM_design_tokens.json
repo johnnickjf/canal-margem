@@ -43,14 +43,7 @@
       "Poder econômico",
       "Vida cotidiana"
     ],
-    "voice": [
-      "crítico",
-      "claro",
-      "humano",
-      "popular",
-      "objetivo",
-      "contextual"
-    ]
+    "voice": ["crítico", "claro", "humano", "popular", "objetivo", "contextual"]
   },
   "video": {
     "horizontal": "16:9",

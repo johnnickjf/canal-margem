@@ -12,7 +12,7 @@
     --paper-deep: #ddd5ca;
     --red: #8f2d24;
     --red-deep: #74231c;
-    /* Vermelho clareado só para texto sobre preto (contraste AA) */
+    /* Vermelho clareado para fundos escuros; AA para texto normal não é garantido. */
     --red-on-dark: #c0493c;
     --charcoal: #1f1f1f;
     --black: #0d0d0d;

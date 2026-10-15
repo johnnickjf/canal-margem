@@ -103,8 +103,9 @@ export const contact = {
 
 /**
  * Newsletter: aponte `action` para o endpoint do provedor (Buttondown, Substack,
- * Mailchimp, formulário próprio). Enquanto estiver vazio, o formulário informa
- * que as inscrições ainda não estão abertas, sem enviar dados a lugar nenhum.
+ * Mailchimp, formulário próprio). Enquanto estiver vazio, o JavaScript intercepta
+ * o envio e informa que as inscrições ainda não estão abertas. Sem JavaScript,
+ * o formulário pode enviar um POST para a página atual.
  */
 export const newsletter = {
   action: '',

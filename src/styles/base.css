@@ -136,6 +136,7 @@
   }
 
   [hidden] {
+    /* biome-ignore lint/complexity/noImportantStyles: hidden deve prevalecer sobre o display dos componentes. */
     display: none !important;
   }
 
@@ -193,6 +194,7 @@
 /* ---------- utilitários ---------- */
 @layer utilities {
   .visually-hidden {
+    /* biome-ignore lint/complexity/noImportantStyles: mantém o conteúdo acessível fora do fluxo visual. */
     position: absolute !important;
     width: 1px;
     height: 1px;

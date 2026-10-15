@@ -8,12 +8,28 @@ import { contact, site, socials } from '@/config/site';
 import { photos, type Photo as PhotoData } from '@/data/photos';
 import { voice } from '@/data/manifesto';
 
-const is = ['Crítica', 'Clara', 'Humana', 'Popular sem ser simplista', 'Objetiva', 'Contextual', 'Curiosa', 'Documental'];
-const isNot = ['Partidária', 'Panfletária', 'Acadêmica demais', 'Agressiva por padrão', 'Clickbait vazio', 'Professoral'];
+const is = [
+  'Crítica',
+  'Clara',
+  'Humana',
+  'Popular sem ser simplista',
+  'Objetiva',
+  'Contextual',
+  'Curiosa',
+  'Documental',
+];
+const isNot = [
+  'Partidária',
+  'Panfletária',
+  'Acadêmica demais',
+  'Agressiva por padrão',
+  'Clickbait vazio',
+  'Professoral',
+];
 
-const credits: PhotoData[] = [...new Map(Object.values(photos as Record<string, PhotoData>).map((p) => [p.credit, p])).values()].sort((a, b) =>
-  a.credit.localeCompare(b.credit, 'pt-BR'),
-);
+const credits: PhotoData[] = [
+  ...new Map(Object.values(photos as Record<string, PhotoData>).map((p) => [p.credit, p])).values(),
+].sort((a, b) => a.credit.localeCompare(b.credit, 'pt-BR'));
 ---
 
 <BaseLayout title="Sobre" description={site.positioning} image="escada-metro">

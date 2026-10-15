@@ -13,16 +13,26 @@ export const GET: APIRoute = async () => {
     ...videos.map((video) => ({
       type: video.data.format === 'corte' ? ('Corte' as const) : ('Episódio' as const),
       title: plainHeadline(video.data.title),
-      text: [video.data.dek, video.body ?? '', video.data.chapters.map((c) => c.label).join(' ')].join(' '),
+      text: [
+        video.data.dek,
+        video.body ?? '',
+        video.data.chapters.map((c) => c.label).join(' '),
+      ].join(' '),
       url: routes.video(video),
-      meta: [episodeCode(video.data.episode), temaName.get(video.data.tema.id), video.data.duration].join(' / '),
+      meta: [
+        episodeCode(video.data.episode),
+        temaName.get(video.data.tema.id),
+        video.data.duration,
+      ].join(' / '),
     })),
     ...articles.map((article) => ({
       type: 'Análise' as const,
       title: plainHeadline(article.data.title),
       text: `${article.data.dek} ${article.body ?? ''}`,
       url: routes.article(article),
-      meta: [temaName.get(article.data.tema.id), formatDateMono(article.data.publishedAt)].join(' / '),
+      meta: [temaName.get(article.data.tema.id), formatDateMono(article.data.publishedAt)].join(
+        ' / ',
+      ),
     })),
     ...temas.map((tema) => ({
       type: 'Tema' as const,

@@ -1,11 +1,10 @@
-import { getCollection, getEntry, type CollectionEntry } from 'astro:content';
+import { type CollectionEntry, getCollection, getEntry } from 'astro:content';
 
 export type Video = CollectionEntry<'videos'>;
 export type Article = CollectionEntry<'analises'>;
 export type Tema = CollectionEntry<'temas'>;
 
-const isPublished = ({ data }: { data: { draft?: boolean } }) =>
-  import.meta.env.DEV || !data.draft;
+const isPublished = ({ data }: { data: { draft?: boolean } }) => import.meta.env.DEV || !data.draft;
 
 const byDateDesc = (a: { data: { publishedAt: Date } }, b: { data: { publishedAt: Date } }) =>
   b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf();

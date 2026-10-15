@@ -72,13 +72,13 @@ export const photos = {
     credit: 'Guilherme Cunha',
     creditUrl: 'https://unsplash.com/@guiccunha',
   },
-  'obra': {
+  obra: {
     src: unsplash('photo-1489514354504-1653aa90e34e'),
     alt: 'Operário de uniforme laranja caminhando sobre a estrutura de uma laje em construção',
     credit: 'Guilherme Cunha',
     creditUrl: 'https://unsplash.com/@guiccunha',
   },
-  'maos': {
+  maos: {
     src: unsplash('photo-1499152701974-8a37869fea68'),
     alt: 'Mãos calejadas abertas, com as palmas voltadas para cima, em preto e branco',
     credit: 'Om Prakash Sethia',
@@ -115,7 +115,7 @@ export const photos = {
     creditUrl: 'https://unsplash.com/@marcelomagalhaes',
     focus: '40% 35%',
   },
-  'transito': {
+  transito: {
     src: unsplash('photo-1700680010066-f02c3e31d9e5'),
     alt: 'Rua estreita congestionada de carros entre edifícios altos, vista de cima',
     credit: 'Gustavo Nacht',
