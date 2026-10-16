@@ -1,0 +1,866 @@
+{
+  "illustrative": true,
+  "description": "Cenários conceituais; não são execução de infraestrutura nem contrato de API. Referências resolvem em data-model.json.",
+  "model_examples": "data-model.json",
+  "digest_encoding": "SHA-256 de JSON UTF-8 com sort_keys=true, ensure_ascii=false e separators=(comma,colon), sem espaços. Convenção destes exemplos; não fixa a serialização de produção.",
+  "catalog_revisions": [
+    {
+      "id": "catalog-1",
+      "created_at": "2026-09-15T11:00:00Z",
+      "parent": null,
+      "entity_ids": {
+        "themes": ["theme-work", "theme-cost"],
+        "indicators": [
+          "indicator-income",
+          "indicator-hours",
+          "indicator-gas",
+          "indicator-basket",
+          "indicator-hourly",
+          "indicator-gas-time",
+          "indicator-basket-time"
+        ],
+        "series": [
+          "series-income",
+          "series-hours",
+          "series-gas",
+          "series-basket",
+          "series-hourly",
+          "series-gas-time",
+          "series-basket-time"
+        ],
+        "sources": ["source-demo", "source-margem"],
+        "datasets": ["dataset-demo", "dataset-derived"],
+        "units": [
+          "brl-month",
+          "hours-month",
+          "brl-liter",
+          "brl-basket",
+          "brl-hour",
+          "minutes-liter",
+          "hours-basket"
+        ],
+        "geographies": ["geo-demo"],
+        "methodologies": ["method-demo"],
+        "calculations": ["calc-hourly", "calc-gas", "calc-basket"],
+        "policies": ["policy-demo"],
+        "government_periods": ["government-demo"]
+      }
+    }
+  ],
+  "acceptance_batches": [
+    {
+      "id": "accept-source-1",
+      "vintage": "vintage-source-1",
+      "normalization_version": "demo-1",
+      "coverage": [
+        {
+          "series": "series-income",
+          "reference_period": {
+            "start": "2026-08-01",
+            "end": "2026-08-31"
+          }
+        },
+        {
+          "series": "series-hours",
+          "reference_period": {
+            "start": "2026-08-01",
+            "end": "2026-08-31"
+          }
+        },
+        {
+          "series": "series-gas",
+          "reference_period": {
+            "start": "2026-08-01",
+            "end": "2026-08-31"
+          }
+        },
+        {
+          "series": "series-basket",
+          "reference_period": {
+            "start": "2026-08-01",
+            "end": "2026-08-31"
+          }
+        }
+      ],
+      "observation_ids": ["obs-income-1", "obs-hours-1", "obs-gas-1", "obs-basket-1"],
+      "accepted_at": "2026-09-15T12:01:00Z",
+      "fingerprint": "57f34f7557d889cd55145ed73cab3f5029ce0c3e9fd7b228e947c90841db2f1d"
+    },
+    {
+      "id": "accept-derived-1",
+      "vintage": "vintage-derived-1",
+      "normalization_version": null,
+      "coverage": [
+        {
+          "series": "series-hourly",
+          "reference_period": {
+            "start": "2026-08-01",
+            "end": "2026-08-31"
+          }
+        },
+        {
+          "series": "series-gas-time",
+          "reference_period": {
+            "start": "2026-08-01",
+            "end": "2026-08-31"
+          }
+        },
+        {
+          "series": "series-basket-time",
+          "reference_period": {
+            "start": "2026-08-01",
+            "end": "2026-08-31"
+          }
+        }
+      ],
+      "observation_ids": ["obs-hourly-1", "obs-gas-time-1", "obs-basket-time-1"],
+      "accepted_at": "2026-09-15T12:06:00Z",
+      "fingerprint": "6899455779662b557cd9b7c69c5d81c71817e8162bad9a9f41800a0bce008d3e"
+    },
+    {
+      "id": "accept-source-2",
+      "vintage": "vintage-source-2",
+      "normalization_version": "demo-1",
+      "coverage": [
+        {
+          "series": "series-income",
+          "reference_period": {
+            "start": "2026-08-01",
+            "end": "2026-08-31"
+          }
+        },
+        {
+          "series": "series-gas",
+          "reference_period": {
+            "start": "2026-09-01",
+            "end": "2026-09-30"
+          }
+        }
+      ],
+      "observation_ids": ["obs-income-2", "obs-gas-missing"],
+      "accepted_at": "2026-10-01T12:01:00Z",
+      "fingerprint": "749bc718762631e307544c73e00626f8ddca30e5920413280e804ff323b70d1e"
+    },
+    {
+      "id": "accept-derived-2",
+      "vintage": "vintage-derived-2",
+      "normalization_version": null,
+      "coverage": [
+        {
+          "series": "series-hourly",
+          "reference_period": {
+            "start": "2026-08-01",
+            "end": "2026-08-31"
+          }
+        }
+      ],
+      "observation_ids": ["obs-hourly-2"],
+      "accepted_at": "2026-10-01T12:06:00Z",
+      "fingerprint": "4478cd77e40b8bab43333438e75b010e1aea584f402bfeb02de86acad7ebc904"
+    }
+  ],
+  "publications": [
+    {
+      "id": "publication-1",
+      "channel": "public",
+      "base_activation": null,
+      "catalog_revision": "catalog-1",
+      "data_cutoff": "2026-09-15T12:06:00Z",
+      "scope": [
+        {
+          "series": "series-income",
+          "reference_period": {
+            "start": "2026-08-01",
+            "end": "2026-08-31"
+          }
+        },
+        {
+          "series": "series-hours",
+          "reference_period": {
+            "start": "2026-08-01",
+            "end": "2026-08-31"
+          }
+        },
+        {
+          "series": "series-gas",
+          "reference_period": {
+            "start": "2026-08-01",
+            "end": "2026-08-31"
+          }
+        },
+        {
+          "series": "series-basket",
+          "reference_period": {
+            "start": "2026-08-01",
+            "end": "2026-08-31"
+          }
+        },
+        {
+          "series": "series-hourly",
+          "reference_period": {
+            "start": "2026-08-01",
+            "end": "2026-08-31"
+          }
+        },
+        {
+          "series": "series-gas-time",
+          "reference_period": {
+            "start": "2026-08-01",
+            "end": "2026-08-31"
+          }
+        },
+        {
+          "series": "series-basket-time",
+          "reference_period": {
+            "start": "2026-08-01",
+            "end": "2026-08-31"
+          }
+        }
+      ],
+      "manifest": {
+        "selected": [
+          {
+            "series": "series-income",
+            "reference_period": {
+              "start": "2026-08-01",
+              "end": "2026-08-31"
+            },
+            "observation": "obs-income-1"
+          },
+          {
+            "series": "series-hours",
+            "reference_period": {
+              "start": "2026-08-01",
+              "end": "2026-08-31"
+            },
+            "observation": "obs-hours-1"
+          },
+          {
+            "series": "series-gas",
+            "reference_period": {
+              "start": "2026-08-01",
+              "end": "2026-08-31"
+            },
+            "observation": "obs-gas-1"
+          },
+          {
+            "series": "series-basket",
+            "reference_period": {
+              "start": "2026-08-01",
+              "end": "2026-08-31"
+            },
+            "observation": "obs-basket-1"
+          },
+          {
+            "series": "series-hourly",
+            "reference_period": {
+              "start": "2026-08-01",
+              "end": "2026-08-31"
+            },
+            "observation": "obs-hourly-1"
+          },
+          {
+            "series": "series-gas-time",
+            "reference_period": {
+              "start": "2026-08-01",
+              "end": "2026-08-31"
+            },
+            "observation": "obs-gas-time-1"
+          },
+          {
+            "series": "series-basket-time",
+            "reference_period": {
+              "start": "2026-08-01",
+              "end": "2026-08-31"
+            },
+            "observation": "obs-basket-time-1"
+          }
+        ],
+        "unavailable": [],
+        "visible_observation_ids": [
+          "obs-income-1",
+          "obs-hours-1",
+          "obs-gas-1",
+          "obs-basket-1",
+          "obs-hourly-1",
+          "obs-gas-time-1",
+          "obs-basket-time-1"
+        ],
+        "calculation_versions": [
+          {
+            "id": "calc-hourly",
+            "calculation_version": "1"
+          },
+          {
+            "id": "calc-gas",
+            "calculation_version": "1"
+          },
+          {
+            "id": "calc-basket",
+            "calculation_version": "1"
+          }
+        ]
+      },
+      "manifest_digest": "639a9843c98095fbe19eab5baff8a8e3bf5c93a3d2dcd19bc77d83fed5f6ce83",
+      "built_at": "2026-09-15T12:06:30Z",
+      "ready_at": "2026-09-15T12:07:00Z",
+      "quality_report": {
+        "id": "quality-publication-1",
+        "policy_version": "demo-1",
+        "passed": true,
+        "allowed_unavailable_reasons": ["pending_recalculation"]
+      }
+    },
+    {
+      "id": "publication-2",
+      "channel": "public",
+      "base_activation": "activation-1",
+      "catalog_revision": "catalog-1",
+      "data_cutoff": "2026-10-01T12:06:00Z",
+      "scope": [
+        {
+          "series": "series-income",
+          "reference_period": {
+            "start": "2026-08-01",
+            "end": "2026-08-31"
+          }
+        },
+        {
+          "series": "series-hours",
+          "reference_period": {
+            "start": "2026-08-01",
+            "end": "2026-08-31"
+          }
+        },
+        {
+          "series": "series-gas",
+          "reference_period": {
+            "start": "2026-08-01",
+            "end": "2026-08-31"
+          }
+        },
+        {
+          "series": "series-basket",
+          "reference_period": {
+            "start": "2026-08-01",
+            "end": "2026-08-31"
+          }
+        },
+        {
+          "series": "series-hourly",
+          "reference_period": {
+            "start": "2026-08-01",
+            "end": "2026-08-31"
+          }
+        },
+        {
+          "series": "series-gas",
+          "reference_period": {
+            "start": "2026-09-01",
+            "end": "2026-09-30"
+          }
+        },
+        {
+          "series": "series-gas-time",
+          "reference_period": {
+            "start": "2026-08-01",
+            "end": "2026-08-31"
+          }
+        },
+        {
+          "series": "series-basket-time",
+          "reference_period": {
+            "start": "2026-08-01",
+            "end": "2026-08-31"
+          }
+        }
+      ],
+      "manifest": {
+        "selected": [
+          {
+            "series": "series-income",
+            "reference_period": {
+              "start": "2026-08-01",
+              "end": "2026-08-31"
+            },
+            "observation": "obs-income-2"
+          },
+          {
+            "series": "series-hours",
+            "reference_period": {
+              "start": "2026-08-01",
+              "end": "2026-08-31"
+            },
+            "observation": "obs-hours-1"
+          },
+          {
+            "series": "series-gas",
+            "reference_period": {
+              "start": "2026-08-01",
+              "end": "2026-08-31"
+            },
+            "observation": "obs-gas-1"
+          },
+          {
+            "series": "series-basket",
+            "reference_period": {
+              "start": "2026-08-01",
+              "end": "2026-08-31"
+            },
+            "observation": "obs-basket-1"
+          },
+          {
+            "series": "series-hourly",
+            "reference_period": {
+              "start": "2026-08-01",
+              "end": "2026-08-31"
+            },
+            "observation": "obs-hourly-2"
+          },
+          {
+            "series": "series-gas",
+            "reference_period": {
+              "start": "2026-09-01",
+              "end": "2026-09-30"
+            },
+            "observation": "obs-gas-missing"
+          }
+        ],
+        "unavailable": [
+          {
+            "series": "series-gas-time",
+            "reference_period": {
+              "start": "2026-08-01",
+              "end": "2026-08-31"
+            },
+            "reason": "pending_recalculation",
+            "required_inputs": {
+              "price_per_liter": "obs-gas-1",
+              "hourly_income": "obs-hourly-2"
+            }
+          },
+          {
+            "series": "series-basket-time",
+            "reference_period": {
+              "start": "2026-08-01",
+              "end": "2026-08-31"
+            },
+            "reason": "pending_recalculation",
+            "required_inputs": {
+              "basket_price": "obs-basket-1",
+              "hourly_income": "obs-hourly-2"
+            }
+          }
+        ],
+        "visible_observation_ids": [
+          "obs-income-1",
+          "obs-hours-1",
+          "obs-gas-1",
+          "obs-basket-1",
+          "obs-income-2",
+          "obs-gas-missing",
+          "obs-hourly-1",
+          "obs-gas-time-1",
+          "obs-basket-time-1",
+          "obs-hourly-2"
+        ],
+        "calculation_versions": [
+          {
+            "id": "calc-hourly",
+            "calculation_version": "1"
+          },
+          {
+            "id": "calc-gas",
+            "calculation_version": "1"
+          },
+          {
+            "id": "calc-basket",
+            "calculation_version": "1"
+          }
+        ]
+      },
+      "manifest_digest": "c85017c8f52f72442942f0a23a210fdfd21bf944799ed82ed9849855cdce4b41",
+      "built_at": "2026-10-01T12:06:30Z",
+      "ready_at": "2026-10-01T12:07:00Z",
+      "quality_report": {
+        "id": "quality-publication-2",
+        "policy_version": "demo-1",
+        "passed": true,
+        "allowed_unavailable_reasons": ["pending_recalculation"]
+      }
+    },
+    {
+      "id": "publication-2-alt",
+      "channel": "public",
+      "base_activation": "activation-1",
+      "catalog_revision": "catalog-1",
+      "data_cutoff": "2026-10-01T12:06:00Z",
+      "scope": [
+        {
+          "series": "series-income",
+          "reference_period": {
+            "start": "2026-08-01",
+            "end": "2026-08-31"
+          }
+        },
+        {
+          "series": "series-hours",
+          "reference_period": {
+            "start": "2026-08-01",
+            "end": "2026-08-31"
+          }
+        },
+        {
+          "series": "series-gas",
+          "reference_period": {
+            "start": "2026-08-01",
+            "end": "2026-08-31"
+          }
+        },
+        {
+          "series": "series-basket",
+          "reference_period": {
+            "start": "2026-08-01",
+            "end": "2026-08-31"
+          }
+        },
+        {
+          "series": "series-hourly",
+          "reference_period": {
+            "start": "2026-08-01",
+            "end": "2026-08-31"
+          }
+        },
+        {
+          "series": "series-gas",
+          "reference_period": {
+            "start": "2026-09-01",
+            "end": "2026-09-30"
+          }
+        },
+        {
+          "series": "series-gas-time",
+          "reference_period": {
+            "start": "2026-08-01",
+            "end": "2026-08-31"
+          }
+        },
+        {
+          "series": "series-basket-time",
+          "reference_period": {
+            "start": "2026-08-01",
+            "end": "2026-08-31"
+          }
+        }
+      ],
+      "manifest": {
+        "selected": [
+          {
+            "series": "series-income",
+            "reference_period": {
+              "start": "2026-08-01",
+              "end": "2026-08-31"
+            },
+            "observation": "obs-income-2"
+          },
+          {
+            "series": "series-hours",
+            "reference_period": {
+              "start": "2026-08-01",
+              "end": "2026-08-31"
+            },
+            "observation": "obs-hours-1"
+          },
+          {
+            "series": "series-gas",
+            "reference_period": {
+              "start": "2026-08-01",
+              "end": "2026-08-31"
+            },
+            "observation": "obs-gas-1"
+          },
+          {
+            "series": "series-basket",
+            "reference_period": {
+              "start": "2026-08-01",
+              "end": "2026-08-31"
+            },
+            "observation": "obs-basket-1"
+          },
+          {
+            "series": "series-hourly",
+            "reference_period": {
+              "start": "2026-08-01",
+              "end": "2026-08-31"
+            },
+            "observation": "obs-hourly-2"
+          },
+          {
+            "series": "series-gas",
+            "reference_period": {
+              "start": "2026-09-01",
+              "end": "2026-09-30"
+            },
+            "observation": "obs-gas-missing"
+          }
+        ],
+        "unavailable": [
+          {
+            "series": "series-gas-time",
+            "reference_period": {
+              "start": "2026-08-01",
+              "end": "2026-08-31"
+            },
+            "reason": "pending_recalculation",
+            "required_inputs": {
+              "price_per_liter": "obs-gas-1",
+              "hourly_income": "obs-hourly-2"
+            }
+          },
+          {
+            "series": "series-basket-time",
+            "reference_period": {
+              "start": "2026-08-01",
+              "end": "2026-08-31"
+            },
+            "reason": "pending_recalculation",
+            "required_inputs": {
+              "basket_price": "obs-basket-1",
+              "hourly_income": "obs-hourly-2"
+            }
+          }
+        ],
+        "visible_observation_ids": [
+          "obs-income-1",
+          "obs-hours-1",
+          "obs-gas-1",
+          "obs-basket-1",
+          "obs-income-2",
+          "obs-gas-missing",
+          "obs-hourly-1",
+          "obs-gas-time-1",
+          "obs-basket-time-1",
+          "obs-hourly-2"
+        ],
+        "calculation_versions": [
+          {
+            "id": "calc-hourly",
+            "calculation_version": "1"
+          },
+          {
+            "id": "calc-gas",
+            "calculation_version": "1"
+          },
+          {
+            "id": "calc-basket",
+            "calculation_version": "1"
+          }
+        ]
+      },
+      "manifest_digest": "c85017c8f52f72442942f0a23a210fdfd21bf944799ed82ed9849855cdce4b41",
+      "built_at": "2026-10-01T12:06:30Z",
+      "ready_at": "2026-10-01T12:07:00Z",
+      "quality_report": {
+        "id": "quality-publication-2-alt",
+        "policy_version": "demo-1",
+        "passed": true,
+        "allowed_unavailable_reasons": ["pending_recalculation"]
+      }
+    }
+  ],
+  "activations": [
+    {
+      "id": "activation-1",
+      "channel": "public",
+      "generation": 1,
+      "publication": "publication-1",
+      "previous_activation": null,
+      "activated_at": "2026-09-15T12:08:00Z",
+      "reason": "Primeira publicação fictícia."
+    },
+    {
+      "id": "activation-2",
+      "channel": "public",
+      "generation": 2,
+      "publication": "publication-2",
+      "previous_activation": "activation-1",
+      "activated_at": "2026-10-01T12:08:00Z",
+      "reason": "Renda revisada; duas derivadas explicitamente pendentes."
+    },
+    {
+      "id": "activation-3",
+      "channel": "public",
+      "generation": 3,
+      "publication": "publication-1",
+      "previous_activation": "activation-2",
+      "activated_at": "2026-10-01T12:10:00Z",
+      "reason": "Retorno demonstrativo solicitado pelo operador fictício."
+    }
+  ],
+  "operation_receipts": [
+    {
+      "id": "receipt-1",
+      "operation": "W07",
+      "actor": "publisher-demo",
+      "idempotency_key": "command-1",
+      "request": {
+        "operation": "W07",
+        "publication": "publication-1",
+        "expected_generation": 0
+      },
+      "request_fingerprint": "581bb1296fc4331e9fc75d366ef0e60549d709a909cfbc00ab0a0bd7dacccae0",
+      "state": "succeeded",
+      "resource_ids": ["activation-1"],
+      "recorded_at": "2026-09-15T12:08:00Z",
+      "error": null
+    },
+    {
+      "id": "receipt-2",
+      "operation": "W07",
+      "actor": "publisher-demo",
+      "idempotency_key": "command-2",
+      "request": {
+        "operation": "W07",
+        "publication": "publication-2",
+        "expected_generation": 1
+      },
+      "request_fingerprint": "4e0dfa7273f9a7459aa1c6eb8c7b351cb53a1f505228444f8d5a2b128e43b831",
+      "state": "succeeded",
+      "resource_ids": ["activation-2"],
+      "recorded_at": "2026-10-01T12:08:00Z",
+      "error": null
+    },
+    {
+      "id": "receipt-3",
+      "operation": "W08",
+      "actor": "publisher-demo",
+      "idempotency_key": "command-3",
+      "request": {
+        "operation": "W08",
+        "publication": "publication-1",
+        "expected_generation": 2,
+        "reason": "Retorno demonstrativo solicitado pelo operador fictício."
+      },
+      "request_fingerprint": "4d42ef75583e7ee1e1e72e342b498d650089ea6c4c227cd0b78d0158486f390f",
+      "state": "succeeded",
+      "resource_ids": ["activation-3"],
+      "recorded_at": "2026-10-01T12:10:00Z",
+      "error": null
+    },
+    {
+      "id": "receipt-4",
+      "operation": "W07",
+      "actor": "publisher-demo",
+      "idempotency_key": "command-4",
+      "request": {
+        "operation": "W07",
+        "publication": "publication-2-alt",
+        "expected_generation": 1
+      },
+      "request_fingerprint": "81b388b17aaa71ccdeeed28e54424449b358af547b72bb202109ebe546133ceb",
+      "state": "conflict",
+      "resource_ids": [],
+      "recorded_at": "2026-10-01T12:08:02Z",
+      "error": "generation_mismatch"
+    }
+  ],
+  "command_attempts": [
+    {
+      "at": "2026-10-01T12:08:00Z",
+      "idempotency_key": "command-2",
+      "request_fingerprint": "4e0dfa7273f9a7459aa1c6eb8c7b351cb53a1f505228444f8d5a2b128e43b831",
+      "canonical_receipt": "receipt-2",
+      "outcome": "succeeded",
+      "client_observation": "timeout_after_commit"
+    },
+    {
+      "at": "2026-10-01T12:08:01Z",
+      "idempotency_key": "command-2",
+      "request_fingerprint": "4e0dfa7273f9a7459aa1c6eb8c7b351cb53a1f505228444f8d5a2b128e43b831",
+      "canonical_receipt": "receipt-2",
+      "outcome": "replayed",
+      "expected_activation": "activation-2"
+    },
+    {
+      "at": "2026-10-01T12:08:02Z",
+      "idempotency_key": "command-4",
+      "request_fingerprint": "81b388b17aaa71ccdeeed28e54424449b358af547b72bb202109ebe546133ceb",
+      "canonical_receipt": "receipt-4",
+      "outcome": "conflict",
+      "error": "generation_mismatch"
+    },
+    {
+      "at": "2026-10-01T12:08:03Z",
+      "idempotency_key": "command-2",
+      "request_fingerprint": "81b388b17aaa71ccdeeed28e54424449b358af547b72bb202109ebe546133ceb",
+      "canonical_receipt": "receipt-2",
+      "outcome": "conflict",
+      "error": "idempotency_key_reused"
+    }
+  ],
+  "read_expectations": [
+    {
+      "scenario": "S01",
+      "operation": "R06",
+      "at": "2026-10-01T12:00:30Z",
+      "series": "series-income",
+      "reference_start": "2026-08-01",
+      "expected_observation": "obs-income-1"
+    },
+    {
+      "scenario": "S02",
+      "operation": "R06",
+      "at": "2026-10-01T12:01:00Z",
+      "series": "series-income",
+      "reference_start": "2026-08-01",
+      "expected_observation": "obs-income-2"
+    },
+    {
+      "scenario": "S01",
+      "operation": "R07",
+      "at": "2026-09-15T12:07:30Z",
+      "expected_publication": null
+    },
+    {
+      "scenario": "S02",
+      "operation": "R07",
+      "at": "2026-10-01T12:07:30Z",
+      "expected_publication": "publication-1"
+    },
+    {
+      "scenario": "S10",
+      "operation": "R07",
+      "at": "2026-10-01T12:09:00Z",
+      "expected_publication": "publication-2"
+    },
+    {
+      "scenario": "S10",
+      "operation": "R07",
+      "at": "2026-10-01T12:11:00Z",
+      "expected_publication": "publication-1"
+    }
+  ],
+  "pagination_scenario": {
+    "scenario": "S05",
+    "operation": "R01",
+    "publication": "publication-1",
+    "filters": {
+      "type": "indicator"
+    },
+    "order": ["slug", "id"],
+    "page_size": 2,
+    "first_page_at": "2026-10-01T12:07:30Z",
+    "next_page_at": "2026-10-01T12:09:00Z",
+    "first_page": ["indicator-basket", "indicator-basket-time"],
+    "cursor_context": {
+      "publication": "publication-1",
+      "last_key": ["basket-time", "indicator-basket-time"],
+      "filters": {
+        "type": "indicator"
+      },
+      "order": ["slug", "id"]
+    },
+    "expected_next_page": ["indicator-gas", "indicator-gas-time"]
+  },
+  "model_examples_sha256": "2968de3d24916bcac7a0b01f4739bcf5f9427d75b6e1da7d9d0e9b38835deca1"
+}

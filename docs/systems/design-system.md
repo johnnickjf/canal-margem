@@ -75,7 +75,7 @@ URLs cujo fragmento aponta para o conteúdo de Modal ou Drawer abrem a sobreposi
 
 ## Componentes de indicadores
 
-Os componentes ficam em [src/components/indicators](../../src/components/indicators). Seus contratos são de apresentação; não fixam o modelo conceitual da fase 2.
+Os componentes ficam em [src/components/indicators](../../src/components/indicators). Seus contratos são de apresentação; o [modelo conceitual da fase 2](data-model.md) define separadamente entidades, revisões e linhagem. A futura adaptação desses dados para as props está descrita no modelo.
 
 | Componente | Contrato e estados |
 |---|---|

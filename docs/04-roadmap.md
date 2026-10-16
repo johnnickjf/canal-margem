@@ -136,6 +136,10 @@ Os tokens e componentes editoriais existentes são consolidados e ampliados para
 
 ## Fase 2 — Modelo conceitual dos dados
 
+### Estado
+
+Especificada em [Modelo conceitual dos dados](systems/data-model.md), com [exemplos fictícios](systems/examples/data-model.json) de metadados, revisão histórica, ausência e cálculos derivados. O [catálogo de operações](systems/data-operations.md) complementa a fase com leituras, escritas e garantias de consistência, incluindo aceitação e publicação. A entrega é conceitual: não implementa schema executável, banco, ingestão ou engine. A próxima etapa é a seleção de indicadores da fase 3.
+
 ### Objetivo
 
 Definir como o Margem entende indicadores antes de construir bancos e pipelines.

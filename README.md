@@ -38,7 +38,12 @@ O lockfile do projeto é `pnpm-lock.yaml`. Em CI, use `pnpm install --frozen-loc
 
 O contexto de produto, a arquitetura futura e o roadmap estão no [índice de documentação](docs/README.md).
 A [auditoria do frontend](docs/systems/frontend.md) descreve a base atual, o que pode ser reutilizado e as limitações.
-As fases 0 e 1 cobrem a documentação da base e o design system; serviços de dados pertencem às fases seguintes.
+As fases 0 e 1 cobrem a documentação da base e o design system. A fase 2 define o
+[modelo conceitual dos dados](docs/systems/data-model.md), com entidades, metadados, revisões e
+cálculos derivados exemplificados em JSON. O [catálogo de operações](docs/systems/data-operations.md)
+complementa o modelo com leituras, escritas e garantias de consistência, aceitação e publicação.
+É uma especificação independente de banco e framework;
+serviços de dados pertencem às fases seguintes. A próxima etapa é selecionar os indicadores do MVP.
 
 ## Design system
 

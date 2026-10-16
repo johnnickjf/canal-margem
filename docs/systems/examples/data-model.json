@@ -1,0 +1,900 @@
+{
+  "model_version": "phase-2-v1",
+  "illustrative": true,
+  "description": "Instâncias conceituais; nenhum dado, fonte, política ou mandato é real. Não é contrato de API ou schema de validação.",
+  "themes": [
+    {
+      "id": "theme-work",
+      "slug": "trabalho-e-renda",
+      "name": "Trabalho e renda",
+      "question": "Quanto vale minha hora de trabalho?",
+      "description": "Dimensão ilustrativa."
+    },
+    {
+      "id": "theme-cost",
+      "slug": "custo-de-vida",
+      "name": "Custo de vida",
+      "question": "Quanto trabalho equivale aos preços?",
+      "description": "Dimensão ilustrativa."
+    }
+  ],
+  "indicators": [
+    {
+      "id": "indicator-income",
+      "slug": "income",
+      "name": "Renda mensal",
+      "question": "Como interpretar renda mensal?",
+      "description": "Indicador fictício para validar o modelo.",
+      "themes": ["theme-work"],
+      "kind": "source",
+      "interpretation": "Requer o contexto do universo e do método.",
+      "limitations": ["Não usar como evidência socioeconômica."]
+    },
+    {
+      "id": "indicator-hours",
+      "slug": "hours",
+      "name": "Horas mensais",
+      "question": "Como interpretar horas mensais?",
+      "description": "Indicador fictício para validar o modelo.",
+      "themes": ["theme-work"],
+      "kind": "source",
+      "interpretation": "Requer o contexto do universo e do método.",
+      "limitations": ["Não usar como evidência socioeconômica."]
+    },
+    {
+      "id": "indicator-gas",
+      "slug": "gas",
+      "name": "Preço da gasolina",
+      "question": "Como interpretar preço da gasolina?",
+      "description": "Indicador fictício para validar o modelo.",
+      "themes": ["theme-cost"],
+      "kind": "source",
+      "interpretation": "Requer o contexto do universo e do método.",
+      "limitations": ["Não usar como evidência socioeconômica."]
+    },
+    {
+      "id": "indicator-basket",
+      "slug": "basket",
+      "name": "Preço da cesta",
+      "question": "Como interpretar preço da cesta?",
+      "description": "Indicador fictício para validar o modelo.",
+      "themes": ["theme-cost"],
+      "kind": "source",
+      "interpretation": "Requer o contexto do universo e do método.",
+      "limitations": ["Não usar como evidência socioeconômica."]
+    },
+    {
+      "id": "indicator-hourly",
+      "slug": "hourly",
+      "name": "Renda por hora",
+      "question": "Como interpretar renda por hora?",
+      "description": "Indicador fictício para validar o modelo.",
+      "themes": ["theme-work"],
+      "kind": "derived",
+      "interpretation": "Requer o contexto do universo e do método.",
+      "limitations": ["Não usar como evidência socioeconômica."]
+    },
+    {
+      "id": "indicator-gas-time",
+      "slug": "gas-time",
+      "name": "Tempo por litro",
+      "question": "Como interpretar tempo por litro?",
+      "description": "Indicador fictício para validar o modelo.",
+      "themes": ["theme-cost"],
+      "kind": "derived",
+      "interpretation": "Requer o contexto do universo e do método.",
+      "limitations": ["Não usar como evidência socioeconômica."]
+    },
+    {
+      "id": "indicator-basket-time",
+      "slug": "basket-time",
+      "name": "Tempo por cesta",
+      "question": "Como interpretar tempo por cesta?",
+      "description": "Indicador fictício para validar o modelo.",
+      "themes": ["theme-cost"],
+      "kind": "derived",
+      "interpretation": "Requer o contexto do universo e do método.",
+      "limitations": ["Não usar como evidência socioeconômica."]
+    }
+  ],
+  "series": [
+    {
+      "id": "series-income",
+      "indicator": "indicator-income",
+      "source": "source-demo",
+      "dataset": "dataset-demo",
+      "source_series_id": "DEMO-income",
+      "unit": "brl-month",
+      "geography": "geo-demo",
+      "frequency": "monthly",
+      "period_type": "calendar",
+      "population": "População ocupada fictícia; renda e horas são médias desse universo; preços são referências de consumo para ele.",
+      "dimensions": {
+        "scope": "all"
+      },
+      "seasonal_adjustment": "unadjusted",
+      "price_basis": {
+        "kind": "nominal"
+      },
+      "methodology": "method-demo",
+      "methodology_version": "1",
+      "calculation": null,
+      "breaks": []
+    },
+    {
+      "id": "series-hours",
+      "indicator": "indicator-hours",
+      "source": "source-demo",
+      "dataset": "dataset-demo",
+      "source_series_id": "DEMO-hours",
+      "unit": "hours-month",
+      "geography": "geo-demo",
+      "frequency": "monthly",
+      "period_type": "calendar",
+      "population": "População ocupada fictícia; renda e horas são médias desse universo; preços são referências de consumo para ele.",
+      "dimensions": {
+        "scope": "all"
+      },
+      "seasonal_adjustment": "unadjusted",
+      "price_basis": {
+        "kind": "not_applicable"
+      },
+      "methodology": "method-demo",
+      "methodology_version": "1",
+      "calculation": null,
+      "breaks": []
+    },
+    {
+      "id": "series-gas",
+      "indicator": "indicator-gas",
+      "source": "source-demo",
+      "dataset": "dataset-demo",
+      "source_series_id": "DEMO-gas",
+      "unit": "brl-liter",
+      "geography": "geo-demo",
+      "frequency": "monthly",
+      "period_type": "calendar",
+      "population": "População ocupada fictícia; renda e horas são médias desse universo; preços são referências de consumo para ele.",
+      "dimensions": {
+        "scope": "all"
+      },
+      "seasonal_adjustment": "unadjusted",
+      "price_basis": {
+        "kind": "nominal"
+      },
+      "methodology": "method-demo",
+      "methodology_version": "1",
+      "calculation": null,
+      "breaks": []
+    },
+    {
+      "id": "series-basket",
+      "indicator": "indicator-basket",
+      "source": "source-demo",
+      "dataset": "dataset-demo",
+      "source_series_id": "DEMO-basket",
+      "unit": "brl-basket",
+      "geography": "geo-demo",
+      "frequency": "monthly",
+      "period_type": "calendar",
+      "population": "População ocupada fictícia; renda e horas são médias desse universo; preços são referências de consumo para ele.",
+      "dimensions": {
+        "scope": "all"
+      },
+      "seasonal_adjustment": "unadjusted",
+      "price_basis": {
+        "kind": "nominal"
+      },
+      "methodology": "method-demo",
+      "methodology_version": "1",
+      "calculation": null,
+      "breaks": []
+    },
+    {
+      "id": "series-hourly",
+      "indicator": "indicator-hourly",
+      "source": "source-margem",
+      "dataset": "dataset-derived",
+      "source_series_id": null,
+      "unit": "brl-hour",
+      "geography": "geo-demo",
+      "frequency": "monthly",
+      "period_type": "calendar",
+      "population": "População ocupada fictícia; renda e horas são médias desse universo; preços são referências de consumo para ele.",
+      "dimensions": {
+        "scope": "all"
+      },
+      "seasonal_adjustment": "unadjusted",
+      "price_basis": {
+        "kind": "nominal"
+      },
+      "methodology": "method-demo",
+      "methodology_version": "1",
+      "calculation": {
+        "id": "calc-hourly",
+        "calculation_version": "1"
+      },
+      "breaks": []
+    },
+    {
+      "id": "series-gas-time",
+      "indicator": "indicator-gas-time",
+      "source": "source-margem",
+      "dataset": "dataset-derived",
+      "source_series_id": null,
+      "unit": "minutes-liter",
+      "geography": "geo-demo",
+      "frequency": "monthly",
+      "period_type": "calendar",
+      "population": "População ocupada fictícia; renda e horas são médias desse universo; preços são referências de consumo para ele.",
+      "dimensions": {
+        "scope": "all"
+      },
+      "seasonal_adjustment": "unadjusted",
+      "price_basis": {
+        "kind": "nominal"
+      },
+      "methodology": "method-demo",
+      "methodology_version": "1",
+      "calculation": {
+        "id": "calc-gas",
+        "calculation_version": "1"
+      },
+      "breaks": []
+    },
+    {
+      "id": "series-basket-time",
+      "indicator": "indicator-basket-time",
+      "source": "source-margem",
+      "dataset": "dataset-derived",
+      "source_series_id": null,
+      "unit": "hours-basket",
+      "geography": "geo-demo",
+      "frequency": "monthly",
+      "period_type": "calendar",
+      "population": "População ocupada fictícia; renda e horas são médias desse universo; preços são referências de consumo para ele.",
+      "dimensions": {
+        "scope": "all"
+      },
+      "seasonal_adjustment": "unadjusted",
+      "price_basis": {
+        "kind": "nominal"
+      },
+      "methodology": "method-demo",
+      "methodology_version": "1",
+      "calculation": {
+        "id": "calc-basket",
+        "calculation_version": "1"
+      },
+      "breaks": []
+    }
+  ],
+  "observations": [
+    {
+      "id": "obs-income-1",
+      "series": "series-income",
+      "value": "3000",
+      "unit": "brl-month",
+      "reference_period": {
+        "start": "2026-08-01",
+        "end": "2026-08-31",
+        "label": "Agosto de 2026"
+      },
+      "geography": "geo-demo",
+      "source": "source-demo",
+      "dataset": "dataset-demo",
+      "published_at": "2026-09-15",
+      "retrieved_at": "2026-09-15T12:00:00Z",
+      "methodology": "method-demo",
+      "methodology_version": "1",
+      "vintage": "vintage-source-1",
+      "revision_status": "unrevised",
+      "value_status": "observed",
+      "value_note": null,
+      "release_status": "unknown",
+      "supersedes": null,
+      "revision_note": null,
+      "raw_artifact": "raw-1",
+      "source_record_locator": "/income_august",
+      "derivation": null
+    },
+    {
+      "id": "obs-hours-1",
+      "series": "series-hours",
+      "value": "200",
+      "unit": "hours-month",
+      "reference_period": {
+        "start": "2026-08-01",
+        "end": "2026-08-31",
+        "label": "Agosto de 2026"
+      },
+      "geography": "geo-demo",
+      "source": "source-demo",
+      "dataset": "dataset-demo",
+      "published_at": "2026-09-15",
+      "retrieved_at": "2026-09-15T12:00:00Z",
+      "methodology": "method-demo",
+      "methodology_version": "1",
+      "vintage": "vintage-source-1",
+      "revision_status": "unrevised",
+      "value_status": "observed",
+      "value_note": null,
+      "release_status": "unknown",
+      "supersedes": null,
+      "revision_note": null,
+      "raw_artifact": "raw-1",
+      "source_record_locator": "/hours_august",
+      "derivation": null
+    },
+    {
+      "id": "obs-gas-1",
+      "series": "series-gas",
+      "value": "6",
+      "unit": "brl-liter",
+      "reference_period": {
+        "start": "2026-08-01",
+        "end": "2026-08-31",
+        "label": "Agosto de 2026"
+      },
+      "geography": "geo-demo",
+      "source": "source-demo",
+      "dataset": "dataset-demo",
+      "published_at": "2026-09-15",
+      "retrieved_at": "2026-09-15T12:00:00Z",
+      "methodology": "method-demo",
+      "methodology_version": "1",
+      "vintage": "vintage-source-1",
+      "revision_status": "unrevised",
+      "value_status": "observed",
+      "value_note": null,
+      "release_status": "unknown",
+      "supersedes": null,
+      "revision_note": null,
+      "raw_artifact": "raw-1",
+      "source_record_locator": "/gas_august",
+      "derivation": null
+    },
+    {
+      "id": "obs-basket-1",
+      "series": "series-basket",
+      "value": "750",
+      "unit": "brl-basket",
+      "reference_period": {
+        "start": "2026-08-01",
+        "end": "2026-08-31",
+        "label": "Agosto de 2026"
+      },
+      "geography": "geo-demo",
+      "source": "source-demo",
+      "dataset": "dataset-demo",
+      "published_at": "2026-09-15",
+      "retrieved_at": "2026-09-15T12:00:00Z",
+      "methodology": "method-demo",
+      "methodology_version": "1",
+      "vintage": "vintage-source-1",
+      "revision_status": "unrevised",
+      "value_status": "observed",
+      "value_note": null,
+      "release_status": "unknown",
+      "supersedes": null,
+      "revision_note": null,
+      "raw_artifact": "raw-1",
+      "source_record_locator": "/basket_august",
+      "derivation": null
+    },
+    {
+      "id": "obs-income-2",
+      "series": "series-income",
+      "value": "3300",
+      "unit": "brl-month",
+      "reference_period": {
+        "start": "2026-08-01",
+        "end": "2026-08-31",
+        "label": "Agosto de 2026"
+      },
+      "geography": "geo-demo",
+      "source": "source-demo",
+      "dataset": "dataset-demo",
+      "published_at": null,
+      "retrieved_at": "2026-10-01T12:00:00Z",
+      "methodology": "method-demo",
+      "methodology_version": "1",
+      "vintage": "vintage-source-2",
+      "revision_status": "revised",
+      "value_status": "observed",
+      "value_note": null,
+      "release_status": "unknown",
+      "supersedes": "obs-income-1",
+      "revision_note": "Fonte fictícia corrigiu a renda de agosto de 3000 para 3300.",
+      "raw_artifact": "raw-2",
+      "source_record_locator": "/income_august",
+      "derivation": null
+    },
+    {
+      "id": "obs-gas-missing",
+      "series": "series-gas",
+      "value": null,
+      "unit": "brl-liter",
+      "reference_period": {
+        "start": "2026-09-01",
+        "end": "2026-09-30",
+        "label": "Setembro de 2026"
+      },
+      "geography": "geo-demo",
+      "source": "source-demo",
+      "dataset": "dataset-demo",
+      "published_at": null,
+      "retrieved_at": "2026-10-01T12:00:00Z",
+      "methodology": "method-demo",
+      "methodology_version": "1",
+      "vintage": "vintage-source-2",
+      "revision_status": "unknown",
+      "value_status": "missing",
+      "value_note": "Valor não publicado nesta edição.",
+      "release_status": "unknown",
+      "supersedes": null,
+      "revision_note": null,
+      "raw_artifact": "raw-2",
+      "source_record_locator": "/gas_september",
+      "derivation": null
+    },
+    {
+      "id": "obs-hourly-1",
+      "series": "series-hourly",
+      "value": "15",
+      "unit": "brl-hour",
+      "reference_period": {
+        "start": "2026-08-01",
+        "end": "2026-08-31",
+        "label": "Agosto de 2026"
+      },
+      "geography": "geo-demo",
+      "source": "source-margem",
+      "dataset": "dataset-derived",
+      "published_at": "2026-09-15T12:05:00Z",
+      "retrieved_at": "2026-09-15T12:05:00Z",
+      "methodology": "method-demo",
+      "methodology_version": "1",
+      "vintage": "vintage-derived-1",
+      "revision_status": "unrevised",
+      "value_status": "observed",
+      "value_note": null,
+      "release_status": "unknown",
+      "supersedes": null,
+      "revision_note": null,
+      "raw_artifact": null,
+      "source_record_locator": null,
+      "derivation": {
+        "calculation": "calc-hourly",
+        "calculation_version": "1",
+        "inputs": {
+          "monthly_income": "obs-income-1",
+          "monthly_hours": "obs-hours-1"
+        },
+        "parameters": {},
+        "calculated_at": "2026-09-15T12:05:00Z"
+      }
+    },
+    {
+      "id": "obs-gas-time-1",
+      "series": "series-gas-time",
+      "value": "24",
+      "unit": "minutes-liter",
+      "reference_period": {
+        "start": "2026-08-01",
+        "end": "2026-08-31",
+        "label": "Agosto de 2026"
+      },
+      "geography": "geo-demo",
+      "source": "source-margem",
+      "dataset": "dataset-derived",
+      "published_at": "2026-09-15T12:05:00Z",
+      "retrieved_at": "2026-09-15T12:05:00Z",
+      "methodology": "method-demo",
+      "methodology_version": "1",
+      "vintage": "vintage-derived-1",
+      "revision_status": "unrevised",
+      "value_status": "observed",
+      "value_note": null,
+      "release_status": "unknown",
+      "supersedes": null,
+      "revision_note": null,
+      "raw_artifact": null,
+      "source_record_locator": null,
+      "derivation": {
+        "calculation": "calc-gas",
+        "calculation_version": "1",
+        "inputs": {
+          "price_per_liter": "obs-gas-1",
+          "hourly_income": "obs-hourly-1"
+        },
+        "parameters": {
+          "minutes_per_hour": "60"
+        },
+        "calculated_at": "2026-09-15T12:05:00Z"
+      }
+    },
+    {
+      "id": "obs-basket-time-1",
+      "series": "series-basket-time",
+      "value": "50",
+      "unit": "hours-basket",
+      "reference_period": {
+        "start": "2026-08-01",
+        "end": "2026-08-31",
+        "label": "Agosto de 2026"
+      },
+      "geography": "geo-demo",
+      "source": "source-margem",
+      "dataset": "dataset-derived",
+      "published_at": "2026-09-15T12:05:00Z",
+      "retrieved_at": "2026-09-15T12:05:00Z",
+      "methodology": "method-demo",
+      "methodology_version": "1",
+      "vintage": "vintage-derived-1",
+      "revision_status": "unrevised",
+      "value_status": "observed",
+      "value_note": null,
+      "release_status": "unknown",
+      "supersedes": null,
+      "revision_note": null,
+      "raw_artifact": null,
+      "source_record_locator": null,
+      "derivation": {
+        "calculation": "calc-basket",
+        "calculation_version": "1",
+        "inputs": {
+          "basket_price": "obs-basket-1",
+          "hourly_income": "obs-hourly-1"
+        },
+        "parameters": {},
+        "calculated_at": "2026-09-15T12:05:00Z"
+      }
+    },
+    {
+      "id": "obs-hourly-2",
+      "series": "series-hourly",
+      "value": "16.5",
+      "unit": "brl-hour",
+      "reference_period": {
+        "start": "2026-08-01",
+        "end": "2026-08-31",
+        "label": "Agosto de 2026"
+      },
+      "geography": "geo-demo",
+      "source": "source-margem",
+      "dataset": "dataset-derived",
+      "published_at": "2026-10-01T12:05:00Z",
+      "retrieved_at": "2026-10-01T12:05:00Z",
+      "methodology": "method-demo",
+      "methodology_version": "1",
+      "vintage": "vintage-derived-2",
+      "revision_status": "revised",
+      "value_status": "observed",
+      "value_note": null,
+      "release_status": "unknown",
+      "supersedes": "obs-hourly-1",
+      "revision_note": "Recomputação com a revisão da renda; fórmula mantida.",
+      "raw_artifact": null,
+      "source_record_locator": null,
+      "derivation": {
+        "calculation": "calc-hourly",
+        "calculation_version": "1",
+        "inputs": {
+          "monthly_income": "obs-income-2",
+          "monthly_hours": "obs-hours-1"
+        },
+        "parameters": {},
+        "calculated_at": "2026-10-01T12:05:00Z"
+      }
+    }
+  ],
+  "sources": [
+    {
+      "id": "source-demo",
+      "name": "Instituto fictício de exemplos",
+      "kind": "illustrative",
+      "url": null
+    },
+    {
+      "id": "source-margem",
+      "name": "Margem — cálculo ilustrativo",
+      "kind": "internal",
+      "url": null
+    }
+  ],
+  "datasets": [
+    {
+      "id": "dataset-demo",
+      "source": "source-demo",
+      "name": "Dados inteiramente fictícios",
+      "description": "Exemplo conceitual, sem validade estatística.",
+      "url": null,
+      "license": null,
+      "metadata_note": "Fonte fictícia; não há URL ou licença externa.",
+      "kind": "source"
+    },
+    {
+      "id": "dataset-derived",
+      "source": "source-margem",
+      "name": "Derivadas fictícias",
+      "description": "Resultados demonstrativos das fórmulas da fase 2.",
+      "url": null,
+      "license": null,
+      "metadata_note": "Artefato interno de especificação; não é dataset publicado.",
+      "kind": "derived"
+    }
+  ],
+  "methodologies": [
+    {
+      "id": "method-demo",
+      "version": "1",
+      "description": "Exemplo mensal de valores nominais de uma mesma população fictícia.",
+      "document_url": null,
+      "document_note": "Método fictício descrito em ../data-model.md.",
+      "limitations": [
+        "Nenhuma observação é real.",
+        "Razão de médias não é média de razões individuais.",
+        "Tempo equivalente não representa orçamento individual."
+      ],
+      "comparability": "Somente recortes e períodos idênticos neste exemplo."
+    }
+  ],
+  "geographies": [
+    {
+      "id": "geo-demo",
+      "name": "Território fictício",
+      "level": "country",
+      "code_system": "example",
+      "code": "00",
+      "boundary_version": "1",
+      "parent": null
+    }
+  ],
+  "units": [
+    {
+      "id": "brl-month",
+      "symbol": "BRL/mês",
+      "quantity": "money_per_month",
+      "currency": "BRL",
+      "scale": "1",
+      "definition": "Renda nominal mensal."
+    },
+    {
+      "id": "hours-month",
+      "symbol": "h/mês",
+      "quantity": "hours_per_month",
+      "currency": null,
+      "scale": "1",
+      "definition": "Horas mensais por pessoa no universo fictício."
+    },
+    {
+      "id": "brl-liter",
+      "symbol": "BRL/L",
+      "quantity": "money_per_liter",
+      "currency": "BRL",
+      "scale": "1",
+      "definition": "Preço nominal de um litro."
+    },
+    {
+      "id": "brl-basket",
+      "symbol": "BRL/cesta",
+      "quantity": "money_per_basket",
+      "currency": "BRL",
+      "scale": "1",
+      "definition": "Preço nominal da cesta fictícia definida neste método."
+    },
+    {
+      "id": "brl-hour",
+      "symbol": "BRL/h",
+      "quantity": "money_per_hour",
+      "currency": "BRL",
+      "scale": "1",
+      "definition": "Razão de renda mensal por horas mensais."
+    },
+    {
+      "id": "minutes-liter",
+      "symbol": "min/L",
+      "quantity": "minutes_per_liter",
+      "currency": null,
+      "scale": "1",
+      "definition": "Minutos equivalentes de trabalho por litro."
+    },
+    {
+      "id": "hours-basket",
+      "symbol": "h/cesta",
+      "quantity": "hours_per_basket",
+      "currency": null,
+      "scale": "1",
+      "definition": "Horas equivalentes de trabalho por cesta."
+    }
+  ],
+  "policies": [
+    {
+      "id": "policy-demo",
+      "name": "Política inteiramente fictícia",
+      "description": "Exemplo de contexto temporal sem alegação causal.",
+      "geography": "geo-demo",
+      "legal_references": [
+        {
+          "label": "Referência fictícia, sem validade legal",
+          "url": null
+        }
+      ],
+      "effective_periods": [
+        {
+          "start": "2026-01-01",
+          "end": null,
+          "legal_reference_index": 0
+        }
+      ],
+      "related_indicators": ["indicator-income"],
+      "government_periods": ["government-demo"],
+      "relationship_note": "Coincidência temporal ilustrativa; não demonstra impacto."
+    }
+  ],
+  "government_periods": [
+    {
+      "id": "government-demo",
+      "name": "Administração fictícia",
+      "office": "Órgão fictício",
+      "geography": "geo-demo",
+      "start": "2026-01-01",
+      "end": null,
+      "sources": [
+        {
+          "label": "Registro fictício, sem mandato real",
+          "url": null
+        }
+      ]
+    }
+  ],
+  "vintages": [
+    {
+      "id": "vintage-source-1",
+      "dataset": "dataset-demo",
+      "kind": "source_release",
+      "source_release_id": "DEMO-1",
+      "published_at": "2026-09-15",
+      "first_retrieved_at": "2026-09-15T12:00:00Z",
+      "publication_note": null,
+      "order": 1
+    },
+    {
+      "id": "vintage-source-2",
+      "dataset": "dataset-demo",
+      "kind": "source_release",
+      "source_release_id": "DEMO-2",
+      "published_at": null,
+      "first_retrieved_at": "2026-10-01T12:00:00Z",
+      "publication_note": "Data de publicação não informada na fonte fictícia.",
+      "order": 2
+    },
+    {
+      "id": "vintage-derived-1",
+      "dataset": "dataset-derived",
+      "kind": "calculation_run",
+      "source_release_id": null,
+      "published_at": "2026-09-15T12:05:00Z",
+      "first_retrieved_at": "2026-09-15T12:05:00Z",
+      "publication_note": null,
+      "order": 1
+    },
+    {
+      "id": "vintage-derived-2",
+      "dataset": "dataset-derived",
+      "kind": "calculation_run",
+      "source_release_id": null,
+      "published_at": "2026-10-01T12:05:00Z",
+      "first_retrieved_at": "2026-10-01T12:05:00Z",
+      "publication_note": null,
+      "order": 2
+    }
+  ],
+  "raw_artifacts": [
+    {
+      "id": "raw-1",
+      "vintage": "vintage-source-1",
+      "retrieved_at": "2026-09-15T12:00:00Z",
+      "media_type": "application/json",
+      "sha256": "ae80fdd2d09f976e69020967ebc1388d8bb4757e8b49a7d36bdbdf5fe1990a5c",
+      "content": "{\"income_august\":\"3000\",\"hours_august\":\"200\",\"gas_august\":\"6\",\"basket_august\":\"750\"}"
+    },
+    {
+      "id": "raw-2",
+      "vintage": "vintage-source-2",
+      "retrieved_at": "2026-10-01T12:00:00Z",
+      "media_type": "application/json",
+      "sha256": "1696f33e16a24867d681459d54883a42465f1787099f0a9215a0e5fdb6f2bdc1",
+      "content": "{\"income_august\":\"3300\",\"gas_september\":null,\"gas_september_note\":\"Valor não publicado nesta edição.\"}"
+    }
+  ],
+  "calculations": [
+    {
+      "id": "calc-hourly",
+      "calculation_version": "1",
+      "formula": "monthly_income / monthly_hours",
+      "inputs": {
+        "monthly_income": {
+          "unit": "brl-month"
+        },
+        "monthly_hours": {
+          "unit": "hours-month"
+        }
+      },
+      "parameters": {},
+      "output_unit": "brl-hour",
+      "methodology": "method-demo",
+      "methodology_version": "1",
+      "alignment": {
+        "period": "identical",
+        "geography": "identical",
+        "population": "compatible_explicitly",
+        "price_basis": "nominal_same_currency"
+      },
+      "missing_policy": "do_not_compute",
+      "precision": {
+        "decimal_places": 12,
+        "rounding": "half_even"
+      }
+    },
+    {
+      "id": "calc-gas",
+      "calculation_version": "1",
+      "formula": "price_per_liter / hourly_income * minutes_per_hour",
+      "inputs": {
+        "price_per_liter": {
+          "unit": "brl-liter"
+        },
+        "hourly_income": {
+          "unit": "brl-hour"
+        }
+      },
+      "parameters": {
+        "minutes_per_hour": "60"
+      },
+      "output_unit": "minutes-liter",
+      "methodology": "method-demo",
+      "methodology_version": "1",
+      "alignment": {
+        "period": "identical",
+        "geography": "identical",
+        "population": "compatible_explicitly",
+        "price_basis": "nominal_same_currency"
+      },
+      "missing_policy": "do_not_compute",
+      "precision": {
+        "decimal_places": 12,
+        "rounding": "half_even"
+      }
+    },
+    {
+      "id": "calc-basket",
+      "calculation_version": "1",
+      "formula": "basket_price / hourly_income",
+      "inputs": {
+        "basket_price": {
+          "unit": "brl-basket"
+        },
+        "hourly_income": {
+          "unit": "brl-hour"
+        }
+      },
+      "parameters": {},
+      "output_unit": "hours-basket",
+      "methodology": "method-demo",
+      "methodology_version": "1",
+      "alignment": {
+        "period": "identical",
+        "geography": "identical",
+        "population": "compatible_explicitly",
+        "price_basis": "nominal_same_currency"
+      },
+      "missing_policy": "do_not_compute",
+      "precision": {
+        "decimal_places": 12,
+        "rounding": "half_even"
+      }
+    }
+  ]
+}

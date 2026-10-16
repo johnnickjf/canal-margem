@@ -2,7 +2,7 @@
 
 ## Status
 
-Requisitos para a arquitetura futura. API de indicadores, armazenamento e pipelines ainda não estão implementados. O [frontend atual](systems/frontend.md) é estático.
+Requisitos para a arquitetura futura. API de indicadores, armazenamento e pipelines ainda não estão implementados. O frontend é estático; sua base está inventariada na [auditoria da fase 0](systems/frontend.md). O [modelo conceitual da fase 2](systems/data-model.md) fixa entidades e semântica dos dados, sem escolher infraestrutura.
 
 As escolhas de tecnologia serão registradas em Architecture Decision Records (ADRs).
 
@@ -152,16 +152,18 @@ Exemplos:
 - minutos de trabalho necessários para comprar um litro de combustível;
 - horas necessárias para adquirir cesta básica.
 
+No [modelo conceitual](systems/data-model.md#camadas-e-integração-futura), os nomes canônicos das camadas são `raw`, `normalized`, `derived` e `published`. `Indicators` corresponde ao catálogo e à projeção publicada; `Derived Indicators` corresponde a indicadores `kind: derived` com observações calculadas. Uma projeção publicada pode conter dados externos ou derivados. Essas responsabilidades não exigem armazenamentos separados.
+
 ---
 
 ## 6. Provenance
 
 Nenhum número deverá existir sem metadados suficientes para explicar sua origem.
 
-Modelo conceitual mínimo. Os nomes de campos ainda são provisórios: a fase 2 do [roadmap](04-roadmap.md) usa `dataset` e `revision_status`, enquanto este documento usa `source_dataset` e `is_revised`. O modelo deverá definir nomes e estados de revisão antes de virar um contrato implementável:
+Metadados canônicos definidos no [modelo conceitual](systems/data-model.md#metadados-obrigatórios-de-observação). A observação referencia uma série, que identifica o indicador e o código externo:
 
 ```text
-indicator
+series
 value
 unit
 geography
@@ -169,20 +171,24 @@ reference_period
 published_at
 retrieved_at
 source
-source_dataset
-source_series_id
+dataset
+methodology
 methodology_version
-is_revised
+revision_status
 vintage
 ```
 
-Indicadores derivados deverão registrar adicionalmente os campos abaixo. `calculation_version` corresponde ao conceito de versão do cálculo chamado `version` na fase 8 do roadmap; o nome definitivo ainda será definido:
+Indicadores derivados registram o cálculo e a versão, inputs por IDs imutáveis e parâmetros em `derivation`. A especificação de cálculo guarda:
 
 ```text
 formula
 inputs
 calculation_version
+methodology
+methodology_version
 ```
+
+`revision_status` admite `unrevised`, `revised` e `unknown`; não se reduz a um booleano. Publicação, coleta, estado preliminar/final e atualização são dimensões distintas. As condições de ausência e os campos complementares obrigatórios estão no modelo; esta lista resumida não é um schema de validação.
 
 ---
 
@@ -258,6 +264,8 @@ Consequentemente deverão ser estudados:
 
 Nenhuma tecnologia específica está definida neste momento.
 
+O [catálogo de operações e consistência](systems/data-operations.md) fixa consultas por publicação, paginação estável e cache identificado pelo manifesto. Escritas aceitam lotes validados e preservam revisões; leituras públicas usam uma publicação completa e imutável. Essa separação lógica pode ser implementada no mesmo banco.
+
 ---
 
 ## 11. Processamento em background
@@ -272,6 +280,8 @@ O sistema deverá possuir mecanismos para:
 - recalcular indicadores afetados;
 - validar resultados;
 - publicar nova versão.
+
+Coleta, aceitação validada e ativação pública são momentos distintos, definidos no [catálogo](systems/data-operations.md#três-momentos-distintos). O canal muda de publicação de forma indivisível, com geração esperada para detectar concorrência. Preparação parcial não muda a visão pública; derivadas pendentes são informadas sem misturar resultados antigos com inputs revisados. As garantias são requisitos conceituais, ainda sem implementação de pipeline.
 
 Fluxo conceitual:
 
