@@ -1,0 +1,44 @@
+---
+export type Props = {
+  assessment?: 'favorable' | 'unfavorable' | 'neutral' | 'undetermined';
+} & (
+  | { direction: 'up' | 'down' | 'flat'; change: string; comparison: string }
+  | { direction: 'unavailable'; change?: never; comparison?: string }
+);
+const { direction, change, comparison, assessment = 'undetermined' } = Astro.props;
+const symbols = { up: '↑', down: '↓', flat: '→', unavailable: '—' };
+const labels = { up: 'Alta', down: 'Queda', flat: 'Estável', unavailable: 'Variação indisponível' };
+const assessments = {
+  favorable: 'Leitura favorável neste contexto',
+  unfavorable: 'Leitura desfavorável neste contexto',
+  neutral: 'Leitura neutra neste contexto',
+  undetermined: 'Sentido depende do contexto',
+};
+---
+
+<div class="trend" data-direction={direction}>
+  <p class="trend__change">
+    <span aria-hidden="true">{symbols[direction]}</span> {labels[direction]}
+    {change !== undefined && (
+      <>
+        : <strong>{change}</strong>
+      </>
+    )}
+  </p>
+  {comparison && <p class="trend__context">{comparison}</p>}
+  {direction !== 'unavailable' && <p class="trend__context">{assessments[assessment]}</p>}
+</div>
+<style>
+  .trend {
+    display: grid;
+    gap: var(--space-2xs);
+  }
+  .trend__change {
+    font-family: var(--font-mono);
+    font-size: var(--text-base);
+  }
+  .trend__context {
+    color: var(--fg-muted);
+    font-size: var(--text-sm);
+  }
+</style>

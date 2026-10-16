@@ -1,0 +1,76 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+export interface SelectOption {
+  value: string;
+  label: string;
+  disabled?: boolean;
+}
+type Props = Omit<HTMLAttributes<'select'>, 'id'> & {
+  id: string;
+  label: string;
+  options: SelectOption[];
+  value?: string;
+  hint?: string;
+  error?: string;
+};
+const { id, label, options, value, hint, error, class: className, ...rest } = Astro.props;
+const description =
+  [hint && `${id}-hint`, error && `${id}-error`, rest['aria-describedby']]
+    .filter(Boolean)
+    .join(' ') || undefined;
+---
+
+<div class="ui-field">
+  <label for={id}>{label}</label>
+  <select
+    id={id}
+    class:list={['ui-select', className]}
+    {...rest}
+    aria-describedby={description}
+    aria-invalid={error ? 'true' : rest['aria-invalid']}
+  >
+    {options.map((option) => (
+      <option value={option.value} selected={option.value === value} disabled={option.disabled}>
+        {option.label}
+      </option>
+    ))}
+  </select>
+  {hint && (
+    <p id={`${id}-hint`} class="ui-field__hint">
+      {hint}
+    </p>
+  )}
+  {error && (
+    <p id={`${id}-error`} class="ui-field__error">
+      {error}
+    </p>
+  )}
+</div>
+<style>
+  .ui-field {
+    display: grid;
+    gap: var(--space-xs);
+    min-width: 0;
+  }
+  label {
+    font-weight: 600;
+  }
+  .ui-select {
+    min-height: var(--control-height);
+    width: 100%;
+    padding: var(--space-xs);
+    background: var(--surface);
+    border: 1px solid var(--control-border);
+    border-radius: var(--radius);
+  }
+  .ui-select:disabled {
+    cursor: not-allowed;
+  }
+  .ui-field__hint {
+    font-size: var(--text-sm);
+    color: var(--fg-muted);
+  }
+  .ui-field__error {
+    color: var(--status-error);
+  }
+</style>

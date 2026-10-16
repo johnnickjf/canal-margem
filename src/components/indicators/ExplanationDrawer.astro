@@ -1,0 +1,65 @@
+---
+import Drawer from '@/components/ui/Drawer.astro';
+import Heading from '@/components/ui/Heading.astro';
+import SourceBadge, { type Props as SourceProps } from './SourceBadge.astro';
+interface Props {
+  id: string;
+  title: string;
+  definition: string;
+  importance: string;
+  interpretation: string;
+  pitfalls: string[];
+  source: SourceProps;
+}
+const { id, title, definition, importance, interpretation, pitfalls, source } = Astro.props;
+---
+
+<Drawer id={id} title={`Entenda: ${title}`} triggerLabel="Entenda este indicador">
+  <div class="explanation">
+    <section>
+      <Heading as="h3" size="label">
+        O que mede
+      </Heading>
+      <p>{definition}</p>
+    </section>
+    <section>
+      <Heading as="h3" size="label">
+        Por que importa
+      </Heading>
+      <p>{importance}</p>
+    </section>
+    <section>
+      <Heading as="h3" size="label">
+        Como interpretar
+      </Heading>
+      <p>{interpretation}</p>
+    </section>
+    {pitfalls.length > 0 && (
+      <section>
+        <Heading as="h3" size="label">
+          Cuidados na leitura
+        </Heading>
+        <ul>
+          {pitfalls.map((pitfall) => (
+            <li>{pitfall}</li>
+          ))}
+        </ul>
+      </section>
+    )}
+    <SourceBadge {...source} />
+    <slot />
+  </div>
+</Drawer>
+<style>
+  .explanation {
+    display: grid;
+    gap: var(--space-md);
+  }
+  .explanation section {
+    display: grid;
+    gap: var(--space-xs);
+  }
+  ul {
+    padding-left: var(--space-md);
+  }
+</style>

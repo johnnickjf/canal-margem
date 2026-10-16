@@ -121,8 +121,8 @@
   }
 
   :focus-visible {
-    outline: 2px solid var(--red);
-    outline-offset: 3px;
+    outline: var(--focus-ring);
+    outline-offset: var(--focus-offset);
   }
 
   .on-dark :focus-visible,
@@ -140,8 +140,8 @@
     display: none !important;
   }
 
-  /* Trava a rolagem da página enquanto um diálogo modal (menu) está aberto */
-  html:has(dialog[open]) {
+  /* Trava a rolagem somente durante diálogos modais. */
+  html:has(dialog:modal) {
     overflow: hidden;
   }
 }
@@ -150,7 +150,7 @@
 @layer layout {
   .container {
     width: 100%;
-    max-width: var(--page-max);
+    max-width: var(--content-wide);
     margin-inline: auto;
     padding-inline: var(--gutter);
   }
@@ -187,6 +187,14 @@
     --line: var(--line-on-dark);
     --line-strong: var(--paper);
     --accent-text: var(--red-on-dark);
+    --focus-color: var(--paper);
+    --surface: var(--charcoal);
+    --surface-muted: #32302d;
+    --control-border: #a8a29a;
+    --status-info: #9cc6db;
+    --status-warning: #e4bb84;
+    --status-error: var(--red-on-dark);
+    --status-neutral: var(--fg-muted);
     color: var(--fg);
   }
 }

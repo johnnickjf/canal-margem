@@ -1,0 +1,17 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+type Props = HTMLAttributes<'div'> & { as?: 'div' | 'section'; width?: 'wide' | 'narrow' };
+const { as: Tag = 'div', width = 'wide', class: className, ...rest } = Astro.props;
+---
+
+<Tag
+  class:list={['container', { 'ui-container--narrow': width === 'narrow' }, className]}
+  {...rest}
+>
+  <slot />
+</Tag>
+<style>
+  .ui-container--narrow {
+    max-width: var(--content-narrow);
+  }
+</style>

@@ -1,0 +1,27 @@
+---
+import Badge from '@/components/ui/Badge.astro';
+import Link from '@/components/ui/Link.astro';
+export interface Props {
+  title?: string;
+  description: string;
+  href?: string;
+}
+const { title = 'Atenção à metodologia', description, href } = Astro.props;
+---
+
+<aside class="methodology-warning" aria-label={title}>
+  <Badge tone="warning">{title}</Badge>
+  <p>{description}</p>
+  {href && <Link href={href}>Ler metodologia</Link>}
+</aside>
+<style>
+  .methodology-warning {
+    display: grid;
+    justify-items: start;
+    gap: var(--space-xs);
+    padding: var(--space-sm);
+    border: var(--rule);
+    border-left: 4px solid var(--status-warning);
+    font-size: var(--text-sm);
+  }
+</style>

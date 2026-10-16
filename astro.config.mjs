@@ -7,7 +7,12 @@ import { defineConfig } from 'astro/config';
 export default defineConfig({
   site: 'https://margem.com.br',
   trailingSlash: 'ignore',
-  integrations: [sitemap()],
+  integrations: [
+    sitemap({
+      // Referência utilitária com exemplos fictícios, marcada também com noindex.
+      filter: (page) => new URL(page).pathname.replace(/\/$/, '') !== '/design-system',
+    }),
+  ],
   image: {
     domains: ['images.unsplash.com'],
   },

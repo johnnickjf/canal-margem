@@ -1,6 +1,6 @@
 # Documentação do Margem
 
-O Canal Margem está preparando a evolução do site editorial para uma plataforma de análise socioeconômica verificável. A entrega inicial cobre a fase 0 do roadmap: conhecer a base e organizar o contexto.
+O Canal Margem está preparando a evolução do site editorial para uma plataforma de análise socioeconômica verificável. A base inclui a documentação da fase 0 e o design system da fase 1.
 
 ## Ordem de leitura
 
@@ -9,6 +9,8 @@ O Canal Margem está preparando a evolução do site editorial para uma platafor
 3. [Arquitetura técnica](03-technical-architecture.md): requisitos futuros para dados, proveniência e distribuição.
 4. [Roadmap](04-roadmap.md): fases 0–23 e critérios do futuro MVP.
 5. [Auditoria do frontend atual](systems/frontend.md): implementação observada, identidade reutilizável, limitações e próximo passo.
+6. [Design system](systems/design-system.md): tokens, componentes básicos e de indicadores, estados e validação da fase 1.
+7. [Testes e cobertura](systems/testing.md): suíte unitária, navegador, build editorial, medição por módulo e CI.
 
 Os quatro documentos numerados partem dos textos fornecidos pelo responsável pelo projeto e receberam ajustes de clareza e precisão. Definem o produto planejado; o estado implementado está na auditoria do frontend. Valores, datas e fontes em exemplos de interface são ilustrativos, não dados apurados.
 
@@ -19,7 +21,8 @@ Os quatro documentos numerados partem dos textos fornecidos pelo responsável pe
 | Site editorial Astro, conteúdo local e identidade visual | Implementado; inventariado na auditoria |
 | Documentação central e roadmap | Organizados nesta fase |
 | Gerenciamento de pacotes e qualidade | pnpm 11.22.0 e Biome 2.5.15 configurados; cobertura descrita no README |
-| Design system da plataforma | Próxima fase; há componentes candidatos ao reaproveitamento |
+| Testes automatizados e CI | Vitest com cobertura e limites por módulo; Playwright para componentes, fluxos editoriais e build; workflow preparado, execução remota ainda não verificada |
+| Design system da plataforma | Implementado na fase 1; referência em `/design-system`, com exemplos fictícios |
 | Indicadores, comparador e camada Entenda | Planejados |
 | Banco, API de indicadores, ingestão e processamento | Planejados; tecnologias em aberto |
 | Publicação e operação em produção | Não verificadas; sem configuração de deploy no repositório |
@@ -44,4 +47,4 @@ Manter detalhes de infraestrutura fora da visão e do documento de UX. Registrar
 
 ## Próxima entrega
 
-Executar a fase 1 sobre a base existente: inventariar estados e variantes, consolidar tokens e primitives reutilizáveis e propor os primeiros componentes de indicador com dados explicitamente ilustrativos. Critérios: preservar o caráter editorial, verificar layouts em mobile e desktop, navegação por teclado e estados que não dependam só de cor. Banco, pipelines e integrações ficam para as fases correspondentes do roadmap.
+Executar a fase 2: definir o modelo conceitual dos indicadores, relações e metadados obrigatórios. Os contratos de apresentação do design system não fixam entidades de banco, fórmulas ou políticas de atualização. Banco, pipelines e integrações ficam para as fases correspondentes do roadmap. A [regra permanente de SEO e descoberta por IA](../AGENTS.md) deve ser preservada em todas as fases.

@@ -1,0 +1,28 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+type Props = HTMLAttributes<'article'> & {
+  as?: 'article' | 'div';
+  variant?: 'default' | 'muted' | 'outline';
+};
+const { as: Tag = 'article', variant = 'default', class: className, ...rest } = Astro.props;
+---
+
+<Tag class:list={['ui-card', `ui-card--${variant}`, className]} {...rest}>
+  <slot />
+</Tag>
+<style>
+  .ui-card {
+    min-width: 0;
+    padding: var(--space-md);
+    border: var(--rule);
+    border-radius: var(--radius);
+    background: var(--surface);
+    box-shadow: var(--shadow-none);
+  }
+  .ui-card--muted {
+    background: var(--surface-muted);
+  }
+  .ui-card--outline {
+    background: transparent;
+  }
+</style>

@@ -1,0 +1,31 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+type Props = HTMLAttributes<'span'> & { tone?: 'neutral' | 'info' | 'warning' | 'error' };
+const { tone = 'neutral', class: className, ...rest } = Astro.props;
+---
+
+<span class:list={['ui-badge', `ui-badge--${tone}`, className]} {...rest}>
+  <slot />
+</span>
+<style>
+  .ui-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2xs);
+    padding: 0.25em 0.6em;
+    border: 1px solid currentColor;
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    line-height: 1.5;
+    color: var(--status-neutral);
+  }
+  .ui-badge--info {
+    color: var(--status-info);
+  }
+  .ui-badge--warning {
+    color: var(--status-warning);
+  }
+  .ui-badge--error {
+    color: var(--status-error);
+  }
+</style>

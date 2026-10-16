@@ -1,0 +1,76 @@
+---
+import Badge from '@/components/ui/Badge.astro';
+import { presentationDate } from '@/lib/presentation-date';
+export interface Props {
+  referencePeriod: string;
+  status: 'current' | 'delayed' | 'preliminary' | 'revised' | 'unknown';
+  publishedAt?: string;
+  retrievedAt?: string;
+}
+const { referencePeriod, status, publishedAt, retrievedAt } = Astro.props;
+const labels = {
+  current: 'Atualização em dia',
+  delayed: 'Atualização atrasada',
+  preliminary: 'Dado preliminar',
+  revised: 'Dado revisado',
+  unknown: 'Atualização não verificada',
+} as const;
+const tone =
+  status === 'delayed' || status === 'preliminary'
+    ? 'warning'
+    : status === 'revised'
+      ? 'info'
+      : 'neutral';
+---
+
+<div class="data-freshness">
+  <dl>
+    <div>
+      <dt>Referência</dt>
+      <dd>{referencePeriod}</dd>
+    </div>
+    {publishedAt && (
+      <div>
+        <dt>Publicado em</dt>
+        <dd>
+          <time datetime={publishedAt}>{presentationDate(publishedAt)}</time>
+        </dd>
+      </div>
+    )}
+    {retrievedAt && (
+      <div>
+        <dt>Consultado em</dt>
+        <dd>
+          <time datetime={retrievedAt}>{presentationDate(retrievedAt)}</time>
+        </dd>
+      </div>
+    )}
+  </dl>
+  <Badge tone={tone}>{labels[status]}</Badge>
+</div>
+<style>
+  .data-freshness {
+    display: grid;
+    gap: var(--space-xs);
+    justify-items: start;
+    font-size: var(--text-sm);
+  }
+  dl {
+    display: grid;
+    gap: var(--space-2xs);
+  }
+  dl div {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 var(--space-xs);
+  }
+  dt {
+    color: var(--fg-muted);
+  }
+  dt::after {
+    content: ':';
+  }
+  dd {
+    margin: 0;
+  }
+</style>

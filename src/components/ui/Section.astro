@@ -1,0 +1,12 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import Container from './Container.astro';
+type Props = HTMLAttributes<'section'> & { labelledby: string; width?: 'wide' | 'narrow' };
+const { labelledby, width = 'wide', class: className, ...rest } = Astro.props;
+---
+
+<section class:list={['section', className]} {...rest} aria-labelledby={labelledby}>
+  <Container width={width}>
+    <slot />
+  </Container>
+</section>

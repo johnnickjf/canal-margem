@@ -1,0 +1,40 @@
+---
+import Button from '@/components/ui/Button.astro';
+import Select, { type SelectOption } from '@/components/ui/Select.astro';
+interface Props {
+  id: string;
+  label?: string;
+  action: string;
+  options: SelectOption[];
+  value?: string;
+  name?: string;
+  disabled?: boolean;
+}
+const {
+  id,
+  label = 'Período de comparação',
+  action,
+  options,
+  value,
+  name = 'periodo',
+  disabled = false,
+} = Astro.props;
+---
+
+<form class="time-range" action={action} method="get" aria-label={label}>
+  <Select id={id} label={label} name={name} options={options} value={value} disabled={disabled} />
+  <Button type="submit" variant="outline" disabled={disabled}>
+    Aplicar período
+  </Button>
+</form>
+<style>
+  .time-range {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+    align-items: end;
+  }
+  .time-range :global(.ui-field) {
+    flex: 1 1 220px;
+  }
+</style>

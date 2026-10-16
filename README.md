@@ -38,7 +38,41 @@ O lockfile do projeto é `pnpm-lock.yaml`. Em CI, use `pnpm install --frozen-loc
 
 O contexto de produto, a arquitetura futura e o roadmap estão no [índice de documentação](docs/README.md).
 A [auditoria do frontend](docs/systems/frontend.md) descreve a base atual, o que pode ser reutilizado e as limitações.
-Esta primeira etapa organiza a documentação; indicadores e serviços de dados pertencem às fases seguintes.
+As fases 0 e 1 cobrem a documentação da base e o design system; serviços de dados pertencem às fases seguintes.
+
+## Design system
+
+A referência de componentes está em `/design-system` (`http://localhost:4321/design-system` no
+desenvolvimento). Inclui tokens, os 16 componentes básicos e os sete componentes de indicadores
+da fase 1, com dados explicitamente fictícios. Contratos, estados e limites estão na
+[documentação do design system](docs/systems/design-system.md).
+
+```bash
+pnpm exec playwright install chromium  # preparação do navegador de teste
+pnpm test:e2e                         # check + build + testes desktop/mobile
+```
+
+A referência utilitária usa `noindex` e fica fora do sitemap. As páginas editoriais mantêm a
+[regra obrigatória de SEO e descoberta por IA](AGENTS.md).
+
+## Testes e cobertura
+
+```bash
+pnpm test:unit      # testes unitários de datas, formatação e títulos
+pnpm test:coverage  # relatório V8 e limites de cobertura por módulo
+pnpm test:e2e       # lint, tipos, build e Playwright
+pnpm test           # validação completa: coverage + test:e2e
+```
+
+A CI em [`.github/workflows/tests.yml`](.github/workflows/tests.yml) executa a validação em cada
+PR e push. Sua primeira execução no GitHub depende do envio dessas alterações.
+Os relatórios ficam em `coverage/`; capturas e traces, em `test-results/`. Esses diretórios
+são ignorados pelo Git. A CI também guarda os relatórios como artefatos por 14 dias.
+
+A cobertura unitária inclui `src/lib/**/*.ts` e `src/scripts/**/*.ts`, inclusive arquivos sem testes.
+Datas, formatação e títulos têm limites por arquivo definidos após a medição inicial.
+Esse percentual não mede os templates Astro nem os fluxos do Playwright. Escopo, métricas,
+testes editoriais, validação de rascunhos/RSS e limites estão na [documentação de testes](docs/systems/testing.md).
 
 ## Estrutura
 
@@ -149,7 +183,7 @@ As fotos atuais vêm do Unsplash (licença Unsplash) e os créditos aparecem em 
 
 - **Tokens** em `src/styles/tokens.css`, baseados em `docs/brand/MARGEM_design_tokens.json`, com extensões para o site. Não há sincronização automática entre os arquivos.
 - **Cor 80/15/5**: papel domina, carvão estrutura, vermelho só como marca-texto.
-  `--red-on-dark` é uma variação clareada para fundos escuros; não garante contraste AA para texto de tamanho normal. Ver [limites de contraste](docs/systems/frontend.md#contraste-do-vermelho-em-fundos-escuros).
+  `--red-on-dark` é uma variação de texto clareada na fase 1 para melhorar o contraste sobre carvão e preto. Ver [tokens e validação do design system](docs/systems/design-system.md).
 - **Tipografia** auto-hospedada via Fontsource: Bebas Neue (títulos), Inter (corpo/UI), IBM Plex Mono (labels, datas, `M / 000`).
 - **Texturas** procedurais em SVG (`textures.css`): papel, concreto, grunge vermelho e halftone — sem arquivos pesados.
 - **Bordas rasgadas** geradas em `src/lib/torn.ts` como `clip-path` determinístico por `seed`.

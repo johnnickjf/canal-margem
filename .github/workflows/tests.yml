@@ -1,0 +1,50 @@
+name: Testes
+
+on:
+  pull_request:
+  push:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: tests-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  tests:
+    name: Lint, tipos, cobertura, build e navegador
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      CI: 'true'
+      ASTRO_TELEMETRY_DISABLED: '1'
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+      - name: Instalar pnpm na versão do projeto
+        run: npm install --global "$(node --print 'require("./package.json").packageManager')"
+      - name: Instalar dependências pelo lockfile
+        run: pnpm install --frozen-lockfile
+      - name: Instalar Chromium e dependências de sistema
+        run: pnpm exec playwright install --with-deps chromium
+      - name: Testar funções compartilhadas e limites de cobertura
+        run: pnpm test:coverage
+      - name: Verificar lint, tipos, build e fluxos no navegador
+        run: pnpm test:e2e
+      - name: Guardar relatórios, capturas e traces
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v7
+        with:
+          name: test-results
+          path: |
+            coverage/
+            playwright-report/
+            test-results/
+          retention-days: 14
+          if-no-files-found: warn

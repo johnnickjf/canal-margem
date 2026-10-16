@@ -1,0 +1,83 @@
+---
+import Button from './Button.astro';
+interface Props {
+  id: string;
+  label?: string;
+  action?: string;
+  name?: string;
+  value?: string;
+  placeholder?: string;
+  disabled?: boolean;
+  hint?: string;
+  error?: string;
+}
+const {
+  id,
+  label = 'O que você procura?',
+  action = '/busca',
+  name = 'q',
+  value,
+  placeholder,
+  disabled = false,
+  hint,
+  error,
+} = Astro.props;
+---
+
+<form role="search" aria-label={label} action={action} method="get" class="ui-search">
+  <label for={id}>{label}</label>
+  <div class="ui-search__row">
+    <input
+      id={id}
+      type="search"
+      name={name}
+      value={value}
+      placeholder={placeholder}
+      disabled={disabled}
+      aria-invalid={error ? 'true' : undefined}
+      aria-describedby={hint || error ? `${id}-message` : undefined}
+    />
+    <Button type="submit" disabled={disabled}>
+      Buscar
+    </Button>
+  </div>
+  {(error || hint) && (
+    <p
+      id={`${id}-message`}
+      class:list={['ui-search__message', { 'ui-search__message--error': error }]}
+    >
+      {error || hint}
+    </p>
+  )}
+</form>
+<style>
+  .ui-search {
+    display: grid;
+    gap: var(--space-xs);
+  }
+  label {
+    font-weight: 600;
+  }
+  .ui-search__row {
+    display: flex;
+    gap: var(--space-xs);
+    flex-wrap: wrap;
+  }
+  input {
+    flex: 1 1 180px;
+    min-width: 0;
+    width: 100%;
+    min-height: var(--control-height);
+    border: 1px solid var(--control-border);
+    border-radius: var(--radius);
+    background: var(--surface);
+    padding: var(--space-xs) var(--space-sm);
+  }
+  .ui-search__message {
+    color: var(--fg-muted);
+    font-size: var(--text-sm);
+  }
+  .ui-search__message--error {
+    color: var(--status-error);
+  }
+</style>

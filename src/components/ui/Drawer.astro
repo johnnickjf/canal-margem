@@ -1,0 +1,8 @@
+---
+import Modal, { type Props as ModalProps } from './Modal.astro';
+type Props = Omit<ModalProps, 'variant'>;
+---
+
+<Modal {...Astro.props} variant="drawer">
+  <slot />
+</Modal>

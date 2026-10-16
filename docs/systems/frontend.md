@@ -4,6 +4,8 @@ Inspeção inicial em 14/10/2026, sobre a base `94e866d`, atualizada após a ado
 
 A base é um site editorial estático em Astro, mais amplo que uma landing page: possui acervo de vídeos, análises, temas, manifesto, busca e RSS. A evolução pode aproveitar essa estrutura sem migração de stack nesta fase. API de indicadores, banco e pipelines ainda não existem.
 
+Esta auditoria registra a fase 0. A fase 1 acrescenta tokens, primitives, componentes de indicadores e testes de navegador, documentados no [design system](design-system.md). As ausências descritas abaixo correspondem ao inventário anterior a essa implementação.
+
 ## Stack, organização e convenções
 
 | Área | Evidência e comportamento atual |
@@ -119,7 +121,7 @@ Dependências externas atuais no navegador são imagens Unsplash, YouTube após 
 
 ### Contraste do vermelho em fundos escuros
 
-O token `--red-on-dark: #C0493C` tem contraste calculado de aproximadamente 3,94:1 sobre `--black: #0D0D0D` e 3,34:1 sobre `--charcoal: #1F1F1F`, considerando cores sólidas. A afirmação anterior de contraste AA sem restrições era incorreta: o [critério 1.4.3 da WCAG](https://www.w3.org/WAI/WCAG21/Understanding/contrast-minimum) exige 4,5:1 para texto de tamanho normal e 3:1 para texto grande (18pt, ou 14pt em negrito). Texturas e fundos reais ainda precisam de inspeção no navegador. Esta revisão corrige a descrição; não altera a paleta.
+Na fase 0, `--red-on-dark: #C0493C` tinha contraste calculado de aproximadamente 3,94:1 sobre `--black: #0D0D0D` e 3,34:1 sobre `--charcoal: #1F1F1F`, considerando cores sólidas. A afirmação anterior de contraste AA sem restrições era incorreta: o [critério 1.4.3 da WCAG](https://www.w3.org/WAI/WCAG21/Understanding/contrast-minimum) exige 4,5:1 para texto de tamanho normal e 3:1 para texto grande (18pt, ou 14pt em negrito). A fase 1 substitui essa variação de texto por `#E0796C`, mantendo a paleta oficial. A validação dos componentes está documentada no [design system](design-system.md); não certifica todos os estados do acervo editorial.
 
 ### Conteúdo de exemplo e publicação
 

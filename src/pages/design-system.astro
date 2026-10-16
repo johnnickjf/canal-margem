@@ -1,0 +1,538 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Badge from '@/components/ui/Badge.astro';
+import Button from '@/components/ui/Button.astro';
+import Card from '@/components/ui/Card.astro';
+import Container from '@/components/ui/Container.astro';
+import Drawer from '@/components/ui/Drawer.astro';
+import EmptyState from '@/components/ui/EmptyState.astro';
+import ErrorState from '@/components/ui/ErrorState.astro';
+import Heading from '@/components/ui/Heading.astro';
+import Link from '@/components/ui/Link.astro';
+import Modal from '@/components/ui/Modal.astro';
+import Search from '@/components/ui/Search.astro';
+import Section from '@/components/ui/Section.astro';
+import Select from '@/components/ui/Select.astro';
+import Skeleton from '@/components/ui/Skeleton.astro';
+import Tabs from '@/components/ui/Tabs.astro';
+import Tooltip from '@/components/ui/Tooltip.astro';
+import DataFreshness from '@/components/indicators/DataFreshness.astro';
+import ExplanationDrawer from '@/components/indicators/ExplanationDrawer.astro';
+import IndicatorCard from '@/components/indicators/IndicatorCard.astro';
+import MethodologyWarning from '@/components/indicators/MethodologyWarning.astro';
+import SourceBadge from '@/components/indicators/SourceBadge.astro';
+import TimeRangeSelector from '@/components/indicators/TimeRangeSelector.astro';
+import Trend from '@/components/indicators/Trend.astro';
+
+const colors = [
+  { label: 'Papel', token: '--paper' },
+  { label: 'Papel claro', token: '--paper-light' },
+  { label: 'Carvão', token: '--charcoal' },
+  { label: 'Vermelho', token: '--red' },
+  { label: 'Texto sobre escuro', token: '--red-on-dark' },
+  { label: 'Concreto', token: '--concrete' },
+];
+const source = { name: 'Fonte fictícia', dataset: 'Amostra de interface' };
+const periods = [
+  { value: '12m', label: 'Últimos 12 meses' },
+  { value: '5a', label: 'Últimos 5 anos' },
+];
+const statuses = ['current', 'delayed', 'preliminary', 'revised', 'unknown'] as const;
+const explanation = {
+  title: 'Renda de exemplo',
+  definition: 'Valor fictício usado para demonstrar a apresentação de uma renda mensal.',
+  importance: 'O contexto, a unidade e o recorte ajudam a evitar leituras isoladas do número.',
+  interpretation:
+    'Compare apenas períodos e recortes compatíveis. Esta amostra não descreve a economia brasileira.',
+  pitfalls: [
+    'Não usar o valor de demonstração como evidência.',
+    'Uma variação não demonstra, sozinha, uma causa.',
+  ],
+  source,
+};
+---
+
+<BaseLayout
+  title="Design system"
+  description="Referência de componentes, tokens e estados da interface MARGEM. Exemplos ilustrativos para desenvolvimento."
+  noindex
+>
+  <Container class="ds-opening">
+    <p class="label">MARGEM / Fundação do produto</p>
+    <Heading as="h1" size="page">
+      Design system
+    </Heading>
+    <p class="lede">Uma base editorial para ler números com contexto.</p>
+    <p id="dados-ilustrativos">
+      Esta página é uma referência de interface. Todos os valores, fontes e datas de indicadores
+      abaixo são fictícios e ilustrativos.
+    </p>
+    <nav aria-label="Seções da referência" class="ds-row">
+      <Link href="#fundamentos">Fundamentos</Link>
+      <Link href="#componentes">Componentes</Link>
+      <Link href="#interacoes">Interações</Link>
+      <Link href="#indicadores">Indicadores</Link>
+    </nav>
+  </Container>
+
+  <Section labelledby="fundamentos">
+    <div class="ds-stack">
+      <Heading as="h2" id="fundamentos">
+        Fundamentos
+      </Heading>
+      <p>
+        Papel como superfície, carvão como estrutura e vermelho como destaque. Cantos retos e fontes
+        locais preservam a identidade editorial.
+      </p>
+      <div class="ds-grid ds-palette">
+        {colors.map((color) => (
+          <div>
+            <span
+              class="ds-swatch"
+              style={`background: var(${color.token})`}
+              aria-hidden="true"
+            ></span>
+            <strong>{color.label}</strong>
+            <code>{color.token}</code>
+          </div>
+        ))}
+      </div>
+      <div class="ds-grid">
+        <Card>
+          <Heading as="h3" size="card">
+            Tipografia
+          </Heading>
+          <p class="ds-body">Inter para leitura e controles.</p>
+          <p class="mono">IBM Plex Mono / 0123456789</p>
+          <p>Títulos em Bebas Neue, com nível semântico independente do tamanho visual.</p>
+        </Card>
+        <Card variant="outline">
+          <Heading as="h3" size="card">
+            Espaçamento e layout
+          </Heading>
+          <p>4 / 8 / 16 / 24 / 40 / 64 / 96 / 144 px</p>
+          <p>Conteúdo: até 1440 px. Leitura: 66 caracteres. Breakpoints: 720 / 960 / 1080 px.</p>
+          <p>Sem sombras em cartões. Sombra reservada a sobreposições.</p>
+        </Card>
+      </div>
+    </div>
+  </Section>
+
+  <Section labelledby="componentes">
+    <div class="ds-stack">
+      <Heading as="h2" id="componentes">
+        Componentes básicos
+      </Heading>
+      <Heading as="h3" size="card">
+        Ações e links
+      </Heading>
+      <div class="ds-row">
+        <Button>Primário</Button>
+        <Button variant="outline">Contorno</Button>
+        <Button variant="text">Texto</Button>
+        <Button disabled>Indisponível</Button>
+        <Button loading>Carregando</Button>
+        <Button href="/sobre" icon="arrow-right">
+          Conheça a MARGEM
+        </Button>
+      </div>
+      <div class="ds-row">
+        <Link href="/analises">Leia as análises</Link>
+        <Link href="https://www.ibge.gov.br/" external>
+          Site do IBGE
+        </Link>
+      </div>
+      <div class="ds-grid">
+        <Card>
+          <Heading as="h3" size="card">
+            Cartão padrão
+          </Heading>
+          <p>Superfície de leitura para agrupar informação.</p>
+        </Card>
+        <Card variant="muted">
+          <Heading as="h3" size="card">
+            Cartão secundário
+          </Heading>
+          <p>Variação de superfície, sem mudar a hierarquia semântica.</p>
+        </Card>
+        <Card variant="outline">
+          <Heading as="h3" size="card">
+            Cartão com borda
+          </Heading>
+          <p>O mesmo espaçamento sobre o papel da página.</p>
+        </Card>
+      </div>
+      <Heading as="h3" size="card">
+        Formulários
+      </Heading>
+      <div class="ds-grid">
+        <Select
+          id="ds-recorte"
+          label="Recorte geográfico"
+          options={[
+            { value: 'br', label: 'Brasil' },
+            { value: 'sp', label: 'São Paulo' },
+          ]}
+          hint="Exemplo de seleção nativa."
+        />
+        <Select
+          id="ds-recorte-error"
+          label="Recorte com erro"
+          options={[{ value: '', label: 'Selecione um recorte' }]}
+          error="Escolha um recorte disponível."
+        />
+        <Select
+          id="ds-recorte-disabled"
+          label="Recorte indisponível"
+          options={[{ value: '', label: 'Sem opções' }]}
+          disabled
+        />
+      </div>
+      <Search
+        id="ds-search"
+        label="Buscar no acervo editorial"
+        placeholder="Aluguel, jornada, imposto…"
+        hint="A busca abre a página de resultados do acervo."
+      />
+      <div class="ds-row">
+        <Badge>Informação</Badge>
+        <Badge tone="info">Fonte primária</Badge>
+        <Badge tone="warning">Dado preliminar</Badge>
+        <Badge tone="error">Falha na consulta</Badge>
+      </div>
+      <Heading as="h3" size="card">
+        Estados de conteúdo
+      </Heading>
+      <div class="ds-grid">
+        <Card as="div">
+          <Skeleton label="Carregando a série de exemplo" />
+        </Card>
+        <EmptyState description="A fonte ainda não oferece observações para este período. Escolha outro recorte." />
+        <ErrorState description="A consulta de exemplo falhou. Os dados não foram substituídos por zero.">
+          <Link href="#indicadores">Rever os exemplos</Link>
+        </ErrorState>
+      </div>
+      <div class="ds-dark on-dark ds-stack" data-dark-sample>
+        <Heading as="h3" size="card">
+          Superfície escura
+        </Heading>
+        <p class="hl">Destaque legível sobre carvão.</p>
+        <div class="ds-row">
+          <Button>Primário</Button>
+          <Button variant="outline">Contorno</Button>
+          <Link href="/manifesto">Manifesto</Link>
+          <Badge tone="warning">Atenção à metodologia</Badge>
+        </div>
+      </div>
+    </div>
+  </Section>
+
+  <Section labelledby="interacoes">
+    <div class="ds-stack">
+      <Heading as="h2" id="interacoes">
+        Interações
+      </Heading>
+      <div class="ds-row">
+        <Tooltip
+          id="ds-tip"
+          label="O que é uma revisão?"
+          text="Uma fonte pode corrigir valores já publicados. Consulte a versão antes de comparar."
+        />
+        <Tooltip
+          id="ds-tip-two"
+          label="O que é referência?"
+          text="É o período representado pelo dado, que pode ser diferente da data de publicação."
+        />
+      </div>
+      <div class="ds-grid">
+        <Modal id="ds-modal" title="Contexto da comparação" triggerLabel="Abrir modal">
+          <p>
+            Compare séries de mesma unidade, geografia e metodologia. Alterações de recorte precisam
+            ficar visíveis.
+          </p>
+          <p>
+            <Link href="#indicadores">Ver os cartões de exemplo</Link>
+          </p>
+        </Modal>
+        <Drawer id="ds-drawer" title="Detalhes do recorte" triggerLabel="Abrir painel lateral">
+          <p>Um recorte deve informar a geografia, a unidade e o período de referência.</p>
+          <p>
+            <Link href="#dados-ilustrativos">Sobre estes exemplos</Link>
+          </p>
+        </Drawer>
+      </div>
+      <Tabs
+        id="ds-reading"
+        label="Níveis de leitura"
+        items={[
+          { id: 'resumo', label: 'Resumo' },
+          { id: 'contexto', label: 'Contexto' },
+          { id: 'metodo', label: 'Metodologia' },
+        ]}
+      >
+        <div slot="resumo">
+          <Heading as="h3" size="card">
+            O que aconteceu?
+          </Heading>
+          <p>Uma resposta curta precede os detalhes.</p>
+        </div>
+        <div slot="contexto">
+          <Heading as="h3" size="card">
+            O que isso significa?
+          </Heading>
+          <p>A leitura cotidiana acompanha o número, sem atribuir uma causa automaticamente.</p>
+        </div>
+        <div slot="metodo">
+          <Heading as="h3" size="card">
+            Como foi medido?
+          </Heading>
+          <p>Fonte, unidade, recorte e limitações ficam disponíveis para aprofundamento.</p>
+        </div>
+      </Tabs>
+      <Tabs
+        id="ds-secondary"
+        label="Referência adicional"
+        items={[
+          { id: 'fonte', label: 'Fonte' },
+          { id: 'versao', label: 'Versão' },
+        ]}
+      >
+        <p slot="fonte">Fonte fictícia usada apenas nesta referência.</p>
+        <p slot="versao">Versão demonstrativa, sem série publicada.</p>
+      </Tabs>
+    </div>
+  </Section>
+
+  <Section labelledby="indicadores">
+    <div class="ds-stack">
+      <Heading as="h2" id="indicadores">
+        Componentes de indicadores
+      </Heading>
+      <MethodologyWarning
+        title="Valores ilustrativos"
+        description="Esta amostra demonstra estados de interface. Não use estes números como evidência ou para tomar decisões."
+      />
+      <form class="ds-range-demo" data-range-demo>
+        <Select
+          id="ds-live-range"
+          name="periodo"
+          label="Período do exemplo"
+          options={periods}
+          value="12m"
+        />
+        <Button type="submit" variant="outline">
+          Atualizar exemplo
+        </Button>
+        <p role="status" data-range-status>
+          Exibindo demonstração: últimos 12 meses.
+        </p>
+      </form>
+      <div class="ds-grid ds-grid--cards">
+        <IndicatorCard
+          title="Renda de exemplo"
+          state="ready"
+          value="2.400"
+          unit="R$/mês"
+          geography="Brasil fictício"
+          explanation="A amostra apresenta uma renda mensal. Não representa uma observação real."
+          source={source}
+          freshness={{
+            referencePeriod: 'Agosto de 2026 (fictício)',
+            status: 'preliminary',
+            publishedAt: '2026-09-15',
+            retrievedAt: '2026-10-01',
+          }}
+          trend={{
+            direction: 'up',
+            change: '2,1%',
+            comparison: 'Em relação a agosto de 2025 (fictício)',
+          }}
+          illustrative
+        >
+          <ExplanationDrawer id="ds-explanation" {...explanation} />
+        </IndicatorCard>
+        <IndicatorCard
+          title="Variação nula de exemplo"
+          state="ready"
+          value="0"
+          unit="p.p."
+          geography="Brasil fictício"
+          explanation="Zero é um valor informado; ausência de dados tem outro estado."
+          source={source}
+          freshness={{ referencePeriod: 'Agosto de 2026 (fictício)', status: 'revised' }}
+          trend={{
+            direction: 'flat',
+            change: '0 p.p.',
+            comparison: 'Comparação fictícia com julho de 2026',
+          }}
+          warning={{
+            description:
+              'A amostra mostra como comunicar uma revisão. Verifique a metodologia antes de comparar.',
+          }}
+          illustrative
+        />
+        <IndicatorCard title="Série em carregamento" state="loading" illustrative />
+        <IndicatorCard
+          title="Série sem observações"
+          state="empty"
+          message="Não há observações para o período escolhido. Ausência não equivale a zero."
+          illustrative
+        />
+        <IndicatorCard
+          title="Consulta com falha"
+          state="error"
+          message="A fonte não respondeu neste exemplo. Tente novamente quando estiver disponível."
+          illustrative
+        />
+      </div>
+      <Heading as="h3" size="card">
+        Proveniência e atualização
+      </Heading>
+      <SourceBadge {...source} />
+      <div class="ds-grid">
+        {statuses.map((status) => (
+          <Card as="div">
+            <DataFreshness
+              referencePeriod="Agosto de 2026 (fictício)"
+              status={status}
+              publishedAt="2026-09-15"
+            />
+          </Card>
+        ))}
+      </div>
+      <Heading as="h3" size="card">
+        Variação com contexto
+      </Heading>
+      <div class="ds-grid">
+        <Trend direction="up" change="2,1%" comparison="Comparação anual fictícia" />
+        <Trend direction="down" change="1,2%" comparison="Comparação anual fictícia" />
+        <Trend
+          direction="flat"
+          change="0 p.p."
+          comparison="Comparação mensal fictícia"
+          assessment="neutral"
+        />
+        <Trend
+          direction="unavailable"
+          comparison="Os recortes não são comparáveis neste exemplo."
+        />
+      </div>
+      <Heading as="h3" size="card">
+        Seletor de período
+      </Heading>
+      <p>
+        O formulário abaixo mostra o contrato de navegação por período. Nesta referência, o período
+        recebido é anunciado sem consultar séries.
+      </p>
+      <TimeRangeSelector id="ds-period" action="/design-system#indicadores" options={periods} />
+      <p role="status" data-period-status></p>
+    </div>
+  </Section>
+  <Section labelledby="leitura" width="narrow">
+    <div class="ds-stack">
+      <Heading as="h2" id="leitura">
+        Leitura e continuidade
+      </Heading>
+      <p>
+        O container de leitura limita a largura do texto. Os componentes recebem conteúdo e
+        metadados de quem os utiliza; fórmulas e políticas de atualização pertencem à camada de
+        dados.
+      </p>
+      <Link href="/">Voltar ao site editorial</Link>
+    </div>
+  </Section>
+</BaseLayout>
+<script>
+  const demo = document.querySelector<HTMLFormElement>('[data-range-demo]');
+  demo?.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const select = demo.querySelector('select');
+    const status = demo.querySelector('[data-range-status]');
+    if (select && status)
+      status.textContent = `Exibindo demonstração: ${select.selectedOptions[0].text.toLowerCase()}. Valores fictícios; nenhuma série consultada.`;
+  });
+  const period = new URLSearchParams(location.search).get('periodo');
+  const select = document.querySelector<HTMLSelectElement>('#ds-period');
+  const status = document.querySelector('[data-period-status]');
+  if (period && select && status) {
+    const option = [...select.options].find((item) => item.value === period);
+    if (option) {
+      select.value = period;
+      status.textContent = `Período recebido: ${option.text}. Demonstração sem consulta a séries.`;
+    }
+  }
+</script>
+<style>
+  .ds-opening {
+    display: grid;
+    gap: var(--space-md);
+    padding-block: var(--space-xl);
+  }
+  .ds-opening > p {
+    max-width: var(--measure);
+  }
+  .ds-stack {
+    display: grid;
+    gap: var(--space-md);
+  }
+  .ds-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--space-sm) var(--space-md);
+  }
+  .ds-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-md);
+    align-items: start;
+  }
+  .ds-grid :global(.ui-card > p) {
+    margin-top: var(--space-sm);
+  }
+  .ds-grid--cards {
+    align-items: stretch;
+  }
+  .ds-palette > div {
+    display: grid;
+    gap: var(--space-xs);
+  }
+  .ds-swatch {
+    display: block;
+    height: 80px;
+    border: var(--rule);
+  }
+  .ds-body {
+    font-size: var(--text-lg);
+  }
+  .ds-dark {
+    background: var(--charcoal);
+    padding: var(--space-md);
+  }
+  .ds-range-demo {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: end;
+    gap: var(--space-sm);
+  }
+  .ds-range-demo > p {
+    flex-basis: 100%;
+    font-size: var(--text-sm);
+  }
+  @media (min-width: 720px) {
+    .ds-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .ds-palette {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+  @media (min-width: 1080px) {
+    .ds-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    .ds-palette {
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+    }
+  }
+</style>

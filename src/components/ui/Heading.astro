@@ -1,0 +1,37 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+type Props = HTMLAttributes<'h2'> & {
+  as: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
+  size?: 'page' | 'section' | 'card' | 'label';
+};
+const { as: Tag, size = 'section', class: className, ...rest } = Astro.props;
+---
+
+<Tag class:list={['ui-heading', `ui-heading--${size}`, className]} {...rest}>
+  <slot />
+</Tag>
+<style>
+  .ui-heading {
+    font-family: var(--font-display);
+    font-weight: 400;
+    line-height: 1;
+    text-transform: uppercase;
+    text-wrap: balance;
+  }
+  .ui-heading--page {
+    font-size: var(--display-xl);
+  }
+  .ui-heading--section {
+    font-size: var(--heading-section);
+  }
+  .ui-heading--card {
+    font-size: var(--heading-card);
+  }
+  .ui-heading--label {
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    font-weight: 600;
+    line-height: 1.5;
+    text-transform: none;
+  }
+</style>

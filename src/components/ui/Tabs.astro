@@ -1,0 +1,65 @@
+---
+interface Props {
+  id: string;
+  label: string;
+  items: { id: string; label: string }[];
+  selected?: string;
+}
+const { id, label, items, selected = items[0]?.id } = Astro.props;
+if (
+  !items.length ||
+  new Set(items.map((item) => item.id)).size !== items.length ||
+  !items.some((item) => item.id === selected)
+)
+  throw new Error('Tabs: itens devem ser únicos e a seleção deve existir.');
+---
+
+<div class="ui-tabs" data-ui-tabs data-selected={selected}>
+  <nav aria-label={label} class="ui-tabs__nav" data-ui-tablist>
+    {items.map((item) => (
+      <a id={`${id}-tab-${item.id}`} href={`#${id}-panel-${item.id}`} data-ui-tab={item.id}>
+        {item.label}
+      </a>
+    ))}
+  </nav>
+  {items.map((item) => (
+    <section
+      id={`${id}-panel-${item.id}`}
+      aria-labelledby={`${id}-tab-${item.id}`}
+      class="ui-tabs__panel"
+      data-ui-panel={item.id}
+    >
+      <slot name={item.id} />
+    </section>
+  ))}
+</div>
+<script>
+  import { initTabs } from '@/scripts/tabs';
+  initTabs();
+</script>
+<style>
+  .ui-tabs__nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+    border-bottom: var(--rule);
+  }
+  .ui-tabs__nav a {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--control-height);
+    padding: var(--space-xs) var(--space-sm);
+    text-decoration: none;
+    border-bottom: 3px solid transparent;
+  }
+  .ui-tabs__nav a:hover {
+    text-decoration: underline;
+  }
+  .ui-tabs__nav a[aria-selected='true'] {
+    border-bottom-color: var(--red);
+    font-weight: 600;
+  }
+  .ui-tabs__panel {
+    padding-block: var(--space-md);
+  }
+</style>

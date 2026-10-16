@@ -1,0 +1,41 @@
+---
+interface Props {
+  label?: string;
+  lines?: number;
+}
+const { label = 'Carregando conteúdo', lines = 3 } = Astro.props;
+if (!Number.isInteger(lines) || lines < 1 || lines > 12)
+  throw new Error('Skeleton: lines deve estar entre 1 e 12.');
+---
+
+<div class="ui-skeleton" role="status" aria-live="polite">
+  <span class="visually-hidden">{label}</span>
+  {Array.from({ length: lines }, () => (
+    <span class="ui-skeleton__line" aria-hidden="true"></span>
+  ))}
+</div>
+<style>
+  .ui-skeleton {
+    display: grid;
+    gap: var(--space-sm);
+    width: 100%;
+  }
+  .ui-skeleton__line {
+    display: block;
+    height: 1.2em;
+    background: var(--surface-muted);
+  }
+  .ui-skeleton__line:last-child {
+    width: 65%;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .ui-skeleton__line {
+      animation: pulse 1.4s ease-in-out infinite alternate;
+    }
+    @keyframes pulse {
+      to {
+        opacity: 0.45;
+      }
+    }
+  }
+</style>

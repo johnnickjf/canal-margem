@@ -12,8 +12,8 @@
     --paper-deep: #ddd5ca;
     --red: #8f2d24;
     --red-deep: #74231c;
-    /* Vermelho clareado para fundos escuros; AA para texto normal não é garantido. */
-    --red-on-dark: #c0493c;
+    /* Contraste de texto normal sobre carvão e preto; paleta de marca preservada. */
+    --red-on-dark: #e0796c;
     --charcoal: #1f1f1f;
     --black: #0d0d0d;
     --concrete: #9a9a9a;
@@ -28,6 +28,14 @@
     --line: rgb(31 31 31 / 0.24);
     --line-strong: var(--charcoal);
     --line-on-dark: rgb(232 226 217 / 0.2);
+    --surface: var(--paper-light);
+    --surface-muted: var(--paper-deep);
+    --control-border: var(--muted);
+    --focus-color: var(--red);
+    --status-info: #315568;
+    --status-warning: #704411;
+    --status-error: var(--red);
+    --status-neutral: var(--muted);
 
     /* Tipografia */
     --font-display: 'Bebas Neue', 'Arial Narrow', sans-serif;
@@ -68,12 +76,29 @@
     --gutter: clamp(16px, 2.4vw, 40px);
     --column-gap: clamp(16px, 1.8vw, 28px);
     --measure: 66ch;
+    --content-narrow: 760px;
+    --content-wide: var(--page-max);
+    /* Referência para tooling/JS. Media queries usam os valores literais documentados. */
+    --breakpoint-sm: 720px;
+    --breakpoint-nav: 960px;
+    --breakpoint-lg: 1080px;
 
     /* Forma */
     --radius: 0px;
     --radius-max: 4px;
-    --rule: 1px solid var(--line);
-    --rule-strong: 1px solid var(--line-strong);
+    --rule: var(--border-width) solid var(--line);
+    --rule-strong: var(--border-width) solid var(--line-strong);
+    --border-width: 1px;
+    --border-width-strong: 2px;
+    --shadow-none: none;
+    --shadow-overlay: 0 12px 40px rgb(13 13 13 / 0.2);
+    --control-height: 48px;
+    --control-height-sm: 44px;
+    --focus-ring: var(--border-width-strong) solid var(--focus-color);
+    --focus-offset: 3px;
+    --heading-section: var(--display-md);
+    --heading-card: var(--display-sm);
+    --data-value: clamp(2rem, 1.6rem + 1.6vw, 3.5rem);
 
     /* Movimento: curto, sem bounce */
     --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
@@ -86,6 +111,7 @@
     --z-header: 50;
     --z-menu: 60;
     --z-skip: 100;
+    --z-tooltip: 70;
 
     /* Altura do cabeçalho fixo (usada em scroll-margin e sticky) */
     --header-h: 64px;

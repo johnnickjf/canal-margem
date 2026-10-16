@@ -16,7 +16,12 @@
     "lint": "biome check .",
     "lint:fix": "biome check --write .",
     "format": "biome format --write .",
-    "format:check": "biome format ."
+    "format:check": "biome format .",
+    "test:unit": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "test": "pnpm test:coverage && pnpm test:e2e",
+    "test:e2e": "pnpm build && playwright test",
+    "test:e2e:ui": "playwright test --ui"
   },
   "dependencies": {
     "@astrojs/rss": "^4.0.19",
@@ -28,8 +33,12 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.10",
+    "@axe-core/playwright": "^4.13.0",
     "@biomejs/biome": "2.5.15",
-    "typescript": "^6.0.3"
+    "@playwright/test": "^1.64.1",
+    "@vitest/coverage-v8": "5.0.4",
+    "typescript": "^6.0.3",
+    "vitest": "5.0.4"
   },
   "packageManager": "pnpm@11.22.0"
 }

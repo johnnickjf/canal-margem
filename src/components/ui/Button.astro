@@ -2,15 +2,32 @@
 import Icon, { type IconName } from './Icon.astro';
 import type { HTMLAttributes } from 'astro/types';
 
-type Props = {
-  href?: string;
+type Common = {
   variant?: 'primary' | 'outline' | 'text';
   icon?: IconName;
-  type?: 'button' | 'submit';
   class?: string;
-} & Omit<HTMLAttributes<'a'> & HTMLAttributes<'button'>, 'type'>;
+};
 
-const { href, variant = 'primary', icon, type = 'button', class: className, ...rest } = Astro.props;
+type Props = Common &
+  (
+    | (HTMLAttributes<'a'> & { href: string; disabled?: never; loading?: never; type?: never })
+    | (Omit<HTMLAttributes<'button'>, 'type'> & {
+        href?: never;
+        type?: 'button' | 'submit' | 'reset';
+        loading?: boolean;
+      })
+  );
+
+const {
+  href,
+  variant = 'primary',
+  icon,
+  type = 'button',
+  class: className,
+  disabled = false,
+  loading = false,
+  ...rest
+} = Astro.props;
 const Tag = href ? 'a' : 'button';
 ---
 
@@ -19,9 +36,14 @@ const Tag = href ? 'a' : 'button';
   href={href}
   type={href ? undefined : type}
   {...rest}
+  disabled={href ? undefined : disabled || loading}
+  aria-busy={loading || rest['aria-busy']}
 >
-  <span class="btn__label"><slot /></span>
-  {icon && <Icon name={icon} size={18} class="btn__icon" />}
+  {loading && <span class="btn__spinner" aria-hidden="true"></span>}
+  <span class="btn__label">
+    <slot />
+  </span>
+  {icon && !loading && <Icon name={icon} size={18} class="btn__icon" />}
 </Tag>
 
 <style>
@@ -55,6 +77,30 @@ const Tag = href ? 'a' : 'button';
 
   .btn__label {
     padding-top: 0.08em;
+  }
+
+  .btn:disabled {
+    cursor: not-allowed;
+    opacity: 0.65;
+  }
+
+  .btn__spinner {
+    width: 1em;
+    height: 1em;
+    border: 2px solid currentColor;
+    border-right-color: transparent;
+    border-radius: 50%;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .btn__spinner {
+      animation: spin 900ms linear infinite;
+    }
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
   }
 
   .btn :global(.btn__icon) {
@@ -104,7 +150,7 @@ const Tag = href ? 'a' : 'button';
   }
 
   .btn--text:hover {
-    --btn-fg: var(--red);
-    border-bottom-color: var(--red);
+    --btn-fg: var(--accent-text, var(--red));
+    border-bottom-color: var(--accent-text, var(--red));
   }
 </style>

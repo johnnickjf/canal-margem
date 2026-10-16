@@ -1,0 +1,127 @@
+---
+import Heading from './Heading.astro';
+export interface Props {
+  id: string;
+  title: string;
+  triggerLabel: string;
+  variant?: 'modal' | 'drawer';
+  headingLevel?: 'h2' | 'h3';
+}
+const { id, title, triggerLabel, variant = 'modal', headingLevel = 'h2' } = Astro.props;
+---
+
+<div class="ui-dialog-shell" data-ui-dialog-shell>
+  <a class="ui-dialog-trigger" href={`#${id}-content`} data-ui-dialog-trigger>
+    {triggerLabel}
+  </a>
+  <details open data-ui-dialog-fallback>
+    <summary>{title}</summary>
+    <div id={`${id}-content`} class="ui-dialog-content" data-ui-dialog-content>
+      <header class="ui-dialog-header">
+        <Heading
+          as={headingLevel}
+          size="section"
+          id={`${id}-title`}
+          tabindex="-1"
+          data-ui-dialog-heading
+        >
+          {title}
+        </Heading>
+        <button
+          type="button"
+          class="ui-dialog-close"
+          data-ui-dialog-close
+          hidden
+          aria-label={`Fechar: ${title}`}
+        >
+          Fechar <span aria-hidden="true">×</span>
+        </button>
+      </header>
+      <div class="ui-dialog-body">
+        <slot />
+      </div>
+    </div>
+  </details>
+  <dialog
+    id={id}
+    class:list={['ui-dialog', `ui-dialog--${variant}`]}
+    aria-labelledby={`${id}-title`}
+    data-ui-dialog
+  ></dialog>
+</div>
+<script>
+  import { initDialogs } from '@/scripts/dialogs';
+  initDialogs();
+</script>
+<style>
+  .ui-dialog-trigger {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--control-height-sm);
+    font-weight: 600;
+    text-underline-offset: 0.2em;
+  }
+  details {
+    margin-top: var(--space-sm);
+  }
+  summary {
+    cursor: pointer;
+    font-weight: 600;
+  }
+  .ui-dialog {
+    position: fixed;
+    inset: 0;
+    margin: auto;
+    max-width: calc(100% - 2 * var(--gutter));
+    max-height: calc(100dvh - 2 * var(--gutter));
+    width: 640px;
+    padding: 0;
+    border: var(--rule-strong);
+    border-radius: var(--radius);
+    background: var(--surface);
+    color: var(--fg);
+    box-shadow: var(--shadow-overlay);
+    overscroll-behavior: contain;
+  }
+  .ui-dialog::backdrop {
+    background: rgb(13 13 13 / 0.6);
+  }
+  .ui-dialog--drawer {
+    inset: 0 0 0 auto;
+    margin: 0;
+    width: min(560px, 100%);
+    max-width: 100%;
+    max-height: 100dvh;
+    height: 100dvh;
+    border-width: 0 0 0 1px;
+  }
+  .ui-dialog-content {
+    padding: var(--space-md);
+  }
+  .ui-dialog-header {
+    display: flex;
+    align-items: start;
+    justify-content: space-between;
+    gap: var(--space-sm);
+    padding-bottom: var(--space-md);
+    border-bottom: var(--rule);
+  }
+  .ui-dialog-close {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-xs);
+    flex-shrink: 0;
+    min-height: var(--control-height-sm);
+    padding-inline: var(--space-xs);
+    text-decoration: underline;
+  }
+  .ui-dialog-close span {
+    font-size: 1.5rem;
+  }
+  .ui-dialog-body {
+    padding-top: var(--space-md);
+  }
+  .ui-dialog-body :global(p + p) {
+    margin-top: var(--space-sm);
+  }
+</style>

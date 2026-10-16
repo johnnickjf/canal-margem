@@ -1,0 +1,37 @@
+---
+import Badge from '@/components/ui/Badge.astro';
+import Link from '@/components/ui/Link.astro';
+export interface Props {
+  name: string;
+  dataset: string;
+  href?: string;
+  primary?: boolean;
+}
+const { name, dataset, href, primary = false } = Astro.props;
+---
+
+<div class="source-badge">
+  <span class="source-badge__label">Fonte:</span>
+  {href ? (
+    <Link href={href} external>
+      {name} — {dataset}
+    </Link>
+  ) : (
+    <span>
+      {name} — {dataset}
+    </span>
+  )}
+  {primary && <Badge tone="info">Fonte primária</Badge>}
+</div>
+<style>
+  .source-badge {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--space-2xs) var(--space-xs);
+    font-size: var(--text-sm);
+  }
+  .source-badge__label {
+    font-weight: 600;
+  }
+</style>

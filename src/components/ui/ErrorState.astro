@@ -1,0 +1,30 @@
+---
+import Heading from './Heading.astro';
+interface Props {
+  title?: string;
+  description: string;
+  headingLevel?: 'h2' | 'h3' | 'h4';
+}
+const { title = 'Não foi possível carregar', description, headingLevel = 'h3' } = Astro.props;
+---
+
+<div class="ui-error">
+  <Heading as={headingLevel} size="card">
+    {title}
+  </Heading>
+  <p>{description}</p>
+  {Astro.slots.has('default') && (
+    <div>
+      <slot />
+    </div>
+  )}
+</div>
+<style>
+  .ui-error {
+    display: grid;
+    gap: var(--space-sm);
+    padding: var(--space-md);
+    border: var(--rule);
+    border-left: 4px solid var(--status-error);
+  }
+</style>

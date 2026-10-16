@@ -1,0 +1,25 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+type Props = HTMLAttributes<'a'> & { href: string; external?: boolean };
+const { href, external = false, class: className, rel, target, ...rest } = Astro.props;
+---
+
+<a
+  href={href}
+  class:list={['ui-link', className]}
+  target={external ? '_blank' : target}
+  rel={external || target === '_blank' ? `${rel ?? ''} noopener noreferrer`.trim() : rel}
+  {...rest}
+>
+  <slot />
+  {external && <span class="visually-hidden"> (abre em nova aba)</span>}
+</a>
+<style>
+  .ui-link {
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+  .ui-link:hover {
+    color: var(--accent-text, var(--red));
+  }
+</style>

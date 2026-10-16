@@ -1,0 +1,32 @@
+---
+import Heading from './Heading.astro';
+interface Props {
+  title?: string;
+  description: string;
+  headingLevel?: 'h2' | 'h3' | 'h4';
+}
+const { title = 'Sem dados neste recorte', description, headingLevel = 'h3' } = Astro.props;
+---
+
+<div class="ui-empty">
+  <Heading as={headingLevel} size="card">
+    {title}
+  </Heading>
+  <p>{description}</p>
+  {Astro.slots.has('default') && (
+    <div>
+      <slot />
+    </div>
+  )}
+</div>
+<style>
+  .ui-empty {
+    display: grid;
+    gap: var(--space-sm);
+    padding: var(--space-md);
+    border: 1px dashed var(--control-border);
+  }
+  p {
+    color: var(--fg-muted);
+  }
+</style>

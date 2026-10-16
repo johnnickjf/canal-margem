@@ -1,0 +1,78 @@
+---
+interface Props {
+  id: string;
+  label: string;
+  text: string;
+}
+const { id, label, text } = Astro.props;
+---
+
+<span class="ui-tooltip" data-ui-tooltip>
+  <button type="button" aria-describedby={id} class="ui-tooltip__trigger">
+    {label}
+  </button>
+  <span id={id} role="tooltip" class="ui-tooltip__content">
+    {text}
+  </span>
+</span>
+<script>
+  document.querySelectorAll<HTMLElement>('[data-ui-tooltip]').forEach((root) => {
+    const trigger = root.querySelector('button');
+    const content = root.querySelector<HTMLElement>('[role="tooltip"]');
+    if (!trigger || !content) return;
+    content.hidden = true;
+    root.dataset.ready = 'true';
+    const show = () => {
+      content.hidden = false;
+      content.style.left = '0';
+      content.style.top = 'auto';
+      content.style.bottom = '100%';
+      const rect = content.getBoundingClientRect();
+      const overflow = Math.max(0, rect.right - (document.documentElement.clientWidth - 16));
+      content.style.left = `${-overflow}px`;
+      if (rect.top < 8) {
+        content.style.top = '100%';
+        content.style.bottom = 'auto';
+      }
+    };
+    root.addEventListener('pointerenter', show);
+    root.addEventListener('pointerleave', () => {
+      if (!root.contains(document.activeElement)) content.hidden = true;
+    });
+    root.addEventListener('focusin', show);
+    root.addEventListener('focusout', () => {
+      if (!root.matches(':hover')) content.hidden = true;
+    });
+    root.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') content.hidden = true;
+    });
+    trigger.addEventListener('click', show);
+  });
+</script>
+<style>
+  .ui-tooltip {
+    display: inline-block;
+    position: relative;
+  }
+  .ui-tooltip__trigger {
+    min-height: var(--control-height-sm);
+    text-decoration: underline dotted;
+    text-underline-offset: 0.2em;
+  }
+  .ui-tooltip__content {
+    display: block;
+    font-size: var(--text-sm);
+  }
+  .ui-tooltip[data-ready] .ui-tooltip__content {
+    position: absolute;
+    bottom: 100%;
+    left: 0;
+    z-index: var(--z-tooltip);
+    width: min(28ch, calc(100vw - 2 * var(--gutter)));
+    padding: var(--space-sm);
+    border: var(--rule-strong);
+    background: var(--charcoal);
+    color: var(--paper-light);
+    box-shadow: var(--shadow-overlay);
+  }
+</style>

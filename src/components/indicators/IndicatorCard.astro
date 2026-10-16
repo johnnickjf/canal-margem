@@ -1,0 +1,99 @@
+---
+import Badge from '@/components/ui/Badge.astro';
+import Card from '@/components/ui/Card.astro';
+import EmptyState from '@/components/ui/EmptyState.astro';
+import ErrorState from '@/components/ui/ErrorState.astro';
+import Heading from '@/components/ui/Heading.astro';
+import Link from '@/components/ui/Link.astro';
+import Skeleton from '@/components/ui/Skeleton.astro';
+import DataFreshness, { type Props as FreshnessProps } from './DataFreshness.astro';
+import MethodologyWarning, { type Props as WarningProps } from './MethodologyWarning.astro';
+import SourceBadge, { type Props as SourceProps } from './SourceBadge.astro';
+import Trend, { type Props as TrendProps } from './Trend.astro';
+
+type Common = {
+  title: string;
+  href?: string;
+  headingLevel?: 'h2' | 'h3' | 'h4';
+  illustrative?: boolean;
+};
+type Props = Common &
+  (
+    | {
+        state: 'ready';
+        value: string;
+        unit: string;
+        geography: string;
+        explanation: string;
+        source: SourceProps;
+        freshness: FreshnessProps;
+        trend: TrendProps;
+        warning?: WarningProps;
+      }
+    | { state: 'loading' }
+    | { state: 'empty' | 'error'; message: string }
+  );
+const { title, href, headingLevel = 'h3', illustrative = false } = Astro.props;
+const data = Astro.props;
+---
+
+<Card class="indicator-card" data-indicator-state={data.state}>
+  <div class="indicator-card__body">
+    <header>
+      {illustrative && <Badge tone="warning">Exemplo ilustrativo</Badge>}
+      <Heading as={headingLevel} size="card">
+        {href ? <Link href={href}>{title}</Link> : title}
+      </Heading>
+    </header>
+    {data.state === 'ready' ? (
+      <>
+        <p class="indicator-card__value">
+          {data.value} <span>{data.unit}</span>
+        </p>
+        <p class="indicator-card__geography">Recorte: {data.geography}</p>
+        <Trend {...data.trend} />
+        <p>{data.explanation}</p>
+        <DataFreshness {...data.freshness} />
+        <SourceBadge {...data.source} />
+        {data.warning && <MethodologyWarning {...data.warning} />}
+      </>
+    ) : data.state === 'loading' ? (
+      <Skeleton label={`Carregando: ${title}`} />
+    ) : data.state === 'empty' ? (
+      <EmptyState
+        title="Dados indisponíveis"
+        description={data.message}
+        headingLevel={headingLevel === 'h2' ? 'h3' : 'h4'}
+      />
+    ) : (
+      <ErrorState description={data.message} headingLevel={headingLevel === 'h2' ? 'h3' : 'h4'} />
+    )}
+    <slot />
+  </div>
+</Card>
+<style>
+  .indicator-card__body {
+    display: grid;
+    gap: var(--space-sm);
+  }
+  header {
+    display: grid;
+    justify-items: start;
+    gap: var(--space-sm);
+  }
+  .indicator-card__value {
+    font-family: var(--font-mono);
+    font-size: var(--data-value);
+    font-weight: 500;
+    line-height: 1.2;
+    font-variant-numeric: tabular-nums;
+  }
+  .indicator-card__value span {
+    font-size: var(--text-base);
+    font-weight: 400;
+  }
+  .indicator-card__geography {
+    font-size: var(--text-sm);
+    color: var(--fg-muted);
+  }
+</style>
