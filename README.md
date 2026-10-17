@@ -54,8 +54,11 @@ As [investigações de renda/hora, Peic e inflação por renda](docs/research/ph
 têm conclusão documental. A fase 5 implementa a [PoC de ingestão](docs/systems/ingestion.md)
 com TR4, CV1 e VF1 (IBGE e BCB): quatro séries, raw preservado, validação, persistência local,
 revisões e exportação JSON. A coleta real desde 2012 aceitou 587 observações; a repetição criou
-zero revisões. A próxima etapa é avaliar armazenamento, retenção e backups na fase 6.
-Agendamento, banco definitivo e publicação de indicadores permanecem posteriores.
+zero revisões. A fase 6 define a [arquitetura de armazenamento](docs/systems/storage.md):
+PostgreSQL na Railway, raw privado no Cloudflare R2, histórico por manifesto, cache HTTP
+e recuperação por backup nativo da Railway ou reconstrução pelos pipelines, com decisões e custos registrados em [cinco ADRs](docs/adr/README.md). São decisões documentadas;
+banco e buckets ainda não foram implantados. A próxima etapa é o pipeline do MVP na fase 7.
+Agendamento, implementação do armazenamento e publicação de indicadores permanecem posteriores.
 
 ```bash
 pnpm ingestion fetch --from 2025-01 --to 2025-12

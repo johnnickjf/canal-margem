@@ -395,6 +395,19 @@ Uma série oficial consegue percorrer automaticamente todo o caminho entre a fon
 
 ## Fase 6 — Arquitetura de armazenamento
 
+### Estado
+
+Definida em [Arquitetura de armazenamento](systems/storage.md), com
+[medição da PoC](systems/evidence/storage/measurement.json) e [cinco ADRs](adr/README.md):
+PostgreSQL 18, API e jobs na Railway; raw privado no Cloudflare R2; histórico imutável/publicação
+transacional, projeções cacheáveis e retenção por dependência na operação normal. Recuperação
+usa backup nativo diário da Railway ou reconstrução pelas fontes disponíveis, com possível
+perda de versões antigas após desastre.
+O ADR-0005 registra portabilidade e orçamento de referência, sem autorizar gastos.
+Banco analítico e cache distribuído não serão adotados inicialmente. Migração e restauração
+têm critérios definidos, sem RPO/RTO fixos; o tempo de recuperação será medido. A entrega é documental,
+sem provisionamento ou alteração do fluxo da PoC; a implementação começa com a fase 7.
+
 ### Objetivo
 
 Tomar decisões baseadas na prova de conceito, não em especulação.

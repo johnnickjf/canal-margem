@@ -10,7 +10,7 @@ A entrega deve cobrir consultas públicas e internas, ingestão, revisões, cál
 
 Hoje, [content.ts](../../src/lib/content.ts) consulta coleções locais no build; [busca.json.ts](../../src/pages/busca.json.ts) gera um índice estático consumido por [search.ts](../../src/scripts/search.ts). Conteúdo editorial é alterado em arquivos e publicado por novo build. Esses fluxos não implementam as operações de indicadores deste catálogo.
 
-A [arquitetura](../03-technical-architecture.md#10-estratégia-para-grandes-volumes-de-leitura) prevê muitas leituras e atualizações espaçadas. Ingestões pouco frequentes podem inserir grandes lotes ou revisar anos de histórico. Navegação e gráficos tendem a ler projeções prontas; auditoria percorre referências preservadas; escrita ocorre em background. Nenhuma frequência, volume ou latência foi medida com fontes reais.
+A [arquitetura](../03-technical-architecture.md#10-estratégia-para-grandes-volumes-de-leitura) prevê muitas leituras e atualizações espaçadas. Ingestões pouco frequentes podem inserir grandes lotes ou revisar anos de histórico. Navegação e gráficos tendem a ler projeções prontas; auditoria percorre referências preservadas; escrita ocorre em background. Na elaboração da fase 2, frequência, volume e latência ainda não haviam sido medidos com fontes reais. A [medição da fase 6](storage.md#evidências-da-poc) acrescenta contagens e bytes da PoC, sem benchmark de carga.
 
 ## Contexto de leitura e registros auxiliares
 
@@ -47,7 +47,7 @@ Nas derivadas, a fonte é o próprio Margem: `published_at` identifica a emissã
 | ID | Garantia obrigatória |
 |---|---|
 | G01 | **Identidade e integridade:** referências resolvidas, metadados compatíveis e um registro canônico para cada chave lógica. Mesmo ID/chave com conteúdo divergente é conflito |
-| G02 | **Histórico preservado:** observações aceitas, métodos versionados, raw e manifestos selados permanecem imutáveis. Revisão acrescenta registros e liga a edição anterior |
+| G02 | **Histórico preservado na base retida:** observações aceitas, métodos versionados, raw e manifestos selados permanecem imutáveis. Revisão acrescenta registros e liga a edição anterior |
 | G03 | **Aceitação indivisível do lote declarado:** todas as observações de um `AcceptanceBatch` tornam-se aceitas juntas, com um `accepted_at`, ou nenhuma. Staging parcial não participa de consultas |
 | G04 | **Publicação indivisível:** o canal aponta para um manifesto completo e pronto. Falha na preparação mantém a publicação ativa anterior |
 | G05 | **Leitura consistente por publicação:** todas as partes de uma resposta, comparação, página ou sequência paginada usam o mesmo `publication` e `catalog_revision` |
@@ -58,6 +58,8 @@ Nas derivadas, a fonte é o próprio Margem: `published_at` identifica a emissã
 | G10 | **Cache sem mistura:** dados cacheados incluem a identidade da publicação e dos parâmetros. Propagação atrasada pode servir uma publicação anterior completa, com sua identidade e datas explícitas |
 
 As garantias G03, G04 e G08 são requisitos de resultado observável. A implementação pode usar staging, manifesto, transação ou outra técnica que os preserve. Não há exigência de uma transação única cobrindo downloads e cálculos de todo o pipeline.
+
+Essas garantias descrevem a operação normal e o histórico retido. A [política de recuperação do MVP](../adr/0004-retention-and-recovery.md) admite perda de capturas, recibos, ativações e versões após desastre. Restaurar o banco exige conferir também as dependências no R2 antes de disponibilizar publicações. Uma reconstrução sem o contexto original cria novas capturas e publicações com horários reais; não reutiliza IDs/URLs antigos para conteúdo diferente nem inventa eventos perdidos. Consultas em `T` ficam limitadas ao histórico sobrevivente; contexto perdido deve ser informado explicitamente, sem fallback para a publicação atual.
 
 Depois de reconhecer W03/W05, a autoridade de aceitação deve permitir recuperar o lote inteiro por seu recibo e incluí-lo em R06 quando o corte informado abranger `accepted_at`. Depois de reconhecer W07/W08, uma resolução R07 na autoridade deve observar essa geração ou uma posterior. Uma réplica atrasada não pode afirmar que confirmou esse reconhecimento: deve encaminhar a leitura à autoridade ou informar que ainda não consegue satisfazê-la. Leituras públicas já fixadas em uma publicação anterior permanecem válidas nesse contexto.
 
@@ -88,7 +90,7 @@ Consultas internas R06/R08 também precisam de um corte consistente quando pagin
 
 Ausência de correspondências nos filtros é resultado vazio válido. ID inexistente no contexto é `not_found`; item existente sem cobertura é `not_covered`; ausência informada pela fonte preserva `value_status`; processamento pendente informa seu motivo na projeção. Esses estados não equivalem a falha de infraestrutura.
 
-Entrada malformada é `invalid_request`; recorte não resolvido é `ambiguous_selection`; quebra de comparabilidade informa `not_comparable`; cursor de outro contexto é `cursor_context_mismatch`; contexto retido que não pode ser servido é `temporarily_unavailable`; contexto removido por uma política explícita é `context_expired`. Os nomes identificam resultados de domínio, sem fixar HTTP ou envelopes de API. O consumidor não deve transformar erro ou indisponibilidade em zero, fallback de período ou troca de publicação.
+Entrada malformada é `invalid_request`; recorte não resolvido é `ambiguous_selection`; quebra de comparabilidade informa `not_comparable`; cursor de outro contexto é `cursor_context_mismatch`; contexto retido que não pode ser servido é `temporarily_unavailable`; contexto removido por uma política explícita ou com perda confirmada é `context_expired`. Os nomes identificam resultados de domínio, sem fixar HTTP ou envelopes de API. O consumidor não deve transformar erro ou indisponibilidade em zero, fallback de período ou troca de publicação.
 
 ## Catálogo de escritas
 
@@ -188,4 +190,7 @@ Manifestos e histórico de ativações acrescentam metadados e retenção, mas t
 
 Uma publicação por canal simplifica comparações entre temas; pode exigir copiar referências e reconstruir projeções de partes não alteradas. Particionar canais futuramente exige definir uma publicação composta para leituras que os atravessam, preservando G05. Não introduzir essa complexidade sem volume observado.
 
-Ficam para as fases correspondentes: mecanismos físicos de atomicidade e unicidade, identificação das correções locais de normalização, autenticação, rotas, serialização de cursores/fingerprints, limites quantitativos, SLAs de atualização/cache e retenção física. Retenção deve preservar publicações acessíveis e suas dependências; expiração precisa ser explícita, sem reescrever consultas antigas para o estado atual. Essas escolhas deverão cumprir as garantias deste catálogo e ser verificadas com falhas e concorrência na PoC.
+A [fase 6](storage.md) define os mecanismos de armazenamento, atomicidade e unicidade,
+cache e retenção para implementação posterior. Permanecem para as fases correspondentes:
+identificação das correções locais de normalização, autenticação, rotas, serialização de
+cursores/fingerprints, limites quantitativos e SLAs de atualização. Retenção deve preservar publicações acessíveis e suas dependências; expiração precisa ser explícita, sem reescrever consultas antigas para o estado atual. Essas escolhas deverão cumprir as garantias deste catálogo e ser verificadas com falhas e concorrência no backend definitivo.

@@ -1,0 +1,161 @@
+{
+  "scope": "Phase-6 read-only measurement of the existing local PoC; no production benchmark or restored backup",
+  "measured_at": "2026-10-17T17:19:25.165816+00:00",
+  "code_revision": "c90f2db9b3c3d8b6243c7e38a9ef4aa3582510bf",
+  "store": ".data/ingestion",
+  "method": "Sum logical file bytes, not allocated disk blocks. SHA-256 every inventoried file; verify content-addressed names, selected/batch observation references and the five preserved official bodies. No network fetch or store mutation.",
+  "current": {
+    "snapshot": "d81242685b7871ffe52630a6c2fc3918be652cb7acc3463c4f6d105599878145",
+    "bytes": 782551,
+    "observations": 587,
+    "selected": 587,
+    "batches": 2,
+    "series": {
+      "cv1-12m": 177,
+      "cv1-monthly": 177,
+      "tr4": 58,
+      "vf1": 175
+    },
+    "last_success": {
+      "run": "2026-10-17T16-53-39.122Z-41e4b5f3-4707-4a48-bccf-1922007fc138",
+      "at": "2026-10-17T16:53:39.803Z",
+      "batch": "2026-10-17T16-53-09.186Z-8caa07de-4aae-4924-864e-fc31ff8cc42d",
+      "changed": 0
+    }
+  },
+  "directories": {
+    "raw": {
+      "files": 8,
+      "bytes": 18584,
+      "inventory": [
+        {
+          "path": "raw/011dfc36268327eba80623f15d8efb51dd9a29dabf1e87010ab9314406a74571",
+          "bytes": 6651,
+          "sha256": "011dfc36268327eba80623f15d8efb51dd9a29dabf1e87010ab9314406a74571"
+        },
+        {
+          "path": "raw/2a221ed9673f6b5780cfae1446c3b52b7b063f8004a7a9872578a8ebb7e86892",
+          "bytes": 1047,
+          "sha256": "2a221ed9673f6b5780cfae1446c3b52b7b063f8004a7a9872578a8ebb7e86892"
+        },
+        {
+          "path": "raw/40eef5012840ae8f22d9661ffba1251c7bd3d4bc3d2cdce3d86b396c69ca0f1f",
+          "bytes": 803,
+          "sha256": "40eef5012840ae8f22d9661ffba1251c7bd3d4bc3d2cdce3d86b396c69ca0f1f"
+        },
+        {
+          "path": "raw/5d46a579070a3a2af82d3f87090322c0f8f70f6d57f45855e87c19f6eb9e640c",
+          "bytes": 327,
+          "sha256": "5d46a579070a3a2af82d3f87090322c0f8f70f6d57f45855e87c19f6eb9e640c"
+        },
+        {
+          "path": "raw/6b0eb45ed30deea0850b5d7163f3dcd66a82e786a572d2edede9a0cfba6b61be",
+          "bytes": 2027,
+          "sha256": "6b0eb45ed30deea0850b5d7163f3dcd66a82e786a572d2edede9a0cfba6b61be"
+        },
+        {
+          "path": "raw/8a08dbe82e3dcf8e1f0ef947d64c3cd63939ab8e15c01ce2443a43ff6ab39d45",
+          "bytes": 1162,
+          "sha256": "8a08dbe82e3dcf8e1f0ef947d64c3cd63939ab8e15c01ce2443a43ff6ab39d45"
+        },
+        {
+          "path": "raw/b36967572e1f4d75d9b43a23f87a800686043f5b859687a9ef08be9bb537c725",
+          "bytes": 457,
+          "sha256": "b36967572e1f4d75d9b43a23f87a800686043f5b859687a9ef08be9bb537c725"
+        },
+        {
+          "path": "raw/d2ebbf27eef8a9c065127af95d8ed458c52a3b8257a7457e53190243fd0fd7a8",
+          "bytes": 6110,
+          "sha256": "d2ebbf27eef8a9c065127af95d8ed458c52a3b8257a7457e53190243fd0fd7a8"
+        }
+      ]
+    },
+    "runs": {
+      "files": 8,
+      "bytes": 132425,
+      "inventory": [
+        {
+          "path": "runs/2026-10-17T16-49-31.709Z-fcf76c30-b68a-4e01-bdbc-64e33e091929.json",
+          "bytes": 5979,
+          "sha256": "03ce758b1874dd662e98241128b1617284676fd4430eee2950540edd3f875418"
+        },
+        {
+          "path": "runs/2026-10-17T16-49-31.709Z-fcf76c30-b68a-4e01-bdbc-64e33e091929.jsonl",
+          "bytes": 4534,
+          "sha256": "8cc3e1b03e06ed8b46e12130cf4a744a6242ae4e45a9201edf24a7ba6364c27e"
+        },
+        {
+          "path": "runs/2026-10-17T16-51-01.638Z-ee46f4ac-93b5-4651-aa0e-ea9a2666cdbd.json",
+          "bytes": 6008,
+          "sha256": "0ec3734f49a24717ea70cd20fdfe029ec9a2188a1eba8304346d5efc3092c3d2"
+        },
+        {
+          "path": "runs/2026-10-17T16-51-01.638Z-ee46f4ac-93b5-4651-aa0e-ea9a2666cdbd.jsonl",
+          "bytes": 4562,
+          "sha256": "1ad7ab97d3b15ba4fc9cdc99fd558a813ad70fefe8a3875bbd4432d0c547f497"
+        },
+        {
+          "path": "runs/2026-10-17T16-53-09.186Z-8caa07de-4aae-4924-864e-fc31ff8cc42d.json",
+          "bytes": 48009,
+          "sha256": "d34b4d3f0d47da845123f1b92e97807fcf044fd7ba4f4136cbed487fdf758a9d"
+        },
+        {
+          "path": "runs/2026-10-17T16-53-09.186Z-8caa07de-4aae-4924-864e-fc31ff8cc42d.jsonl",
+          "bytes": 7635,
+          "sha256": "6505f075871cd65c07b6a314108082fd53868a4f232df9709301af838bc98644"
+        },
+        {
+          "path": "runs/2026-10-17T16-53-39.122Z-41e4b5f3-4707-4a48-bccf-1922007fc138.json",
+          "bytes": 48037,
+          "sha256": "c09642214f4c545a4860388ffef9ff47b66c9f8ec92b2401fa1c40b8e4205f8d"
+        },
+        {
+          "path": "runs/2026-10-17T16-53-39.122Z-41e4b5f3-4707-4a48-bccf-1922007fc138.jsonl",
+          "bytes": 7661,
+          "sha256": "8d35662470059b6219ce1d79d1156f243a00454b388eeb4c96b7dc15705a2d55"
+        }
+      ]
+    },
+    "snapshots": {
+      "files": 4,
+      "bytes": 1672697,
+      "inventory": [
+        {
+          "path": "snapshots/128039935d62946bc18d8ba741afea56802862530394ab816a6be8df6cbf36bf.json",
+          "bytes": 782553,
+          "sha256": "128039935d62946bc18d8ba741afea56802862530394ab816a6be8df6cbf36bf"
+        },
+        {
+          "path": "snapshots/5b6bab359495f0da8e7e976479f1957687d48debdea75aa4068d67194b3698a1.json",
+          "bytes": 53796,
+          "sha256": "5b6bab359495f0da8e7e976479f1957687d48debdea75aa4068d67194b3698a1"
+        },
+        {
+          "path": "snapshots/64a4bb0860ce218a01f6e20965e2f303c00619bd542758e7ac16fee625cab8e9.json",
+          "bytes": 53797,
+          "sha256": "64a4bb0860ce218a01f6e20965e2f303c00619bd542758e7ac16fee625cab8e9"
+        },
+        {
+          "path": "snapshots/d81242685b7871ffe52630a6c2fc3918be652cb7acc3463c4f6d105599878145.json",
+          "bytes": 782551,
+          "sha256": "d81242685b7871ffe52630a6c2fc3918be652cb7acc3463c4f6d105599878145"
+        }
+      ]
+    }
+  },
+  "observation_raw": {
+    "unique_objects": 6,
+    "bytes": 15510
+  },
+  "preserved_capture": {
+    "path": "docs/systems/evidence/ingestion/verification.json",
+    "sha256": "f6aab797027767c1e75a4d9c4a37e7ad42c8642fd5a44c13c9e39e9fcc55b1ec",
+    "verified_bodies": 5,
+    "body_bytes": 16997
+  },
+  "limits": [
+    "Only four national series from two providers; other MVP sources and geography expansion are unmeasured.",
+    "No database, object service, load, remote backup, power-loss or disaster recovery execution in this measurement.",
+    "Local snapshots and the three initial short-window raw bodies are ignored by Git; the inventory preserves their hashes and sizes, not their bytes."
+  ]
+}

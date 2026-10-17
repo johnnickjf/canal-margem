@@ -12,7 +12,12 @@ A fundação reutilizável da fase 1 está em [Design system](design-system.md):
 
 [Indicadores do MVP](mvp-indicators.md) registra a fase 3: seleção revisada de 15 conceitos principais, incluindo alimentação, tempo de trabalho pelo piso, insegurança alimentar e moradia. Separa contextos e inputs, especifica salário mínimo real pelo INPC e tempo por cesta, e define a passagem para o catálogo da fase 4. O [mapa de fontes](../research/source-map.md) registra evidências, investigações obrigatórias e expansão; a engine continua posterior.
 
-O [catálogo de fontes](../data-sources/README.md) documenta a fase 4, com recortes, endpoints/arquivos, amostras oficiais, histórico observado e limites por fonte. As [investigações](../research/phase-4-investigations.md) encerram as perguntas de renda/hora, Peic e inflação por renda. A [PoC da fase 5](ingestion.md) implementa TR4, CV1 e VF1 com coleta por comando, raw, validação, persistência local, revisões e exportação. A coleta recorrente e o armazenamento definitivo continuam posteriores.
+O [catálogo de fontes](../data-sources/README.md) documenta a fase 4, com recortes, endpoints/arquivos, amostras oficiais, histórico observado e limites por fonte. As [investigações](../research/phase-4-investigations.md) encerram as perguntas de renda/hora, Peic e inflação por renda. A [PoC da fase 5](ingestion.md) implementa TR4, CV1 e VF1 com coleta por comando, raw, validação, persistência local, revisões e exportação. A coleta recorrente continua posterior.
+
+[Arquitetura de armazenamento](storage.md) define a fase 6 com medição da PoC e cinco ADRs:
+PostgreSQL/Railway, raw no R2, histórico/cache, backup nativo/reconstrução e portabilidade/custos. Especifica migração e
+restauração; serviços e ensaio remoto ainda não foram executados. A implementação do
+armazenamento fica para a fase 7.
 
 Documentos futuros, quando houver desenho ou implementação concreta, poderão cobrir `api.md`, `data-processing.md` e `indicator-engine.md`. A ausência desses sistemas nesta fase é intencional.
 

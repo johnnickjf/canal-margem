@@ -10,6 +10,8 @@ O contrato de conclusão inclui as onze entidades previstas no roadmap, cardinal
 
 O [catálogo de operações de leitura e escrita](data-operations.md) complementa esta especificação com aceitação de lotes, consultas, idempotência, concorrência, publicações imutáveis e garantias de consistência. Seus exemplos distinguem coleta, aceitação e disponibilização pública.
 
+As regras de imutabilidade e consulta histórica valem para a operação normal e a base retida. A [política de recuperação do MVP](../adr/0004-retention-and-recovery.md) admite perda de versões após desastre: reconstruir com fontes disponíveis não garante reproduzir edições antigas. Sem o contexto original, novas capturas e publicações recebem identidades e horários próprios, sem reutilizar IDs para conteúdo diferente ou inventar eventos perdidos.
+
 ## Base e nomes canônicos
 
 O modelo parte da [rastreabilidade exigida pela visão](../01-project-vision.md#9-transparência), das [camadas da arquitetura](../03-technical-architecture.md#5-camadas-de-dados) e da [leitura em três níveis da UX](../02-product-design.md#4-modelo-de-leitura). As coleções de [src/content.config.ts](../../src/content.config.ts) descrevem conteúdo editorial; não representam séries estatísticas. As props de [IndicatorCard](../../src/components/indicators/IndicatorCard.astro) e [DataFreshness](../../src/components/indicators/DataFreshness.astro) são contratos de apresentação, separados deste modelo.

@@ -4,7 +4,10 @@
 
 Requisitos para a arquitetura futura. A [PoC da fase 5](systems/ingestion.md) implementa ingestão IBGE/BCB, armazenamento local e exportação JSON. API pública, banco definitivo, engine e pipelines recorrentes ainda não estão implementados. O frontend é estático; sua base está inventariada na [auditoria da fase 0](systems/frontend.md). O [modelo conceitual da fase 2](systems/data-model.md) fixa entidades e semântica dos dados, sem escolher infraestrutura.
 
-As escolhas de tecnologia serão registradas em Architecture Decision Records (ADRs).
+As [decisões da fase 6](systems/storage.md) definem PostgreSQL 18 na Railway, Cloudflare R2 privado,
+histórico/publicação por manifesto, projeções cacheáveis e recuperação por backup nativo ou
+reconstrução em [cinco ADRs](adr/README.md). São escolhas para implementação, sem serviços implantados.
+As demais escolhas de tecnologia serão registradas em Architecture Decision Records (ADRs).
 
 ---
 
@@ -204,6 +207,11 @@ de:
 
 Por isso, revisões não deverão simplesmente sobrescrever registros antigos.
 
+Essa consulta usa o histórico retido. O [ADR-0004](adr/0004-retention-and-recovery.md) admite
+perda de versões após desastre; reconstruir a base pelas fontes disponíveis não garante
+recuperar edições anteriores. A reconstrução sem o contexto original cria nova publicação,
+sem reutilizar IDs/URLs para conteúdo diferente ou inventar eventos históricos.
+
 ---
 
 ## 8. Dimensão geográfica
@@ -262,7 +270,10 @@ Consequentemente deverão ser estudados:
 - armazenamento columnar para analytics;
 - separação entre workloads analíticos e transacionais.
 
-Nenhuma tecnologia específica está definida neste momento.
+Na fase 6, o [ADR-0003](adr/0003-data-versioning-and-cache.md) define cache HTTP por publicação,
+sem cache distribuído inicial. O [ADR-0001](adr/0001-primary-database.md) adia banco analítico,
+particionamento e réplicas até haver carga medida. Os limites de cache são especificados,
+sem API de indicadores em execução.
 
 O [catálogo de operações e consistência](systems/data-operations.md) fixa consultas por publicação, paginação estável e cache identificado pelo manifesto. Escritas aceitam lotes validados e preservam revisões; leituras públicas usam uma publicação completa e imutável. Essa separação lógica pode ser implementada no mesmo banco.
 
@@ -281,7 +292,7 @@ O sistema deverá possuir mecanismos para:
 - validar resultados;
 - publicar nova versão.
 
-Coleta, aceitação validada e ativação pública são momentos distintos, definidos no [catálogo](systems/data-operations.md#três-momentos-distintos). O canal muda de publicação de forma indivisível, com geração esperada para detectar concorrência. Preparação parcial não muda a visão pública; derivadas pendentes são informadas sem misturar resultados antigos com inputs revisados. As garantias são requisitos conceituais, ainda sem implementação de pipeline.
+Coleta, aceitação validada e ativação pública são momentos distintos, definidos no [catálogo](systems/data-operations.md#três-momentos-distintos). O canal muda de publicação de forma indivisível, com geração esperada para detectar concorrência. Preparação parcial não muda a visão pública; derivadas pendentes são informadas sem misturar resultados antigos com inputs revisados. As garantias são requisitos conceituais; a fase 6 define sua futura persistência em PostgreSQL e R2, com jobs/API na Railway, sem pipeline definitivo implementado.
 
 Fluxo conceitual:
 
@@ -424,24 +435,21 @@ Um ADR deverá explicar:
 
 ## 16. Decisões ainda em aberto
 
-Entre as principais:
+Armazenamento, hospedagem inicial, portabilidade, retenção e recuperação foram definidos nos
+[ADRs da fase 6](adr/README.md); o estado observado continua sendo a PoC local.
+Permanecem abertas:
 
-- banco transacional;
-- banco analítico;
-- object storage;
-- formato dos dados raw;
-- formato de dados intermediários;
+- região e dimensionamento do PostgreSQL/serviços Railway, configuração R2 e backup nativo Railway;
+- formato de dados intermediários por fonte;
 - processamento batch;
-- orquestração;
-- estratégia de cache;
-- infraestrutura;
+- horários, timeouts e coordenação dos jobs no cron Railway;
+- configuração e automação da infraestrutura escolhida;
 - API pública ou privada;
-- estratégia de deploy;
+- implementação do deploy de API/jobs e publicação do frontend;
 - filas;
 - monitoramento;
-- versionamento de datasets;
 - mecanismos de cálculo;
 - atualização incremental;
-- custos operacionais.
+- custos operacionais medidos frente ao orçamento de referência do ADR-0005.
 
 Essas decisões deverão ser tomadas a partir dos requisitos e volume esperado, não antecipadamente.

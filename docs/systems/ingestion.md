@@ -212,9 +212,9 @@ não são removidos nesta entrega.
 
 O filesystem local é o mecanismo descartável da experimentação, sem dependências novas. O custo
 é regravar todo o estado por coleta e reter snapshots completos: não é uma decisão de banco,
-object storage ou retenção de produção. A fase 6 deve avaliar essas escolhas com as contagens,
-tamanhos, proveniência e falhas observadas, além de backups/restauração e durabilidade após perda
-de energia. O rename dá atomicidade local; não foi verificada durabilidade contra falha do disco,
+object storage ou retenção de produção. A [fase 6](storage.md) mediu essa base e definiu
+PostgreSQL/Railway, R2, histórico/cache, backup nativo/reconstrução e portabilidade em cinco ADRs. A implementação e o ensaio
+de restauração ainda são posteriores; a PoC permanece ativa até a substituição verificada. O rename dá atomicidade local; não foi verificada durabilidade contra falha do disco,
 filesystem de rede ou múltiplas máquinas.
 
 Não há agendamento, alerta ou SLA de atualização; são trabalhos das fases 7 e 22. As consultas

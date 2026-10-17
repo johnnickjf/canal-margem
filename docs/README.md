@@ -1,6 +1,6 @@
 # Documentação do Margem
 
-O Canal Margem está preparando a evolução do site editorial para uma plataforma de análise socioeconômica verificável. A base inclui a documentação da fase 0, o design system da fase 1, o modelo conceitual dos dados da fase 2, a seleção de indicadores da fase 3, o catálogo de fontes da fase 4 e a PoC local de ingestão da fase 5.
+O Canal Margem está preparando a evolução do site editorial para uma plataforma de análise socioeconômica verificável. A base inclui a documentação da fase 0, o design system da fase 1, o modelo conceitual dos dados da fase 2, a seleção de indicadores da fase 3, o catálogo de fontes da fase 4, a PoC local de ingestão da fase 5 e as decisões de armazenamento da fase 6.
 
 ## Ordem de leitura
 
@@ -18,6 +18,7 @@ O Canal Margem está preparando a evolução do site editorial para uma platafor
 12. [Catálogo de fontes](data-sources/README.md): matriz dos 15 principais, contextos e inputs, cinco fichas, consultas e arquivos identificados, amostras reais e critérios para a PoC.
 13. [Investigações da fase 4](research/phase-4-investigations.md): conclusões sobre renda/hora publicada pelo IBGE, acesso à Peic e histórico de inflação por renda do Ipea.
 14. [PoC de ingestão](systems/ingestion.md): comandos, quatro séries IBGE/BCB, raw, validação, persistência local, revisões, exportação e evidências da fase 5.
+15. [Arquitetura de armazenamento](systems/storage.md): medição da PoC, PostgreSQL na Railway, raw no R2, histórico/cache, retenção, backup nativo Railway, reconstrução planejada e migração; decisões em [ADRs](adr/README.md).
 
 Os quatro documentos numerados partem dos textos fornecidos pelo responsável pelo projeto e receberam ajustes de clareza e precisão. Definem o produto planejado; a auditoria do frontend registra a fase 0, e os documentos de sistemas registram as entregas posteriores. Exemplos do modelo e do design system são ilustrativos. As amostras em `data-sources/evidence/` são dados oficiais consultados na fase 4, com proveniência, sem integração ao site.
 
@@ -35,7 +36,8 @@ Os quatro documentos numerados partem dos textos fornecidos pelo responsável pe
 | Catálogo de fontes | Fase 4 documentada: recortes e amostras oficiais conferidos, histórico observado e limites por fonte; investigações concluídas; sem comprovação de operação recorrente ou comparabilidade irrestrita |
 | Páginas de indicadores, comparador e camada Entenda | Planejados |
 | Ingestão e persistência local | PoC da fase 5 executada com quatro séries e 587 observações; revisões, repetição e falhas testadas |
-| Banco definitivo, API de indicadores e processamento | Planejados; tecnologias em aberto |
+| Arquitetura de armazenamento | Fase 6 definida em cinco ADRs: PostgreSQL/Railway, R2, histórico/cache, backup nativo/reconstrução e portabilidade/custos; serviços ainda não implantados |
+| Pipeline do MVP, API de indicadores e processamento | Planejados; implementação do armazenamento começa com os jobs da fase 7 |
 | Publicação e operação em produção | Não verificadas; sem configuração de deploy no repositório |
 
 As rotas atuais são `/temas/:slug`, `/videos/:slug` e `/analises/:slug`. As rotas `/tema/:slug`, `/indicador/:slug`, `/comparar` e `/entenda/:slug` dos documentos são propostas futuras. A convivência entre temas editoriais e dimensões socioeconômicas precisa ser resolvida antes de alterar URLs ou navegação.
@@ -58,4 +60,9 @@ Manter detalhes de infraestrutura fora da visão e do documento de UX. Registrar
 
 ## Próxima entrega
 
-Avaliar a arquitetura de armazenamento da fase 6 com as [evidências da PoC](systems/ingestion.md): banco principal, raw/object storage, retenção, versionamento, cache e backups. Registrar decisões em ADRs, sem presumir que o filesystem da experimentação será a solução definitiva. Agendamento e integração dos demais indicadores seguem na fase 7. A [regra permanente de SEO e descoberta por IA](../AGENTS.md) continua obrigatória.
+Implementar o pipeline do MVP da fase 7, com jobs por fonte, armazenamento conforme os
+[ADRs da fase 6](adr/README.md), agendamento, validação, qualidade, versionamento e
+observabilidade. Conferir a migração da PoC e ensaiar recuperação conforme os
+[critérios de armazenamento](systems/storage.md#migração-e-critérios-para-as-próximas-fases).
+Engine e API seguem nas fases 8 e 9; retirar a PoC somente após substituição verificada,
+conforme o roadmap. A [regra permanente de SEO e descoberta por IA](../AGENTS.md) continua obrigatória.
