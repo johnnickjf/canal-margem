@@ -43,7 +43,12 @@ As fases 0 e 1 cobrem a documentação da base e o design system. A fase 2 defin
 cálculos derivados exemplificados em JSON. O [catálogo de operações](docs/systems/data-operations.md)
 complementa o modelo com leituras, escritas e garantias de consistência, aceitação e publicação.
 É uma especificação independente de banco e framework;
-serviços de dados pertencem às fases seguintes. A próxima etapa é selecionar os indicadores do MVP.
+serviços de dados pertencem às fases seguintes. A fase 3 fixa os
+[15 indicadores principais do MVP](docs/systems/mvp-indicators.md), incluindo cesta básica,
+tempo de trabalho pelo salário mínimo, insegurança alimentar e moradia. O salário mínimo real
+usa INPC como deflator; jornada e inadimplência acompanham a leitura como contexto.
+O [mapa de fontes](docs/research/source-map.md) separa fontes necessárias e candidatas à expansão.
+A próxima etapa é catalogar as fontes, séries, contextos e entradas auxiliares na fase 4.
 
 ## Design system
 

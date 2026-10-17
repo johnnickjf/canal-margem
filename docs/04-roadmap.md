@@ -138,7 +138,7 @@ Os tokens e componentes editoriais existentes são consolidados e ampliados para
 
 ### Estado
 
-Especificada em [Modelo conceitual dos dados](systems/data-model.md), com [exemplos fictícios](systems/examples/data-model.json) de metadados, revisão histórica, ausência e cálculos derivados. O [catálogo de operações](systems/data-operations.md) complementa a fase com leituras, escritas e garantias de consistência, incluindo aceitação e publicação. A entrega é conceitual: não implementa schema executável, banco, ingestão ou engine. A próxima etapa é a seleção de indicadores da fase 3.
+Especificada em [Modelo conceitual dos dados](systems/data-model.md), com [exemplos fictícios](systems/examples/data-model.json) de metadados, revisão histórica, ausência e cálculos derivados. O [catálogo de operações](systems/data-operations.md) complementa a fase com leituras, escritas e garantias de consistência, incluindo aceitação e publicação. A entrega é conceitual: não implementa schema executável, banco, ingestão ou engine. A seleção de indicadores está registrada na fase 3 abaixo.
 
 ### Objetivo
 
@@ -210,6 +210,10 @@ Modelo conceitual independente de banco de dados ou framework.
 
 ## Fase 3 — Definição do MVP de indicadores
 
+### Estado
+
+Definida em [Indicadores do MVP](systems/mvp-indicators.md): 15 conceitos principais nas cinco dimensões, com cesta básica, tempo pelo salário mínimo, insegurança alimentar e ônus de aluguel. O mínimo real usa INPC; jornada, participação, subutilização e inadimplência acompanham a leitura como contexto. Dívida bruta passa a uma entrega posterior. O [mapa de fontes](research/source-map.md) registra as evidências e as investigações pendentes. A seleção não implementa dados ou páginas; fontes, inputs e comparabilidade operacional ainda exigem o catálogo da fase 4.
+
 ### Objetivo
 
 Evitar começar tentando integrar centenas de séries.
@@ -217,6 +221,8 @@ Evitar começar tentando integrar centenas de séries.
 Selecionar aproximadamente 10–15 indicadores que permitam validar o produto.
 
 ### Candidatos
+
+O levantamento abaixo registra os candidatos originais. A lista escolhida e os motivos de adiamento estão em [Indicadores do MVP](systems/mvp-indicators.md).
 
 #### Trabalho e renda
 
@@ -267,6 +273,10 @@ Lista oficial dos indicadores do MVP.
 
 ## Fase 4 — Catálogo de fontes
 
+### Escopo definido pela fase 3
+
+Catalogar os 15 indicadores principais, contextos e entradas auxiliares de INPC, mínimo nominal e cesta por capital. As fontes necessárias são IBGE, Banco Central, ANP, Conab/DIEESE e Fundação João Pinheiro. Concluir também a investigação de renda/hora publicada pelo IBGE, Peic/CNC e inflação por faixa de renda/Ipea, sem presumir novas integrações. Tesouro, MDS, MTE, ANEEL, SINISA, Inep e DATASUS permanecem no [mapa de expansão](research/source-map.md).
+
 ### Objetivo
 
 Mapear exatamente de onde virá cada dado do MVP.
@@ -275,7 +285,7 @@ Mapear exatamente de onde virá cada dado do MVP.
 
 Criar documentação para as fontes necessárias.
 
-Prováveis primeiras fontes:
+O levantamento original de fontes candidatas foi:
 
 ```text
 IBGE
@@ -285,6 +295,8 @@ Tesouro Nacional
 ANP
 DIEESE
 ```
+
+A revisão inclui explicitamente Conab/DIEESE e Fundação João Pinheiro; a prioridade atual é a do escopo acima. A presença de uma fonte no levantamento não implica integração automática.
 
 Para cada indicador:
 

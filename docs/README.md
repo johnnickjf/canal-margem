@@ -1,6 +1,6 @@
 # Documentação do Margem
 
-O Canal Margem está preparando a evolução do site editorial para uma plataforma de análise socioeconômica verificável. A base inclui a documentação da fase 0, o design system da fase 1 e o modelo conceitual dos dados da fase 2.
+O Canal Margem está preparando a evolução do site editorial para uma plataforma de análise socioeconômica verificável. A base inclui a documentação da fase 0, o design system da fase 1, o modelo conceitual dos dados da fase 2 e a seleção inicial de indicadores da fase 3.
 
 ## Ordem de leitura
 
@@ -13,6 +13,8 @@ O Canal Margem está preparando a evolução do site editorial para uma platafor
 7. [Testes e cobertura](systems/testing.md): suíte unitária, navegador, build editorial, medição por módulo e CI.
 8. [Modelo conceitual dos dados](systems/data-model.md): entidades, relações, identidade de séries, metadados, revisões e linhagem de cálculos; exemplos fictícios em JSON.
 9. [Operações e consistência](systems/data-operations.md): catálogo de leituras e escritas, aceitação de lotes, publicação, idempotência, concorrência e consulta histórica pública/interna.
+10. [Indicadores do MVP](systems/mvp-indicators.md): seleção revisada de 15 conceitos principais nas cinco dimensões, com alimentação, tempo de trabalho pelo piso, insegurança alimentar e moradia; contextos e entradas auxiliares separados.
+11. [Mapa de fontes](research/source-map.md): evidências da revisão, fontes necessárias, investigações de renda/hora, Peic e inflação por faixa de renda, e fontes para expansão.
 
 Os quatro documentos numerados partem dos textos fornecidos pelo responsável pelo projeto e receberam ajustes de clareza e precisão. Definem o produto planejado; a auditoria do frontend registra a fase 0, e os documentos de sistemas registram as entregas posteriores. Valores, datas e fontes em exemplos são ilustrativos, não dados apurados.
 
@@ -26,13 +28,14 @@ Os quatro documentos numerados partem dos textos fornecidos pelo responsável pe
 | Testes automatizados e CI | Vitest com cobertura e limites por módulo; Playwright para componentes, fluxos editoriais e build; workflow preparado, execução remota ainda não verificada |
 | Design system da plataforma | Implementado na fase 1; referência em `/design-system`, com exemplos fictícios |
 | Modelo conceitual dos dados | Especificado na fase 2, com exemplos de revisão e derivação e catálogo de operações/consistência; sem schema executável ou persistência |
-| Indicadores, comparador e camada Entenda | Planejados |
+| Seleção de indicadores | 15 conceitos principais definidos na fase 3, mais contextos e inputs; fontes identificadas preliminarmente, sem integração ou cobertura histórica validada |
+| Páginas de indicadores, comparador e camada Entenda | Planejados |
 | Banco, API de indicadores, ingestão e processamento | Planejados; tecnologias em aberto |
 | Publicação e operação em produção | Não verificadas; sem configuração de deploy no repositório |
 
 As rotas atuais são `/temas/:slug`, `/videos/:slug` e `/analises/:slug`. As rotas `/tema/:slug`, `/indicador/:slug`, `/comparar` e `/entenda/:slug` dos documentos são propostas futuras. A convivência entre temas editoriais e dimensões socioeconômicas precisa ser resolvida antes de alterar URLs ou navegação.
 
-O conjunto sugerido de indicadores em UX é uma lista de candidatos. A fase 3 selecionará aproximadamente 10–15; o critério de MVP exige pelo menos 10. O [modelo da fase 2](systems/data-model.md) fixa `dataset`, `revision_status`, `methodology_version` e `calculation_version`, distingue revisão de atualização e define `derived` como observações calculadas e `published` como projeção validada de observações externas ou derivadas. Essas camadas não determinam schemas físicos. Exemplos de API com `:id` e `:slug` também não fixam o contrato final.
+O conjunto sugerido de indicadores em UX é uma lista de candidatos. A [seleção da fase 3](systems/mvp-indicators.md) fixa 15 conceitos principais; cesta e tempo por cesta têm recorte por capital. O critério de MVP exige pelo menos 10 indicadores disponíveis e tradução de preços em tempo de trabalho, cuja primeira entrega será a cesta na referência do salário mínimo. Isso está especificado, ainda sem cálculo executável. O [modelo da fase 2](systems/data-model.md) fixa `dataset`, `revision_status`, `methodology_version` e `calculation_version`, distingue revisão de atualização e define `derived` como observações calculadas e `published` como projeção validada de observações externas ou derivadas. Essas camadas não determinam schemas físicos. Exemplos de API com `:id` e `:slug` também não fixam o contrato final.
 
 O [manual de marca](brand/MARGEM_Manual_Marca_Conteudo_Site.md) define a direção visual, não certifica sua implementação. Diferenças observadas, limites de contraste e pendências do conteúdo de exemplo estão na [auditoria do frontend](systems/frontend.md).
 
@@ -43,11 +46,11 @@ O [manual de marca](brand/MARGEM_Manual_Marca_Conteudo_Site.md) define a direç�
 | [brand](brand/MARGEM_Manual_Marca_Conteudo_Site.md) | Manual, tokens JSON e pranchas existentes; referência visual preservada |
 | [research](research/README.md) | Investigações e hipóteses, separadas de decisões |
 | [adr](adr/README.md) | Decisões técnicas com contexto, alternativas e consequências |
-| [data-sources](data-sources/README.md) | Catálogo futuro das fontes externas |
+| [data-sources](data-sources/README.md) | Próxima entrega: catálogo das fontes da seleção da fase 3 |
 | [systems](systems/README.md) | Componentes próprios e estado de implementação |
 
 Manter detalhes de infraestrutura fora da visão e do documento de UX. Registrar decisões técnicas em ADR com as evidências que as sustentam. Documentos de sistemas devem distinguir implementação de proposta; investigações ficam em `research/`.
 
 ## Próxima entrega
 
-Executar a fase 3: selecionar aproximadamente 10–15 indicadores do MVP, com justificativa de relevância, compreensão, comparabilidade e viabilidade de manutenção. Usar o modelo da fase 2 para distinguir conceito, série, recortes e derivados; o catálogo detalhado de fontes pertence à fase 4. Banco, pipelines e integrações ficam para as fases correspondentes do roadmap. A [regra permanente de SEO e descoberta por IA](../AGENTS.md) deve ser preservada em todas as fases.
+Executar a fase 4: catalogar os 15 principais, contextos e inputs de salário mínimo real e tempo por cesta, cobrindo IBGE, BCB, ANP, Conab/DIEESE e Fundação João Pinheiro. Identificar datasets, séries, recortes, endpoints ou arquivos, histórico, metodologia, quebras e condições de acesso com evidência atual. Concluir as investigações sobre renda/hora, Peic e inflação por faixa de renda. A [seleção revisada](systems/mvp-indicators.md) e o [mapa de fontes](research/source-map.md) definem o escopo e os limites dessa passagem. Banco, pipelines e integrações ficam para as fases correspondentes do roadmap. A [regra permanente de SEO e descoberta por IA](../AGENTS.md) deve ser preservada em todas as fases.

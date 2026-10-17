@@ -74,7 +74,7 @@ Entidades auxiliares preservam a origem e o cálculo:
 | `RawArtifact` | `id`, `vintage`, `retrieved_at`, `media_type`, `sha256`, `content` ou referência ao conteúdo imutável. Guarda os bytes coletados, sem prometer um formato de storage |
 | `Calculation` | `id`, `calculation_version`, `formula`, `inputs`, `output_unit`, `methodology`, `methodology_version`, `alignment`, `missing_policy`, `precision`. Descreve papéis dos inputs, unidades e regras; não executa a fórmula |
 
-Os temas estatísticos não substituem os 12 pilares de [temas.json](../../src/content/temas.json). A fase 3 agrupará os indicadores nas cinco dimensões da visão; o mapeamento para o acervo e as URLs fica para o shell. Este modelo não altera `/temas/:slug`.
+Os temas estatísticos não substituem os 12 pilares de [temas.json](../../src/content/temas.json). A [seleção da fase 3](mvp-indicators.md) agrupa os indicadores nas cinco dimensões da visão; o mapeamento para o acervo e as URLs fica para o shell. Este modelo não altera `/temas/:slug`.
 
 `Policy` e `GovernmentPeriod` são contratos conceituais mínimos. `effective_periods` contém intervalos de vigência com referências documentais; promulgação e vigência podem ocorrer em datas diferentes. `related_indicators` registra uma relação investigável com justificativa. `government_periods` registra contexto de implementação, não autoria exclusiva. Nenhuma dessas relações permite inferir efeito causal ou pontuar governos. Evidências de impacto e legislação como entidade própria pertencem às fases 18 e 19.
 
@@ -238,4 +238,4 @@ Ficam definidos os nomes canônicos, identidades, metadados, estados e linhagem.
 
 O [catálogo de operações](data-operations.md) define a unidade de publicação, a distinção entre aceitação e disponibilização e a regra de derivadas pendentes: não misturar input revisado com resultado antigo na visão atual. A política específica de cada publicação deverá declarar quais resultados são obrigatórios e quais indisponibilidades admite.
 
-Continuam em aberto: escolha dos indicadores e fontes reais, correspondência da taxonomia editorial, calendários de atualização, codificação de correções locais, schemas executáveis, formatos de transporte, precisão necessária por indicador, armazenamento e APIs. A PoC deve testar estes conceitos com edições reais antes de fixar infraestrutura. Não há evidência de coleta, comparabilidade real ou operação nesta entrega.
+A [fase 3](mvp-indicators.md) fixa a seleção inicial dos indicadores e identifica fontes preliminares. Continuam em aberto: catálogo verificável de séries reais, correspondência da taxonomia editorial, calendários de atualização, codificação de correções locais, schemas executáveis, formatos de transporte, precisão necessária por indicador, armazenamento e APIs. A PoC deve testar estes conceitos com edições reais antes de fixar infraestrutura. Não há evidência de coleta, comparabilidade real ou operação nesta entrega.

@@ -10,6 +10,8 @@ A fundação reutilizável da fase 1 está em [Design system](design-system.md):
 
 [Operações de leitura, escrita e consistência](data-operations.md) complementa a fase 2 com contratos de consulta, aceitação em lotes, idempotência, concorrência e publicação por manifesto. Inclui exemplos da diferença entre coleta, aceitação e ativação pública, ainda sem execução de infraestrutura.
 
+[Indicadores do MVP](mvp-indicators.md) registra a fase 3: seleção revisada de 15 conceitos principais, incluindo alimentação, tempo de trabalho pelo piso, insegurança alimentar e moradia. Separa contextos e inputs, especifica salário mínimo real pelo INPC e tempo por cesta, e define a passagem para o catálogo da fase 4. O [mapa de fontes](../research/source-map.md) registra evidências, investigações obrigatórias e expansão; não há ingestão ou engine implementada.
+
 Documentos futuros, quando houver desenho ou implementação concreta, poderão cobrir `api.md`, `ingestion.md`, `data-processing.md` e `indicator-engine.md`. A ausência desses sistemas nesta fase é intencional.
 
 Cada documento deve distinguir estado atual de proposta e descrever responsabilidade, entradas e saídas, dependências, fluxos, configuração, falhas, validação e operação relevantes. Requisitos gerais permanecem na [arquitetura técnica](../03-technical-architecture.md); decisões ficam em [adr](../adr/README.md).
