@@ -48,7 +48,11 @@ serviços de dados pertencem às fases seguintes. A fase 3 fixa os
 tempo de trabalho pelo salário mínimo, insegurança alimentar e moradia. O salário mínimo real
 usa INPC como deflator; jornada e inadimplência acompanham a leitura como contexto.
 O [mapa de fontes](docs/research/source-map.md) separa fontes necessárias e candidatas à expansão.
-A próxima etapa é catalogar as fontes, séries, contextos e entradas auxiliares na fase 4.
+A fase 4 entrega o [catálogo de fontes](docs/data-sources/README.md), com recortes dos 15
+principais, contextos e inputs, amostras oficiais e limites de histórico, método e acesso.
+As [investigações de renda/hora, Peic e inflação por renda](docs/research/phase-4-investigations.md)
+têm conclusão documental. A próxima etapa é a PoC de ingestão da fase 5, com TR4, CV1 e VF1
+(IBGE e BCB); coleta recorrente, persistência e exposição ainda não estão implementadas.
 
 ## Design system
 
@@ -91,7 +95,7 @@ docs/                       Visão, UX, arquitetura, roadmap e índice de docume
   brand/                    Manual de marca, tokens e pranchas de referência
   research/                 Investigações e hipóteses
   adr/                      Decisões técnicas
-  data-sources/             Catálogo futuro de fontes
+  data-sources/             Catálogo das fontes do MVP e evidências da fase 4
   systems/                  Auditoria do frontend e documentação dos sistemas
 public/                     favicon (M|), robots.txt
 src/

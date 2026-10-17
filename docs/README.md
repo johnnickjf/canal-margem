@@ -1,6 +1,6 @@
 # Documentação do Margem
 
-O Canal Margem está preparando a evolução do site editorial para uma plataforma de análise socioeconômica verificável. A base inclui a documentação da fase 0, o design system da fase 1, o modelo conceitual dos dados da fase 2 e a seleção inicial de indicadores da fase 3.
+O Canal Margem está preparando a evolução do site editorial para uma plataforma de análise socioeconômica verificável. A base inclui a documentação da fase 0, o design system da fase 1, o modelo conceitual dos dados da fase 2, a seleção de indicadores da fase 3 e o catálogo de fontes da fase 4.
 
 ## Ordem de leitura
 
@@ -15,8 +15,10 @@ O Canal Margem está preparando a evolução do site editorial para uma platafor
 9. [Operações e consistência](systems/data-operations.md): catálogo de leituras e escritas, aceitação de lotes, publicação, idempotência, concorrência e consulta histórica pública/interna.
 10. [Indicadores do MVP](systems/mvp-indicators.md): seleção revisada de 15 conceitos principais nas cinco dimensões, com alimentação, tempo de trabalho pelo piso, insegurança alimentar e moradia; contextos e entradas auxiliares separados.
 11. [Mapa de fontes](research/source-map.md): evidências da revisão, fontes necessárias, investigações de renda/hora, Peic e inflação por faixa de renda, e fontes para expansão.
+12. [Catálogo de fontes](data-sources/README.md): matriz dos 15 principais, contextos e inputs, cinco fichas, consultas e arquivos identificados, amostras reais e critérios para a PoC.
+13. [Investigações da fase 4](research/phase-4-investigations.md): conclusões sobre renda/hora publicada pelo IBGE, acesso à Peic e histórico de inflação por renda do Ipea.
 
-Os quatro documentos numerados partem dos textos fornecidos pelo responsável pelo projeto e receberam ajustes de clareza e precisão. Definem o produto planejado; a auditoria do frontend registra a fase 0, e os documentos de sistemas registram as entregas posteriores. Valores, datas e fontes em exemplos são ilustrativos, não dados apurados.
+Os quatro documentos numerados partem dos textos fornecidos pelo responsável pelo projeto e receberam ajustes de clareza e precisão. Definem o produto planejado; a auditoria do frontend registra a fase 0, e os documentos de sistemas registram as entregas posteriores. Exemplos do modelo e do design system são ilustrativos. As amostras em `data-sources/evidence/` são dados oficiais consultados na fase 4, com proveniência, sem integração ao site.
 
 ## Estado e limites
 
@@ -29,6 +31,7 @@ Os quatro documentos numerados partem dos textos fornecidos pelo responsável pe
 | Design system da plataforma | Implementado na fase 1; referência em `/design-system`, com exemplos fictícios |
 | Modelo conceitual dos dados | Especificado na fase 2, com exemplos de revisão e derivação e catálogo de operações/consistência; sem schema executável ou persistência |
 | Seleção de indicadores | 15 conceitos principais definidos na fase 3, mais contextos e inputs; fontes identificadas preliminarmente, sem integração ou cobertura histórica validada |
+| Catálogo de fontes | Fase 4 documentada: recortes e amostras oficiais conferidos, histórico observado e limites por fonte; investigações concluídas; sem comprovação de operação recorrente ou comparabilidade irrestrita |
 | Páginas de indicadores, comparador e camada Entenda | Planejados |
 | Banco, API de indicadores, ingestão e processamento | Planejados; tecnologias em aberto |
 | Publicação e operação em produção | Não verificadas; sem configuração de deploy no repositório |
@@ -46,11 +49,11 @@ O [manual de marca](brand/MARGEM_Manual_Marca_Conteudo_Site.md) define a direç�
 | [brand](brand/MARGEM_Manual_Marca_Conteudo_Site.md) | Manual, tokens JSON e pranchas existentes; referência visual preservada |
 | [research](research/README.md) | Investigações e hipóteses, separadas de decisões |
 | [adr](adr/README.md) | Decisões técnicas com contexto, alternativas e consequências |
-| [data-sources](data-sources/README.md) | Próxima entrega: catálogo das fontes da seleção da fase 3 |
+| [data-sources](data-sources/README.md) | Catálogo da fase 4, matriz dos indicadores, fichas e evidências de acesso |
 | [systems](systems/README.md) | Componentes próprios e estado de implementação |
 
 Manter detalhes de infraestrutura fora da visão e do documento de UX. Registrar decisões técnicas em ADR com as evidências que as sustentam. Documentos de sistemas devem distinguir implementação de proposta; investigações ficam em `research/`.
 
 ## Próxima entrega
 
-Executar a fase 4: catalogar os 15 principais, contextos e inputs de salário mínimo real e tempo por cesta, cobrindo IBGE, BCB, ANP, Conab/DIEESE e Fundação João Pinheiro. Identificar datasets, séries, recortes, endpoints ou arquivos, histórico, metodologia, quebras e condições de acesso com evidência atual. Concluir as investigações sobre renda/hora, Peic e inflação por faixa de renda. A [seleção revisada](systems/mvp-indicators.md) e o [mapa de fontes](research/source-map.md) definem o escopo e os limites dessa passagem. Banco, pipelines e integrações ficam para as fases correspondentes do roadmap. A [regra permanente de SEO e descoberta por IA](../AGENTS.md) deve ser preservada em todas as fases.
+Executar a fase 5: PoC de ingestão com TR4, CV1 e VF1, três indicadores e quatro séries externas de IBGE e BCB, contando separadamente as duas medidas de CV1. O [catálogo](data-sources/README.md) identifica as consultas, amostras e condições de passagem. Provar fetch, validação, armazenamento raw, normalização, persistência e exposição, com idempotência, timestamps, logs, retries, schema e controle de atualização. A [auditoria da fase 4](data-sources/verification.md) separa catálogo verificado de integração ainda não implementada. Os demais indicadores permanecem no escopo do MVP. A [regra permanente de SEO e descoberta por IA](../AGENTS.md) deve ser preservada em todas as fases.

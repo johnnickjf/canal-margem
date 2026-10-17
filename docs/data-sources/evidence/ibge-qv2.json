@@ -1,0 +1,40 @@
+[
+  {
+    "id": "10681",
+    "variavel": "Índice de Gini do rendimento domiciliar per capita, a preços médios do ano",
+    "unidade": "Índice",
+    "resultados": [
+      {
+        "classificacoes": [],
+        "series": [
+          {
+            "localidade": {
+              "id": "1",
+              "nivel": {
+                "id": "N1",
+                "nome": "Brasil"
+              },
+              "nome": "Brasil"
+            },
+            "serie": {
+              "2012": "0.540",
+              "2013": "0.532",
+              "2014": "0.526",
+              "2015": "0.524",
+              "2016": "0.537",
+              "2017": "0.539",
+              "2018": "0.545",
+              "2019": "0.543",
+              "2020": "0.523",
+              "2021": "0.543",
+              "2022": "0.517",
+              "2023": "0.517",
+              "2024": "0.504",
+              "2025": "0.511"
+            }
+          }
+        ]
+      }
+    ]
+  }
+]

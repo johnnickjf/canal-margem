@@ -1,0 +1,145 @@
+[
+  {
+    "id": "9784",
+    "variavel": "Distribuição percentual dos domicílios",
+    "unidade": "%",
+    "resultados": [
+      {
+        "classificacoes": [
+          {
+            "id": "1",
+            "nome": "Situação do domicílio",
+            "categoria": {
+              "6795": "Total"
+            }
+          },
+          {
+            "id": "12404",
+            "nome": "Situação de segurança alimentar existente no domicílio",
+            "categoria": {
+              "109099": "Com insegurança alimentar"
+            }
+          }
+        ],
+        "series": [
+          {
+            "localidade": {
+              "id": "1",
+              "nivel": {
+                "id": "N1",
+                "nome": "Brasil"
+              },
+              "nome": "Brasil"
+            },
+            "serie": {
+              "2023": "27.6",
+              "2024": "24.2"
+            }
+          }
+        ]
+      },
+      {
+        "classificacoes": [
+          {
+            "id": "1",
+            "nome": "Situação do domicílio",
+            "categoria": {
+              "6795": "Total"
+            }
+          },
+          {
+            "id": "12404",
+            "nome": "Situação de segurança alimentar existente no domicílio",
+            "categoria": {
+              "109100": "Com insegurança alimentar leve"
+            }
+          }
+        ],
+        "series": [
+          {
+            "localidade": {
+              "id": "1",
+              "nivel": {
+                "id": "N1",
+                "nome": "Brasil"
+              },
+              "nome": "Brasil"
+            },
+            "serie": {
+              "2023": "18.2",
+              "2024": "16.4"
+            }
+          }
+        ]
+      },
+      {
+        "classificacoes": [
+          {
+            "id": "1",
+            "nome": "Situação do domicílio",
+            "categoria": {
+              "6795": "Total"
+            }
+          },
+          {
+            "id": "12404",
+            "nome": "Situação de segurança alimentar existente no domicílio",
+            "categoria": {
+              "109101": "Com insegurança alimentar moderada"
+            }
+          }
+        ],
+        "series": [
+          {
+            "localidade": {
+              "id": "1",
+              "nivel": {
+                "id": "N1",
+                "nome": "Brasil"
+              },
+              "nome": "Brasil"
+            },
+            "serie": {
+              "2023": "5.3",
+              "2024": "4.5"
+            }
+          }
+        ]
+      },
+      {
+        "classificacoes": [
+          {
+            "id": "1",
+            "nome": "Situação do domicílio",
+            "categoria": {
+              "6795": "Total"
+            }
+          },
+          {
+            "id": "12404",
+            "nome": "Situação de segurança alimentar existente no domicílio",
+            "categoria": {
+              "109102": "Com insegurança alimentar grave"
+            }
+          }
+        ],
+        "series": [
+          {
+            "localidade": {
+              "id": "1",
+              "nivel": {
+                "id": "N1",
+                "nome": "Brasil"
+              },
+              "nome": "Brasil"
+            },
+            "serie": {
+              "2023": "4.1",
+              "2024": "3.2"
+            }
+          }
+        ]
+      }
+    ]
+  }
+]

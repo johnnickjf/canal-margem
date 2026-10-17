@@ -273,6 +273,10 @@ Lista oficial dos indicadores do MVP.
 
 ## Fase 4 — Catálogo de fontes
 
+### Estado
+
+Documentada no [catálogo de fontes](data-sources/README.md): matriz dos 15 principais, contextos e inputs, fichas de IBGE, BCB, ANP, Conab/DIEESE e FJP, com recortes e obtenção identificados, histórico observado, método, quebras, direitos e amostras oficiais. As [investigações complementares](research/phase-4-investigations.md) têm conclusão. A [auditoria](data-sources/verification.md) registra a validação e os limites. Acesso pontual não comprova integração recorrente ou comparabilidade entre todas as edições; a implementação continua na fase 5.
+
 ### Escopo definido pela fase 3
 
 Catalogar os 15 indicadores principais, contextos e entradas auxiliares de INPC, mínimo nominal e cesta por capital. As fontes necessárias são IBGE, Banco Central, ANP, Conab/DIEESE e Fundação João Pinheiro. Concluir também a investigação de renda/hora publicada pelo IBGE, Peic/CNC e inflação por faixa de renda/Ipea, sem presumir novas integrações. Tesouro, MDS, MTE, ANEEL, SINISA, Inep e DATASUS permanecem no [mapa de expansão](research/source-map.md).
@@ -336,6 +340,10 @@ Nenhum indicador do MVP existe sem uma fonte identificada.
 ---
 
 ## Fase 5 — Prova de conceito de ingestão
+
+### Entrada do catálogo
+
+Implementar TR4 (IBGE `4099/4099`), CV1 (IBGE `1737/63,2265`) e VF1 (BCB SGS `29265`), três indicadores e quatro séries externas de duas fontes, contando separadamente as duas medidas de CV1. Consultas e amostras estão no [catálogo da fase 4](data-sources/README.md). A PoC deve distinguir trimestre civil, mês e média móvel trimestral, testar revisão histórica e repetição sem mudança e preservar os originais antes de normalizar. Ainda não implementada.
 
 ### Objetivo
 

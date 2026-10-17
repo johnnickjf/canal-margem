@@ -1,0 +1,1055 @@
+{
+  "kind": "Recortes de arquivos oficiais; não são respostas originais nem dados publicados pelo Margem.",
+  "extracts": [
+    {
+      "capture_id": "anp-week.xlsx",
+      "sheet": "BRASIL",
+      "header_range": "A10:K10",
+      "headers": [
+        "DATA INICIAL",
+        "DATA FINAL",
+        "BRASIL",
+        "PRODUTO",
+        "NÚMERO DE POSTOS PESQUISADOS",
+        "UNIDADE DE MEDIDA",
+        "PREÇO MÉDIO REVENDA",
+        "DESVIO PADRÃO REVENDA",
+        "PREÇO MÍNIMO REVENDA",
+        "PREÇO MÁXIMO REVENDA",
+        "COEF DE VARIAÇÃO REVENDA"
+      ],
+      "range": "A13:K13",
+      "values": [
+        "2026-10-04T00:00:00",
+        "2026-10-10T00:00:00",
+        "BRASIL",
+        "GASOLINA COMUM",
+        4474,
+        "R$/l",
+        6.54,
+        0.409,
+        5.39,
+        8.99,
+        0.062
+      ]
+    },
+    {
+      "capture_id": "anp-old.xlsx",
+      "sheet": "BRASIL - 09.05.04 A 29.12.12",
+      "product": "GASOLINA COMUM",
+      "observations": 447,
+      "first": {
+        "row": 461,
+        "values": [
+          "2004-05-09T00:00:00",
+          "2004-05-15T00:00:00",
+          "GASOLINA COMUM",
+          12442,
+          "R$/l",
+          2.083,
+          0.142,
+          1.57,
+          2.85,
+          0.328,
+          0.068,
+          1.755,
+          0.079,
+          1.38,
+          2.188,
+          0.045
+        ]
+      },
+      "last": {
+        "row": 907,
+        "values": [
+          "2012-12-23T00:00:00",
+          "2012-12-29T00:00:00",
+          "GASOLINA COMUM",
+          8674,
+          "R$/l",
+          2.756,
+          0.147,
+          2.269,
+          3.799,
+          0.385,
+          0.053,
+          2.371,
+          0.109,
+          2.11,
+          2.89,
+          0.046
+        ]
+      },
+      "gaps": [
+        {
+          "after": "2005-08-07",
+          "before": "2005-08-28",
+          "days_between_starts": 21
+        },
+        {
+          "after": "2009-08-09",
+          "before": "2009-08-30",
+          "days_between_starts": 21
+        }
+      ]
+    },
+    {
+      "capture_id": "anp-new.xlsx",
+      "sheet": "BRASIL - DESDE 30.12.2012",
+      "product": "GASOLINA COMUM",
+      "observations": 710,
+      "first": {
+        "row": 20,
+        "values": [
+          "2012-12-30T00:00:00",
+          "2013-01-05T00:00:00",
+          "GASOLINA COMUM",
+          8672,
+          "R$/l",
+          2.758,
+          0.147,
+          2.269,
+          3.799,
+          0.385,
+          0.053,
+          2.373,
+          0.11,
+          2.12,
+          2.89,
+          0.046,
+          null
+        ]
+      },
+      "last": {
+        "row": 4585,
+        "values": [
+          "2026-10-04T00:00:00",
+          "2026-10-10T00:00:00",
+          "GASOLINA COMUM",
+          4474,
+          "R$/l",
+          6.54,
+          0.409,
+          5.39,
+          8.99,
+          "-",
+          0.062,
+          "-",
+          "-",
+          "-",
+          "-",
+          "-",
+          null
+        ]
+      },
+      "gaps": [
+        {
+          "after": "2015-08-09",
+          "before": "2015-08-23",
+          "days_between_starts": 14
+        },
+        {
+          "after": "2020-08-16",
+          "before": "2020-10-18",
+          "days_between_starts": 63
+        }
+      ]
+    },
+    {
+      "capture_id": "fjp2022.xlsx",
+      "sheet": "DH_Componentes",
+      "header_range": "A1:J2",
+      "headers": [
+        [
+          "Ano",
+          "Especificação",
+          "Habitação Precária",
+          null,
+          null,
+          "Coabitação",
+          null,
+          null,
+          "Ônus",
+          "Déficit Habitacional"
+        ],
+        [
+          null,
+          null,
+          "Domicílios Improvisados",
+          "Domicílios Rústicos",
+          "Habitação Precária",
+          "Cômodos",
+          "Unidades conviventes déficit",
+          "Coabitação",
+          null,
+          null
+        ]
+      ],
+      "range": "A56:J56",
+      "values": [
+        2022,
+        "Brasil",
+        1077112,
+        605541.7068374199,
+        1682653.70683742,
+        111548.16357050001,
+        1178330.6896220502,
+        1289878.8531925501,
+        3242780.43138197,
+        6215312.991411939
+      ],
+      "selected_cell": "I56",
+      "unit": "domicílios estimados"
+    },
+    {
+      "capture_id": "fjp2023.xlsx",
+      "sheet": "DH_Componentes",
+      "header_range": "A1:J2",
+      "headers": [
+        [
+          "Ano",
+          "Especificação",
+          "Habitação Precária",
+          null,
+          null,
+          "Coabitação",
+          null,
+          null,
+          "Ônus",
+          "Déficit Habitacional"
+        ],
+        [
+          null,
+          null,
+          "Domicílios Improvisados",
+          "Domicílios Rústicos",
+          "Habitação Precária",
+          "Cômodos",
+          "Unidades conviventes déficit",
+          "Coabitação",
+          null,
+          null
+        ]
+      ],
+      "range": "A56:J56",
+      "values": [
+        2023,
+        "Brasil",
+        642593.1581559577,
+        598843.9449676299,
+        1241437.1031235876,
+        143387.31345482002,
+        927052.4533434599,
+        1070439.76679828,
+        3665439.8798232903,
+        5977316.7497451585
+      ],
+      "selected_cell": "I56",
+      "unit": "domicílios estimados"
+    },
+    {
+      "capture_id": "fjp2024.xlsx",
+      "sheet": "DH_Componentes",
+      "header_range": "A1:J2",
+      "headers": [
+        [
+          "Ano",
+          "Especificação",
+          "Habitação Precária",
+          null,
+          null,
+          "Coabitação",
+          null,
+          null,
+          "Ônus",
+          "Déficit Habitacional"
+        ],
+        [
+          null,
+          null,
+          "Domicílios Improvisados",
+          "Domicílios Rústicos",
+          "Habitação Precária",
+          "Cômodos",
+          "Unidades conviventes déficit",
+          "Coabitação",
+          null,
+          null
+        ]
+      ],
+      "range": "A56:J56",
+      "values": [
+        2024,
+        "Brasil",
+        637255.3012621864,
+        519579.13925738004,
+        1156834.4405195666,
+        137979.60847255003,
+        891392.3551369102,
+        1029371.9636094596,
+        3587776.7972144,
+        5773983.2013434265
+      ],
+      "selected_cell": "I56",
+      "unit": "domicílios estimados"
+    },
+    {
+      "capture_id": "fjp2016.xlsx",
+      "sheet": "Ônus",
+      "header_range": "A1:E1",
+      "headers": ["Ano", "DH", "Região", "Contagem", "% do total da componente"],
+      "rows": [
+        {
+          "range": "A55:E55",
+          "values": [2016.0, "Ônus", "Brasil", 2863470.25661334, 1]
+        },
+        {
+          "range": "A109:E109",
+          "values": [2017.0, "Ônus", "Brasil", 2995856.53302932, 1]
+        },
+        {
+          "range": "A163:E163",
+          "values": [2018.0, "Ônus", "Brasil", 3089164.58710717, 1]
+        },
+        {
+          "range": "A217:E217",
+          "values": [2019.0, "Ônus", "Brasil", 3070105.58949384, 1]
+        }
+      ],
+      "selected_column": "D",
+      "unit": "domicílios estimados"
+    },
+    {
+      "capture_id": "sis-renda.zip",
+      "member": "Tabela 2.18 (Pobr_Geo).xls",
+      "member_sha256": "9eb604b08e10bea62a005bb640c912b9e72c351a94515065b8d05edcff325f25",
+      "inspection": "XLS convertido para XLSX por LibreOffice somente para leitura; valores em cache lidos sem editar o original.",
+      "indicator": "QV1",
+      "rows": [
+        {
+          "sheet": "2012",
+          "cell": "E7",
+          "value": 34.7349983837757,
+          "label": "Brasil"
+        },
+        {
+          "sheet": "2013",
+          "cell": "E7",
+          "value": 32.4832447629671,
+          "label": "Brasil"
+        },
+        {
+          "sheet": "2014",
+          "cell": "E7",
+          "value": 30.8776235187097,
+          "label": "Brasil"
+        },
+        {
+          "sheet": "2015",
+          "cell": "E7",
+          "value": 31.7200572285169,
+          "label": "Brasil"
+        },
+        {
+          "sheet": "2016",
+          "cell": "E7",
+          "value": 33.7475981453081,
+          "label": "Brasil"
+        },
+        {
+          "sheet": "2017",
+          "cell": "E7",
+          "value": 33.7856767810757,
+          "label": "Brasil"
+        },
+        {
+          "sheet": "2018",
+          "cell": "E7",
+          "value": 33.4429404956159,
+          "label": "Brasil"
+        },
+        {
+          "sheet": "2019",
+          "cell": "E7",
+          "value": 32.6055469737021,
+          "label": "Brasil"
+        },
+        {
+          "sheet": "2020",
+          "cell": "E7",
+          "value": 31.0643187018952,
+          "label": "Brasil"
+        },
+        {
+          "sheet": "2021",
+          "cell": "E7",
+          "value": 36.7736600884238,
+          "label": "Brasil"
+        },
+        {
+          "sheet": "2022",
+          "cell": "E7",
+          "value": 31.6483927506308,
+          "label": "Brasil"
+        },
+        {
+          "sheet": "2023",
+          "cell": "E7",
+          "value": 27.2961534677636,
+          "label": "Brasil"
+        },
+        {
+          "sheet": "2024",
+          "cell": "E7",
+          "value": 23.1110155033287,
+          "label": "Brasil"
+        }
+      ],
+      "header_cells": {
+        "E4": "Menos de US$ 6,85 PPC 2017 (1)"
+      },
+      "notes": [
+        {
+          "cell": "A60",
+          "value": "Distrito Federal"
+        },
+        {
+          "cell": "A62",
+          "value": "Fonte: IBGE. Pesquisa Nacional por Amostra de Domicílios Contínua, 2024, acumulado de primeiras visitas."
+        },
+        {
+          "cell": "A63",
+          "value": "Notas: Exclusive as pessoas cuja condição no domicílio era pensionista, empregado doméstico ou parente do empregado doméstico."
+        },
+        {
+          "cell": "A64",
+          "value": "Rendimentos deflacionados para reais médios do próprio ano."
+        },
+        {
+          "cell": "A65",
+          "value": "(1) Taxa de conversão da paridade de poder de compra para consumo privado, R$ 2,3273771 para US$ 1,00 PPC 2017, valores diários tornados mensais e inflacionados pelo IPCA para anos recentes."
+        },
+        {
+          "cell": "A66",
+          "value": "(2) Mediana calculada no nível pessoa."
+        }
+      ]
+    },
+    {
+      "capture_id": "sis-work.zip",
+      "member": "Tabela 1.5 (Indic_Geo_Rend).xls",
+      "member_sha256": "bb45e9dd6efd85d9be3731611037eebf43bc657d528ac953249df3925b7b41a5",
+      "inspection": "XLS convertido para XLSX por LibreOffice somente para leitura; valores em cache lidos sem editar o original.",
+      "indicator": "renda/hora",
+      "rows": [
+        {
+          "sheet": "2012",
+          "cell": "E8",
+          "value": 17.4330394772164,
+          "label": "Brasil"
+        },
+        {
+          "sheet": "2013",
+          "cell": "E8",
+          "value": 18.1295052553918,
+          "label": "Brasil"
+        },
+        {
+          "sheet": "2014",
+          "cell": "E8",
+          "value": 18.5265011903426,
+          "label": "Brasil"
+        },
+        {
+          "sheet": "2015",
+          "cell": "E8",
+          "value": 18.0640645812976,
+          "label": "Brasil"
+        },
+        {
+          "sheet": "2016",
+          "cell": "E8",
+          "value": 18.0069470963512,
+          "label": "Brasil"
+        },
+        {
+          "sheet": "2017",
+          "cell": "E8",
+          "value": 17.9514261835378,
+          "label": "Brasil"
+        },
+        {
+          "sheet": "2018",
+          "cell": "E8",
+          "value": 18.244412412719,
+          "label": "Brasil"
+        },
+        {
+          "sheet": "2019",
+          "cell": "E8",
+          "value": 18.2502376566706,
+          "label": "Brasil"
+        },
+        {
+          "sheet": "2020",
+          "cell": "E8",
+          "value": 18.6195817827778,
+          "label": "Brasil"
+        },
+        {
+          "sheet": "2021",
+          "cell": "E8",
+          "value": 17.7229004876229,
+          "label": "Brasil"
+        },
+        {
+          "sheet": "2022",
+          "cell": "E8",
+          "value": 17.2823023519376,
+          "label": "Brasil"
+        },
+        {
+          "sheet": "2023",
+          "cell": "E8",
+          "value": 18.5947743448421,
+          "label": "Brasil"
+        },
+        {
+          "sheet": "2024",
+          "cell": "E8",
+          "value": 19.2715979039101,
+          "label": "Brasil"
+        }
+      ],
+      "header_cells": {
+        "E4": "Rendimento-hora médio real habitual de todos os trabalhos\n(R$/hora)"
+      },
+      "notes": [
+        {
+          "cell": "A60",
+          "value": "Mato Grosso do Sul"
+        },
+        {
+          "cell": "A61",
+          "value": "Campo Grande"
+        },
+        {
+          "cell": "A62",
+          "value": "Mato Grosso"
+        },
+        {
+          "cell": "A63",
+          "value": "Cuiabá"
+        },
+        {
+          "cell": "A64",
+          "value": "Goiás"
+        },
+        {
+          "cell": "A65",
+          "value": "Goiânia"
+        },
+        {
+          "cell": "A66",
+          "value": "Distrito Federal"
+        },
+        {
+          "cell": "A67",
+          "value": "Brasília"
+        },
+        {
+          "cell": "A69",
+          "value": "Fonte: IBGE. Pesquisa Nacional por Amostra de Domicílios Contínua, 2024 (acumulado de primeiras visitas)."
+        },
+        {
+          "cell": "A70",
+          "value": "Notas: Rendimentos deflacionados para reais médios de 2024."
+        }
+      ]
+    },
+    {
+      "capture_id": "dieese202512.pdf",
+      "page": 4,
+      "table": "Tabela 1",
+      "reference_period": "202512",
+      "rows": [
+        {
+          "capital_label": "São Paulo",
+          "basket_brl_text": "845,95",
+          "monthly_change_percent_text": "0,56",
+          "net_minimum_share_percent_text": "60,25",
+          "published_time": "122h36m"
+        },
+        {
+          "capital_label": "Florianópolis",
+          "basket_brl_text": "801,29",
+          "monthly_change_percent_text": "0,08",
+          "net_minimum_share_percent_text": "57,07",
+          "published_time": "116h08m"
+        },
+        {
+          "capital_label": "Rio de Janeiro",
+          "basket_brl_text": "792,06",
+          "monthly_change_percent_text": "1,03",
+          "net_minimum_share_percent_text": "56,41",
+          "published_time": "114h47m"
+        },
+        {
+          "capital_label": "Cuiabá (1)",
+          "basket_brl_text": "791,29",
+          "monthly_change_percent_text": "0,17",
+          "net_minimum_share_percent_text": "56,35",
+          "published_time": "114h41m"
+        },
+        {
+          "capital_label": "Porto Alegre",
+          "basket_brl_text": "784,22",
+          "monthly_change_percent_text": "-0,70",
+          "net_minimum_share_percent_text": "55,85",
+          "published_time": "113h40m"
+        },
+        {
+          "capital_label": "Campo Grande",
+          "basket_brl_text": "775,90",
+          "monthly_change_percent_text": "-0,47",
+          "net_minimum_share_percent_text": "55,26",
+          "published_time": "112h27m"
+        },
+        {
+          "capital_label": "Curitiba",
+          "basket_brl_text": "737,88",
+          "monthly_change_percent_text": "-1,03",
+          "net_minimum_share_percent_text": "52,55",
+          "published_time": "106h56m"
+        },
+        {
+          "capital_label": "Vitória",
+          "basket_brl_text": "727,22",
+          "monthly_change_percent_text": "-0,59",
+          "net_minimum_share_percent_text": "51,79",
+          "published_time": "105h23m"
+        },
+        {
+          "capital_label": "Goiânia",
+          "basket_brl_text": "725,95",
+          "monthly_change_percent_text": "1,19",
+          "net_minimum_share_percent_text": "51,70",
+          "published_time": "105h13m"
+        },
+        {
+          "capital_label": "Belo Horizonte",
+          "basket_brl_text": "723,26",
+          "monthly_change_percent_text": "1,58",
+          "net_minimum_share_percent_text": "51,51",
+          "published_time": "104h49m"
+        },
+        {
+          "capital_label": "Brasília",
+          "basket_brl_text": "714,21",
+          "monthly_change_percent_text": "1,54",
+          "net_minimum_share_percent_text": "50,86",
+          "published_time": "103h31m"
+        },
+        {
+          "capital_label": "Palmas (1)",
+          "basket_brl_text": "677,63",
+          "monthly_change_percent_text": "0,75",
+          "net_minimum_share_percent_text": "48,26",
+          "published_time": "98h13m"
+        },
+        {
+          "capital_label": "Fortaleza",
+          "basket_brl_text": "677,00",
+          "monthly_change_percent_text": "0,95",
+          "net_minimum_share_percent_text": "48,21",
+          "published_time": "98h07m"
+        },
+        {
+          "capital_label": "Belém",
+          "basket_brl_text": "666,57",
+          "monthly_change_percent_text": "0,06",
+          "net_minimum_share_percent_text": "47,47",
+          "published_time": "96h36m"
+        },
+        {
+          "capital_label": "Boa Vista (1)",
+          "basket_brl_text": "652,14",
+          "monthly_change_percent_text": "-2,55",
+          "net_minimum_share_percent_text": "46,44",
+          "published_time": "94h31m"
+        },
+        {
+          "capital_label": "Macapá (1)",
+          "basket_brl_text": "651,15",
+          "monthly_change_percent_text": "1,23",
+          "net_minimum_share_percent_text": "46,37",
+          "published_time": "94h22m"
+        },
+        {
+          "capital_label": "Teresina (1)",
+          "basket_brl_text": "645,09",
+          "monthly_change_percent_text": "1,39",
+          "net_minimum_share_percent_text": "45,94",
+          "published_time": "93h29m"
+        },
+        {
+          "capital_label": "São Luís (1)",
+          "basket_brl_text": "629,43",
+          "monthly_change_percent_text": "0,42",
+          "net_minimum_share_percent_text": "44,83",
+          "published_time": "91h13m"
+        },
+        {
+          "capital_label": "Rio Branco (1)",
+          "basket_brl_text": "626,11",
+          "monthly_change_percent_text": "-1,54",
+          "net_minimum_share_percent_text": "44,59",
+          "published_time": "90h44m"
+        },
+        {
+          "capital_label": "Manaus (1)",
+          "basket_brl_text": "620,42",
+          "monthly_change_percent_text": "-1,43",
+          "net_minimum_share_percent_text": "44,18",
+          "published_time": "89h55m"
+        },
+        {
+          "capital_label": "Salvador",
+          "basket_brl_text": "607,48",
+          "monthly_change_percent_text": "1,55",
+          "net_minimum_share_percent_text": "43,26",
+          "published_time": "88h02m"
+        },
+        {
+          "capital_label": "João Pessoa",
+          "basket_brl_text": "597,66",
+          "monthly_change_percent_text": "0,00",
+          "net_minimum_share_percent_text": "42,56",
+          "published_time": "86h37m"
+        },
+        {
+          "capital_label": "Natal",
+          "basket_brl_text": "597,15",
+          "monthly_change_percent_text": "0,98",
+          "net_minimum_share_percent_text": "42,53",
+          "published_time": "86h32m"
+        },
+        {
+          "capital_label": "Recife",
+          "basket_brl_text": "596,10",
+          "monthly_change_percent_text": "-0,44",
+          "net_minimum_share_percent_text": "42,45",
+          "published_time": "86h23m"
+        },
+        {
+          "capital_label": "Porto Velho (1)",
+          "basket_brl_text": "592,01",
+          "monthly_change_percent_text": "-3,60",
+          "net_minimum_share_percent_text": "42,16",
+          "published_time": "85h48m"
+        },
+        {
+          "capital_label": "Maceió (1)",
+          "basket_brl_text": "589,69",
+          "monthly_change_percent_text": "3,19",
+          "net_minimum_share_percent_text": "42,00",
+          "published_time": "85h28m"
+        },
+        {
+          "capital_label": "Aracaju",
+          "basket_brl_text": "539,49",
+          "monthly_change_percent_text": "0,26",
+          "net_minimum_share_percent_text": "38,42",
+          "published_time": "78h11m"
+        }
+      ],
+      "note": "(1) Capitais com coleta iniciada em abril de 2025 (dados de variação anual não disponíveis)",
+      "printed_page": 3
+    },
+    {
+      "capture_id": "dieese202609.pdf",
+      "page": 4,
+      "table": "Tabela 1",
+      "reference_period": "202609",
+      "rows": [
+        {
+          "capital_label": "São Paulo",
+          "basket_brl_text": "922,51",
+          "monthly_change_percent_text": "2,43",
+          "net_minimum_share_percent_text": "61,52",
+          "published_time": "125h12m"
+        },
+        {
+          "capital_label": "Florianópolis",
+          "basket_brl_text": "915,62",
+          "monthly_change_percent_text": "7,61",
+          "net_minimum_share_percent_text": "61,06",
+          "published_time": "124h16m"
+        },
+        {
+          "capital_label": "Rio de Janeiro",
+          "basket_brl_text": "913,46",
+          "monthly_change_percent_text": "7,32",
+          "net_minimum_share_percent_text": "60,92",
+          "published_time": "123h58m"
+        },
+        {
+          "capital_label": "Cuiabá",
+          "basket_brl_text": "891,24",
+          "monthly_change_percent_text": "4,66",
+          "net_minimum_share_percent_text": "59,44",
+          "published_time": "120h58m"
+        },
+        {
+          "capital_label": "Porto Alegre",
+          "basket_brl_text": "889,15",
+          "monthly_change_percent_text": "5,93",
+          "net_minimum_share_percent_text": "59,30",
+          "published_time": "120h40m"
+        },
+        {
+          "capital_label": "Curitiba",
+          "basket_brl_text": "841,93",
+          "monthly_change_percent_text": "5,39",
+          "net_minimum_share_percent_text": "56,15",
+          "published_time": "114h16m"
+        },
+        {
+          "capital_label": "Vitória",
+          "basket_brl_text": "829,14",
+          "monthly_change_percent_text": "4,95",
+          "net_minimum_share_percent_text": "55,30",
+          "published_time": "112h32m"
+        },
+        {
+          "capital_label": "Goiânia",
+          "basket_brl_text": "808,01",
+          "monthly_change_percent_text": "4,54",
+          "net_minimum_share_percent_text": "53,89",
+          "published_time": "109h40m"
+        },
+        {
+          "capital_label": "Campo Grande",
+          "basket_brl_text": "806,56",
+          "monthly_change_percent_text": "0,18",
+          "net_minimum_share_percent_text": "53,79",
+          "published_time": "109h28m"
+        },
+        {
+          "capital_label": "Belo Horizonte",
+          "basket_brl_text": "802,99",
+          "monthly_change_percent_text": "5,72",
+          "net_minimum_share_percent_text": "53,55",
+          "published_time": "108h59m"
+        },
+        {
+          "capital_label": "Fortaleza",
+          "basket_brl_text": "779,96",
+          "monthly_change_percent_text": "3,23",
+          "net_minimum_share_percent_text": "52,02",
+          "published_time": "105h52m"
+        },
+        {
+          "capital_label": "Brasília",
+          "basket_brl_text": "773,78",
+          "monthly_change_percent_text": "5,37",
+          "net_minimum_share_percent_text": "51,61",
+          "published_time": "105h01m"
+        },
+        {
+          "capital_label": "Palmas",
+          "basket_brl_text": "752,68",
+          "monthly_change_percent_text": "4,75",
+          "net_minimum_share_percent_text": "50,20",
+          "published_time": "102h09m"
+        },
+        {
+          "capital_label": "Belém",
+          "basket_brl_text": "731,62",
+          "monthly_change_percent_text": "3,17",
+          "net_minimum_share_percent_text": "48,79",
+          "published_time": "99h17m"
+        },
+        {
+          "capital_label": "Macapá",
+          "basket_brl_text": "720,01",
+          "monthly_change_percent_text": "2,47",
+          "net_minimum_share_percent_text": "48,02",
+          "published_time": "97h43m"
+        },
+        {
+          "capital_label": "Boa Vista",
+          "basket_brl_text": "699,75",
+          "monthly_change_percent_text": "0,24",
+          "net_minimum_share_percent_text": "46,67",
+          "published_time": "94h58m"
+        },
+        {
+          "capital_label": "Teresina",
+          "basket_brl_text": "698,55",
+          "monthly_change_percent_text": "1,27",
+          "net_minimum_share_percent_text": "46,59",
+          "published_time": "94h49m"
+        },
+        {
+          "capital_label": "São Luís",
+          "basket_brl_text": "692,94",
+          "monthly_change_percent_text": "4,71",
+          "net_minimum_share_percent_text": "46,21",
+          "published_time": "94h02m"
+        },
+        {
+          "capital_label": "Porto Velho",
+          "basket_brl_text": "691,25",
+          "monthly_change_percent_text": "3,98",
+          "net_minimum_share_percent_text": "46,10",
+          "published_time": "93h49m"
+        },
+        {
+          "capital_label": "Rio Branco",
+          "basket_brl_text": "678,35",
+          "monthly_change_percent_text": "2,83",
+          "net_minimum_share_percent_text": "45,24",
+          "published_time": "92h04m"
+        },
+        {
+          "capital_label": "Manaus",
+          "basket_brl_text": "676,18",
+          "monthly_change_percent_text": "1,53",
+          "net_minimum_share_percent_text": "45,10",
+          "published_time": "91h46m"
+        },
+        {
+          "capital_label": "Recife",
+          "basket_brl_text": "663,48",
+          "monthly_change_percent_text": "3,18",
+          "net_minimum_share_percent_text": "44,25",
+          "published_time": "90h03m"
+        },
+        {
+          "capital_label": "João Pessoa",
+          "basket_brl_text": "660,21",
+          "monthly_change_percent_text": "2,98",
+          "net_minimum_share_percent_text": "44,03",
+          "published_time": "89h36m"
+        },
+        {
+          "capital_label": "Natal",
+          "basket_brl_text": "635,60",
+          "monthly_change_percent_text": "1,30",
+          "net_minimum_share_percent_text": "42,39",
+          "published_time": "86h16m"
+        },
+        {
+          "capital_label": "Salvador",
+          "basket_brl_text": "634,67",
+          "monthly_change_percent_text": "0,92",
+          "net_minimum_share_percent_text": "42,33",
+          "published_time": "86h08m"
+        },
+        {
+          "capital_label": "Maceió",
+          "basket_brl_text": "631,28",
+          "monthly_change_percent_text": "0,61",
+          "net_minimum_share_percent_text": "42,10",
+          "published_time": "85h41m"
+        },
+        {
+          "capital_label": "Aracaju",
+          "basket_brl_text": "587,76",
+          "monthly_change_percent_text": "2,94",
+          "net_minimum_share_percent_text": "39,20",
+          "published_time": "79h46m"
+        }
+      ],
+      "note": null,
+      "printed_page": 3
+    },
+    {
+      "capture_id": "ipea.xlsx",
+      "sheets": [
+        {
+          "sheet": "Mensal",
+          "headers": [
+            null,
+            "Renda muito baixa",
+            "Renda baixa",
+            "Renda média-baixa",
+            "Renda média",
+            "Renda média-alta",
+            "Renda alta"
+          ],
+          "observations": 235,
+          "first": {
+            "range": "A6:G6",
+            "values": [
+              "jul/2006",
+              0.06879508824538479,
+              0.09598255690112134,
+              0.11254991669630651,
+              0.14348702951521453,
+              0.1616366795320275,
+              0.17240369700931255
+            ]
+          },
+          "last": {
+            "range": "A240:G240",
+            "values": [
+              "Jan/26",
+              0.3052221124944299,
+              0.3370992220865041,
+              0.3717711379410808,
+              0.37932605251382945,
+              0.38490998467545046,
+              0.17849093972669405
+            ]
+          },
+          "label_anomalies": [
+            {
+              "cell": "A237",
+              "raw_value": "Óut/25",
+              "interpretation": "outubro/2025, verificado pela sequência mensal; preservar grafia original"
+            }
+          ]
+        },
+        {
+          "sheet": "Acumulado 12 meses",
+          "headers": [
+            null,
+            "Renda muito baixa",
+            "Renda baixa",
+            "Renda média-baixa",
+            "Renda média",
+            "Renda média-alta",
+            "Renda alta"
+          ],
+          "observations": 224,
+          "first": {
+            "range": "A6:G6",
+            "values": [
+              "jun/2007",
+              4.294227967642161,
+              3.969976358412919,
+              3.85514012702044,
+              3.4746497574352997,
+              3.2608915891432,
+              3.705220058589642
+            ]
+          },
+          "last": {
+            "range": "A229:G229",
+            "values": [
+              "Jan/26",
+              4.3135831148712445,
+              4.490602810565036,
+              4.453699855528259,
+              4.452062890236275,
+              4.570198145128246,
+              4.339601521808034
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

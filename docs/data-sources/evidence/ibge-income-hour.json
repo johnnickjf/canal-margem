@@ -1,0 +1,48 @@
+[
+  {
+    "id": "8828",
+    "variavel": "Rendimento médio por hora real das pessoas de 15 anos ou mais de idade ocupadas na semana de referência com rendimento de trabalho, habitualmente recebido em todos os trabalhos",
+    "unidade": "Reais por hora",
+    "resultados": [
+      {
+        "classificacoes": [
+          {
+            "id": "2",
+            "nome": "Sexo",
+            "categoria": {
+              "6794": "Total"
+            }
+          }
+        ],
+        "series": [
+          {
+            "localidade": {
+              "id": "1",
+              "nivel": {
+                "id": "N1",
+                "nome": "Brasil"
+              },
+              "nome": "Brasil"
+            },
+            "serie": {
+              "2012": "16.3",
+              "2013": "17.0",
+              "2014": "17.7",
+              "2015": "17.2",
+              "2016": "17.4",
+              "2017": "17.3",
+              "2018": "17.7",
+              "2019": "17.6",
+              "2020": "18.2",
+              "2021": "17.1",
+              "2022": "16.7",
+              "2023": "17.9",
+              "2024": "18.5",
+              "2025": "20.4"
+            }
+          }
+        ]
+      }
+    ]
+  }
+]

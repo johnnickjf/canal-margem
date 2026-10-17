@@ -8,6 +8,8 @@ A seleção atende à [fase 3 do roadmap](../04-roadmap.md#fase-3--definição-d
 
 O contrato de conclusão desta entrega é: lista entre 10 e 15 conceitos principais, cobertura das cinco dimensões, pergunta compreensível por indicador, medição inicial, justificativa de seleção, limitações, cálculos especificados e passagem explícita para o catálogo da fase 4. Medidas auxiliares e candidatas precisam de estado separado. A evidência necessária é documental. Banco, coleta, engine e páginas de indicadores pertencem às fases seguintes.
 
+Continuidade: o [catálogo da fase 4](../data-sources/README.md) agora identifica tabelas, variáveis, classificações, séries e arquivos, com amostras oficiais e limites observados. As [três investigações](../research/phase-4-investigations.md) têm conclusão documental. Isso não altera esta lista nem significa ingestão implementada; os requisitos de passagem abaixo permanecem referência, com o atendimento e as ressalvas registrados no catálogo.
+
 ## Critérios de seleção
 
 Cada indicador precisa responder a uma pergunta da vida material, ter definição explicável e uma fonte institucional identificável. Preferimos resultados agregados já publicados a processamento inicial de microdados. Custo de manutenção ajuda a planejar a integração, mas não substitui relevância: dados anuais e resultados locais são aceitos quando a pergunta os exige. O custo abaixo é uma avaliação de planejamento, não uma medição operacional.
@@ -182,7 +184,7 @@ Antes de liberar uma série para a PoC, o catálogo precisa demonstrar:
 
 Falha de acesso não autoriza trocar fonte ou recorte silenciosamente: documentar a limitação e revisar a seleção se ela inviabilizar um conceito. A fase 3 fixa o escopo, não certifica futuras integrações.
 
-Para a [PoC da fase 5](../04-roadmap.md#fase-5--prova-de-conceito-de-ingestão), o conjunto recomendado é TR4, CV1 e VF1: três séries externas de IBGE e BCB, cobrindo trimestre, mês e indicador com janela móvel. VF1 substitui a antiga escolha VF2 porque permanece principal. A PoC deve provar o pipeline e revisões antes de ampliar para ANP, Conab/DIEESE, FJP e cálculos. A ordem não reduz a obrigação de integrar o restante do escopo revisado.
+Para a [PoC da fase 5](../04-roadmap.md#fase-5--prova-de-conceito-de-ingestão), o conjunto recomendado é TR4, CV1 e VF1: três indicadores e quatro séries externas de IBGE e BCB (incluindo as duas medidas de CV1), cobrindo trimestre, mês e indicador com janela móvel. VF1 substitui a antiga escolha VF2 porque permanece principal. A PoC deve provar o pipeline e revisões antes de ampliar para ANP, Conab/DIEESE, FJP e cálculos. A ordem não reduz a obrigação de integrar o restante do escopo revisado.
 
 ## Integração com o produto e SEO
 

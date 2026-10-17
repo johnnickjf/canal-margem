@@ -12,6 +12,8 @@ A fundação reutilizável da fase 1 está em [Design system](design-system.md):
 
 [Indicadores do MVP](mvp-indicators.md) registra a fase 3: seleção revisada de 15 conceitos principais, incluindo alimentação, tempo de trabalho pelo piso, insegurança alimentar e moradia. Separa contextos e inputs, especifica salário mínimo real pelo INPC e tempo por cesta, e define a passagem para o catálogo da fase 4. O [mapa de fontes](../research/source-map.md) registra evidências, investigações obrigatórias e expansão; não há ingestão ou engine implementada.
 
+O [catálogo de fontes](../data-sources/README.md) documenta a fase 4, com recortes, endpoints/arquivos, amostras oficiais, histórico observado e limites por fonte. As [investigações](../research/phase-4-investigations.md) encerram as perguntas de renda/hora, Peic e inflação por renda. A fase 5 começa pela PoC de TR4, CV1 e VF1; ainda não há ingestão recorrente ou persistência.
+
 Documentos futuros, quando houver desenho ou implementação concreta, poderão cobrir `api.md`, `ingestion.md`, `data-processing.md` e `indicator-engine.md`. A ausência desses sistemas nesta fase é intencional.
 
 Cada documento deve distinguir estado atual de proposta e descrever responsabilidade, entradas e saídas, dependências, fluxos, configuração, falhas, validação e operação relevantes. Requisitos gerais permanecem na [arquitetura técnica](../03-technical-architecture.md); decisões ficam em [adr](../adr/README.md).

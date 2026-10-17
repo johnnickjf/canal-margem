@@ -6,6 +6,8 @@ Em 17/10/2026, a revisão da seleção inicial identificou excesso de prioridade
 
 Este mapa registra a investigação que fundamenta a decisão e os caminhos para a fase 4. **Fonte identificada não significa acesso de dados validado.** A evidência aqui é de publicação institucional e metodologia; tabelas, arquivos, permissões de uso, cobertura efetiva e automação serão verificados no catálogo. Não há prova de execução de pipelines.
 
+Este é o registro da seleção, anterior à catalogação. A verificação posterior está no [catálogo da fase 4](../data-sources/README.md), com consultas, arquivos, amostras oficiais e limites de acesso/histórico. As [três investigações obrigatórias](phase-4-investigations.md) agora têm conclusão documental. As pendências nas tabelas abaixo descrevem a passagem original; o catálogo registra seu atendimento e o que precisa de validação antes da integração/publicação.
+
 ## Fontes necessárias à seleção
 
 | Fonte | Uso no MVP revisado | Evidência consultada | O que a fase 4 precisa resolver |
@@ -47,6 +49,6 @@ EE2, dívida bruta, permanece identificado na [série do BCB](https://dadosabert
 
 A revisão aceita fontes adicionais, recortes por capital e edições anuais para responder às perguntas centrais do produto. O trabalho de catalogação aumenta; isso deve ser tratado na ordem de integração e nos estados de disponibilidade, sem substituir alimentação ou moradia por uma série mais fácil.
 
-A fase 4 deve cobrir os 15 principais, seus inputs e contextos e concluir as três investigações obrigatórias. A expansão de serviços públicos e políticas não bloqueia essa entrega. O [catálogo de fontes](../data-sources/README.md) define a evidência necessária para liberar séries à PoC.
+A fase 4 cobriu os 15 principais, inputs e contextos e concluiu documentalmente as três investigações. A expansão de serviços públicos e políticas permanece posterior. O [catálogo de fontes](../data-sources/README.md) define as consultas e os limites para a PoC da fase 5, sem reduzir o escopo do MVP.
 
 Os links foram identificados na pesquisa desta sessão, em 17/10/2026. Houve leitura de páginas institucionais, publicações e resultados de busca; parte das páginas do IBGE e visualizadores do DIEESE não entregou conteúdo completo por acesso direto. O arquivo do repositório da FJP apresentou uma verificação contra acesso automatizado; a definição foi identificada também por resultados indexados e a publicação institucional, sem demonstrar coleta automatizável. Não foram verificados todos os endpoints, arquivos ou direitos de redistribuição. Datas no título de publicação são referência da evidência consultada, não garantia de que seja a edição mais recente.
