@@ -61,6 +61,8 @@ No SIDRA, distinguir `...` (não disponível), `..` (não se aplica), `X` (inibi
 
 TR4, CV1 e VF1 têm recortes, unidades, períodos e respostas numéricas conferidos para a **PoC de três indicadores e quatro séries externas, de duas fontes**: uma série de TR4, duas medidas de CV1 e uma de VF1. A liberação é para experimentação local. Publicação exige cumprir os termos de cada fonte.
 
+A [implementação e a auditoria da fase 5](../systems/ingestion.md) registram a execução local posterior deste recorte, com 587 observações e repetição sem revisões. O catálogo continua sendo a evidência documental da fase 4.
+
 A fase 5 deve provar `fetch → validate → raw → normalize → persist → expose`, com idempotência, logs, timestamps, retries, schema e controle de atualização. Deve testar revisão histórica e repetição sem mudança, trimestre civil e janela móvel de VF1. Nada disso é comprovado pela catalogação.
 
 Cuidados para a integração posterior: CV2 exige segmentos e lacunas explícitos; CV4/CV5 exigem validação por mês/capital e versão de método; CV6 exige edição e hierarquia de exclusões, sem retrospectiva automática. Direitos não especificados nos arquivos FJP, no mínimo SGS e na Peic precisam de confirmação antes de redistribuição de bases. Esses limites não alteram a seleção dos 15.

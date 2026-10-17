@@ -1,6 +1,6 @@
 # Documentação do Margem
 
-O Canal Margem está preparando a evolução do site editorial para uma plataforma de análise socioeconômica verificável. A base inclui a documentação da fase 0, o design system da fase 1, o modelo conceitual dos dados da fase 2, a seleção de indicadores da fase 3 e o catálogo de fontes da fase 4.
+O Canal Margem está preparando a evolução do site editorial para uma plataforma de análise socioeconômica verificável. A base inclui a documentação da fase 0, o design system da fase 1, o modelo conceitual dos dados da fase 2, a seleção de indicadores da fase 3, o catálogo de fontes da fase 4 e a PoC local de ingestão da fase 5.
 
 ## Ordem de leitura
 
@@ -17,6 +17,7 @@ O Canal Margem está preparando a evolução do site editorial para uma platafor
 11. [Mapa de fontes](research/source-map.md): evidências da revisão, fontes necessárias, investigações de renda/hora, Peic e inflação por faixa de renda, e fontes para expansão.
 12. [Catálogo de fontes](data-sources/README.md): matriz dos 15 principais, contextos e inputs, cinco fichas, consultas e arquivos identificados, amostras reais e critérios para a PoC.
 13. [Investigações da fase 4](research/phase-4-investigations.md): conclusões sobre renda/hora publicada pelo IBGE, acesso à Peic e histórico de inflação por renda do Ipea.
+14. [PoC de ingestão](systems/ingestion.md): comandos, quatro séries IBGE/BCB, raw, validação, persistência local, revisões, exportação e evidências da fase 5.
 
 Os quatro documentos numerados partem dos textos fornecidos pelo responsável pelo projeto e receberam ajustes de clareza e precisão. Definem o produto planejado; a auditoria do frontend registra a fase 0, e os documentos de sistemas registram as entregas posteriores. Exemplos do modelo e do design system são ilustrativos. As amostras em `data-sources/evidence/` são dados oficiais consultados na fase 4, com proveniência, sem integração ao site.
 
@@ -29,11 +30,12 @@ Os quatro documentos numerados partem dos textos fornecidos pelo responsável pe
 | Gerenciamento de pacotes e qualidade | pnpm 11.22.0 e Biome 2.5.15 configurados; cobertura descrita no README |
 | Testes automatizados e CI | Vitest com cobertura e limites por módulo; Playwright para componentes, fluxos editoriais e build; workflow preparado, execução remota ainda não verificada |
 | Design system da plataforma | Implementado na fase 1; referência em `/design-system`, com exemplos fictícios |
-| Modelo conceitual dos dados | Especificado na fase 2, com exemplos de revisão e derivação e catálogo de operações/consistência; sem schema executável ou persistência |
-| Seleção de indicadores | 15 conceitos principais definidos na fase 3, mais contextos e inputs; fontes identificadas preliminarmente, sem integração ou cobertura histórica validada |
+| Modelo conceitual dos dados | Especificado na fase 2, com exemplos de revisão e derivação e catálogo de operações/consistência; especificação geral; a PoC implementa o recorte documentado de ingestão |
+| Seleção de indicadores | 15 conceitos principais definidos na fase 3, mais contextos e inputs; fontes catalogadas na fase 4; quatro séries integradas na PoC, sem ampliar o escopo dos 15 |
 | Catálogo de fontes | Fase 4 documentada: recortes e amostras oficiais conferidos, histórico observado e limites por fonte; investigações concluídas; sem comprovação de operação recorrente ou comparabilidade irrestrita |
 | Páginas de indicadores, comparador e camada Entenda | Planejados |
-| Banco, API de indicadores, ingestão e processamento | Planejados; tecnologias em aberto |
+| Ingestão e persistência local | PoC da fase 5 executada com quatro séries e 587 observações; revisões, repetição e falhas testadas |
+| Banco definitivo, API de indicadores e processamento | Planejados; tecnologias em aberto |
 | Publicação e operação em produção | Não verificadas; sem configuração de deploy no repositório |
 
 As rotas atuais são `/temas/:slug`, `/videos/:slug` e `/analises/:slug`. As rotas `/tema/:slug`, `/indicador/:slug`, `/comparar` e `/entenda/:slug` dos documentos são propostas futuras. A convivência entre temas editoriais e dimensões socioeconômicas precisa ser resolvida antes de alterar URLs ou navegação.
@@ -56,4 +58,4 @@ Manter detalhes de infraestrutura fora da visão e do documento de UX. Registrar
 
 ## Próxima entrega
 
-Executar a fase 5: PoC de ingestão com TR4, CV1 e VF1, três indicadores e quatro séries externas de IBGE e BCB, contando separadamente as duas medidas de CV1. O [catálogo](data-sources/README.md) identifica as consultas, amostras e condições de passagem. Provar fetch, validação, armazenamento raw, normalização, persistência e exposição, com idempotência, timestamps, logs, retries, schema e controle de atualização. A [auditoria da fase 4](data-sources/verification.md) separa catálogo verificado de integração ainda não implementada. Os demais indicadores permanecem no escopo do MVP. A [regra permanente de SEO e descoberta por IA](../AGENTS.md) deve ser preservada em todas as fases.
+Avaliar a arquitetura de armazenamento da fase 6 com as [evidências da PoC](systems/ingestion.md): banco principal, raw/object storage, retenção, versionamento, cache e backups. Registrar decisões em ADRs, sem presumir que o filesystem da experimentação será a solução definitiva. Agendamento e integração dos demais indicadores seguem na fase 7. A [regra permanente de SEO e descoberta por IA](../AGENTS.md) continua obrigatória.

@@ -21,3 +21,6 @@ npm-debug.log*
 Thumbs.db
 .vscode/*
 !.vscode/extensions.json
+
+# local ingestion PoC (raw, logs, accepted snapshots)
+.data/

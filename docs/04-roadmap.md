@@ -343,7 +343,10 @@ Nenhum indicador do MVP existe sem uma fonte identificada.
 
 ### Entrada do catálogo
 
-Implementar TR4 (IBGE `4099/4099`), CV1 (IBGE `1737/63,2265`) e VF1 (BCB SGS `29265`), três indicadores e quatro séries externas de duas fontes, contando separadamente as duas medidas de CV1. Consultas e amostras estão no [catálogo da fase 4](data-sources/README.md). A PoC deve distinguir trimestre civil, mês e média móvel trimestral, testar revisão histórica e repetição sem mudança e preservar os originais antes de normalizar. Ainda não implementada.
+Implementar TR4 (IBGE `4099/4099`), CV1 (IBGE `1737/63,2265`) e VF1 (BCB SGS `29265`), três indicadores e quatro séries externas de duas fontes, contando separadamente as duas medidas de CV1. Consultas e amostras estão no [catálogo da fase 4](data-sources/README.md). A PoC deve distinguir trimestre civil, mês e média móvel trimestral, testar revisão histórica e repetição sem mudança e preservar os originais antes de normalizar. Implementada na [PoC local](systems/ingestion.md):
+coleta real de 587 observações, repetição sem novas versões, histórico, logs, retries e
+exportação JSON. Revisões e falhas foram verificadas em cenários controlados; armazenamento
+definitivo e operação recorrente seguem para as fases 6 e 7.
 
 ### Objetivo
 
@@ -547,6 +550,34 @@ A API deverá retornar tanto valores quanto contexto necessário para interpreta
 Frontend não conhece IBGE, BCB ou qualquer outro provedor.
 
 Ele conhece apenas o contrato do Margem.
+
+### Critério de transição para a fase 10 — retirada da PoC
+
+A sequência permanece: arquitetura e armazenamento (6), integrações reais (7), cálculos (8),
+API própria (9) e integração do frontend (10). O frontend da plataforma consome o contrato
+do Margem; a coleta das fontes oficiais pertence aos jobs do backend.
+
+Quando o backend e a API substituírem o fluxo experimental da fase 5, a retirada da PoC é
+parte obrigatória da conclusão desta transição, antes de integrar o frontend:
+
+- Incorporar ao backend os adaptadores, validações e testes que continuarem necessários,
+  ajustando-os à arquitetura escolhida; remover suas versões experimentais ou duplicadas.
+- Remover a CLI e a persistência provisórias, o comando `pnpm ingestion` e configurações,
+  testes, fixtures e capturas usados exclusivamente pela PoC. Não manter uma segunda
+  implementação funcional ou uma pasta de arquivo morto dentro do repositório.
+- Preservar a proveniência e o histórico necessários à auditoria dos dados. Evidências raw
+  ainda necessárias devem ter destino no armazenamento apropriado, definido na fase 6,
+  antes de retirar as cópias experimentais. Manter na suíte apenas fixtures úteis aos testes
+  do sistema definitivo.
+- Atualizar README, documentação, comandos e configuração de cobertura para descrever o
+  sistema vigente, conservando somente o registro histórico conciso das decisões e resultados.
+- Comprovar o fluxo real `job → persistência → API`, com origem rastreável, repetição sem
+  duplicação, revisão histórica e tratamento de falhas. Conferir que código, testes e
+  documentação ativos não dependem dos artefatos removidos e executar as validações afetadas.
+
+A PoC permanece utilizável até essa substituição ser verificada. Depois dela, somente o
+código incorporado ao backend, os testes relevantes e a documentação necessária permanecem;
+os mecanismos descartáveis da experimentação são apagados.
 
 ---
 

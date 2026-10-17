@@ -9,7 +9,11 @@ export default defineConfig({
     env: { TZ: 'America/Sao_Paulo' },
     coverage: {
       provider: 'v8',
-      include: ['src/lib/**/*.ts', 'src/scripts/**/*.ts'],
+      include: [
+        'src/lib/**/*.ts',
+        'src/scripts/**/*.ts',
+        'src/ingestion/{catalog,normalize,store,pipeline}.ts',
+      ],
       reporter: ['text', 'html', 'json-summary', 'lcov'],
       reportOnFailure: true,
       // Limites definidos após medir a base; cada arquivo crítico mantém sua cobertura.

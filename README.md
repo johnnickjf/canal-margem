@@ -51,8 +51,20 @@ O [mapa de fontes](docs/research/source-map.md) separa fontes necessárias e can
 A fase 4 entrega o [catálogo de fontes](docs/data-sources/README.md), com recortes dos 15
 principais, contextos e inputs, amostras oficiais e limites de histórico, método e acesso.
 As [investigações de renda/hora, Peic e inflação por renda](docs/research/phase-4-investigations.md)
-têm conclusão documental. A próxima etapa é a PoC de ingestão da fase 5, com TR4, CV1 e VF1
-(IBGE e BCB); coleta recorrente, persistência e exposição ainda não estão implementadas.
+têm conclusão documental. A fase 5 implementa a [PoC de ingestão](docs/systems/ingestion.md)
+com TR4, CV1 e VF1 (IBGE e BCB): quatro séries, raw preservado, validação, persistência local,
+revisões e exportação JSON. A coleta real desde 2012 aceitou 587 observações; a repetição criou
+zero revisões. A próxima etapa é avaliar armazenamento, retenção e backups na fase 6.
+Agendamento, banco definitivo e publicação de indicadores permanecem posteriores.
+
+```bash
+pnpm ingestion fetch --from 2025-01 --to 2025-12
+pnpm ingestion read --series tr4
+pnpm ingestion status
+```
+
+Os dados e logs ficam em `.data/ingestion/`, fora do Git. A PoC executa por comando, sem
+consultar provedores durante visitas ao site. Consulte [operação e limites](docs/systems/ingestion.md).
 
 ## Design system
 
@@ -83,7 +95,8 @@ PR e push. Sua primeira execução no GitHub depende do envio dessas alteraçõe
 Os relatórios ficam em `coverage/`; capturas e traces, em `test-results/`. Esses diretórios
 são ignorados pelo Git. A CI também guarda os relatórios como artefatos por 14 dias.
 
-A cobertura unitária inclui `src/lib/**/*.ts` e `src/scripts/**/*.ts`, inclusive arquivos sem testes.
+A cobertura unitária inclui `src/lib/**/*.ts`, `src/scripts/**/*.ts` e os módulos de ingestão
+`catalog`, `normalize`, `store` e `pipeline`, inclusive arquivos sem testes.
 Datas, formatação e títulos têm limites por arquivo definidos após a medição inicial.
 Esse percentual não mede os templates Astro nem os fluxos do Playwright. Escopo, métricas,
 testes editoriais, validação de rascunhos/RSS e limites estão na [documentação de testes](docs/systems/testing.md).
@@ -108,6 +121,7 @@ src/
   data/
     photos.ts               Banco de imagens: chave → arquivo, alt, crédito, ponto focal
     manifesto.ts            Teses do manifesto, fórmula editorial e voz
+  ingestion/                PoC local de IBGE/BCB: coleta, normalização, persistência e CLI
   lib/                      Consultas de conteúdo, formatação, títulos, bordas rasgadas
   styles/                   Tokens, texturas procedurais e base (cascade layers)
   scripts/                  Comportamentos do cliente (revelação no scroll, busca)

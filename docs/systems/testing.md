@@ -26,13 +26,14 @@ A configuração está em [vitest.config.ts](../../vitest.config.ts); os testes 
 |---|---|
 | `presentation-date.ts` | Formato YYYY-MM-DD, calendário, anos bissextos, datas inválidas e preservação do dia em UTC |
 | `format.ts` | Datas editoriais e ISO, mudança de dia/ano por fuso, códigos de episódio, índices, durações de vídeo e tempo de leitura |
+| `ingestion/{catalog,normalize,store,pipeline}.ts` | Pipeline offline com amostras oficiais e replay da captura real: 587 observações, raw/hash, CLI, repetição, revisões, ausências, falhas parciais/de armazenamento, concorrência, retries, schemas e períodos |
 | `headline.ts` | Destaque no começo, meio e fim, texto sem destaque, marcação incompleta, acentos e versão sem colchetes para metadados/busca |
 
 Vitest e o provider V8 ficam fixados na mesma versão. Os testes usam o fuso `America/Sao_Paulo`, para detectar regressões que troquem UTC pelo fuso local.
 
 ### Medição e limites
 
-O relatório inclui **todos os arquivos TypeScript em `src/lib/` e `src/scripts/`**, inclusive módulos não importados pelos testes. Arquivos que contêm somente tipos não têm instruções executáveis a cobrir. Configuração, dados, schemas, páginas e componentes Astro ficam fora desse denominador.
+O relatório inclui **todos os arquivos TypeScript em `src/lib/` e `src/scripts/`** e `src/ingestion/{catalog,normalize,store,pipeline}.ts`, inclusive módulos não importados pelos testes. A CLI é exercitada por subprocessos, fora da instrumentação V8 desses módulos. Arquivos que contêm somente tipos não têm instruções executáveis a cobrir. Configuração, dados, schemas, páginas e componentes Astro ficam fora desse denominador.
 
 A medição inicial de 15/10/2026, com 46 testes unitários, foi:
 
@@ -84,4 +85,4 @@ O workflow foi validado localmente com actionlint. Sua execução no GitHub depe
 
 ## Limites
 
-Não há testes Firefox, WebKit ou em aparelhos físicos, cobertura de todos os fluxos editoriais, comparação visual automática ou execução contra produção. Axe e navegação por teclado fornecem evidências parciais de acessibilidade; não substituem avaliação assistiva. Os testes locais de SEO não comprovam indexação externa. Fórmulas, fontes reais e pipelines ainda não existem nesta fase.
+Não há testes Firefox, WebKit ou em aparelhos físicos, cobertura de todos os fluxos editoriais, comparação visual automática ou execução contra produção. Axe e navegação por teclado fornecem evidências parciais de acessibilidade; não substituem avaliação assistiva. Os testes locais de SEO não comprovam indexação externa. Fórmulas e pipelines recorrentes ainda não existem. A [PoC de ingestão](ingestion.md) tem execução local real e testes offline; não há verificação de produção ou teste dependente da disponibilidade das APIs na CI.

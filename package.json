@@ -21,7 +21,8 @@
     "test:coverage": "vitest run --coverage",
     "test": "pnpm test:coverage && pnpm test:e2e",
     "test:e2e": "pnpm build && playwright test",
-    "test:e2e:ui": "playwright test --ui"
+    "test:e2e:ui": "playwright test --ui",
+    "ingestion": "node --experimental-strip-types src/ingestion/cli.ts"
   },
   "dependencies": {
     "@astrojs/rss": "^4.0.19",

@@ -2,7 +2,7 @@
 
 ## Status
 
-Requisitos para a arquitetura futura. API de indicadores, armazenamento e pipelines ainda não estão implementados. O frontend é estático; sua base está inventariada na [auditoria da fase 0](systems/frontend.md). O [modelo conceitual da fase 2](systems/data-model.md) fixa entidades e semântica dos dados, sem escolher infraestrutura.
+Requisitos para a arquitetura futura. A [PoC da fase 5](systems/ingestion.md) implementa ingestão IBGE/BCB, armazenamento local e exportação JSON. API pública, banco definitivo, engine e pipelines recorrentes ainda não estão implementados. O frontend é estático; sua base está inventariada na [auditoria da fase 0](systems/frontend.md). O [modelo conceitual da fase 2](systems/data-model.md) fixa entidades e semântica dos dados, sem escolher infraestrutura.
 
 As escolhas de tecnologia serão registradas em Architecture Decision Records (ADRs).
 
