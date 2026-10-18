@@ -685,6 +685,16 @@ O site editorial atual evolui gradualmente para o shell da plataforma.
 
 ## Fase 11 — Home orientada a perguntas
 
+### Estado
+
+Implementada na [home orientada a perguntas](systems/question-home.md): a pergunta inicial
+é o título principal da home, seguida por cinco entradas em linguagem cotidiana. Cada uma
+leva a um tema e permite chegar a um indicador em dois cliques, inclusive sem JavaScript.
+Vídeos, cortes, temas editoriais, análises e demais seções continuam abaixo. A verificação
+local cobre desktop/celular, teclado, acessibilidade automática, SEO e builds com e sem
+publicação da API. A compreensão por usuários reais ainda precisa ser observada; a página
+temática completa continua na fase 12.
+
 ### Objetivo
 
 Validar a principal hipótese de UX.

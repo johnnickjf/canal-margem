@@ -71,7 +71,9 @@ após preservar 21 arquivos e 587 observações para auditoria. A fase 10 implem
 [shell da plataforma](docs/systems/platform-shell.md), com home integrada, temas, indicadores,
 entrada do comparador e conteúdo Entenda. O build fixa uma publicação da API em todas as
 páginas e consultas; sem API configurada, exibe definições e indisponibilidade explícita.
-A próxima etapa é a home orientada a perguntas da fase 11; implantação Railway/R2 permanece posterior.
+A fase 11 implementa a [home orientada a perguntas](docs/systems/question-home.md): cinco
+entradas do cotidiano levam aos temas e indicadores, com navegação sem JavaScript e conteúdo
+editorial preservado. A próxima etapa é a página temática da fase 12; implantação Railway/R2 permanece posterior.
 
 ```bash
 MARGEM_API_URL=http://127.0.0.1:8080 pnpm build  # API já operando, origem sem caminho

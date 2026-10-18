@@ -1,6 +1,5 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import Hero from '@/components/sections/Hero.astro';
 import FeaturedVideos from '@/components/sections/FeaturedVideos.astro';
 import LatestCuts from '@/components/sections/LatestCuts.astro';
 import ThemesIndex from '@/components/sections/ThemesIndex.astro';
@@ -11,7 +10,10 @@ import AboutContact from '@/components/sections/AboutContact.astro';
 import PlatformEntry from '@/components/platform/PlatformEntry.astro';
 import { site, socials } from '@/config/site';
 
-// Ordem das seções conforme o manual (seção 18).
+const title = 'O que você quer entender?';
+const description =
+  'Explore perguntas sobre trabalho, renda, custo de vida, dívidas e condições de vida no Brasil. Encontre indicadores, fontes e explicações, além de vídeos e análises.';
+
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
@@ -23,8 +25,7 @@ const jsonLd = {
 };
 ---
 
-<BaseLayout jsonLd={jsonLd}>
-  <Hero />
+<BaseLayout title={title} description={description} jsonLd={jsonLd}>
   <PlatformEntry />
   <FeaturedVideos />
   <LatestCuts />

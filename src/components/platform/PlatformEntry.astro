@@ -1,13 +1,105 @@
 ---
-import { platform } from '@/lib/platform';
 import PublicationNote from './PublicationNote.astro';
+
+// Perguntas de entrada da fase 11; os destinos são dimensões do catálogo Margem.
+const journeys = [
+  {
+    slug: 'trabalho-e-renda',
+    name: 'Trabalho e renda',
+    question: 'Estou trabalhando mais e ganhando melhor?',
+  },
+  { slug: 'custo-de-vida', name: 'Custo de vida', question: 'Meu dinheiro compra mais ou menos?' },
+  {
+    slug: 'vida-financeira',
+    name: 'Vida financeira',
+    question: 'Quanto da minha renda está indo para dívidas?',
+  },
+  {
+    slug: 'qualidade-de-vida',
+    name: 'Qualidade de vida',
+    question: 'As condições de vida estão melhorando?',
+  },
+  {
+    slug: 'economia-e-estado',
+    name: 'Economia e Estado',
+    question: 'A economia do país está ficando mais forte ou mais frágil?',
+  },
+];
 ---
 <section class="container platform-entry" aria-labelledby="platform-title">
-  <p class="label">Dados para entender a vida real</p>
-  <h2 id="platform-title">Economia no cotidiano</h2>
-  <p>Trabalho, preços, dívidas e condições de vida. Explore as perguntas por trás dos indicadores.</p>
-  <div class="platform-grid">
-    {platform.themes.map((theme) => <article class="platform-card"><h3><a href={`/tema/${theme.slug}`}>{theme.name}</a></h3><p>{theme.question}</p></article>)}
-  </div>
+  <header class="questions-intro">
+    <p class="label">Política / Economia / Pessoas</p>
+    <h1 id="platform-title">O que você quer <span>entender?</span></h1>
+    <p>Do salário às compras do mês, a economia faz parte da sua vida. Escolha uma pergunta para explorar os dados e o que eles significam.</p>
+  </header>
+  <nav aria-label="Perguntas para entender a economia">
+    <ul class="questions-grid">
+      {journeys.map((journey) => <li>
+        <a class="question-card" href={`/tema/${journey.slug}`}>
+          <span class="label question-card__theme">{journey.name}</span>
+          <h2>{journey.question}</h2>
+          <span class="question-card__footer" aria-hidden="true">
+            <span class="label">Explorar o tema</span><span>↗</span>
+          </span>
+        </a>
+      </li>)}
+    </ul>
+  </nav>
+  <p class="questions-help">Quer começar pelo básico? <a href="/entenda/como-ler-os-dados">Entenda como ler os dados</a>. Para acompanhar as histórias, veja nossos <a href="/videos">vídeos</a> e <a href="/analises">análises</a>.</p>
   <PublicationNote />
 </section>
+
+<style>
+  .platform-entry { border-bottom: var(--rule-strong); }
+  .questions-intro { display: grid; gap: var(--space-md); }
+  h1 {
+    font-family: var(--font-display);
+    font-size: clamp(3.5rem, 8vw, 7.5rem);
+    line-height: 0.95;
+    text-transform: uppercase;
+    max-width: 16ch;
+  }
+  h1 span { color: var(--red); }
+  .questions-intro > p:last-child { max-width: var(--measure); font-size: var(--text-lg); }
+  .questions-grid {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-md);
+  }
+  .questions-grid li { display: flex; min-width: 0; }
+  .question-card {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    padding: var(--space-md);
+    border: var(--rule);
+    border-top: 4px solid var(--red);
+    background: var(--surface);
+    color: var(--fg);
+    text-decoration: none;
+  }
+  .question-card h2 { font-size: clamp(1.75rem, 2.6vw, 2.5rem); }
+  .question-card__theme { color: var(--fg-muted); }
+  .question-card__footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-sm);
+    margin-top: auto;
+    padding-top: var(--space-sm);
+  }
+  .question-card:hover { border-color: var(--red); }
+  .question-card:hover h2,
+  .question-card:focus-visible h2 { color: var(--red); }
+  .questions-help { max-width: var(--measure); }
+  @media (max-width: 900px) {
+    .questions-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media (max-width: 560px) {
+    .questions-grid { grid-template-columns: minmax(0, 1fr); }
+  }
+</style>

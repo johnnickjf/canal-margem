@@ -50,6 +50,7 @@ test('build da plataforma fixa publicação no HTML, preserva decimais e explici
     const files = await readdir(dist, { recursive: true });
     const sitemap = await readFile(path.join(dist, 'sitemap-0.xml'), 'utf8');
     for (const route of [
+      '',
       'tema/trabalho-e-renda',
       'indicador/desemprego',
       'indicador/inflacao',
@@ -75,6 +76,18 @@ test('build da plataforma fixa publicação no HTML, preserva decimais e explici
           })),
         };
       }, html);
+      if (route === '') {
+        expect(content.text).toContain('O que você quer entender?');
+        for (const theme of [
+          'trabalho-e-renda',
+          'custo-de-vida',
+          'vida-financeira',
+          'qualidade-de-vida',
+          'economia-e-estado',
+        ]) {
+          expect(content.links).toContain(`/tema/${theme}`);
+        }
+      }
       for (const link of content.links) {
         if (link.includes('/api/v1/'))
           expect(new URL(link).searchParams.get('publication')).toBe('a'.repeat(64));

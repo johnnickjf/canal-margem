@@ -5,7 +5,10 @@ test('shell navega da home ao tema e ao indicador sem JavaScript', async ({ brow
   const context = await browser.newContext({ javaScriptEnabled: false });
   const page = await context.newPage();
   await page.goto('/');
-  await page.locator('.platform-entry').getByRole('link', { name: 'Trabalho e renda' }).click();
+  await page
+    .locator('.platform-entry')
+    .getByRole('link', { name: /Estou trabalhando mais/ })
+    .click();
   await expect(page).toHaveURL(/\/tema\/trabalho-e-renda\/?$/);
   await page.getByRole('heading', { name: 'Desemprego', exact: true }).getByRole('link').click();
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('Desemprego');

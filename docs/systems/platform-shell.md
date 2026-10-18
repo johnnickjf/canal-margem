@@ -1,7 +1,8 @@
 # Shell da plataforma — fase 10
 
-A fase 10 integra a plataforma ao site editorial Astro. A home mantém suas seções e ganha
-uma entrada para as cinco dimensões socioeconômicas. A navegação compartilhada oferece
+A fase 10 integra a plataforma ao site editorial Astro. A home integra
+uma entrada para as cinco dimensões socioeconômicas. A [fase 11](question-home.md) evolui
+essa entrada para perguntas no início da página, com as demais seções editoriais abaixo. A navegação compartilhada oferece
 acesso aos temas, ao comparador e à explicação dos dados, inclusive sem JavaScript.
 
 ## Rotas e escopo
@@ -19,7 +20,7 @@ dimensões do catálogo da API. Nenhuma URL editorial foi substituída. As pági
 do catálogo também têm definição em `/indicador/:slug`, identificadas como medidas auxiliares.
 
 O comparador interativo pertence à fase 16. Gráficos, filtros interativos, busca de indicadores
-e a experiência completa de cada página continuam nas fases 11–16. O shell não apresenta
+e a experiência completa de cada página continuam nas fases 12–16. O shell não apresenta
 controles que simulam essas funcionalidades.
 
 ## Publicação fixada no build
@@ -94,5 +95,5 @@ rascunhos, busca e RSS.
 
 Esses testes comprovam a integração local com respostas controladas. Operação com uma API
 remota, atualização automática do site, indexação externa e validação assistiva manual não
-foram verificadas nesta fase. A próxima entrega do roadmap é a home orientada a perguntas,
-na fase 11.
+foram verificadas nesta fase. A home orientada a perguntas está implementada na [fase 11](question-home.md).
+A próxima entrega do roadmap é a página temática da fase 12.

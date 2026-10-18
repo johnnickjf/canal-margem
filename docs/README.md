@@ -25,6 +25,7 @@ O Canal Margem está preparando a evolução do site editorial para uma platafor
 17. [Engine de indicadores](systems/indicator-engine.md): fórmulas versionadas, inputs fixados por ID, cálculos reproduzíveis e persistência da fase 8.
 18. [API Margem](systems/api.md): publicações, ativação, consultas HTTP v1, cache e comparação da fase 9.
 19. [Shell da plataforma](systems/platform-shell.md): rotas, convivência editorial, publicação fixada no build e validação da fase 10.
+20. [Home orientada a perguntas](systems/question-home.md): cinco entradas do cotidiano, caminhos até os indicadores e validação da fase 11.
 
 Os quatro documentos numerados partem dos textos fornecidos pelo responsável pelo projeto e receberam ajustes de clareza e precisão. Definem o produto planejado; a auditoria do frontend registra a fase 0, e os documentos de sistemas registram as entregas posteriores. Exemplos do modelo e do design system são ilustrativos. As amostras em `data-sources/evidence/` são dados oficiais consultados na fase 4, com proveniência, sem integração ao site.
 
@@ -41,7 +42,8 @@ Os quatro documentos numerados partem dos textos fornecidos pelo responsável pe
 | Seleção de indicadores | 15 conceitos principais definidos na fase 3, mais contextos e inputs; fontes catalogadas na fase 4; PoC preservada como arquivo histórico, sem ampliar o escopo dos 15 |
 | Catálogo de fontes | Fase 4 documentada: recortes e amostras oficiais conferidos, histórico observado e limites por fonte; investigações concluídas; sem comprovação de operação recorrente ou comparabilidade irrestrita |
 | Shell da plataforma | Fase 10 implementada: entrada na home, temas socioeconômicos, definições/recortes de indicadores, entrada do comparador e guia Entenda; publicação fixada no build |
-| Experiência completa de indicadores, comparador e camada Entenda | Evolução nas fases 11–16; comparador interativo ainda planejado |
+| Home orientada a perguntas | Fase 11 implementada: cinco perguntas como entrada principal, temas e indicadores em dois cliques; conteúdo editorial preservado |
+| Experiência completa de indicadores, comparador e camada Entenda | Evolução nas fases 12–16; comparador interativo ainda planejado |
 | Ingestão e persistência local | PoC da fase 5 retirada após substituição verificada na fase 9; 21 arquivos e 587 observações preservados |
 | Arquitetura de armazenamento | Fase 6 definida em cinco ADRs: PostgreSQL/Railway, R2, histórico/cache, backup nativo/reconstrução e portabilidade/custos; serviços ainda não implantados |
 | Pipeline do MVP | Fase 7 implementada e verificada localmente: cinco fontes, 6.375 observações, PostgreSQL e API compatível com S3 (R2 em produção), repetição, revisões, falhas e importação da PoC |
@@ -72,7 +74,8 @@ Manter detalhes de infraestrutura fora da visão e do documento de UX. Registrar
 
 ## Próxima entrega
 
-Implementar a home orientada a perguntas da fase 11 sobre o [shell da plataforma](systems/platform-shell.md).
+Implementar a página temática da fase 12 sobre o [shell da plataforma](systems/platform-shell.md)
+e a [home orientada a perguntas](systems/question-home.md) da fase 11.
 A fase 10 fixa a mesma publicação no HTML e nas consultas, conforme o [contrato da API](systems/api.md).
 A PoC foi retirada após preservação e substituição verificadas. Implantação Railway/R2 e backup remoto continuam sem ensaio. A
 [regra permanente de SEO e descoberta por IA](../AGENTS.md) continua obrigatória.
