@@ -631,6 +631,16 @@ os mecanismos descartáveis da experimentação são apagados.
 
 ## Fase 10 — Shell da nova experiência
 
+### Estado
+
+Implementada no [shell da plataforma](systems/platform-shell.md): entrada na home,
+cinco temas socioeconômicos em `/tema/:slug`, indicadores, entrada do comparador e guia Entenda.
+As rotas editoriais `/temas/:slug` permanecem. O build fixa publicação, catálogo e recortes
+da API no HTML e nos links JSON. Sem API configurada, mostra definições e indisponibilidade.
+Verificação local inclui build com API HTTP controlada, navegação sem JavaScript, SEO e
+acessibilidade automática; operação remota permanece não verificada. A experiência completa
+das páginas e o comparador interativo continuam nas fases seguintes.
+
 ### Objetivo
 
 Integrar a nova plataforma ao site existente preservando a identidade atual.

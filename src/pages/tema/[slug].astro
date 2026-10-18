@@ -1,0 +1,20 @@
+---
+import PlatformLayout from '@/layouts/PlatformLayout.astro';
+import { platform } from '@/lib/platform';
+export function getStaticPaths() {
+  return platform.themes.map((theme) => ({ params: { slug: theme.slug }, props: { theme } }));
+}
+const { theme } = Astro.props;
+const indicators = platform.indicators.filter(
+  (indicator) => indicator.theme === theme.slug && indicator.role === 'primary',
+);
+---
+<PlatformLayout title={theme.name} description={theme.question}>
+  <section aria-label="Indicadores do tema" class="platform-grid">
+    {indicators.map((indicator) => <article class="platform-card">
+      <h2><a href={`/indicador/${indicator.slug}`}>{indicator.name}</a></h2>
+      <p>{indicator.question}</p><p>{indicator.definition}</p>
+    </article>)}
+  </section>
+  <p>Para vídeos e análises, visite os <a href="/temas">temas editoriais</a>.</p>
+</PlatformLayout>

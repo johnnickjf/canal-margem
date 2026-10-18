@@ -11,7 +11,7 @@ const isCurrent = (href: string) => path === href || path.startsWith(`${href}/`)
 const latest = await getLatestEpisode();
 ---
 
-<div class="dateline">
+<div class="dateline" role="region" aria-label="Edição editorial">
   <div class="container dateline__inner label">
     <span>{site.signature.join(' / ')}</span>
     {

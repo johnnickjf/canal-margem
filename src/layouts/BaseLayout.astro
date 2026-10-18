@@ -5,6 +5,8 @@ import '@fontsource/ibm-plex-mono/400.css';
 import '@fontsource/ibm-plex-mono/500.css';
 import '@fontsource/ibm-plex-mono/600.css';
 import '@/styles/base.css';
+import '@/styles/platform.css';
+import PlatformNav from '@/components/platform/PlatformNav.astro';
 
 import Seo, { type SeoProps } from '@/components/layout/Seo.astro';
 import Header from '@/components/layout/Header.astro';
@@ -38,6 +40,7 @@ const { mainClass, ...seo } = Astro.props;
   <body>
     <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
     <Header />
+    <PlatformNav />
     <main id="conteudo" class={mainClass} tabindex="-1">
       <slot />
     </main>

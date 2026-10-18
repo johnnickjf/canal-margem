@@ -8,6 +8,7 @@ import ManifestoTeaser from '@/components/sections/ManifestoTeaser.astro';
 import LatestAnalyses from '@/components/sections/LatestAnalyses.astro';
 import Newsletter from '@/components/sections/Newsletter.astro';
 import AboutContact from '@/components/sections/AboutContact.astro';
+import PlatformEntry from '@/components/platform/PlatformEntry.astro';
 import { site, socials } from '@/config/site';
 
 // Ordem das seções conforme o manual (seção 18).
@@ -24,6 +25,7 @@ const jsonLd = {
 
 <BaseLayout jsonLd={jsonLd}>
   <Hero />
+  <PlatformEntry />
   <FeaturedVideos />
   <LatestCuts />
   <ThemesIndex />

@@ -1,0 +1,21 @@
+---
+import type { ObservationNode } from '@/lib/platform-build';
+interface Props {
+  node: ObservationNode;
+}
+const { node } = Astro.props;
+const calculation = node.evaluation?.request;
+const context = node.observation.context;
+const names: Record<string, string> = {
+  'relative-change': 'Variação percentual',
+  difference: 'Diferença absoluta',
+  rebase: 'Índice de base 100',
+  'compound-change': 'Variação acumulada composta',
+  tr2: 'Salário mínimo deflacionado pelo INPC',
+  cv5: 'Tempo equivalente por cesta no salário mínimo (220 horas mensais)',
+  'price-income': 'Cesta em percentual do salário mínimo',
+};
+---
+{calculation && <p><strong>Cálculo:</strong> {names[calculation.calculation] ?? calculation.calculation} · versão {calculation.version}.</p>}
+{context?.comparison_start && context.comparison_end && <p>Comparado ao período de <time datetime={context.comparison_start}>{context.comparison_start}</time> a <time datetime={context.comparison_end}>{context.comparison_end}</time>.</p>}
+{context?.index_base_period && <p>Base do índice (= 100): {context.index_base_period}.</p>}

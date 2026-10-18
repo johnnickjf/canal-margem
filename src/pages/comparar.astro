@@ -1,0 +1,9 @@
+---
+import PlatformLayout from '@/layouts/PlatformLayout.astro';
+import { platform } from '@/lib/platform';
+---
+<PlatformLayout title="Comparar períodos" description="O que mudou ao longo do tempo? Comece entendendo o indicador e seus recortes.">
+  <section><h2>Comparador em preparação</h2><p>A seleção interativa de períodos será disponibilizada em uma próxima etapa. Por enquanto, consulte a definição, a cobertura e as fontes de cada indicador.</p></section>
+  <section><h2>O que torna uma comparação válida?</h2><p>Compare a mesma série, geografia, unidade e metodologia. Os dois períodos devem ter dados na mesma publicação. Ausência de dados não significa estabilidade nem valor zero.</p><p>Diferença absoluta e variação percentual respondem a perguntas distintas. Nenhuma delas demonstra causalidade.</p></section>
+  <section><h2>Escolha um indicador para conhecer</h2><ul>{platform.indicators.filter((item) => item.role === 'primary').map((indicator) => <li><a href={`/indicador/${indicator.slug}`}>{indicator.name}</a></li>)}</ul></section>
+</PlatformLayout>

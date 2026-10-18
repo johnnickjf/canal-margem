@@ -23,6 +23,8 @@ O Canal Margem está preparando a evolução do site editorial para uma platafor
 16. [Pipelines do MVP](systems/pipelines.md): jobs das cinco fontes, PostgreSQL e API compatível com S3 (R2 em produção), agendamento, revisões, importação da PoC e evidência real da fase 7.
 
 17. [Engine de indicadores](systems/indicator-engine.md): fórmulas versionadas, inputs fixados por ID, cálculos reproduzíveis e persistência da fase 8.
+18. [API Margem](systems/api.md): publicações, ativação, consultas HTTP v1, cache e comparação da fase 9.
+19. [Shell da plataforma](systems/platform-shell.md): rotas, convivência editorial, publicação fixada no build e validação da fase 10.
 
 Os quatro documentos numerados partem dos textos fornecidos pelo responsável pelo projeto e receberam ajustes de clareza e precisão. Definem o produto planejado; a auditoria do frontend registra a fase 0, e os documentos de sistemas registram as entregas posteriores. Exemplos do modelo e do design system são ilustrativos. As amostras em `data-sources/evidence/` são dados oficiais consultados na fase 4, com proveniência, sem integração ao site.
 
@@ -38,7 +40,8 @@ Os quatro documentos numerados partem dos textos fornecidos pelo responsável pe
 | Modelo conceitual dos dados | Especificado na fase 2, com exemplos de revisão e derivação e catálogo de operações/consistência; especificação geral; a PoC implementa o recorte documentado de ingestão |
 | Seleção de indicadores | 15 conceitos principais definidos na fase 3, mais contextos e inputs; fontes catalogadas na fase 4; PoC preservada como arquivo histórico, sem ampliar o escopo dos 15 |
 | Catálogo de fontes | Fase 4 documentada: recortes e amostras oficiais conferidos, histórico observado e limites por fonte; investigações concluídas; sem comprovação de operação recorrente ou comparabilidade irrestrita |
-| Páginas de indicadores, comparador e camada Entenda | Planejados |
+| Shell da plataforma | Fase 10 implementada: entrada na home, temas socioeconômicos, definições/recortes de indicadores, entrada do comparador e guia Entenda; publicação fixada no build |
+| Experiência completa de indicadores, comparador e camada Entenda | Evolução nas fases 11–16; comparador interativo ainda planejado |
 | Ingestão e persistência local | PoC da fase 5 retirada após substituição verificada na fase 9; 21 arquivos e 587 observações preservados |
 | Arquitetura de armazenamento | Fase 6 definida em cinco ADRs: PostgreSQL/Railway, R2, histórico/cache, backup nativo/reconstrução e portabilidade/custos; serviços ainda não implantados |
 | Pipeline do MVP | Fase 7 implementada e verificada localmente: cinco fontes, 6.375 observações, PostgreSQL e API compatível com S3 (R2 em produção), repetição, revisões, falhas e importação da PoC |
@@ -46,9 +49,12 @@ Os quatro documentos numerados partem dos textos fornecidos pelo responsável pe
 | API de indicadores | Fase 9 implementada: publicação, ativação, HTTP v1, cache, filtros, paginação, comparação e limites; verificação local |
 | Publicação e operação em produção | Não verificadas; Dockerfile e cron Railway preparados, sem serviço remoto implantado |
 
-As rotas atuais são `/temas/:slug`, `/videos/:slug` e `/analises/:slug`. As rotas `/tema/:slug`, `/indicador/:slug`, `/comparar` e `/entenda/:slug` dos documentos são propostas futuras. A convivência entre temas editoriais e dimensões socioeconômicas precisa ser resolvida antes de alterar URLs ou navegação.
+As rotas editoriais `/temas/:slug`, `/videos/:slug` e `/analises/:slug` convivem com
+`/tema/:slug`, `/indicador/:slug`, `/comparar` e `/entenda/como-ler-os-dados` no
+[shell da fase 10](systems/platform-shell.md). `/temas` mantém os 12 pilares editoriais;
+`/tema` apresenta as cinco dimensões socioeconômicas, sem substituir URLs existentes.
 
-O conjunto sugerido de indicadores em UX é uma lista de candidatos. A [seleção da fase 3](systems/mvp-indicators.md) fixa 15 conceitos principais; cesta e tempo por cesta têm recorte por capital. O critério de MVP exige pelo menos 10 indicadores disponíveis e tradução de preços em tempo de trabalho, cuja primeira entrega será a cesta na referência do salário mínimo. Os cálculos de TR2 e CV5 estão implementados na fase 8; a experiência pública permanece posterior. O [modelo da fase 2](systems/data-model.md) fixa `dataset`, `revision_status`, `methodology_version` e `calculation_version`, distingue revisão de atualização e define `derived` como observações calculadas e `published` como projeção validada de observações externas ou derivadas. Essas camadas não determinam schemas físicos. Exemplos de API com `:id` e `:slug` também não fixam o contrato final.
+O conjunto sugerido de indicadores em UX é uma lista de candidatos. A [seleção da fase 3](systems/mvp-indicators.md) fixa 15 conceitos principais; cesta e tempo por cesta têm recorte por capital. O critério de MVP exige pelo menos 10 indicadores disponíveis e tradução de preços em tempo de trabalho, cuja primeira entrega será a cesta na referência do salário mínimo. Os cálculos de TR2 e CV5 estão implementados na fase 8; o shell da fase 10 apresenta recortes quando há uma publicação configurada. A publicação remota e a experiência completa permanecem posteriores. O [modelo da fase 2](systems/data-model.md) fixa `dataset`, `revision_status`, `methodology_version` e `calculation_version`, distingue revisão de atualização e define `derived` como observações calculadas e `published` como projeção validada de observações externas ou derivadas. Essas camadas não determinam schemas físicos. Exemplos de API com `:id` e `:slug` também não fixam o contrato final.
 
 O [manual de marca](brand/MARGEM_Manual_Marca_Conteudo_Site.md) define a direção visual, não certifica sua implementação. Diferenças observadas, limites de contraste e pendências do conteúdo de exemplo estão na [auditoria do frontend](systems/frontend.md).
 
@@ -66,7 +72,7 @@ Manter detalhes de infraestrutura fora da visão e do documento de UX. Registrar
 
 ## Próxima entrega
 
-Implementar o shell da fase 10 sobre o [contrato da API](systems/api.md), fixando a mesma
-publicação no HTML e nas consultas. A PoC foi retirada após preservação e substituição
-verificadas. Implantação Railway/R2 e backup remoto continuam sem ensaio. A
+Implementar a home orientada a perguntas da fase 11 sobre o [shell da plataforma](systems/platform-shell.md).
+A fase 10 fixa a mesma publicação no HTML e nas consultas, conforme o [contrato da API](systems/api.md).
+A PoC foi retirada após preservação e substituição verificadas. Implantação Railway/R2 e backup remoto continuam sem ensaio. A
 [regra permanente de SEO e descoberta por IA](../AGENTS.md) continua obrigatória.

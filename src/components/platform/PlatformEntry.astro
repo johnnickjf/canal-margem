@@ -1,0 +1,13 @@
+---
+import { platform } from '@/lib/platform';
+import PublicationNote from './PublicationNote.astro';
+---
+<section class="container platform-entry" aria-labelledby="platform-title">
+  <p class="label">Dados para entender a vida real</p>
+  <h2 id="platform-title">Economia no cotidiano</h2>
+  <p>Trabalho, preços, dívidas e condições de vida. Explore as perguntas por trás dos indicadores.</p>
+  <div class="platform-grid">
+    {platform.themes.map((theme) => <article class="platform-card"><h3><a href={`/tema/${theme.slug}`}>{theme.name}</a></h3><p>{theme.question}</p></article>)}
+  </div>
+  <PublicationNote />
+</section>

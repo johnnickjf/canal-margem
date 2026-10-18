@@ -2,7 +2,8 @@
 
 A API Go usa `net/http` e `chi`, no mesmo monólito dos jobs. Serve somente publicações já
 ativadas. O visitante não consulta provedores nem executa ingestão. O contrato HTTP começa
-em `/api/v1`; mudanças incompatíveis exigem outro prefixo. A integração do frontend é a fase 10.
+em `/api/v1`; mudanças incompatíveis exigem outro prefixo. A integração do frontend está no
+[shell da fase 10](platform-shell.md), com publicação fixada no build.
 
 A entrega inclui preparação, selagem por hash, projeção JSON, ativação transacional,
 consultas, cache HTTP, filtros, paginação, comparação e limites de abuso. A

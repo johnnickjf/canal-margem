@@ -1,0 +1,13 @@
+---
+import PlatformLayout from '@/layouts/PlatformLayout.astro';
+export function getStaticPaths() {
+  return [{ params: { slug: 'como-ler-os-dados' } }];
+}
+---
+<PlatformLayout title="Como ler os dados" description="Fontes, períodos, recortes e limites: o que conferir antes de interpretar um número.">
+  <section><h2>O período faz parte do dado</h2><p>Mês, trimestre civil e média móvel trimestral são recortes diferentes. Confira sempre o início e o fim do período, a geografia e a unidade.</p></section>
+  <section><h2>Coleta, publicação e revisão</h2><p>A data de coleta indica quando o Margem consultou a fonte. Ela não substitui a data de divulgação pela instituição. Uma revisão pode alterar um período antigo. Cada edição do site fixa uma publicação para manter suas consultas consistentes.</p></section>
+  <section><h2>Ausência não é zero</h2><p>Uma série pode estar fora da cobertura ou aguardando recálculo. Quando o último período está indisponível, não mostramos um número anterior como se fosse atual.</p></section>
+  <section><h2>Preços e tempo de trabalho</h2><p>Valores nominais e reais não são equivalentes. O tempo por cesta usa o salário mínimo nacional do mesmo mês e a referência de 220 horas mensais. É uma equivalência calculada; não descreve a jornada nem o salário de cada pessoa.</p></section>
+  <section><h2>Contexto antes de concluir</h2><p>Indicadores resumem populações e não descrevem todas as experiências. Médias escondem diferenças. Mudanças simultâneas não provam que uma causou a outra.</p><p>Confira as definições em <a href="/tema/trabalho-e-renda">Trabalho e renda</a> e <a href="/tema/custo-de-vida">Custo de vida</a>.</p></section>
+</PlatformLayout>

@@ -273,7 +273,7 @@ O objetivo é dificultar recortes temporais enganosos.
 
 ## 13. Estrutura inicial de rotas
 
-As rotas abaixo são propostas. O site atual usa `/temas/:slug`; a convivência dessa rota com `/tema/:slug` ainda precisa ser definida.
+As rotas abaixo orientam a experiência planejada. O [shell da fase 10](systems/platform-shell.md) implementa sua estrutura inicial: `/temas/:slug` preserva os temas editoriais e `/tema/:slug` apresenta as dimensões socioeconômicas.
 
 ```text
 /

@@ -1,5 +1,5 @@
-import { execFile } from 'node:child_process';
-import { cp, mkdtemp, readdir, readFile, rm, symlink, writeFile } from 'node:fs/promises';
+import { execFile, spawn } from 'node:child_process';
+import { cp, mkdir, mkdtemp, readdir, readFile, rm, symlink, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { promisify } from 'node:util';
@@ -8,6 +8,115 @@ import { site } from '../src/config/site';
 import type { SearchItem } from '../src/lib/search';
 
 const run = promisify(execFile);
+// Astro's content loader uses the linked dependencies; isolate build executions.
+test.describe.configure({ mode: 'serial' });
+async function copySite(root: string, sandbox: string) {
+  for (const entry of ['src', 'public', 'astro.config.mjs', 'tsconfig.json', 'package.json']) {
+    await cp(path.join(root, entry), path.join(sandbox, entry), { recursive: true });
+  }
+  const catalog = 'backend/internal/publications';
+  await mkdir(path.join(sandbox, catalog), { recursive: true });
+  await cp(
+    path.join(root, catalog, 'indicators.json'),
+    path.join(sandbox, catalog, 'indicators.json'),
+  );
+  await symlink(path.join(root, 'node_modules'), path.join(sandbox, 'node_modules'), 'dir');
+}
+
+test('build da plataforma fixa publicação no HTML, preserva decimais e explicita lacunas', async ({
+  page,
+}) => {
+  test.setTimeout(120_000);
+  const root = process.cwd();
+  const sandbox = await mkdtemp(path.join(tmpdir(), 'canal-margem-platform-'));
+  const fixture = spawn(process.execPath, ['tests/fixtures/platform-api.mjs'], {
+    cwd: root,
+    stdio: ['ignore', 'pipe', 'pipe'],
+  });
+  try {
+    const origin = await new Promise<string>((resolve, reject) => {
+      fixture.stdout.once('data', (data) => resolve(String(data).trim()));
+      fixture.once('error', reject);
+      fixture.once('exit', () => reject(new Error('Fixture encerrou antes de iniciar')));
+    });
+    await copySite(root, sandbox);
+    await run(process.execPath, [path.join(root, 'node_modules/astro/bin/astro.mjs'), 'build'], {
+      cwd: sandbox,
+      env: { ...process.env, MARGEM_API_URL: origin, ASTRO_TELEMETRY_DISABLED: '1' },
+      timeout: 90_000,
+      maxBuffer: 4 * 1024 * 1024,
+    });
+    const dist = path.join(sandbox, 'dist');
+    const files = await readdir(dist, { recursive: true });
+    const sitemap = await readFile(path.join(dist, 'sitemap-0.xml'), 'utf8');
+    for (const route of [
+      'tema/trabalho-e-renda',
+      'indicador/desemprego',
+      'indicador/inflacao',
+      'comparar',
+      'entenda/como-ler-os-dados',
+    ]) {
+      const html = await readFile(path.join(dist, route, 'index.html'), 'utf8');
+      expect(html).toContain(`data-publication="${'a'.repeat(64)}"`);
+      expect(sitemap).toContain(`https://margem.com.br/${route}`);
+      const content = await page.evaluate((html) => {
+        const doc = new DOMParser().parseFromString(html, 'text/html');
+        return {
+          values: [...doc.querySelectorAll('.platform-value')].map(
+            (element) => element.textContent,
+          ),
+          links: [...doc.querySelectorAll('a[href]')].map(
+            (element) => element.getAttribute('href') ?? '',
+          ),
+          text: doc.querySelector('main')?.textContent,
+          inputs: [...doc.querySelectorAll('.platform-inputs')].map((element) => ({
+            text: element.textContent,
+            observations: element.querySelectorAll('a[href*="/observations/"]').length,
+          })),
+        };
+      }, html);
+      for (const link of content.links) {
+        if (link.includes('/api/v1/'))
+          expect(new URL(link).searchParams.get('publication')).toBe('a'.repeat(64));
+        if (link.startsWith('/') && !link.startsWith('//') && !link.includes('#')) {
+          expect(files, `link local quebrado: ${link}`).toContain(
+            path.extname(link)
+              ? link.slice(1)
+              : `${link.slice(1) ? `${link.slice(1)}/` : ''}index.html`,
+          );
+        }
+      }
+      if (route === 'indicador/desemprego') {
+        expect(content.values[0]).toContain('0,000000000000000001');
+        expect(content.text).toContain('Variação percentual');
+        expect(content.text).toContain('Diferença absoluta');
+        expect(content.text).toContain('Índice de base 100');
+        expect(content.text).toContain('Comparado ao período de 2024-01-01 a 2024-03-31');
+        expect(content.text).toContain('Base do índice (= 100): 2024-01-01/2024-03-31');
+        expect(content.text).toContain('Fontes e observações usadas no cálculo');
+        expect(content.inputs).toHaveLength(3);
+        for (const input of content.inputs) {
+          expect(input.observations).toBe(2);
+          expect(input.text).toContain('Fonte: IBGE');
+          expect(input.text).toContain('Dataset: fixture');
+          expect(input.text).toContain('Coleta: 2026-10-18T12:00:00Z');
+          expect(input.text).toContain('2024-01-01');
+        }
+        expect(content.links).toContain('https://www.ibge.gov.br/dados-desemprego');
+        expect(
+          content.links.some((link) => link.includes(`/observations/${'e'.repeat(64)}?`)),
+        ).toBe(true);
+      }
+      if (route === 'indicador/inflacao') {
+        expect(content.values).toHaveLength(0);
+        expect(content.text).toContain('Input revisado');
+      }
+    }
+  } finally {
+    fixture.kill();
+    await rm(sandbox, { recursive: true, force: true });
+  }
+});
 const fixtures = [
   { id: 'qa-published-episode', collection: 'videos', format: 'longo', draft: false },
   { id: 'qa-draft-episode', collection: 'videos', format: 'longo', draft: true },
@@ -24,10 +133,7 @@ test('build exclui rascunhos de páginas, busca e sitemap e mantém o RSS consis
   const root = process.cwd();
   const sandbox = await mkdtemp(path.join(tmpdir(), 'canal-margem-content-'));
   try {
-    for (const entry of ['src', 'public', 'astro.config.mjs', 'tsconfig.json', 'package.json']) {
-      await cp(path.join(root, entry), path.join(sandbox, entry), { recursive: true });
-    }
-    await symlink(path.join(root, 'node_modules'), path.join(sandbox, 'node_modules'), 'dir');
+    await copySite(root, sandbox);
     for (const fixture of fixtures) {
       const video = fixture.collection === 'videos';
       const frontmatter = [
@@ -61,7 +167,7 @@ test('build exclui rascunhos de páginas, busca e sitemap e mantém o RSS consis
       [path.join(root, 'node_modules/astro/bin/astro.mjs'), 'build'],
       {
         cwd: sandbox,
-        env: { ...process.env, ASTRO_TELEMETRY_DISABLED: '1' },
+        env: { ...process.env, MARGEM_API_URL: '', ASTRO_TELEMETRY_DISABLED: '1' },
         timeout: 90_000,
         maxBuffer: 4 * 1024 * 1024,
       },

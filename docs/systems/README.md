@@ -25,6 +25,10 @@ Não há implantação remota.
 
 A [engine de indicadores](indicator-engine.md) implementa a fase 8: TR2, CV5, relações, variações e índices com inputs explícitos, cálculo versionado e avaliações imutáveis no PostgreSQL.
 
-A [API da fase 9](api.md) implementa preparação e ativação por manifesto, contrato HTTP v1, cache, filtros, paginação, comparação e limites de abuso. O próximo passo é integrar o shell do frontend na fase 10.
+A [API da fase 9](api.md) implementa preparação e ativação por manifesto, contrato HTTP v1, cache, filtros, paginação, comparação e limites de abuso.
+
+O [shell da fase 10](platform-shell.md) integra home, temas, indicadores, entrada do comparador
+e Entenda ao site editorial. O build fixa uma publicação da API no HTML e nos links de consulta;
+sem API configurada, exibe definições sem valores. A próxima etapa é a home da fase 11.
 
 Cada documento deve distinguir estado atual de proposta e descrever responsabilidade, entradas e saídas, dependências, fluxos, configuração, falhas, validação e operação relevantes. Requisitos gerais permanecem na [arquitetura técnica](../03-technical-architecture.md); decisões ficam em [adr](../adr/README.md).

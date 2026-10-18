@@ -67,8 +67,15 @@ variações, índices e relações cesta/renda, com inputs explícitos, precisã
 imutável. A fase 9 implementa a [API Margem](docs/systems/api.md), com publicações imutáveis,
 ativação por geração, consultas versionadas, paginação, cache HTTP, comparação e limites
 de abuso. O fluxo local com coleta oficial foi verificado e a [PoC foi retirada](docs/systems/ingestion.md)
-após preservar 21 arquivos e 587 observações para auditoria. A próxima etapa é o shell da
-fase 10; implantação Railway/R2 permanece posterior.
+após preservar 21 arquivos e 587 observações para auditoria. A fase 10 implementa o
+[shell da plataforma](docs/systems/platform-shell.md), com home integrada, temas, indicadores,
+entrada do comparador e conteúdo Entenda. O build fixa uma publicação da API em todas as
+páginas e consultas; sem API configurada, exibe definições e indisponibilidade explícita.
+A próxima etapa é a home orientada a perguntas da fase 11; implantação Railway/R2 permanece posterior.
+
+```bash
+MARGEM_API_URL=http://127.0.0.1:8080 pnpm build  # API já operando, origem sem caminho
+```
 
 ```bash
 pnpm pipeline run --source ibge --from 2025-01-01 --to 2025-12-31

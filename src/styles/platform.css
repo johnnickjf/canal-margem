@@ -1,0 +1,67 @@
+@layer components {
+  .platform-page,
+  .platform-entry {
+    display: grid;
+    gap: var(--space-lg);
+    padding-block: var(--space-xl);
+  }
+  .platform-page h1 {
+    font-family: var(--font-display);
+    font-size: var(--display-lg);
+    line-height: 1;
+    max-width: 24ch;
+  }
+  .platform-page h2,
+  .platform-entry h2 {
+    font-family: var(--font-display);
+    font-size: var(--display-md);
+    line-height: 1.1;
+  }
+  .platform-page h3,
+  .platform-entry h3 {
+    font-size: var(--text-lg);
+  }
+  .platform-intro {
+    max-width: var(--measure);
+    margin-top: var(--space-sm);
+  }
+  .platform-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+    gap: var(--space-md);
+  }
+  .platform-card {
+    padding: var(--space-md);
+    border: var(--rule);
+    background: var(--surface);
+    display: grid;
+    align-content: start;
+    gap: var(--space-sm);
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+  .platform-page section {
+    display: grid;
+    gap: var(--space-md);
+  }
+  .platform-value {
+    font-family: var(--font-mono);
+    font-size: var(--display-sm);
+  }
+  .platform-page dl {
+    display: grid;
+    gap: var(--space-xs);
+  }
+  .platform-page dt {
+    font-weight: 600;
+  }
+  .platform-page dd {
+    margin: 0 0 var(--space-sm);
+  }
+  .platform-inputs ul,
+  .platform-inputs li {
+    display: grid;
+    gap: var(--space-sm);
+    margin-top: var(--space-sm);
+  }
+}

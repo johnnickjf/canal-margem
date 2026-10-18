@@ -1,0 +1,50 @@
+---
+import PlatformLayout from '@/layouts/PlatformLayout.astro';
+import { apiLink, platform } from '@/lib/platform';
+import CalculationContext from '@/components/platform/CalculationContext.astro';
+export function getStaticPaths() {
+  return platform.indicators.map((indicator) => ({
+    params: { slug: indicator.slug },
+    props: { indicator },
+  }));
+}
+const { indicator } = Astro.props;
+const theme = platform.themes.find((item) => item.slug === indicator.theme);
+if (!theme) throw new Error('Tema do indicador ausente no catálogo.');
+const selections = platform.selections[indicator.slug] ?? [];
+---
+<PlatformLayout title={indicator.name} description={indicator.question}>
+  <p><a href={`/tema/${theme.slug}`}>{theme.name}</a> / {indicator.role === 'primary' ? 'Indicador principal' : 'Medida auxiliar'}</p>
+  <section><h2>O que este indicador mede</h2><p>{indicator.definition}</p></section>
+  <section><h2>Dados por recorte</h2>
+    {selections.length === 0 && <p>Sem cobertura nesta edição. Nenhum valor foi substituído por zero.</p>}
+    <div class="platform-grid">{selections.map(({ series, latest, inputs = [] }) => {
+      const source = platform.sources.find((item) => item.id === series.source);
+      const value = latest.node?.observation.value;
+      return <article class="platform-card">
+        <h3>{series.geography === 'BR' ? 'Brasil' : series.geography} · {series.series}</h3>
+        <p>Período: <time datetime={latest.start}>{latest.start}</time> a <time datetime={latest.end}>{latest.end}</time></p>
+        {latest.node && <CalculationContext node={latest.node} />}
+        {latest.status === 'observed' && value != null ? <p class="platform-value">{value.replace('.', ',')} <span>{series.unit}</span></p> : <p><strong>Dados indisponíveis</strong> · {latest.reason || latest.status}</p>}
+        <dl><dt>Unidade</dt><dd>{series.unit}</dd><dt>Dataset</dt><dd>{series.dataset}</dd><dt>Método</dt><dd>{series.method}</dd></dl>
+        {source && <p>Fonte: <a href={source.url}>{source.name}</a></p>}
+        {latest.node?.origins.map((origin) => <p><a href={origin.url}>Consulta de origem</a> · Coleta: <time datetime={origin.retrieved_at}>{origin.retrieved_at}</time></p>)}
+        {inputs.length > 0 && <details class="platform-inputs"><summary>Fontes e observações usadas no cálculo</summary><ul>{inputs.map((input) => {
+          const observation = input.observation;
+          const inputSource = platform.sources.find((item) => item.id === observation.context?.source);
+          return <li>
+            <p><a href={apiLink(`observations/${observation.id}`)}>Observação de entrada: {observation.series}</a></p>
+            <p>Período: <time datetime={observation.start}>{observation.start}</time> a <time datetime={observation.end}>{observation.end}</time></p>
+            <CalculationContext node={input} />
+            {inputSource && <p>Fonte: <a href={inputSource.url}>{inputSource.name}</a></p>}
+            {observation.context?.dataset && <p>Dataset: {observation.context.dataset}</p>}
+            {input.origins.map((origin) => <p><a href={origin.url}>Consulta de origem</a> · Coleta: <time datetime={origin.retrieved_at}>{origin.retrieved_at}</time></p>)}
+          </li>;
+        })}</ul></details>}
+        <a href={apiLink(`series/${encodeURIComponent(series.series)}`, { geography: series.geography })}>Consultar série desta publicação (JSON)</a>
+      </article>;
+    })}</div>
+  </section>
+  <section><h2>Limites de interpretação</h2><p>{indicator.limitations}</p><p>Uma mudança no indicador, por si só, não identifica sua causa.</p></section>
+  <p><a href="/comparar">Sobre a comparação de períodos</a></p>
+</PlatformLayout>

@@ -1,0 +1,18 @@
+---
+import { platform } from '@/lib/platform';
+---
+<aside class="publication-note" aria-label="Disponibilidade dos dados" data-publication={platform.publication ?? 'unavailable'}>
+  {platform.publication ? <>
+    <p>Dados fixados nesta edição. Corte de coleta: <time datetime={platform.cutoff!}>{platform.cutoff}</time>.</p>
+    <details><summary>Identificar a publicação</summary><p class="publication-id">{platform.publication}</p></details>
+    <p>Uma nova edição dos dados exige atualizar o site. Ausência não equivale a zero.</p>
+  </> : <>
+    <p><strong>Dados ainda indisponíveis nesta edição do site.</strong></p>
+    <p>Explore as definições e os limites dos indicadores. Os valores serão exibidos após a integração de uma publicação verificada.</p>
+  </>}
+  <a href="/entenda/como-ler-os-dados">Como ler os dados e suas limitações</a>
+</aside>
+<style>
+  aside { padding: var(--space-md); border-left: 3px solid var(--red); background: var(--surface); display: grid; gap: var(--space-xs); }
+  .publication-id { overflow-wrap: anywhere; font-family: var(--font-mono); font-size: var(--text-sm); }
+</style>
