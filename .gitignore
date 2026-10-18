@@ -24,3 +24,7 @@ Thumbs.db
 
 # local ingestion PoC (raw, logs, accepted snapshots)
 .data/
+
+# backend Go
+backend/margem
+backend/coverage.out

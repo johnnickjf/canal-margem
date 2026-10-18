@@ -17,7 +17,11 @@ O [catálogo de fontes](../data-sources/README.md) documenta a fase 4, com recor
 [Arquitetura de armazenamento](storage.md) define a fase 6 com medição da PoC e cinco ADRs:
 PostgreSQL/Railway, raw no R2, histórico/cache, backup nativo/reconstrução e portabilidade/custos. Especifica migração e
 restauração; serviços e ensaio remoto ainda não foram executados. A implementação do
-armazenamento fica para a fase 7.
+armazenamento está nos [pipelines da fase 7](pipelines.md), com jobs das cinco
+fontes, cadência, PostgreSQL e API compatível com S3 (R2 em produção), qualidade, revisões, diagnóstico e preservação da PoC.
+A coleta Python original e sua repetição foram verificadas localmente; o
+[backend Go modular](../adr/0007-go-modular-backend.md) preserva seus contratos, IDs e lotes.
+Não há implantação remota.
 
 Documentos futuros, quando houver desenho ou implementação concreta, poderão cobrir `api.md`, `data-processing.md` e `indicator-engine.md`. A ausência desses sistemas nesta fase é intencional.
 

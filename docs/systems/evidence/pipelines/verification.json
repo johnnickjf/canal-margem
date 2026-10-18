@@ -1,0 +1,763 @@
+{
+  "verified_at": "2026-10-17T19:13:22.774194+00:00",
+  "scope": "Phase 7 implementation and local integration; official providers -> PostgreSQL 18 + LocalStack S3. No Railway/R2 deployment, R2 bucket-lock or native backup claim.",
+  "catalog_version": "c937cf6dc9d642c7eb4cb78701e723e725e30457f80efdb901a225fc3ad29dc9",
+  "code_manifest_sha256": "d55f53d883762c965a02239fc4c3be4bfc1fb9fd6d1a9f47992a590632eb0b42",
+  "code": [
+    {
+      "path": ".github/workflows/tests.yml",
+      "sha256": "f2adddeaf42c01c03da2a64cf8eec8fd78d1c443bb71c3492d2db14013b7555b"
+    },
+    {
+      "path": "backend/Dockerfile",
+      "sha256": "7e9c802feefdf81f6e8023e2500f9eb45b748e94cc2ac22ca16d087165e46c1a"
+    },
+    {
+      "path": "backend/compose.yaml",
+      "sha256": "c0c9a77541c241ea14dcd6fe608b5d953f3554c46b3a9b593ceb9a3fb599becb"
+    },
+    {
+      "path": "backend/margem_pipeline/001.sql",
+      "sha256": "619e972002f3de07e379cc3f63950485e6ed404964dd33f1c4c20b33477cfaa4"
+    },
+    {
+      "path": "backend/margem_pipeline/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "backend/margem_pipeline/api_sources.py",
+      "sha256": "8ffc430b2bbb769ea77f8754d625ed7bf1014597a196797ba43091355abc282f"
+    },
+    {
+      "path": "backend/margem_pipeline/catalog.py",
+      "sha256": "7e0cbcaedd5824396a69e58b14b28b01632802a6edb60c1dee80ca7eab81fb2d"
+    },
+    {
+      "path": "backend/margem_pipeline/cli.py",
+      "sha256": "d483d9e1e2f4f0f9154d9a95f5baf403a43ab5ff9b166f897235fb1c15e9f2e2"
+    },
+    {
+      "path": "backend/margem_pipeline/domain.py",
+      "sha256": "e5e7061f74f178f3a0f64025da8ea46d4ef460594a16870f26cd03e6b774abc5"
+    },
+    {
+      "path": "backend/margem_pipeline/file_sources.py",
+      "sha256": "483db86d4f9cc995846ef59d00ae151731ae75dea1e2715ad2cd612165d7971b"
+    },
+    {
+      "path": "backend/margem_pipeline/files.json",
+      "sha256": "84c6a2187fab87160281ad09ab7631dcb2b6d0dc05abd2ccfb182f4a411d8a2e"
+    },
+    {
+      "path": "backend/margem_pipeline/http.py",
+      "sha256": "1cfd47a5c51dea40e06e5f13c8ff45dff3e3b7677df39329ec4bb6d02230d4c3"
+    },
+    {
+      "path": "backend/margem_pipeline/jobs.py",
+      "sha256": "e23a94bb68c7389b4249e1a9007d3d123e3206338ecf455c8bcf8ad32bdb79b0"
+    },
+    {
+      "path": "backend/margem_pipeline/legacy.py",
+      "sha256": "f495590493a487f16f55d2b89c3bac0d086048f620b4db6989bfe92b96e8bcfa"
+    },
+    {
+      "path": "backend/margem_pipeline/storage.py",
+      "sha256": "c8a73dd491c31f58dfcaa6394a7c4f7c4ad62dbac063cdaa859c2f0e5aa6e0a7"
+    },
+    {
+      "path": "backend/pyproject.toml",
+      "sha256": "1f94d48518672597c9548c1bc97862db68b820ac0dc38c5b716c6edac2d04421"
+    },
+    {
+      "path": "backend/railway.toml",
+      "sha256": "ccf469b8068bfdd2c5d983dee10a258bb6951632b959bd68e646907456c5a4f2"
+    },
+    {
+      "path": "backend/runtime-grants.sql",
+      "sha256": "4e7bb27644a969e143e20e9670cab320ca4bd541f0d413406e130d86526692f2"
+    },
+    {
+      "path": "backend/tests/conftest.py",
+      "sha256": "a16f00e75773b9dac042ee3097b108b3ff4c10eb3e81fabb190157a68797ed40"
+    },
+    {
+      "path": "backend/tests/fixtures/basket-pages.json",
+      "sha256": "61b944baf4a11bcadc0aca8a305b00cbd53737fa03af108e40acdc4112ee9f73"
+    },
+    {
+      "path": "backend/tests/test_api_sources.py",
+      "sha256": "69b135e8465dfa61e2af3076be2abf62088439845c1b596152187cfc909793d9"
+    },
+    {
+      "path": "backend/tests/test_domain.py",
+      "sha256": "0cdb1ca39c764bbc03463129fa6d4ef07b1f5019b9ac0960122f22b4130a5e21"
+    },
+    {
+      "path": "backend/tests/test_file_sources.py",
+      "sha256": "9841cbb4dd6fae517e77b5e1a9b22c2a0517699102bc85ea089d0a1d63764971"
+    },
+    {
+      "path": "backend/tests/test_integration.py",
+      "sha256": "df713e791b7634c0bb5aaa143d7d9868b07803aa71d814902266d8fc7f390423"
+    },
+    {
+      "path": "backend/tests/test_legacy.py",
+      "sha256": "0472e774ca6d1fb5a96f38349bdce071d796908702c43da9985085207a5f70c8"
+    },
+    {
+      "path": "backend/uv.lock",
+      "sha256": "3a96816e515bd485f02f143d5c63da838e319238217c9788f586a81b7cda57ce"
+    },
+    {
+      "path": "package.json",
+      "sha256": "ed64fc8ea8af66cf990b4e06314c288f44198e00a594cb6467ba89a60f4f1480"
+    }
+  ],
+  "environment": {
+    "python": "3.14.4",
+    "postgresql": "PostgreSQL 18.6 on x86_64-pc-linux-musl, compiled by gcc (Alpine 15.2.0) 15.2.0, 64-bit",
+    "s3_image": "localstack/localstack:3.8",
+    "container": "margem-pipeline:phase7"
+  },
+  "window": {
+    "from": "2012-01-01",
+    "to": "2026-10-17"
+  },
+  "initial_fetch": [
+    {
+      "source": "ibge",
+      "status": "succeeded",
+      "run": "cb7d1060-661a-4815-8cbd-75c55cf3ed0b",
+      "batch": "36ca2c3bfb6f32a24b39e15a7ba1f34690e89d353f83ad69587ec3fea56fbccd",
+      "observations": 1619,
+      "changed": 1619,
+      "seconds": 15.679
+    },
+    {
+      "source": "bcb",
+      "status": "succeeded",
+      "run": "07997e18-4c36-4858-b808-92d4082911ee",
+      "batch": "7aeced5853ca8614f9c236cbbdaa4d78b206ffc36512848ac68dff24c14ad24b",
+      "observations": 528,
+      "changed": 528,
+      "seconds": 0.696
+    },
+    {
+      "source": "anp",
+      "status": "succeeded",
+      "run": "db7f7bfd-7c8a-43bd-8433-b17927d7956e",
+      "batch": "e0a5e829a07d27bcd1491575c265bdbac58081baeadaa57cbb3069bcd1a4715b",
+      "observations": 762,
+      "changed": 762,
+      "seconds": 3.233
+    },
+    {
+      "source": "fjp",
+      "status": "succeeded",
+      "run": "c1225889-81bc-4498-bb98-bf0fbc7f9d5d",
+      "batch": "0a064dc7900615c54d2384833f04d31448f9918617f1e615e36a99bdfea9bb2b",
+      "observations": 7,
+      "changed": 7,
+      "seconds": 7.298
+    },
+    {
+      "source": "dieese",
+      "status": "succeeded",
+      "run": "574a4733-f43d-403b-9b32-809c87718bef",
+      "batch": "63fdaceb9d59bf8b8c6479a8eadb9b3567f238fac3fca5146f08f7a97d00f567",
+      "observations": 3459,
+      "changed": 3459,
+      "seconds": 40.992
+    }
+  ],
+  "repeat_fetch": [
+    {
+      "source": "ibge",
+      "status": "succeeded",
+      "run": "b788663b-7d64-44b1-83ac-ea812b194aab",
+      "batch": "36ca2c3bfb6f32a24b39e15a7ba1f34690e89d353f83ad69587ec3fea56fbccd",
+      "observations": 1619,
+      "changed": 0,
+      "seconds": 8.627
+    },
+    {
+      "source": "bcb",
+      "status": "succeeded",
+      "run": "0d6be5bc-8800-4c23-8bf3-de7353401b15",
+      "batch": "7aeced5853ca8614f9c236cbbdaa4d78b206ffc36512848ac68dff24c14ad24b",
+      "observations": 528,
+      "changed": 0,
+      "seconds": 0.636
+    },
+    {
+      "source": "anp",
+      "status": "succeeded",
+      "run": "52554eea-f41b-4bd3-8289-0c0e9f73927f",
+      "batch": "e0a5e829a07d27bcd1491575c265bdbac58081baeadaa57cbb3069bcd1a4715b",
+      "observations": 762,
+      "changed": 0,
+      "seconds": 3.184
+    },
+    {
+      "source": "fjp",
+      "status": "succeeded",
+      "run": "b74252f8-c1f3-4522-9152-5284ee3c33e3",
+      "batch": "0a064dc7900615c54d2384833f04d31448f9918617f1e615e36a99bdfea9bb2b",
+      "observations": 7,
+      "changed": 0,
+      "seconds": 7.691
+    },
+    {
+      "source": "dieese",
+      "status": "succeeded",
+      "run": "a4820616-3daa-474a-b256-71942cc9abf0",
+      "batch": "63fdaceb9d59bf8b8c6479a8eadb9b3567f238fac3fca5146f08f7a97d00f567",
+      "observations": 3459,
+      "changed": 0,
+      "seconds": 41.144
+    }
+  ],
+  "accepted_states": [
+    {
+      "status": "missing",
+      "n": 42
+    },
+    {
+      "status": "observed",
+      "n": 6333
+    }
+  ],
+  "database_counts": {
+    "ops.run": 11,
+    "normalized.observation": 6375,
+    "normalized.batch": 5,
+    "normalized.receipt": 11,
+    "normalized.provenance": 19187,
+    "raw.object": 352,
+    "raw.capture": 738,
+    "legacy.import": 1,
+    "legacy.file": 21,
+    "legacy.observation": 587
+  },
+  "runs": [
+    {
+      "id": "db7f7bfd-7c8a-43bd-8433-b17927d7956e",
+      "source": "anp",
+      "catalog": "c937cf6dc9d642c7eb4cb78701e723e725e30457f80efdb901a225fc3ad29dc9",
+      "started_at": "2026-10-17 19:05:58.443328+00:00",
+      "finished_at": "2026-10-17 19:06:01.434240+00:00",
+      "status": "succeeded",
+      "batch": "e0a5e829a07d27bcd1491575c265bdbac58081baeadaa57cbb3069bcd1a4715b",
+      "observations": 762,
+      "changed": 762
+    },
+    {
+      "id": "cb7d1060-661a-4815-8cbd-75c55cf3ed0b",
+      "source": "ibge",
+      "catalog": "c937cf6dc9d642c7eb4cb78701e723e725e30457f80efdb901a225fc3ad29dc9",
+      "started_at": "2026-10-17 19:05:58.443424+00:00",
+      "finished_at": "2026-10-17 19:06:12.983168+00:00",
+      "status": "succeeded",
+      "batch": "36ca2c3bfb6f32a24b39e15a7ba1f34690e89d353f83ad69587ec3fea56fbccd",
+      "observations": 1619,
+      "changed": 1619
+    },
+    {
+      "id": "07997e18-4c36-4858-b808-92d4082911ee",
+      "source": "bcb",
+      "catalog": "c937cf6dc9d642c7eb4cb78701e723e725e30457f80efdb901a225fc3ad29dc9",
+      "started_at": "2026-10-17 19:05:58.443457+00:00",
+      "finished_at": "2026-10-17 19:05:58.967759+00:00",
+      "status": "succeeded",
+      "batch": "7aeced5853ca8614f9c236cbbdaa4d78b206ffc36512848ac68dff24c14ad24b",
+      "observations": 528,
+      "changed": 528
+    },
+    {
+      "id": "c1225889-81bc-4498-bb98-bf0fbc7f9d5d",
+      "source": "fjp",
+      "catalog": "c937cf6dc9d642c7eb4cb78701e723e725e30457f80efdb901a225fc3ad29dc9",
+      "started_at": "2026-10-17 19:05:59.138859+00:00",
+      "finished_at": "2026-10-17 19:06:06.378151+00:00",
+      "status": "succeeded",
+      "batch": "0a064dc7900615c54d2384833f04d31448f9918617f1e615e36a99bdfea9bb2b",
+      "observations": 7,
+      "changed": 7
+    },
+    {
+      "id": "574a4733-f43d-403b-9b32-809c87718bef",
+      "source": "dieese",
+      "catalog": "c937cf6dc9d642c7eb4cb78701e723e725e30457f80efdb901a225fc3ad29dc9",
+      "started_at": "2026-10-17 19:06:01.676240+00:00",
+      "finished_at": "2026-10-17 19:06:41.602519+00:00",
+      "status": "succeeded",
+      "batch": "63fdaceb9d59bf8b8c6479a8eadb9b3567f238fac3fca5146f08f7a97d00f567",
+      "observations": 3459,
+      "changed": 3459
+    },
+    {
+      "id": "b788663b-7d64-44b1-83ac-ea812b194aab",
+      "source": "ibge",
+      "catalog": "c937cf6dc9d642c7eb4cb78701e723e725e30457f80efdb901a225fc3ad29dc9",
+      "started_at": "2026-10-17 19:07:05.103329+00:00",
+      "finished_at": "2026-10-17 19:07:12.490448+00:00",
+      "status": "succeeded",
+      "batch": "36ca2c3bfb6f32a24b39e15a7ba1f34690e89d353f83ad69587ec3fea56fbccd",
+      "observations": 1619,
+      "changed": 0
+    },
+    {
+      "id": "52554eea-f41b-4bd3-8289-0c0e9f73927f",
+      "source": "anp",
+      "catalog": "c937cf6dc9d642c7eb4cb78701e723e725e30457f80efdb901a225fc3ad29dc9",
+      "started_at": "2026-10-17 19:07:05.103395+00:00",
+      "finished_at": "2026-10-17 19:07:08.007719+00:00",
+      "status": "succeeded",
+      "batch": "e0a5e829a07d27bcd1491575c265bdbac58081baeadaa57cbb3069bcd1a4715b",
+      "observations": 762,
+      "changed": 0
+    },
+    {
+      "id": "0d6be5bc-8800-4c23-8bf3-de7353401b15",
+      "source": "bcb",
+      "catalog": "c937cf6dc9d642c7eb4cb78701e723e725e30457f80efdb901a225fc3ad29dc9",
+      "started_at": "2026-10-17 19:07:05.103470+00:00",
+      "finished_at": "2026-10-17 19:07:05.602446+00:00",
+      "status": "succeeded",
+      "batch": "7aeced5853ca8614f9c236cbbdaa4d78b206ffc36512848ac68dff24c14ad24b",
+      "observations": 528,
+      "changed": 0
+    },
+    {
+      "id": "b74252f8-c1f3-4522-9152-5284ee3c33e3",
+      "source": "fjp",
+      "catalog": "c937cf6dc9d642c7eb4cb78701e723e725e30457f80efdb901a225fc3ad29dc9",
+      "started_at": "2026-10-17 19:07:05.740585+00:00",
+      "finished_at": "2026-10-17 19:07:13.280500+00:00",
+      "status": "succeeded",
+      "batch": "0a064dc7900615c54d2384833f04d31448f9918617f1e615e36a99bdfea9bb2b",
+      "observations": 7,
+      "changed": 0
+    },
+    {
+      "id": "a4820616-3daa-474a-b256-71942cc9abf0",
+      "source": "dieese",
+      "catalog": "c937cf6dc9d642c7eb4cb78701e723e725e30457f80efdb901a225fc3ad29dc9",
+      "started_at": "2026-10-17 19:07:08.299339+00:00",
+      "finished_at": "2026-10-17 19:07:48.466523+00:00",
+      "status": "succeeded",
+      "batch": "63fdaceb9d59bf8b8c6479a8eadb9b3567f238fac3fca5146f08f7a97d00f567",
+      "observations": 3459,
+      "changed": 0
+    },
+    {
+      "id": "a0b1c8a5-40b7-4a1f-be63-35281b900be1",
+      "source": "ibge",
+      "catalog": "c937cf6dc9d642c7eb4cb78701e723e725e30457f80efdb901a225fc3ad29dc9",
+      "started_at": "2026-10-17 19:10:09.588246+00:00",
+      "finished_at": "2026-10-17 19:10:15.064235+00:00",
+      "status": "succeeded",
+      "batch": "36ca2c3bfb6f32a24b39e15a7ba1f34690e89d353f83ad69587ec3fea56fbccd",
+      "observations": 1619,
+      "changed": 0
+    }
+  ],
+  "health": {
+    "healthy": true,
+    "sources": [
+      {
+        "source": "ibge",
+        "healthy": true,
+        "latest": {
+          "id": "a0b1c8a5-40b7-4a1f-be63-35281b900be1",
+          "status": "succeeded",
+          "started_at": "2026-10-17 19:10:09.588246+00:00",
+          "finished_at": "2026-10-17 19:10:15.064235+00:00",
+          "error": null,
+          "observations": 1619,
+          "changed": 0
+        },
+        "last_success": {
+          "finished_at": "2026-10-17 19:10:15.064235+00:00",
+          "batch": "36ca2c3bfb6f32a24b39e15a7ba1f34690e89d353f83ad69587ec3fea56fbccd"
+        },
+        "coverage": [
+          {
+            "series": "cv1-12m",
+            "first_period": "2012-01-01",
+            "last_period": "2026-09-30",
+            "observations": 177,
+            "unavailable": 0
+          },
+          {
+            "series": "cv1-monthly",
+            "first_period": "2012-01-01",
+            "last_period": "2026-09-30",
+            "observations": 177,
+            "unavailable": 0
+          },
+          {
+            "series": "cv2-current-12m",
+            "first_period": "2020-01-01",
+            "last_period": "2026-09-30",
+            "observations": 81,
+            "unavailable": 11
+          },
+          {
+            "series": "cv2-current-monthly",
+            "first_period": "2020-01-01",
+            "last_period": "2026-09-30",
+            "observations": 81,
+            "unavailable": 0
+          },
+          {
+            "series": "cv2-old-12m",
+            "first_period": "2012-01-01",
+            "last_period": "2019-12-31",
+            "observations": 96,
+            "unavailable": 11
+          },
+          {
+            "series": "cv2-old-monthly",
+            "first_period": "2012-01-01",
+            "last_period": "2019-12-31",
+            "observations": 96,
+            "unavailable": 0
+          },
+          {
+            "series": "ee1",
+            "first_period": "2012-01-01",
+            "last_period": "2023-12-31",
+            "observations": 12,
+            "unavailable": 0
+          },
+          {
+            "series": "inpc-12m",
+            "first_period": "2012-01-01",
+            "last_period": "2026-09-30",
+            "observations": 177,
+            "unavailable": 0
+          },
+          {
+            "series": "inpc-index",
+            "first_period": "2012-01-01",
+            "last_period": "2026-09-30",
+            "observations": 177,
+            "unavailable": 0
+          },
+          {
+            "series": "inpc-monthly",
+            "first_period": "2012-01-01",
+            "last_period": "2026-09-30",
+            "observations": 177,
+            "unavailable": 0
+          },
+          {
+            "series": "participation",
+            "first_period": "2012-01-01",
+            "last_period": "2026-06-30",
+            "observations": 58,
+            "unavailable": 0
+          },
+          {
+            "series": "qv1",
+            "first_period": "2012-01-01",
+            "last_period": "2024-12-31",
+            "observations": 13,
+            "unavailable": 0
+          },
+          {
+            "series": "qv2",
+            "first_period": "2012-01-01",
+            "last_period": "2025-12-31",
+            "observations": 14,
+            "unavailable": 0
+          },
+          {
+            "series": "qv3",
+            "first_period": "2023-01-01",
+            "last_period": "2024-12-31",
+            "observations": 2,
+            "unavailable": 0
+          },
+          {
+            "series": "qv3-mild",
+            "first_period": "2023-01-01",
+            "last_period": "2024-12-31",
+            "observations": 2,
+            "unavailable": 0
+          },
+          {
+            "series": "qv3-moderate",
+            "first_period": "2023-01-01",
+            "last_period": "2024-12-31",
+            "observations": 2,
+            "unavailable": 0
+          },
+          {
+            "series": "qv3-severe",
+            "first_period": "2023-01-01",
+            "last_period": "2024-12-31",
+            "observations": 2,
+            "unavailable": 0
+          },
+          {
+            "series": "tr1",
+            "first_period": "2012-01-01",
+            "last_period": "2026-06-30",
+            "observations": 58,
+            "unavailable": 0
+          },
+          {
+            "series": "tr3",
+            "first_period": "2012-01-01",
+            "last_period": "2026-06-30",
+            "observations": 58,
+            "unavailable": 0
+          },
+          {
+            "series": "tr4",
+            "first_period": "2012-01-01",
+            "last_period": "2026-06-30",
+            "observations": 58,
+            "unavailable": 0
+          },
+          {
+            "series": "tr5",
+            "first_period": "2015-10-01",
+            "last_period": "2026-06-30",
+            "observations": 43,
+            "unavailable": 0
+          },
+          {
+            "series": "underutilization",
+            "first_period": "2012-01-01",
+            "last_period": "2026-06-30",
+            "observations": 58,
+            "unavailable": 0
+          }
+        ],
+        "stale_series": []
+      },
+      {
+        "source": "bcb",
+        "healthy": true,
+        "latest": {
+          "id": "0d6be5bc-8800-4c23-8bf3-de7353401b15",
+          "status": "succeeded",
+          "started_at": "2026-10-17 19:07:05.103470+00:00",
+          "finished_at": "2026-10-17 19:07:05.602446+00:00",
+          "error": null,
+          "observations": 528,
+          "changed": 0
+        },
+        "last_success": {
+          "finished_at": "2026-10-17 19:07:05.602446+00:00",
+          "batch": "7aeced5853ca8614f9c236cbbdaa4d78b206ffc36512848ac68dff24c14ad24b"
+        },
+        "coverage": [
+          {
+            "series": "minimum-nominal",
+            "first_period": "2012-01-01",
+            "last_period": "2026-09-30",
+            "observations": 177,
+            "unavailable": 0
+          },
+          {
+            "series": "vf1",
+            "first_period": "2012-01-01",
+            "last_period": "2026-07-31",
+            "observations": 175,
+            "unavailable": 0
+          },
+          {
+            "series": "vf2",
+            "first_period": "2012-01-01",
+            "last_period": "2026-08-31",
+            "observations": 176,
+            "unavailable": 0
+          }
+        ],
+        "stale_series": []
+      },
+      {
+        "source": "anp",
+        "healthy": true,
+        "latest": {
+          "id": "52554eea-f41b-4bd3-8289-0c0e9f73927f",
+          "status": "succeeded",
+          "started_at": "2026-10-17 19:07:05.103395+00:00",
+          "finished_at": "2026-10-17 19:07:08.007719+00:00",
+          "error": null,
+          "observations": 762,
+          "changed": 0
+        },
+        "last_success": {
+          "finished_at": "2026-10-17 19:07:08.007719+00:00",
+          "batch": "e0a5e829a07d27bcd1491575c265bdbac58081baeadaa57cbb3069bcd1a4715b"
+        },
+        "coverage": [
+          {
+            "series": "cv3",
+            "first_period": "2012-01-01",
+            "last_period": "2026-10-10",
+            "observations": 762,
+            "unavailable": 0
+          }
+        ],
+        "stale_series": []
+      },
+      {
+        "source": "dieese",
+        "healthy": true,
+        "latest": {
+          "id": "a4820616-3daa-474a-b256-71942cc9abf0",
+          "status": "succeeded",
+          "started_at": "2026-10-17 19:07:08.299339+00:00",
+          "finished_at": "2026-10-17 19:07:48.466523+00:00",
+          "error": null,
+          "observations": 3459,
+          "changed": 0
+        },
+        "last_success": {
+          "finished_at": "2026-10-17 19:07:48.466523+00:00",
+          "batch": "63fdaceb9d59bf8b8c6479a8eadb9b3567f238fac3fca5146f08f7a97d00f567"
+        },
+        "coverage": [
+          {
+            "series": "cv4",
+            "first_period": "2012-01-01",
+            "last_period": "2026-09-30",
+            "observations": 3459,
+            "unavailable": 20
+          }
+        ],
+        "stale_series": []
+      },
+      {
+        "source": "fjp",
+        "healthy": true,
+        "latest": {
+          "id": "b74252f8-c1f3-4522-9152-5284ee3c33e3",
+          "status": "succeeded",
+          "started_at": "2026-10-17 19:07:05.740585+00:00",
+          "finished_at": "2026-10-17 19:07:13.280500+00:00",
+          "error": null,
+          "observations": 7,
+          "changed": 0
+        },
+        "last_success": {
+          "finished_at": "2026-10-17 19:07:13.280500+00:00",
+          "batch": "0a064dc7900615c54d2384833f04d31448f9918617f1e615e36a99bdfea9bb2b"
+        },
+        "coverage": [
+          {
+            "series": "cv6",
+            "first_period": "2016-01-01",
+            "last_period": "2024-12-31",
+            "observations": 7,
+            "unavailable": 0
+          }
+        ],
+        "stale_series": []
+      }
+    ]
+  },
+  "integrity": {
+    "status": "verified",
+    "objects": 352,
+    "bytes": 91388493,
+    "object_inventory_sha256": "fe2170d92ab99c972c51c9fd034046b16db97b207f255811dc7221a572c58db9"
+  },
+  "poc_import": {
+    "first": {
+      "import": "83ce402e5237bd181870ccbc9dbbd60864903d328a7a49cebdfd943e24eecaec",
+      "files": 21,
+      "observations": 587,
+      "promoted": false
+    },
+    "repeat": {
+      "import": "83ce402e5237bd181870ccbc9dbbd60864903d328a7a49cebdfd943e24eecaec",
+      "files": 21,
+      "observations": 587,
+      "promoted": false
+    }
+  },
+  "restoration": {
+    "kind": "local pg_dump/pg_restore to separate database, same raw bucket; not Railway native backup or object-storage restore",
+    "status": "verified",
+    "objects": 352,
+    "bytes": 91388493,
+    "observations": 6375,
+    "seconds": 1.675
+  },
+  "docker_cli": {
+    "migrate": {
+      "exit_code": 0,
+      "result": {
+        "migration": "001",
+        "status": "succeeded"
+      }
+    },
+    "status": {
+      "exit_code": 0,
+      "result": {
+        "healthy": true,
+        "sources": 5
+      }
+    },
+    "tick": {
+      "exit_code": 0,
+      "result": [
+        {
+          "source": "ibge",
+          "status": "not-due"
+        },
+        {
+          "source": "bcb",
+          "status": "not-due"
+        },
+        {
+          "source": "anp",
+          "status": "not-due"
+        },
+        {
+          "source": "dieese",
+          "status": "not-due"
+        },
+        {
+          "source": "fjp",
+          "status": "not-due"
+        }
+      ]
+    },
+    "verify": {
+      "exit_code": 0,
+      "result": {
+        "status": "verified",
+        "objects": 352,
+        "bytes": 91388493
+      }
+    }
+  },
+  "validation": {
+    "pnpm_test": "passed: 54 backend + 87 Vitest + 35 Playwright/build; integration services enabled",
+    "backend_after_s3_config_change": "54 passed",
+    "biome_astro_build_seo": "passed by pnpm test / test:e2e",
+    "actionlint": "passed v1.7.7",
+    "docker_build": "passed; installed package migration/status/tick/verify passed",
+    "compose_config": "passed"
+  },
+  "not_verified": [
+    "Railway scheduler execution and remote notification delivery",
+    "R2 indefinite raw prefix lock and least-privilege bucket credentials",
+    "Railway native backup/restore",
+    "Publication, engine, API and external indexing"
+  ],
+  "limitations": [
+    "TR1 monetary release base remains unresolved for public comparison",
+    "QV1 is pinned to SIS 2025/PPC 2017; new edition requires catalog review",
+    "FJP history remains segmented; new sheets require catalog review",
+    "Basket composition/product comparison for Palmas/SaoLuis remains unresolved; only published totals ingested"
+  ]
+}

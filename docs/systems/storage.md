@@ -4,8 +4,9 @@
 
 A fase 6 define o armazenamento do MVP a partir da [PoC da fase 5](ingestion.md).
 As decisões estão aceitas para implementação nos ADRs abaixo. A implementação vigente
-continua sendo a PoC local; banco, buckets, backup nativo e API ainda não foram provisionados
-ou testados. Esta entrega é uma especificação de arquitetura, sem contratação de serviços.
+inclui agora os [pipelines da fase 7](pipelines.md), testados com PostgreSQL 18 e API S3 emulada pelo LocalStack.
+Banco/buckets remotos, bucket lock R2, backup nativo e API ainda não foram provisionados
+ou testados. A PoC permanece disponível e seu histórico foi preservado em `legacy`. Esta entrega é uma especificação de arquitetura, sem contratação de serviços.
 
 | Decisão | Resultado | Registro |
 |---|---|---|
@@ -130,7 +131,7 @@ Resolve a preservação de P2. Cloudflare R2 Standard recebe bytes exatos, inclu
 erro e metadados de validação. O banco mantém identidade lógica, URL, hash, tamanho, tipo,
 horários e localizador. Deduplicar bytes não elimina eventos de coleta.
 
-O cliente usa API S3 com endpoint configurável. Upload simples grava `raw/sha256/<hash>`
+O cliente acessa o Cloudflare R2 pela API compatível com S3 e endpoint configurável. Upload simples grava `raw/sha256/<hash>`
 com `If-None-Match: *`. O job lê e confere tamanho/SHA-256 antes da aceitação; ETag não
 substitui esse hash. Multipart usa chave exclusiva por tentativa, sem presumir condição
 em `CompleteMultipartUpload`, e precisa do ensaio definido no [ADR-0002](../adr/0002-raw-object-storage.md).
@@ -316,25 +317,30 @@ com o inventário preservado. Falha caso os arquivos tenham sido removidos ou al
 coletas posteriores; nesse caso é necessário produzir outra medição, sem editar a evidência antiga.
 
 ```bash
-python3 - <<'PY'
-from pathlib import Path
-import hashlib, json
-m = json.loads(Path('docs/systems/evidence/storage/measurement.json').read_text())
-root = Path(m['store'])
-for directory in m['directories'].values():
-    assert directory['bytes'] == sum(f['bytes'] for f in directory['inventory'])
-    assert directory['files'] == len(directory['inventory'])
-    for f in directory['inventory']:
-        b = (root / f['path']).read_bytes()
-        assert len(b) == f['bytes']
-        assert hashlib.sha256(b).hexdigest() == f['sha256']
-snapshot = root / 'snapshots' / (m['current']['snapshot'] + '.json')
-s = json.loads(snapshot.read_bytes())
-assert len(s['observations']) == m['current']['observations'] == 587
-assert len(s['selected']) == m['current']['selected']
-assert len(s['batches']) == m['current']['batches']
-print('Inventário e snapshot medidos conferidos; sem teste de infraestrutura.')
-PY
+node --input-type=module <<'JS'
+import assert from 'node:assert/strict';
+import { createHash } from 'node:crypto';
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
+
+const m = JSON.parse(readFileSync('docs/systems/evidence/storage/measurement.json', 'utf8'));
+const root = m.store;
+for (const directory of Object.values(m.directories)) {
+  assert.equal(directory.bytes, directory.inventory.reduce((sum, f) => sum + f.bytes, 0));
+  assert.equal(directory.files, directory.inventory.length);
+  for (const f of directory.inventory) {
+    const bytes = readFileSync(join(root, f.path));
+    assert.equal(bytes.length, f.bytes);
+    assert.equal(createHash('sha256').update(bytes).digest('hex'), f.sha256);
+  }
+}
+const snapshot = JSON.parse(readFileSync(join(root, 'snapshots', m.current.snapshot + '.json'), 'utf8'));
+assert.equal(snapshot.observations.length, m.current.observations);
+assert.equal(m.current.observations, 587);
+assert.equal(Object.keys(snapshot.selected).length, m.current.selected);
+assert.equal(Object.keys(snapshot.batches).length, m.current.batches);
+console.log('Inventário e snapshot medidos conferidos; sem teste de infraestrutura.');
+JS
 ```
 
 O [registro de validação](evidence/storage/validation.md) distingue conferência documental,
@@ -346,4 +352,5 @@ A PoC preserva os dados em um disco e regrava snapshots completos a cada coleta.
 PostgreSQL na Railway para relações e publicações, R2 para raw imutável e projeções públicas
 em bucket separado. A recuperação usa backup nativo Railway ou reconstrução pelos pipelines,
 sem cópia integral independente ou RPO/RTO fixos. O MVP aceita perda de versões antigas após
-desastre; migrações, serviços e recuperação ainda serão implementados.
+desastre. Os [pipelines da fase 7](pipelines.md) implementam migrações, PostgreSQL e API compatível com S3 (R2 em produção)
+e reconstrução local; serviços remotos e restauração nativa ainda exigem ensaio na implantação.

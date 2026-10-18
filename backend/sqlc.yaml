@@ -1,0 +1,12 @@
+version: '2'
+sql:
+  - engine: postgresql
+    schema: internal/platform/postgres/001.sql
+    queries: internal/platform/postgres/queries.sql
+    gen:
+      go:
+        package: postgres
+        out: internal/platform/postgres
+        sql_package: pgx/v5
+        emit_json_tags: true
+        emit_empty_slices: true

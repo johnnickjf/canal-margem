@@ -1,0 +1,27 @@
+# Somente serviços locais para integração; sem volumes externos.
+# LocalStack emula a API S3 usada pelo cliente R2; não valida o serviço Cloudflare.
+services:
+  postgres:
+    image: postgres:18-alpine
+    environment:
+      POSTGRES_PASSWORD: local-only
+      POSTGRES_USER: margem
+      POSTGRES_DB: margem
+    ports:
+      - '127.0.0.1:55437:5432'
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U margem -d margem']
+      interval: 2s
+      timeout: 2s
+      retries: 30
+  s3:
+    image: localstack/localstack:3.8
+    environment:
+      SERVICES: s3
+    ports:
+      - '127.0.0.1:59007:4566'
+    healthcheck:
+      test: ['CMD', 'curl', '-f', 'http://localhost:4566/_localstack/health']
+      interval: 2s
+      timeout: 2s
+      retries: 30

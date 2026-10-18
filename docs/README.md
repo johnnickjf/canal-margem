@@ -20,6 +20,8 @@ O Canal Margem está preparando a evolução do site editorial para uma platafor
 14. [PoC de ingestão](systems/ingestion.md): comandos, quatro séries IBGE/BCB, raw, validação, persistência local, revisões, exportação e evidências da fase 5.
 15. [Arquitetura de armazenamento](systems/storage.md): medição da PoC, PostgreSQL na Railway, raw no R2, histórico/cache, retenção, backup nativo Railway, reconstrução planejada e migração; decisões em [ADRs](adr/README.md).
 
+16. [Pipelines do MVP](systems/pipelines.md): jobs das cinco fontes, PostgreSQL e API compatível com S3 (R2 em produção), agendamento, revisões, importação da PoC e evidência real da fase 7.
+
 Os quatro documentos numerados partem dos textos fornecidos pelo responsável pelo projeto e receberam ajustes de clareza e precisão. Definem o produto planejado; a auditoria do frontend registra a fase 0, e os documentos de sistemas registram as entregas posteriores. Exemplos do modelo e do design system são ilustrativos. As amostras em `data-sources/evidence/` são dados oficiais consultados na fase 4, com proveniência, sem integração ao site.
 
 ## Estado e limites
@@ -37,8 +39,9 @@ Os quatro documentos numerados partem dos textos fornecidos pelo responsável pe
 | Páginas de indicadores, comparador e camada Entenda | Planejados |
 | Ingestão e persistência local | PoC da fase 5 executada com quatro séries e 587 observações; revisões, repetição e falhas testadas |
 | Arquitetura de armazenamento | Fase 6 definida em cinco ADRs: PostgreSQL/Railway, R2, histórico/cache, backup nativo/reconstrução e portabilidade/custos; serviços ainda não implantados |
-| Pipeline do MVP, API de indicadores e processamento | Planejados; implementação do armazenamento começa com os jobs da fase 7 |
-| Publicação e operação em produção | Não verificadas; sem configuração de deploy no repositório |
+| Pipeline do MVP | Fase 7 implementada e verificada localmente: cinco fontes, 6.375 observações, PostgreSQL e API compatível com S3 (R2 em produção), repetição, revisões, falhas e importação da PoC |
+| Engine e API de indicadores | Próximas fases 8 e 9 |
+| Publicação e operação em produção | Não verificadas; Dockerfile e cron Railway preparados, sem serviço remoto implantado |
 
 As rotas atuais são `/temas/:slug`, `/videos/:slug` e `/analises/:slug`. As rotas `/tema/:slug`, `/indicador/:slug`, `/comparar` e `/entenda/:slug` dos documentos são propostas futuras. A convivência entre temas editoriais e dimensões socioeconômicas precisa ser resolvida antes de alterar URLs ou navegação.
 
@@ -60,9 +63,9 @@ Manter detalhes de infraestrutura fora da visão e do documento de UX. Registrar
 
 ## Próxima entrega
 
-Implementar o pipeline do MVP da fase 7, com jobs por fonte, armazenamento conforme os
-[ADRs da fase 6](adr/README.md), agendamento, validação, qualidade, versionamento e
-observabilidade. Conferir a migração da PoC e ensaiar recuperação conforme os
-[critérios de armazenamento](systems/storage.md#migração-e-critérios-para-as-próximas-fases).
-Engine e API seguem nas fases 8 e 9; retirar a PoC somente após substituição verificada,
-conforme o roadmap. A [regra permanente de SEO e descoberta por IA](../AGENTS.md) continua obrigatória.
+Implementar a engine da fase 8: cálculos centralizados e reproduzíveis de variações, valores
+reais e relações como TR2 e CV5, com fórmula, versão, inputs, saída e metodologia. Os
+[pipelines da fase 7](systems/pipelines.md) fornecem os dados normalizados; implantação remota,
+backup Railway e validação de bucket lock R2 continuam sem execução. A API vem na fase 9;
+retirar a PoC somente após substituição verificada, conforme o roadmap. A
+[regra permanente de SEO e descoberta por IA](../AGENTS.md) continua obrigatória.

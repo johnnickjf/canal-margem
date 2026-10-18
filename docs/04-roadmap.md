@@ -443,6 +443,19 @@ Infraestrutura de armazenamento definida e documentada.
 
 ## Fase 7 — Pipeline de dados do MVP
 
+### Estado
+
+Implementada nos [pipelines do MVP](systems/pipelines.md). O [ADR-0007](adr/0007-go-modular-backend.md)
+registra a migração integral para Go, os módulos de domínio, comandos/consultas e pgx/sqlc.
+Jobs independentes para IBGE,
+BCB, ANP, Conab/DIEESE e FJP cobrem os recortes externos e inputs selecionados; não são
+necessários jobs Ipea/Tesouro para este escopo. Há migração PostgreSQL e armazenamento raw por hash e
+criação condicional, com cliente da API compatível com S3 do Cloudflare R2, schema/quality checks, revisões, recibos, locks, cadência e observabilidade.
+A [execução local](systems/evidence/pipelines/verification.json) aceitou 6.375 observações desde
+2012 e repetiu sem novas versões; preservou a PoC sem retirá-la. Dockerfile e cron Railway
+estão preparados. Operação remota, bucket lock R2 e backup nativo permanecem sem ensaio.
+TR2/CV5 serão calculados na fase 8; publicação/ativação permanecem na fase 9.
+
 ### Objetivo
 
 Integrar todas as fontes necessárias para os indicadores selecionados.

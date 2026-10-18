@@ -57,8 +57,13 @@ revisões e exportação JSON. A coleta real desde 2012 aceitou 587 observaçõe
 zero revisões. A fase 6 define a [arquitetura de armazenamento](docs/systems/storage.md):
 PostgreSQL na Railway, raw privado no Cloudflare R2, histórico por manifesto, cache HTTP
 e recuperação por backup nativo da Railway ou reconstrução pelos pipelines, com decisões e custos registrados em [cinco ADRs](docs/adr/README.md). São decisões documentadas;
-banco e buckets ainda não foram implantados. A próxima etapa é o pipeline do MVP na fase 7.
-Agendamento, implementação do armazenamento e publicação de indicadores permanecem posteriores.
+serviços remotos ainda não foram implantados. A fase 7 implementa os
+[pipelines do MVP](docs/systems/pipelines.md): cinco jobs de fontes, PostgreSQL, raw no Cloudflare R2 pela API compatível com S3,
+agendamento, qualidade, histórico e observabilidade. A coleta local real aceitou 6.375
+observações; a repetição não criou versões. A importação da PoC preserva 21 arquivos e
+587 observações, sem promoção pública. A migração para [Go e monólito modular](docs/adr/0007-go-modular-backend.md) preserva
+os contratos e separa comandos de consultas. A próxima etapa é a engine de indicadores da fase 8;
+implantação Railway/R2 e API permanecem posteriores.
 
 ```bash
 pnpm ingestion fetch --from 2025-01 --to 2025-12
@@ -90,8 +95,13 @@ A referência utilitária usa `noindex` e fica fora do sitemap. As páginas edit
 pnpm test:unit      # testes unitários de datas, formatação e títulos
 pnpm test:coverage  # relatório V8 e limites de cobertura por módulo
 pnpm test:e2e       # lint, tipos, build e Playwright
-pnpm test           # validação completa: coverage + test:e2e
+pnpm test:backend   # gofmt + vet + go test -race; serviços por variáveis de teste
+pnpm test           # backend + coverage + test:e2e
 ```
+
+Os jobs usam Go 1.26 (imagem fixada em 1.26.6), pgx e sqlc, sem ORM; consulte
+[configuração, comandos e testes de integração](docs/systems/pipelines.md).
+`pnpm pipeline` acessa a CLI; serviços de teste usam `backend/compose.yaml`.
 
 A CI em [`.github/workflows/tests.yml`](.github/workflows/tests.yml) executa a validação em cada
 PR e push. Sua primeira execução no GitHub depende do envio dessas alterações.
@@ -107,6 +117,7 @@ testes editoriais, validação de rascunhos/RSS e limites estão na [documentaç
 ## Estrutura
 
 ```text
+backend/                    Backend Go: CLI, ingestão, observações, PostgreSQL, cliente R2 e testes
 docs/                       Visão, UX, arquitetura, roadmap e índice de documentação
   brand/                    Manual de marca, tokens e pranchas de referência
   research/                 Investigações e hipóteses

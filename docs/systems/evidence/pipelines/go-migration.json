@@ -1,0 +1,748 @@
+{
+  "scope": "Python-to-Go migration of phase 7 pipelines; local execution, no remote deployment",
+  "recorded_at": "2026-10-17T19:51:12.514796+00:00",
+  "runtime": {
+    "go": "go version go1.26.6 linux/amd64",
+    "postgresql": 18,
+    "s3": "LocalStack 3.8",
+    "backend_subprocess_dependencies": []
+  },
+  "architecture": {
+    "style": "modular monolith",
+    "modules": ["catalog", "ingestion", "observations", "legacy"],
+    "read_write_separation": "commands.go and queries.go in the same process/database",
+    "persistence": "pgx/pgxpool + sqlc 1.31.1; no ORM",
+    "api": "future phase; net/http + chi specified, no server introduced"
+  },
+  "baseline": "verification.json (historical Python collection)",
+  "input": {
+    "window": {
+      "from": "2012-01-01",
+      "to": "2026-10-17"
+    },
+    "observations": 6375,
+    "urls": 340,
+    "raw_objects": 352,
+    "raw_bytes": 91388493,
+    "raw_inventory_sha256": "f23425c2cbe731c3f0b715047d0fb35a22bbec383fea86709ca2d1ddf824b544",
+    "reference_observation_ids_sha256": "54ba54198a8a38e3206030f4700f8b51c1de18466eff4efa03d52b2519baf72a",
+    "monthly_basket_pdfs": 177,
+    "corpus_distribution": "private local raw; CI uses offline synthetic/JSON fixtures"
+  },
+  "preserved": {
+    "catalog_version": "c937cf6dc9d642c7eb4cb78701e723e725e30457f80efdb901a225fc3ad29dc9",
+    "migration_001_sha256": "619e972002f3de07e379cc3f63950485e6ed404964dd33f1c4c20b33477cfaa4",
+    "observation_ids": 6375,
+    "batch_ids": {
+      "ibge": "36ca2c3bfb6f32a24b39e15a7ba1f34690e89d353f83ad69587ec3fea56fbccd",
+      "bcb": "7aeced5853ca8614f9c236cbbdaa4d78b206ffc36512848ac68dff24c14ad24b",
+      "anp": "e0a5e829a07d27bcd1491575c265bdbac58081baeadaa57cbb3069bcd1a4715b",
+      "dieese": "63fdaceb9d59bf8b8c6479a8eadb9b3567f238fac3fca5146f08f7a97d00f567",
+      "fjp": "0a064dc7900615c54d2384833f04d31448f9918617f1e615e36a99bdfea9bb2b"
+    },
+    "legacy": {
+      "manifest": "83ce402e5237bd181870ccbc9dbbd60864903d328a7a49cebdfd943e24eecaec",
+      "files": 21,
+      "observations": 587,
+      "promoted": false
+    }
+  },
+  "replay": {
+    "transport": "original captured responses replayed through net/http -> S3 -> PostgreSQL",
+    "passes": 2,
+    "accepted_observations": 6375,
+    "new_versions_on_second_pass": 0,
+    "by_source": {
+      "ibge": 1619,
+      "bcb": 528,
+      "anp": 762,
+      "dieese": 3459,
+      "fjp": 7
+    },
+    "integrity": {
+      "objects": 351,
+      "bytes": 90979286
+    },
+    "not_requested_raw": [
+      {
+        "sha256": "233a3a959c5cc4565bec28efe9f8d1ac716efc4dd4885e76185ad768234b9f6e",
+        "bytes": 409207
+      }
+    ],
+    "raw_note": "Replay selects the latest captured response per URL. Earlier alternative raw remains in the original store; Docker verify against a database clone confirms all 352 original objects."
+  },
+  "docker": {
+    "migrate": {
+      "migration": "001",
+      "status": "succeeded"
+    },
+    "migrate_repeat": {
+      "migration": "001",
+      "status": "succeeded"
+    },
+    "bcb_live_1": {
+      "source": "bcb",
+      "status": "succeeded",
+      "run": "e7c4fada-320f-4ab9-9840-af4163225689",
+      "batch": "e514ac9913c46f387ac3286ac946a770e3801a215b1bc1d2647fd3523b79a0ee",
+      "observations": 6,
+      "changed": 6
+    },
+    "bcb_live_2": {
+      "source": "bcb",
+      "status": "succeeded",
+      "run": "d8ed06f8-ea03-4129-917e-8694afc2a5cb",
+      "batch": "e514ac9913c46f387ac3286ac946a770e3801a215b1bc1d2647fd3523b79a0ee",
+      "observations": 6,
+      "changed": 0
+    },
+    "status_incomplete": {
+      "healthy": false,
+      "sources": [
+        {
+          "source": "ibge",
+          "healthy": false,
+          "latest": null,
+          "last_success": null,
+          "coverage": [],
+          "stale_series": []
+        },
+        {
+          "source": "bcb",
+          "healthy": false,
+          "latest": {
+            "changed": 0,
+            "error": null,
+            "finished_at": "2026-10-17T19:49:13.732568Z",
+            "id": "d8ed06f8-ea03-4129-917e-8694afc2a5cb",
+            "observations": 6,
+            "started_at": "2026-10-17T19:49:13.532531Z",
+            "status": "succeeded"
+          },
+          "last_success": {
+            "batch": "e514ac9913c46f387ac3286ac946a770e3801a215b1bc1d2647fd3523b79a0ee",
+            "finished_at": "2026-10-17T19:49:13.732568Z"
+          },
+          "coverage": [
+            {
+              "series": "minimum-nominal",
+              "first_period": "2025-01-01",
+              "last_period": "2025-02-28",
+              "observations": 2,
+              "unavailable": 0
+            },
+            {
+              "series": "vf1",
+              "first_period": "2025-01-01",
+              "last_period": "2025-02-28",
+              "observations": 2,
+              "unavailable": 0
+            },
+            {
+              "series": "vf2",
+              "first_period": "2025-01-01",
+              "last_period": "2025-02-28",
+              "observations": 2,
+              "unavailable": 0
+            }
+          ],
+          "stale_series": ["minimum-nominal", "vf1", "vf2"]
+        },
+        {
+          "source": "anp",
+          "healthy": false,
+          "latest": null,
+          "last_success": null,
+          "coverage": [],
+          "stale_series": []
+        },
+        {
+          "source": "dieese",
+          "healthy": false,
+          "latest": null,
+          "last_success": null,
+          "coverage": [],
+          "stale_series": []
+        },
+        {
+          "source": "fjp",
+          "healthy": false,
+          "latest": null,
+          "last_success": null,
+          "coverage": [],
+          "stale_series": []
+        }
+      ]
+    },
+    "verify_live": {
+      "status": "verified",
+      "objects": 3,
+      "bytes": 233
+    },
+    "clone_migrate": {
+      "migration": "001",
+      "status": "succeeded"
+    },
+    "clone_status": {
+      "healthy": true,
+      "sources": [
+        {
+          "source": "ibge",
+          "healthy": true,
+          "latest": {
+            "changed": 0,
+            "error": null,
+            "finished_at": "2026-10-17T19:10:15.064235Z",
+            "id": "a0b1c8a5-40b7-4a1f-be63-35281b900be1",
+            "observations": 1619,
+            "started_at": "2026-10-17T19:10:09.588246Z",
+            "status": "succeeded"
+          },
+          "last_success": {
+            "batch": "36ca2c3bfb6f32a24b39e15a7ba1f34690e89d353f83ad69587ec3fea56fbccd",
+            "finished_at": "2026-10-17T19:10:15.064235Z"
+          },
+          "coverage": [
+            {
+              "series": "cv1-12m",
+              "first_period": "2012-01-01",
+              "last_period": "2026-09-30",
+              "observations": 177,
+              "unavailable": 0
+            },
+            {
+              "series": "cv1-monthly",
+              "first_period": "2012-01-01",
+              "last_period": "2026-09-30",
+              "observations": 177,
+              "unavailable": 0
+            },
+            {
+              "series": "cv2-current-12m",
+              "first_period": "2020-01-01",
+              "last_period": "2026-09-30",
+              "observations": 81,
+              "unavailable": 11
+            },
+            {
+              "series": "cv2-current-monthly",
+              "first_period": "2020-01-01",
+              "last_period": "2026-09-30",
+              "observations": 81,
+              "unavailable": 0
+            },
+            {
+              "series": "cv2-old-12m",
+              "first_period": "2012-01-01",
+              "last_period": "2019-12-31",
+              "observations": 96,
+              "unavailable": 11
+            },
+            {
+              "series": "cv2-old-monthly",
+              "first_period": "2012-01-01",
+              "last_period": "2019-12-31",
+              "observations": 96,
+              "unavailable": 0
+            },
+            {
+              "series": "ee1",
+              "first_period": "2012-01-01",
+              "last_period": "2023-12-31",
+              "observations": 12,
+              "unavailable": 0
+            },
+            {
+              "series": "inpc-12m",
+              "first_period": "2012-01-01",
+              "last_period": "2026-09-30",
+              "observations": 177,
+              "unavailable": 0
+            },
+            {
+              "series": "inpc-index",
+              "first_period": "2012-01-01",
+              "last_period": "2026-09-30",
+              "observations": 177,
+              "unavailable": 0
+            },
+            {
+              "series": "inpc-monthly",
+              "first_period": "2012-01-01",
+              "last_period": "2026-09-30",
+              "observations": 177,
+              "unavailable": 0
+            },
+            {
+              "series": "participation",
+              "first_period": "2012-01-01",
+              "last_period": "2026-06-30",
+              "observations": 58,
+              "unavailable": 0
+            },
+            {
+              "series": "qv1",
+              "first_period": "2012-01-01",
+              "last_period": "2024-12-31",
+              "observations": 13,
+              "unavailable": 0
+            },
+            {
+              "series": "qv2",
+              "first_period": "2012-01-01",
+              "last_period": "2025-12-31",
+              "observations": 14,
+              "unavailable": 0
+            },
+            {
+              "series": "qv3",
+              "first_period": "2023-01-01",
+              "last_period": "2024-12-31",
+              "observations": 2,
+              "unavailable": 0
+            },
+            {
+              "series": "qv3-mild",
+              "first_period": "2023-01-01",
+              "last_period": "2024-12-31",
+              "observations": 2,
+              "unavailable": 0
+            },
+            {
+              "series": "qv3-moderate",
+              "first_period": "2023-01-01",
+              "last_period": "2024-12-31",
+              "observations": 2,
+              "unavailable": 0
+            },
+            {
+              "series": "qv3-severe",
+              "first_period": "2023-01-01",
+              "last_period": "2024-12-31",
+              "observations": 2,
+              "unavailable": 0
+            },
+            {
+              "series": "tr1",
+              "first_period": "2012-01-01",
+              "last_period": "2026-06-30",
+              "observations": 58,
+              "unavailable": 0
+            },
+            {
+              "series": "tr3",
+              "first_period": "2012-01-01",
+              "last_period": "2026-06-30",
+              "observations": 58,
+              "unavailable": 0
+            },
+            {
+              "series": "tr4",
+              "first_period": "2012-01-01",
+              "last_period": "2026-06-30",
+              "observations": 58,
+              "unavailable": 0
+            },
+            {
+              "series": "tr5",
+              "first_period": "2015-10-01",
+              "last_period": "2026-06-30",
+              "observations": 43,
+              "unavailable": 0
+            },
+            {
+              "series": "underutilization",
+              "first_period": "2012-01-01",
+              "last_period": "2026-06-30",
+              "observations": 58,
+              "unavailable": 0
+            }
+          ],
+          "stale_series": []
+        },
+        {
+          "source": "bcb",
+          "healthy": true,
+          "latest": {
+            "changed": 0,
+            "error": null,
+            "finished_at": "2026-10-17T19:07:05.602446Z",
+            "id": "0d6be5bc-8800-4c23-8bf3-de7353401b15",
+            "observations": 528,
+            "started_at": "2026-10-17T19:07:05.10347Z",
+            "status": "succeeded"
+          },
+          "last_success": {
+            "batch": "7aeced5853ca8614f9c236cbbdaa4d78b206ffc36512848ac68dff24c14ad24b",
+            "finished_at": "2026-10-17T19:07:05.602446Z"
+          },
+          "coverage": [
+            {
+              "series": "minimum-nominal",
+              "first_period": "2012-01-01",
+              "last_period": "2026-09-30",
+              "observations": 177,
+              "unavailable": 0
+            },
+            {
+              "series": "vf1",
+              "first_period": "2012-01-01",
+              "last_period": "2026-07-31",
+              "observations": 175,
+              "unavailable": 0
+            },
+            {
+              "series": "vf2",
+              "first_period": "2012-01-01",
+              "last_period": "2026-08-31",
+              "observations": 176,
+              "unavailable": 0
+            }
+          ],
+          "stale_series": []
+        },
+        {
+          "source": "anp",
+          "healthy": true,
+          "latest": {
+            "changed": 0,
+            "error": null,
+            "finished_at": "2026-10-17T19:07:08.007719Z",
+            "id": "52554eea-f41b-4bd3-8289-0c0e9f73927f",
+            "observations": 762,
+            "started_at": "2026-10-17T19:07:05.103395Z",
+            "status": "succeeded"
+          },
+          "last_success": {
+            "batch": "e0a5e829a07d27bcd1491575c265bdbac58081baeadaa57cbb3069bcd1a4715b",
+            "finished_at": "2026-10-17T19:07:08.007719Z"
+          },
+          "coverage": [
+            {
+              "series": "cv3",
+              "first_period": "2012-01-01",
+              "last_period": "2026-10-10",
+              "observations": 762,
+              "unavailable": 0
+            }
+          ],
+          "stale_series": []
+        },
+        {
+          "source": "dieese",
+          "healthy": true,
+          "latest": {
+            "changed": 0,
+            "error": null,
+            "finished_at": "2026-10-17T19:07:48.466523Z",
+            "id": "a4820616-3daa-474a-b256-71942cc9abf0",
+            "observations": 3459,
+            "started_at": "2026-10-17T19:07:08.299339Z",
+            "status": "succeeded"
+          },
+          "last_success": {
+            "batch": "63fdaceb9d59bf8b8c6479a8eadb9b3567f238fac3fca5146f08f7a97d00f567",
+            "finished_at": "2026-10-17T19:07:48.466523Z"
+          },
+          "coverage": [
+            {
+              "series": "cv4",
+              "first_period": "2012-01-01",
+              "last_period": "2026-09-30",
+              "observations": 3459,
+              "unavailable": 20
+            }
+          ],
+          "stale_series": []
+        },
+        {
+          "source": "fjp",
+          "healthy": true,
+          "latest": {
+            "changed": 0,
+            "error": null,
+            "finished_at": "2026-10-17T19:07:13.2805Z",
+            "id": "b74252f8-c1f3-4522-9152-5284ee3c33e3",
+            "observations": 7,
+            "started_at": "2026-10-17T19:07:05.740585Z",
+            "status": "succeeded"
+          },
+          "last_success": {
+            "batch": "0a064dc7900615c54d2384833f04d31448f9918617f1e615e36a99bdfea9bb2b",
+            "finished_at": "2026-10-17T19:07:13.2805Z"
+          },
+          "coverage": [
+            {
+              "series": "cv6",
+              "first_period": "2016-01-01",
+              "last_period": "2024-12-31",
+              "observations": 7,
+              "unavailable": 0
+            }
+          ],
+          "stale_series": []
+        }
+      ]
+    },
+    "clone_tick": [
+      {
+        "source": "ibge",
+        "status": "not-due"
+      },
+      {
+        "source": "bcb",
+        "status": "not-due"
+      },
+      {
+        "source": "anp",
+        "status": "not-due"
+      },
+      {
+        "source": "dieese",
+        "status": "not-due"
+      },
+      {
+        "source": "fjp",
+        "status": "not-due"
+      }
+    ],
+    "clone_verify": {
+      "status": "verified",
+      "objects": 352,
+      "bytes": 91388493
+    },
+    "image": {
+      "id": "sha256:b68c0a4e3787ba316f1b80bc22624cd1ab7b2daf49857c1dd5cd2fd8dff63c31",
+      "bytes": 10119025,
+      "user": "10001:10001"
+    }
+  },
+  "validation": {
+    "gofmt_vet_race": "passed",
+    "configured_postgresql_s3_race": "passed; temporary databases checked with current_database() before migration",
+    "official_corpus_ids": "passed for all five sources on final canonical serializer",
+    "official_legacy_identity": "passed",
+    "full_replay_two_passes": "passed; five Python batch IDs preserved",
+    "sqlc_regeneration": "passed; three generated files byte-identical",
+    "cli_relative_poc_path": "passed through development wrapper",
+    "actionlint": "passed v1.7.7",
+    "biome_astro_check": "passed, zero errors/warnings/hints",
+    "frontend_unit": "87 passed; existing coverage gates passed",
+    "frontend_build_browser_seo": "35 passed",
+    "docker_build_and_live_bcb": "passed; two real collections, six observations, zero new versions on repeat",
+    "existing_database_clone": "migration/status/tick/verify passed; 352 objects / 91388493 bytes"
+  },
+  "validation_log_sha256": {
+    "integration-full.log": "923d3b0470487b827cbddd82ec05aca5986ffab9dc703426d23805dc48518e4a",
+    "corpus-final.log": "9d5de7f9c554bd3c2de25411b11685903684049970e6a98038ab09394e2969d0",
+    "integration-race-final.log": "09cd2e763fb2814a9e934487fabea869985d30102064c7d13d7be87a5962b857",
+    "go-check-final.log": "67d68d8eeed35e7884baa2084326a40f64cf949a7da6a6b55d9cad12b391fd77",
+    "frontend-unit.log": "84aa341e6ad16a5263a60444ceef041dc2dab71d93d776f3f284cbbab3f79a2c",
+    "frontend-e2e.log": "bc7ea6673cf6ce17aeab90ee3f86ce89793960daaab929aeb76dfbf2fda02e9e",
+    "check-final.log": "f559367720ca9f4aa133ba8cad2c7ff6d5e9a69a4d7f9a7557f8d62a9e839a38",
+    "docker-build-final.log": "dc581c39b9cad7164058b306b24121883cfc24c45c9d1a7eb7661fc763a4b3c1",
+    "docker-smoke.log": "7b10eefc4b5d2814611d48f7ad10b51a25c212150a2bb15b4aa1e4d2f79998a1"
+  },
+  "not_verified": [
+    "Railway deployment, scheduling, monitoring and native backup/restore",
+    "Remote R2 bucket lock and credentials",
+    "Engine, publication/activation and public API implementation",
+    "Comparative performance, memory or cost benchmark",
+    "Fresh Go network collection of the full historical IBGE/ANP/DIEESE/FJP corpus"
+  ],
+  "code_manifest_sha256": "4bdac169bf490aa28786a1e00248354cd19c9bdc4e176e1a08e453fedeb1675b",
+  "code": [
+    {
+      "path": ".github/workflows/tests.yml",
+      "sha256": "401f3a12604b5f5f6cbf01445d89a6ef80027486beb20e8f8b6af56792cd8790"
+    },
+    {
+      "path": "backend/.env.example",
+      "sha256": "4dc1b0ce6225e3fde38bf64a193eda3f0e363570954c18658f357f76263c27b0"
+    },
+    {
+      "path": "backend/Dockerfile",
+      "sha256": "189bc4764e9e86fa4c0db9f464d9ef9532ed3c31d78ecc126aa3589d852db33b"
+    },
+    {
+      "path": "backend/README.md",
+      "sha256": "fbf2adbe98b8236381f5da7706322b1dbc318427574bdea41b64a35f5fc46326"
+    },
+    {
+      "path": "backend/cmd/margem/main.go",
+      "sha256": "5f8394d81154a58a4e13dfd9757eeb9cbe36e6b2150f8f07224c6f3c43e66a2b"
+    },
+    {
+      "path": "backend/compose.yaml",
+      "sha256": "c0c9a77541c241ea14dcd6fe608b5d953f3554c46b3a9b593ceb9a3fb599becb"
+    },
+    {
+      "path": "backend/go.mod",
+      "sha256": "c58b96f1232c6880f62d84e34f330c1fe4aa7011088997001ff8f1ef47de6595"
+    },
+    {
+      "path": "backend/go.sum",
+      "sha256": "cf6669fd544d08c36c62ca3509451089a013b7f44bfbec2fd9f4314a72e3b0f8"
+    },
+    {
+      "path": "backend/integration/pipeline_test.go",
+      "sha256": "5576762af8791060f8cd58f3bda0a901f37387618529a3450b040b7adff414fe"
+    },
+    {
+      "path": "backend/internal/app/cli.go",
+      "sha256": "56edf0b064009a3adc5694a02a799cf12f5f553565298b859c7ff6058dbd7454"
+    },
+    {
+      "path": "backend/internal/app/cli_test.go",
+      "sha256": "1577387e96a2c80f954e0f56dacc13642d0cdb5ecd97c6c1923380318299fc5a"
+    },
+    {
+      "path": "backend/internal/catalog/catalog.go",
+      "sha256": "f122b94c949f1d05c409db1e58526e30827a2e570251e26b9571b1ca9da6361b"
+    },
+    {
+      "path": "backend/internal/catalog/series.json",
+      "sha256": "058abfa8ba90b0910d89c7e1320dc6fabdaaf538cb119e12aedc53793165ef37"
+    },
+    {
+      "path": "backend/internal/ingestion/api_sources.go",
+      "sha256": "627bfc2f259368a1caf047872b1bfbc319de20090f44795751fe54e53ed497c0"
+    },
+    {
+      "path": "backend/internal/ingestion/basket-pages_test.json",
+      "sha256": "61b944baf4a11bcadc0aca8a305b00cbd53737fa03af108e40acdc4112ee9f73"
+    },
+    {
+      "path": "backend/internal/ingestion/basket.go",
+      "sha256": "bec31364d43bf84c480a76943910d3690f7eaa3729dc3b7c10fe9f0f15d4b739"
+    },
+    {
+      "path": "backend/internal/ingestion/commands.go",
+      "sha256": "1aac79b41a882bfb1f7f0ab5a3cffaf69d2a77ebdaf272300fab55559738ae0e"
+    },
+    {
+      "path": "backend/internal/ingestion/file_sources.go",
+      "sha256": "8102a21c8280a093f9e433b7bc64b9a05d670fdba6bb9cdf7886c3555f34528c"
+    },
+    {
+      "path": "backend/internal/ingestion/files.json",
+      "sha256": "84c6a2187fab87160281ad09ab7631dcb2b6d0dc05abd2ccfb182f4a411d8a2e"
+    },
+    {
+      "path": "backend/internal/ingestion/http.go",
+      "sha256": "081dc5badcf098421d32685e819b237e5ac2f2b2a0f96d0b374d46d935f01353"
+    },
+    {
+      "path": "backend/internal/ingestion/migration_test.go",
+      "sha256": "1500a81bb1d49051e0f7934375df1f625a2a1a706afedc06ceb046bc1139abd9"
+    },
+    {
+      "path": "backend/internal/ingestion/pdf_text.go",
+      "sha256": "8322b20c11dc227a3f8ef3a6a79c22068e146ff1018b9c995bf87eb63a552461"
+    },
+    {
+      "path": "backend/internal/ingestion/queries.go",
+      "sha256": "ba670dc871052fcc42c082443123fc977bd7e4f95194d7960e0df1cbf5b9f63d"
+    },
+    {
+      "path": "backend/internal/ingestion/sources_test.go",
+      "sha256": "b4445724c78cccf773bb19ce435de045e4acb1118ee65d26dd27879b0cecbe28"
+    },
+    {
+      "path": "backend/internal/ingestion/spreadsheets.go",
+      "sha256": "d66c1bb014aa2b739748b0fab872f3e68918a5ecee87937bd971d9decc26961a"
+    },
+    {
+      "path": "backend/internal/legacy/import.go",
+      "sha256": "32025ef3c77c0241716c1089572d3455881cadd55d2584cebcbf6b4a6cdaa35a"
+    },
+    {
+      "path": "backend/internal/legacy/import_test.go",
+      "sha256": "5db7f2031ccea4276e7013907cf3fb419b21677b807f4d185a49b50e18b992c9"
+    },
+    {
+      "path": "backend/internal/observations/commands.go",
+      "sha256": "88530718878f702fd327367b8dde66a6b9d44ce2019684993b6ddd603482e5cf"
+    },
+    {
+      "path": "backend/internal/observations/domain.go",
+      "sha256": "76fef46281d24cc6dc3aeda2a9f1ebeb817d22d232c87ae64e3c71e1efc1464a"
+    },
+    {
+      "path": "backend/internal/observations/domain_test.go",
+      "sha256": "59ea9bd153d93f6925669c5ad1b20ac74a1028c0671997ebbb54c734a62757ea"
+    },
+    {
+      "path": "backend/internal/observations/queries.go",
+      "sha256": "e5197658c543a2bb67c5de6b28e2c3da1b30c15087a203e84e4da5bb3083d99f"
+    },
+    {
+      "path": "backend/internal/period/period.go",
+      "sha256": "f2b7a58c930b151fd27989ffb349b4b4d46ac68268aea35736899f63b9aa75a6"
+    },
+    {
+      "path": "backend/internal/platform/canonical/json.go",
+      "sha256": "f6f5ae39c341d89e5ec1294f13ba90d2bb9f68b753b26c5891a7268cb05ea105"
+    },
+    {
+      "path": "backend/internal/platform/canonical/json_test.go",
+      "sha256": "6aacf2fc14bb98b6cb984288b14385ba3c91686cd9e5303cf768d09048d8b0ea"
+    },
+    {
+      "path": "backend/internal/platform/objectstore/s3.go",
+      "sha256": "c19844d763d272d4566d5b5c684ae2c201c41352298153be507955fb3f67a139"
+    },
+    {
+      "path": "backend/internal/platform/postgres/001.sql",
+      "sha256": "619e972002f3de07e379cc3f63950485e6ed404964dd33f1c4c20b33477cfaa4"
+    },
+    {
+      "path": "backend/internal/platform/postgres/db.go",
+      "sha256": "645a66554b42c18dc7684b859f349454a4c0ce1599fabca168b88cbda09d608e"
+    },
+    {
+      "path": "backend/internal/platform/postgres/migrate.go",
+      "sha256": "a8a5dec788aa1725380e6a3ada7ae02fa3ba3558ce486731c194427df6d3e8e5"
+    },
+    {
+      "path": "backend/internal/platform/postgres/models.go",
+      "sha256": "15f6c0fb46a1bbd5c61f9bc252cc32d21dd5c218ae37a1c0f6e2c321474a61fb"
+    },
+    {
+      "path": "backend/internal/platform/postgres/queries.sql",
+      "sha256": "3b5081085f59e10549c91d7e04626e9d116e032d28df1329f5c5f25a43a33b73"
+    },
+    {
+      "path": "backend/internal/platform/postgres/queries.sql.go",
+      "sha256": "dd33dd99a114314e7e068c9bb8aabe53e90b1b709fa7f5bf0d7061ea02777b1f"
+    },
+    {
+      "path": "backend/internal/platform/postgres/values.go",
+      "sha256": "e67a3e0b262da376d5f2832e2dc5839a5bda487ec541139ee3d6ac813ac140db"
+    },
+    {
+      "path": "backend/railway.toml",
+      "sha256": "ccf469b8068bfdd2c5d983dee10a258bb6951632b959bd68e646907456c5a4f2"
+    },
+    {
+      "path": "backend/runtime-grants.sql",
+      "sha256": "4e7bb27644a969e143e20e9670cab320ca4bd541f0d413406e130d86526692f2"
+    },
+    {
+      "path": "backend/scripts/check.sh",
+      "sha256": "c3c8415ef05f14909292e9a9c87c955544726f1fbd12e89b270b43adc193ae98"
+    },
+    {
+      "path": "backend/scripts/run.mjs",
+      "sha256": "6de8c287f28349068472fa85c0e5f077a7001f78f9fbf6885a0f8e58f695ed71"
+    },
+    {
+      "path": "backend/sqlc.yaml",
+      "sha256": "5553425205efdc2ea5434f7502b47cc04f1d881a6bc93aff0d23f45eadc7c7cc"
+    },
+    {
+      "path": "package.json",
+      "sha256": "0054a138431ce13c7308bf410da65d130bdb7e7a060c11ef005581f51f3f324f"
+    }
+  ]
+}

@@ -48,3 +48,52 @@ jobs:
             test-results/
           retention-days: 14
           if-no-files-found: warn
+
+  backend:
+    name: Pipelines, PostgreSQL e API compatível com S3 (LocalStack)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    services:
+      postgres:
+        image: postgres:18-alpine
+        env:
+          POSTGRES_DB: margem
+          POSTGRES_USER: margem
+          POSTGRES_PASSWORD: local-only
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U margem -d margem"
+          --health-interval 2s --health-timeout 2s --health-retries 30
+      s3:
+        image: localstack/localstack:3.8
+        env:
+          SERVICES: s3
+        ports:
+          - 4566:4566
+        options: >-
+          --health-cmd "curl -f http://localhost:4566/_localstack/health"
+          --health-interval 2s --health-timeout 2s --health-retries 30
+    env:
+      TEST_DATABASE_URL: postgresql://margem:local-only@127.0.0.1:5432/margem
+      TEST_S3_ENDPOINT_URL: http://127.0.0.1:4566
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-go@v6
+        with:
+          go-version: '1.26.6'
+          cache-dependency-path: backend/go.sum
+      - name: Verificar formatação, vet e testes com detector de corridas
+        env:
+          REQUIRE_INTEGRATION: '1'
+        run: sh backend/scripts/check.sh
+      - name: Verificar geração SQL
+        run: |
+          go -C backend generate ./internal/platform/postgres
+          git diff --exit-code -- backend/internal/platform/postgres
+      - name: Construir imagem e verificar CLI
+        run: |
+          docker build -t margem-pipeline:ci backend
+          docker run --rm margem-pipeline:ci --help

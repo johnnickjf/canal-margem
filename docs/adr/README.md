@@ -2,7 +2,8 @@
 
 A fase 6 registra decisões aceitas para implementação, baseadas na
 [medição da PoC](../systems/evidence/storage/measurement.json). Aceitação do desenho não
-significa implantação: o sistema executável continua sendo a PoC local da fase 5.
+significa implantação remota. Os [pipelines da fase 7](../systems/pipelines.md) implementam
+PostgreSQL e API compatível com S3 (R2 em produção) e os jobs, verificados localmente; a PoC permanece até a transição da fase 9.
 
 | ADR | Decisão | Estado |
 |---|---|---|
@@ -11,6 +12,8 @@ significa implantação: o sistema executável continua sendo a PoC local da fas
 | [0003 — Versionamento e cache](0003-data-versioning-and-cache.md) | Histórico imutável, publicação transacional e cache HTTP por manifesto | Aceito; engine/API posteriores |
 | [0004 — Retenção e recuperação](0004-retention-and-recovery.md) | Backup nativo Railway e reconstrução; possível perda de versões após desastre; sem RPO/RTO fixos | Aceito; ensaios de recuperação pendentes |
 | [0005 — Hospedagem e portabilidade](0005-hosting-and-portability.md) | Railway para API/jobs/banco; projeções R2; orçamento de referência e saída por protocolos | Aceito; sem contratação ou deploy |
+| [0006 — Runtime dos pipelines](0006-pipeline-runtime.md) | Primeira implementação Python dos jobs | Substituído pelo ADR-0007 |
+| [0007 — Backend Go modular](0007-go-modular-backend.md) | Go integral, DDD, comandos/consultas, pgx/sqlc e SQL explícito; sem ORM | Pipelines implementados; engine/API posteriores |
 
 Nomear registros sequencialmente: `0001-assunto.md`. Cada ADR deve conter status (proposto, aceito, rejeitado ou substituído), data, contexto, alternativas, decisão, consequências e evidências relacionadas. Decisões substituídas devem apontar para o novo registro.
 

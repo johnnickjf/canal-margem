@@ -2,7 +2,11 @@
 
 ## Status
 
-Requisitos para a arquitetura futura. A [PoC da fase 5](systems/ingestion.md) implementa ingestão IBGE/BCB, armazenamento local e exportação JSON. API pública, banco definitivo, engine e pipelines recorrentes ainda não estão implementados. O frontend é estático; sua base está inventariada na [auditoria da fase 0](systems/frontend.md). O [modelo conceitual da fase 2](systems/data-model.md) fixa entidades e semântica dos dados, sem escolher infraestrutura.
+Requisitos para a arquitetura futura. A [PoC da fase 5](systems/ingestion.md) implementa ingestão IBGE/BCB, armazenamento local e exportação JSON. Os [pipelines da fase 7](systems/pipelines.md) implementam as cinco fontes, PostgreSQL e API compatível com S3 (R2 em produção),
+qualidade, histórico, agendamento e diagnóstico. O [ADR-0007](adr/0007-go-modular-backend.md)
+fixa Go, monólito modular orientado pelo domínio, comandos/consultas separados e pgx/sqlc
+sem ORM; a migração preserva IDs e lotes da coleta local original. API pública e
+engine ainda não estão implementadas; operação Railway/R2 não foi implantada. O frontend é estático; sua base está inventariada na [auditoria da fase 0](systems/frontend.md). O [modelo conceitual da fase 2](systems/data-model.md) fixa entidades e semântica dos dados, sem escolher infraestrutura.
 
 As [decisões da fase 6](systems/storage.md) definem PostgreSQL 18 na Railway, Cloudflare R2 privado,
 histórico/publicação por manifesto, projeções cacheáveis e recuperação por backup nativo ou
@@ -292,7 +296,9 @@ O sistema deverá possuir mecanismos para:
 - validar resultados;
 - publicar nova versão.
 
-Coleta, aceitação validada e ativação pública são momentos distintos, definidos no [catálogo](systems/data-operations.md#três-momentos-distintos). O canal muda de publicação de forma indivisível, com geração esperada para detectar concorrência. Preparação parcial não muda a visão pública; derivadas pendentes são informadas sem misturar resultados antigos com inputs revisados. As garantias são requisitos conceituais; a fase 6 define sua futura persistência em PostgreSQL e R2, com jobs/API na Railway, sem pipeline definitivo implementado.
+Coleta, aceitação validada e ativação pública são momentos distintos, definidos no [catálogo](systems/data-operations.md#três-momentos-distintos). O canal muda de publicação de forma indivisível, com geração esperada para detectar concorrência. Preparação parcial não muda a visão pública; derivadas pendentes são informadas sem misturar resultados antigos com inputs revisados. As garantias de publicação são requisitos conceituais; a ingestão e aceitação já existem
+nos jobs Go da fase 7. Manifestos, engine e API continuam nas fases seguintes, com PostgreSQL/R2
+e hospedagem Railway definidos na fase 6.
 
 Fluxo conceitual:
 
@@ -436,7 +442,7 @@ Um ADR deverá explicar:
 ## 16. Decisões ainda em aberto
 
 Armazenamento, hospedagem inicial, portabilidade, retenção e recuperação foram definidos nos
-[ADRs da fase 6](adr/README.md); o estado observado continua sendo a PoC local.
+[ADRs da fase 6](adr/README.md); o estado observado inclui a PoC e os pipelines Go locais, sem implantação remota.
 Permanecem abertas:
 
 - região e dimensionamento do PostgreSQL/serviços Railway, configuração R2 e backup nativo Railway;

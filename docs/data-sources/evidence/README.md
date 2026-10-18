@@ -23,22 +23,23 @@ Os XLS da SIS foram convertidos para XLSX em diretório temporário por LibreOff
 Na raiz do repositório, sem rede ou dependências adicionais:
 
 ```sh
-python3 - <<'PY'
-from pathlib import Path
-import hashlib
-import json
+node --input-type=module <<'JS'
+import assert from 'node:assert/strict';
+import { createHash } from 'node:crypto';
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
 
-base = Path('docs/data-sources/evidence')
-manifest = json.loads((base / 'manifest.json').read_text())
-for capture in manifest['captures']:
-    if capture['artifact'] is None:
-        continue
-    artifact = base / capture['artifact']
-    actual = hashlib.sha256(artifact.read_bytes()).hexdigest()
-    assert actual == capture['artifact_sha256'], artifact
-    json.loads(artifact.read_text())
-print('Hashes e sintaxe JSON conferidos.')
-PY
+const base = 'docs/data-sources/evidence';
+const manifest = JSON.parse(readFileSync(join(base, 'manifest.json'), 'utf8'));
+for (const capture of manifest.captures) {
+  if (capture.artifact === null) continue;
+  const artifact = join(base, capture.artifact);
+  const bytes = readFileSync(artifact);
+  assert.equal(createHash('sha256').update(bytes).digest('hex'), capture.artifact_sha256, artifact);
+  JSON.parse(bytes.toString('utf8'));
+}
+console.log('Hashes e sintaxe JSON conferidos.');
+JS
 ```
 
 Essa conferência prova integridade dos artefatos, não semântica ou disponibilidade da fonte. As fichas documentam os recortes; a [auditoria](../verification.md) registra verificações de cobertura, denominadores, lacunas e cálculos feitas nesta entrega. Para reproduzir uma consulta externa, usar a URL exata do manifesto e validar IDs, unidade e período antes de comparar valores.

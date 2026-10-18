@@ -1,0 +1,8 @@
+# Serviço com Root Directory /backend. Railway usa cron UTC.
+[build]
+builder = "DOCKERFILE"
+dockerfilePath = "Dockerfile"
+
+[deploy]
+cronSchedule = "17 * * * *"
+restartPolicyType = "NEVER"

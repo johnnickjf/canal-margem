@@ -12,7 +12,8 @@ pnpm exec playwright install chromium  # primeira instalação local
 pnpm test:unit                         # Vitest, sem medir cobertura
 pnpm test:coverage                     # Vitest, relatório e limites por módulo
 pnpm test:e2e                          # lint, tipos, build e Playwright
-pnpm test                              # cobertura + test:e2e
+pnpm test:backend                      # gofmt + vet + go test -race; Go
+pnpm test                              # backend + cobertura + test:e2e
 pnpm test:e2e:ui                        # interface do Playwright; requer build existente
 ```
 
@@ -85,4 +86,27 @@ O workflow foi validado localmente com actionlint. Sua execução no GitHub depe
 
 ## Limites
 
-Não há testes Firefox, WebKit ou em aparelhos físicos, cobertura de todos os fluxos editoriais, comparação visual automática ou execução contra produção. Axe e navegação por teclado fornecem evidências parciais de acessibilidade; não substituem avaliação assistiva. Os testes locais de SEO não comprovam indexação externa. Fórmulas e pipelines recorrentes ainda não existem. A [PoC de ingestão](ingestion.md) tem execução local real e testes offline; não há verificação de produção ou teste dependente da disponibilidade das APIs na CI.
+Não há testes Firefox, WebKit ou em aparelhos físicos, cobertura de todos os fluxos editoriais, comparação visual automática ou execução contra produção. Axe e navegação por teclado fornecem evidências parciais de acessibilidade; não substituem avaliação assistiva. Os testes locais de SEO não comprovam indexação externa. Fórmulas pertencem à fase 8. Os [pipelines da fase 7](pipelines.md) têm execução local e
+agendamento configurado; operação recorrente remota não foi observada. A [PoC de ingestão](ingestion.md) tem execução local real e testes offline; não há verificação de produção ou teste dependente da disponibilidade das APIs na CI.
+
+
+## Backend dos pipelines
+
+`pnpm test:backend` verifica gofmt, executa `go vet` e `go test -race` em `backend/`.
+Sem `TEST_DATABASE_URL`/`TEST_S3_ENDPOINT_URL`, testes de serviços são explicitamente ignorados.
+Com `REQUIRE_INTEGRATION=1`, ausência de configuração é erro. Cada cenário cria banco e
+bucket aleatórios; `current_database()` é conferido antes de migrar ou testar. A CI exige
+integração, com PostgreSQL 18 e LocalStack S3, e verifica a geração SQL pelo sqlc.
+
+A suíte cobre contratos de JSON, decimais, períodos, classificações, XLSX, layouts de cesta,
+ToUnicode/posicionamento PDF, ausência/zero, idempotência, revisão, proveniência, retries,
+falhas após upload, rollback, locks, cadência, permissões, integridade e importação da PoC.
+O detector de corridas exercita também criação condicional concorrente na API S3 emulada pelo LocalStack.
+O [manual](pipelines.md) contém preparação e execução.
+
+A [validação da migração Go](evidence/pipelines/go-migration.json) usa o corpus privado dos
+bytes oficiais preservados na coleta Python. `MIGRATION_CORPUS` habilita comparação de todos
+os IDs e replay de ponta a ponta; `MIGRATION_POC` acrescenta a importação do arquivo original.
+Esse corpus não é requisito da CI nem prova de consulta atual aos provedores. A
+[evidência Python](evidence/pipelines/verification.json) permanece histórica. Nenhuma dessas
+verificações comprova implantação Railway/R2.
