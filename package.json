@@ -22,7 +22,6 @@
     "test": "pnpm test:backend && pnpm test:coverage && pnpm test:e2e",
     "test:e2e": "pnpm build && playwright test",
     "test:e2e:ui": "playwright test --ui",
-    "ingestion": "node --experimental-strip-types src/ingestion/cli.ts",
     "pipeline": "node backend/scripts/run.mjs",
     "test:backend": "sh backend/scripts/check.sh",
     "generate:backend": "go -C backend generate ./internal/platform/postgres"

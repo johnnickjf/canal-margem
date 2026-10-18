@@ -1,0 +1,175 @@
+{
+  "scope": "Phase 9 implementation and local execution; no Railway/R2/CDN deployment or frontend integration",
+  "recorded_at": "2026-10-18T18:49:48.754618+00:00",
+  "runtime": {
+    "go": "go version go1.26.6 linux/amd64",
+    "postgresql": 18,
+    "object_storage": "LocalStack 3.8 S3; distinct private raw/public projection buckets"
+  },
+  "live_ingestion": {
+    "source": "IBGE official APIs and SIS workbook",
+    "window": {
+      "from": "2025-01-01",
+      "to": "2025-12-31"
+    },
+    "first": {
+      "source": "ibge",
+      "status": "succeeded",
+      "run": "e87b93a4-03f5-4a1b-88ed-d0a17ed43b46",
+      "batch": "148cae0b1a15c1f288fa760d59a49f6135ab7e5a97dcf346bdf3b3599454b13d",
+      "observations": 109,
+      "changed": 109
+    },
+    "repeat": {
+      "source": "ibge",
+      "status": "succeeded",
+      "run": "2068dd1a-9087-409a-b089-de614fd01445",
+      "batch": "148cae0b1a15c1f288fa760d59a49f6135ab7e5a97dcf346bdf3b3599454b13d",
+      "observations": 109,
+      "changed": 0
+    },
+    "rejected_source_response": {
+      "source": "BCB",
+      "http_status": 200,
+      "bytes": 6255,
+      "result": "BCB: série vazia ou inválida",
+      "accepted_observations": 0
+    }
+  },
+  "publication": {
+    "prepared": {
+      "publication": "179df7c7f057dae586808a642c7b771e99cb72f73f0a951ce0107a6810f1913c",
+      "catalog_revision": "bac497316697f5b88817c760f73073cc98dd604822c76021d0c952dee861c7e2",
+      "projection": "publications/179df7c7f057dae586808a642c7b771e99cb72f73f0a951ce0107a6810f1913c/v1/snapshot.json",
+      "sha256": "7f20b9a496ff15ca2d2adec196506f1a6c1dea7068a88928d65727bc3df5a04b",
+      "bytes": 178110
+    },
+    "activation": {
+      "generation": 1,
+      "publication": "179df7c7f057dae586808a642c7b771e99cb72f73f0a951ce0107a6810f1913c",
+      "previous_activation": 0,
+      "activated_at": "2026-10-18T15:43:31.530034-03:00",
+      "catalog_revision": "bac497316697f5b88817c760f73073cc98dd604822c76021d0c952dee861c7e2",
+      "data_cutoff": "2026-10-18T15:43:31.323009-03:00"
+    },
+    "scope_slots": 109,
+    "selected_nodes": 105,
+    "explicit_unavailable_slots": 4,
+    "unavailable_reason": "TR1 release monetary base unresolved; numerical publication blocked",
+    "representation": "publications/{id}/v1/snapshot.json",
+    "server": "net/http + chi; real TCP listener on 127.0.0.1:8080",
+    "responses": {
+      "series": {
+        "http_status": 200,
+        "bytes": 2801,
+        "sha256": "28a30114bfb52688bc25bce5146907376bb7afd927b34311a8f1e9f90fc56a24"
+      },
+      "summary": {
+        "http_status": 200,
+        "bytes": 2028,
+        "sha256": "f3765ba8904e8a63ce51b94033f5e7e9b866a82545096f0e1a7d923b552bc0b7"
+      },
+      "themes": {
+        "http_status": 200,
+        "bytes": 647,
+        "sha256": "52da12add04b2453c09d91368fb69bcc065a12e9619b8210c3fabb1bd939b782"
+      },
+      "comparison": {
+        "http_status": 200,
+        "bytes": 4085,
+        "sha256": "7b5d03809015a5b0b10291ee102fcc582f6037f9dcf5a8487a66ff68afe5a1d8"
+      }
+    },
+    "comparison": {
+      "status": "computed",
+      "value": "-1.9",
+      "calculation": "difference",
+      "version": "2",
+      "inputs": {
+        "current": "54cafc85629530533ea58f54f1bab5bf09ba0e2f497ce1f0609ba7d2e5cb7dfe",
+        "previous": "4bffe9fe672b61297a64810ff62c733912b969a358ecc15637d8f6744f77b33d"
+      },
+      "output_unit": "percentage_points"
+    }
+  },
+  "database": {
+    "bcb_error": "BCB: série vazia ou inválida",
+    "bcb_status": "failed",
+    "normalized": 109,
+    "activations": 1,
+    "legacy_files": 21,
+    "legacy_observations": 587
+  },
+  "retirement": {
+    "import": {
+      "import": "83ce402e5237bd181870ccbc9dbbd60864903d328a7a49cebdfd943e24eecaec",
+      "files": 21,
+      "observations": 587,
+      "promoted": false
+    },
+    "integrity": {
+      "status": "verified",
+      "objects": 56,
+      "bytes": 5749103
+    },
+    "raw_archive_objects": 56,
+    "raw_archive_inventory_sha256": "8376688b662803ac6510d55c1a63d77d5b56101cac74ff485484a1976c366f32",
+    "local_archive": ".data/phase9/archive/",
+    "database_dump_sha256": "b1cd465a45cdcab5391723f50bd12ad5c46a4f65a4a85c4032a5e3e6076e95bd",
+    "original_local_poc_data_retained": true,
+    "exclusive_typescript_pipeline_removed": true,
+    "exclusive_raw_captures_removed": 3,
+    "official_fixtures_moved_to_go_tests": {
+      "tr4.json.raw": "8a08dbe82e3dcf8e1f0ef947d64c3cd63939ab8e15c01ce2443a43ff6ab39d45",
+      "tr4-metadata.json.raw": "6b0eb45ed30deea0850b5d7163f3dcd66a82e786a572d2edede9a0cfba6b61be"
+    },
+    "legacy_importer_retained": "audit archive migration only; no alternate ingestion or public selection"
+  },
+  "verification": {
+    "backend": "gofmt + go vet + go test -race ./...; repeated with -count=1 after fixture relocation",
+    "frontend": "pnpm test:coverage and pnpm test:e2e; 46 unit tests, 35 Playwright tests; lint, Astro check and static build passed",
+    "scenarios": [
+      "accepted and prepared data remain private",
+      "explicit cutoff and unknown IDs rejected",
+      "immutable provenance scoped to publication",
+      "idempotency replay and changed-intent conflict",
+      "one concurrent activation per expected generation",
+      "activation and preparation receipt rollback",
+      "historical resolution and return with new generation",
+      "pagination pinned across activation; cross-context cursor rejected",
+      "revised inputs reject stale derived output; pending state carries no old number",
+      "generic derived engine output published with semantic series ID",
+      "raw absence blocks readiness; projection absence returns 503 without fallback",
+      "whole-period filtering and ambiguous geography",
+      "ETag, 304, HEAD, no-store errors and authenticated reads",
+      "bounded rate and concurrency; forwarding headers cannot bypass local identity",
+      "database roles cannot mutate history or expose raw to API",
+      "process startup and graceful shutdown"
+    ],
+    "docker": {
+      "build": "passed",
+      "help": "passed",
+      "api": {
+        "status": "passed",
+        "container_api_http_status": 200,
+        "publication": "179df7c7f057dae586808a642c7b771e99cb72f73f0a951ce0107a6810f1913c",
+        "summary_source": "ibge"
+      },
+      "shutdown": "docker stop completed normally",
+      "image_id": "sha256:20f8677745814bb20945242eb88b2369042a018983702a1e0de1ab23f2df622a"
+    },
+    "documentation_local_links": {
+      "checked": 462,
+      "missing": 0
+    },
+    "sqlc": "regenerated and byte-for-byte unchanged",
+    "local_test_services": "stopped after verification; containers and archive retained"
+  },
+  "unverified": [
+    "Railway deployment, native backup and restoration",
+    "Cloudflare R2 remote permissions, bucket lock, custom domain, CORS and cache rules",
+    "CDN HIT/Age and alias convergence across real caches",
+    "production load and distributed traffic protection",
+    "frontend shell integration and external indexing"
+  ]
+}

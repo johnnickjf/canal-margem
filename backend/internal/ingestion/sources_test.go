@@ -23,7 +23,7 @@ func testWindow() period.Window {
 	return w
 }
 func TestOfficialIBGEJSONAndMetadata(t *testing.T) {
-	base := "../../../docs/systems/evidence/ingestion"
+	base := "testdata"
 	body, e := os.ReadFile(filepath.Join(base, "tr4.json.raw"))
 	if e != nil {
 		t.Fatal(e)

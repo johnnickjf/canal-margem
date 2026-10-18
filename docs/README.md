@@ -36,14 +36,14 @@ Os quatro documentos numerados partem dos textos fornecidos pelo responsável pe
 | Testes automatizados e CI | Vitest com cobertura e limites por módulo; Playwright para componentes, fluxos editoriais e build; workflow preparado, execução remota ainda não verificada |
 | Design system da plataforma | Implementado na fase 1; referência em `/design-system`, com exemplos fictícios |
 | Modelo conceitual dos dados | Especificado na fase 2, com exemplos de revisão e derivação e catálogo de operações/consistência; especificação geral; a PoC implementa o recorte documentado de ingestão |
-| Seleção de indicadores | 15 conceitos principais definidos na fase 3, mais contextos e inputs; fontes catalogadas na fase 4; quatro séries integradas na PoC, sem ampliar o escopo dos 15 |
+| Seleção de indicadores | 15 conceitos principais definidos na fase 3, mais contextos e inputs; fontes catalogadas na fase 4; PoC preservada como arquivo histórico, sem ampliar o escopo dos 15 |
 | Catálogo de fontes | Fase 4 documentada: recortes e amostras oficiais conferidos, histórico observado e limites por fonte; investigações concluídas; sem comprovação de operação recorrente ou comparabilidade irrestrita |
 | Páginas de indicadores, comparador e camada Entenda | Planejados |
-| Ingestão e persistência local | PoC da fase 5 executada com quatro séries e 587 observações; revisões, repetição e falhas testadas |
+| Ingestão e persistência local | PoC da fase 5 retirada após substituição verificada na fase 9; 21 arquivos e 587 observações preservados |
 | Arquitetura de armazenamento | Fase 6 definida em cinco ADRs: PostgreSQL/Railway, R2, histórico/cache, backup nativo/reconstrução e portabilidade/custos; serviços ainda não implantados |
 | Pipeline do MVP | Fase 7 implementada e verificada localmente: cinco fontes, 6.375 observações, PostgreSQL e API compatível com S3 (R2 em produção), repetição, revisões, falhas e importação da PoC |
 | Engine de indicadores | Fase 8 implementada no backend Go: TR2, CV5, variações, índices e relações, com avaliações imutáveis |
-| API de indicadores | Próxima fase 9 |
+| API de indicadores | Fase 9 implementada: publicação, ativação, HTTP v1, cache, filtros, paginação, comparação e limites; verificação local |
 | Publicação e operação em produção | Não verificadas; Dockerfile e cron Railway preparados, sem serviço remoto implantado |
 
 As rotas atuais são `/temas/:slug`, `/videos/:slug` e `/analises/:slug`. As rotas `/tema/:slug`, `/indicador/:slug`, `/comparar` e `/entenda/:slug` dos documentos são propostas futuras. A convivência entre temas editoriais e dimensões socioeconômicas precisa ser resolvida antes de alterar URLs ou navegação.
@@ -66,8 +66,7 @@ Manter detalhes de infraestrutura fora da visão e do documento de UX. Registrar
 
 ## Próxima entrega
 
-Implementar a API da fase 9: contrato estável, filtros, cache, paginação, documentação e
-erros consistentes, com publicação coerente dos dados e cálculos da
-[engine](systems/indicator-engine.md). A retirada da PoC exige substituição verificada,
-conforme o roadmap. Implantação Railway/R2 e backup remoto continuam sem ensaio. A
+Implementar o shell da fase 10 sobre o [contrato da API](systems/api.md), fixando a mesma
+publicação no HTML e nas consultas. A PoC foi retirada após preservação e substituição
+verificadas. Implantação Railway/R2 e backup remoto continuam sem ensaio. A
 [regra permanente de SEO e descoberta por IA](../AGENTS.md) continua obrigatória.

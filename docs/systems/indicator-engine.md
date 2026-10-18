@@ -2,8 +2,8 @@
 
 A engine está implementada no [módulo indicators](../../backend/internal/indicators/domain.go)
 do backend Go. Usa observações aceitas pelos pipelines, calcula com aritmética racional
-exata e persiste avaliações imutáveis em PostgreSQL. A entrega é privada: API, manifestos
-de publicação, ativação de canal e integração do frontend pertencem às próximas fases.
+exata e persiste avaliações imutáveis em PostgreSQL. A materialização é privada; a [API da fase 9](api.md) seleciona e publica
+as avaliações por manifesto e canal. A integração do frontend pertence à fase 10.
 
 ## Fórmulas e contrato
 
@@ -147,8 +147,9 @@ numérica; não se ajusta a fórmula para reproduzir um valor inconsistente da f
 
 Uma revisão não altera resultados anteriores nem os torna atuais automaticamente. Para
 recalcular, enviar novo manifesto com os IDs revisados e depois recalcular as dependências.
-Descoberta/agenda automática de recomputação e seleção coerente na publicação ficam para
-a integração de publicação da fase 9. A engine permite recalcular as fórmulas executáveis
+A [publicação da fase 9](api.md) verifica a coerência dos inputs e permite declarar
+`pending_recalculation`; a materialização e a seleção são explícitas. Descoberta/agenda
+automática de recomputação ainda não está implementada. A engine permite recalcular as fórmulas executáveis
 e consultar qualquer avaliação retida, inclusive as versões retiradas de execução.
 
 ## Validação e limites

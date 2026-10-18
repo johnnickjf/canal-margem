@@ -96,7 +96,7 @@ fabrica revisão. Alterar valor ou contexto acrescenta observação e lote, mant
 Sem vintage oficial verificável, a identidade é de conteúdo/captura, sem ordem oficial
 inventada. Um recibo relaciona cada execução ao lote aceito. Se uma fonte voltar a um conteúdo
 antigo, outro recibo registra essa captura, reutilizando o conteúdo; não se cria um ciclo de
-predecessores. A futura seleção pública precisará da política de edição por dataset.
+predecessores. A [publicação da fase 9](api.md) exige seleção explícita de IDs e justificativa da edição; não promove automaticamente a última chegada.
 
 Upload usa `If-None-Match: *`, com leitura e conferência de hash/tamanho. Outra verificação
 precede o commit. Downloads não mantêm uma transação SQL aberta. Observações, membros,
@@ -109,7 +109,7 @@ seleções, predecessores, lotes, capturas e metadados. Copia todos os arquivos 
 um manifesto imutável em `legacy`, além das observações com seus IDs, valores e timestamps
 originais. Não apaga arquivos nem converte capturas em edições oficiais. A repetição foi
 conferida sobre os 21 arquivos e 587 observações locais. Isso é preservação do histórico
-experimental; a retirada da CLI continua condicionada ao fluxo job → banco → API da fase 9.
+experimental. A CLI TypeScript foi retirada após verificar o fluxo job → banco → API da fase 9; o importador Go continua como ferramenta de preservação.
 
 Para reconstruir, aplicar migrações numa base nova e executar os jobs para as fontes disponíveis.
 A coleta real desta entrega começou com uma base vazia. As versões recuperadas são as que a

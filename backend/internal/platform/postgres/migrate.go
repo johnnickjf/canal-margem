@@ -19,7 +19,10 @@ var Migration []byte
 //go:embed 002.sql
 var EngineMigration []byte
 
-const LatestMigration = "002"
+//go:embed 003.sql
+var PublicationMigration []byte
+
+const LatestMigration = "003"
 
 //go:generate go run github.com/sqlc-dev/sqlc/cmd/sqlc@v1.31.1 generate -f ../../../sqlc.yaml
 func Open(ctx context.Context) (*pgxpool.Pool, error) {
@@ -52,7 +55,7 @@ func Migrate(ctx context.Context, pool *pgxpool.Pool) error {
 	for _, migration := range []struct {
 		id   string
 		body []byte
-	}{{"001", Migration}, {"002", EngineMigration}} {
+	}{{"001", Migration}, {"002", EngineMigration}, {"003", PublicationMigration}} {
 		var sha string
 		e = tx.QueryRow(ctx, "SELECT sha256 FROM ops.migration WHERE id=$1", migration.id).Scan(&sha)
 		if e != nil && !errors.Is(e, pgx.ErrNoRows) {

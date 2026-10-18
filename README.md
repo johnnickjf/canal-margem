@@ -64,16 +64,21 @@ observações; a repetição não criou versões. A importação da PoC preserva
 587 observações, sem promoção pública. A migração para [Go e monólito modular](docs/adr/0007-go-modular-backend.md) preserva
 os contratos e separa comandos de consultas. A fase 8 implementa a [engine de indicadores](docs/systems/indicator-engine.md): TR2, CV5,
 variações, índices e relações cesta/renda, com inputs explícitos, precisão decimal e histórico
-imutável. A próxima etapa é a API da fase 9; implantação Railway/R2 permanece posterior.
+imutável. A fase 9 implementa a [API Margem](docs/systems/api.md), com publicações imutáveis,
+ativação por geração, consultas versionadas, paginação, cache HTTP, comparação e limites
+de abuso. O fluxo local com coleta oficial foi verificado e a [PoC foi retirada](docs/systems/ingestion.md)
+após preservar 21 arquivos e 587 observações para auditoria. A próxima etapa é o shell da
+fase 10; implantação Railway/R2 permanece posterior.
 
 ```bash
-pnpm ingestion fetch --from 2025-01 --to 2025-12
-pnpm ingestion read --series tr4
-pnpm ingestion status
+pnpm pipeline run --source ibge --from 2025-01-01 --to 2025-12-31
+pnpm pipeline prepare --manifest .data/publication.json
+pnpm pipeline activate --manifest .data/activation.json
+pnpm pipeline serve                # http://127.0.0.1:8080
 ```
 
-Os dados e logs ficam em `.data/ingestion/`, fora do Git. A PoC executa por comando, sem
-consultar provedores durante visitas ao site. Consulte [operação e limites](docs/systems/ingestion.md).
+Consulte [manifestos, contrato HTTP e configuração](docs/systems/api.md).
+Jobs e API executam separadamente; visitas ao site não disparam coletas.
 
 ## Design system
 
@@ -110,8 +115,7 @@ PR e push. Sua primeira execução no GitHub depende do envio dessas alteraçõe
 Os relatórios ficam em `coverage/`; capturas e traces, em `test-results/`. Esses diretórios
 são ignorados pelo Git. A CI também guarda os relatórios como artefatos por 14 dias.
 
-A cobertura unitária inclui `src/lib/**/*.ts`, `src/scripts/**/*.ts` e os módulos de ingestão
-`catalog`, `normalize`, `store` e `pipeline`, inclusive arquivos sem testes.
+A cobertura unitária inclui `src/lib/**/*.ts` e `src/scripts/**/*.ts`, inclusive arquivos sem testes.
 Datas, formatação e títulos têm limites por arquivo definidos após a medição inicial.
 Esse percentual não mede os templates Astro nem os fluxos do Playwright. Escopo, métricas,
 testes editoriais, validação de rascunhos/RSS e limites estão na [documentação de testes](docs/systems/testing.md).
@@ -119,7 +123,7 @@ testes editoriais, validação de rascunhos/RSS e limites estão na [documentaç
 ## Estrutura
 
 ```text
-backend/                    Backend Go: CLI, ingestão, observações, PostgreSQL, cliente R2 e testes
+backend/                    Backend Go: jobs, engine, publicações, API, PostgreSQL, R2 e testes
 docs/                       Visão, UX, arquitetura, roadmap e índice de documentação
   brand/                    Manual de marca, tokens e pranchas de referência
   research/                 Investigações e hipóteses
@@ -137,7 +141,6 @@ src/
   data/
     photos.ts               Banco de imagens: chave → arquivo, alt, crédito, ponto focal
     manifesto.ts            Teses do manifesto, fórmula editorial e voz
-  ingestion/                PoC local de IBGE/BCB: coleta, normalização, persistência e CLI
   lib/                      Consultas de conteúdo, formatação, títulos, bordas rasgadas
   styles/                   Tokens, texturas procedurais e base (cascade layers)
   scripts/                  Comportamentos do cliente (revelação no scroll, busca)

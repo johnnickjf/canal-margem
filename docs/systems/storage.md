@@ -6,7 +6,7 @@ A fase 6 define o armazenamento do MVP a partir da [PoC da fase 5](ingestion.md)
 As decisões estão aceitas para implementação nos ADRs abaixo. A implementação vigente
 inclui agora os [pipelines da fase 7](pipelines.md), testados com PostgreSQL 18 e API S3 emulada pelo LocalStack.
 Banco/buckets remotos, bucket lock R2, backup nativo e API ainda não foram provisionados
-ou testados. A PoC permanece disponível e seu histórico foi preservado em `legacy`. Esta entrega é uma especificação de arquitetura, sem contratação de serviços.
+ou testados. A PoC foi retirada na fase 9 e seu histórico foi preservado em `legacy`. Esta entrega é uma especificação de arquitetura, sem contratação de serviços.
 
 | Decisão | Resultado | Registro |
 |---|---|---|
@@ -41,7 +41,8 @@ As 587 observações são TR4: 58, CV1 mensal: 177, CV1 em 12 meses: 177 e VF1: 
 O snapshot atual seleciona as 587, sem versões adicionais nessa captura. Seis objetos raw
 somando 15.510 bytes são referenciados diretamente pelas observações; os metadados IBGE
 também são necessários à interpretação e devem ser preservados pelos vínculos da coleta.
-Os cinco corpos versionados permitem replay offline; os demais bytes locais não estão no Git.
+Na medição, cinco corpos versionados permitiam replay offline. Após a fase 9, dois
+continuam como fixtures do adaptador Go; os demais estão no arquivo histórico preservado.
 
 A repetição integral aceitou zero versões novas, mas produziu outro snapshot de aproximadamente
 782 KB. Manter esse tamanho e uma coleta diária por 365 dias produziria cerca de 286 MB só
@@ -303,10 +304,10 @@ podem ser acrescentados por novo ADR se os requisitos de perda tolerável ou dis
 | Comprovar cache público | Projeção produz `HIT` após aquecimento com bytes corretos; alias converge em até 60s e falha após expiração sem origem; leitura fixada permanece estável; `404` não persiste após upload; CORS funciona no navegador e erros/administração não são reutilizados, conforme ADR-0003 |
 | Retirar PoC após substituição | Cumprir o [critério de transição](../04-roadmap.md#critério-de-transição-para-a-fase-10--retirada-da-poc): fluxo real job → persistência → API verificado, evidências transferidas e artefatos experimentais removidos |
 
-Os testes atuais de [pipeline](../../tests/unit/ingestion/pipeline.test.ts) e
-[store](../../tests/unit/ingestion/store.test.ts) sustentam o comportamento da PoC, incluindo
-replay, revisões, ausência, falhas de escrita e concorrência local. Eles não comprovam as
-garantias do PostgreSQL, R2 ou backup nativo Railway. O frontend continua estático e sujeito à
+Os testes TypeScript da PoC foram retirados na fase 9. A validação vigente está nos
+[testes de ingestão Go](../../backend/internal/ingestion/sources_test.go) e nos
+[testes de integração](../../backend/integration/publication_test.go), incluindo PostgreSQL,
+publicações e API. Isso não comprova R2 remoto ou backup nativo Railway. O frontend continua estático e sujeito à
 [regra permanente de SEO e descoberta por IA](../../AGENTS.md); nenhuma consulta aos
 provedores deve ser introduzida durante visitas.
 

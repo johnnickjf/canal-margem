@@ -1,7 +1,8 @@
 # Backend Margem
 
 Monólito modular em Go. A fase 7 implementa os pipelines privados; a fase 8 acrescenta a
-[engine de indicadores](../docs/systems/indicator-engine.md). Manifestos de publicação e API ficam na fase 9. Contratos e evidências estão no
+[engine de indicadores](../docs/systems/indicator-engine.md). A fase 9 implementa
+[publicações e API](../docs/systems/api.md). Contratos e evidências estão no
 [manual de operação](../docs/systems/pipelines.md) e no
 [ADR-0007](../docs/adr/0007-go-modular-backend.md).
 
@@ -14,7 +15,9 @@ internal/catalog/            recortes, unidades, métodos e versão do catálogo
 internal/ingestion/          adaptadores de fontes, HTTP, jobs e saúde operacional
 internal/indicators/         fórmulas versionadas, avaliações imutáveis e linhagem
 internal/observations/       regras, identidades, aceitação de lotes e integridade
-internal/legacy/             preservação/importação conservadora da PoC
+internal/publications/       preparação, projeções imutáveis, ativação e histórico
+internal/api/                HTTP v1, cache, filtros, paginação e limites
+internal/legacy/             importação do arquivo histórico da PoC retirada
 internal/period/             períodos de calendário e janelas
 internal/platform/
     canonical/               serialização determinística e SHA-256
@@ -25,8 +28,7 @@ integration/                 cenários PostgreSQL/LocalStack em recursos tempor�
 
 A organização é por responsabilidade de domínio. Fontes externas são adaptadores de
 ingestão. `raw`, `normalized`, `derived` e `published` são etapas dos dados, sem exigir um
-módulo para cada schema. Novos módulos de publicações devem aparecer quando
-suas regras forem implementadas; não criar pacotes vazios.
+módulo para cada schema. Publicações possuem regras próprias no módulo correspondente.
 
 ## Regras de dependência e consistência
 
@@ -34,7 +36,7 @@ suas regras forem implementadas; não criar pacotes vazios.
 - Ingestão solicita aceitação ao módulo de observações; regras numéricas e de identidade
   não pertencem à CLI ou ao cliente HTTP.
 - Cada módulo coordena suas escritas em `commands.go`; `queries.go` retorna DTOs específicos
-  de leitura. Consultas públicas futuras lerão publicações fixadas, sem reutilizar o estado
+  de leitura. Consultas públicas leem publicações fixadas, sem reutilizar o estado
   operacional como seleção pública.
 - SQL gerado é detalhe de persistência. Não expor suas estruturas como contrato HTTP nem
   criar um repositório CRUD genérico. Regenerar consultas após editar `queries.sql`.
@@ -63,6 +65,10 @@ Da raiz do repositório:
 ```bash
 pnpm pipeline --help
 pnpm pipeline migrate
+pnpm pipeline prepare --manifest .data/publication.json
+pnpm pipeline activate --manifest .data/activation.json
+pnpm pipeline current
+pnpm pipeline serve
 pnpm pipeline formulas
 pnpm pipeline calculate --manifest .data/calculations.json
 pnpm pipeline calculation --id ID
@@ -80,9 +86,9 @@ Como `go -C backend` executa dentro de `backend/`, o caminho relativo passado a 
 compilado resolve caminhos em relação ao diretório em que é executado.
 
 As variáveis e o preparo dos serviços estão em [`.env.example`](.env.example) e no
-[manual](../docs/systems/pipelines.md). Não existem provisionamento automático, servidor web,
+[manual](../docs/systems/pipelines.md). O servidor público inicia com `serve`; não há provisionamento automático,
 fila ou scheduler residente. A imagem Docker executa um binário Go sem Python e termina
-ao concluir o job. A futura API adotará `net/http` com `chi` ao implementar seu contrato.
+ao concluir o job. A API usa `net/http` com `chi`; publicação administrativa ocorre pela CLI.
 
 `pnpm test:backend` verifica formatação, vet e testes com detector de corridas; requer
 CGO habilitado e um compilador C disponível (por exemplo, GCC). Testes de

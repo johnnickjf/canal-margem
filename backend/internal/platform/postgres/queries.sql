@@ -82,3 +82,48 @@ SELECT * FROM derived.evaluation WHERE id=$1;
 INSERT INTO derived.evaluation(id,request,definition,result) VALUES ($1,$2,$3,$4) ON CONFLICT DO NOTHING;
 -- name: CreateEngineInput :exec
 INSERT INTO derived.input(evaluation,role,normalized_id,derived_id) VALUES ($1,$2,$3,$4) ON CONFLICT DO NOTHING;
+
+-- name: PublicationNormalized :one
+SELECT o.id,o.series,o.start_date,o.end_date,o.geography,coalesce(o.value::text,'')::text AS value_text,o.status,o.context,o.locator,
+ b.accepted_at,c.retrieved_at,c.url,obj.sha256,obj.key,obj.bytes
+FROM normalized.observation o
+JOIN normalized.member m ON m.observation=o.id
+JOIN normalized.batch b ON b.id=m.batch
+JOIN normalized.receipt r ON r.batch=b.id
+JOIN normalized.provenance p ON p.run=r.run AND p.observation=o.id
+JOIN raw.capture c ON c.id=p.capture
+JOIN raw.object obj ON obj.sha256=c.object
+WHERE o.id=$1 AND b.accepted_at <= sqlc.arg(cutoff)::timestamptz AND c.retrieved_at <= sqlc.arg(cutoff)::timestamptz
+ORDER BY b.accepted_at,c.retrieved_at,c.id LIMIT 1;
+-- name: PublicationOrigins :many
+SELECT DISTINCT c.url,c.retrieved_at,obj.sha256,obj.key,obj.bytes
+FROM normalized.provenance p
+JOIN normalized.receipt r ON r.run=p.run
+JOIN raw.capture c ON c.id=p.capture
+JOIN raw.object obj ON obj.sha256=c.object
+WHERE p.observation=$1 AND r.accepted_at <= sqlc.arg(cutoff)::timestamptz AND c.retrieved_at <= sqlc.arg(cutoff)::timestamptz
+ORDER BY c.retrieved_at,c.url,obj.sha256,obj.key,obj.bytes;
+-- name: PublicationByID :one
+SELECT * FROM published.publication WHERE id=$1;
+-- name: PublicPublication :one
+SELECT p.* FROM published.publication p WHERE p.id=$1 AND EXISTS(SELECT 1 FROM published.activation a WHERE a.publication=p.id);
+-- name: CreatePublication :exec
+INSERT INTO published.publication(id,manifest,catalog_revision,data_cutoff,base_activation,projection_key,projection_sha256,projection_bytes)
+VALUES ($1,$2,$3,$4,$5,$6,$7,$8) ON CONFLICT DO NOTHING;
+-- name: CreatePublicationDependency :exec
+INSERT INTO published.dependency(publication,id,normalized_id,derived_id) VALUES ($1,$2,$3,$4) ON CONFLICT DO NOTHING;
+-- name: PublicationReceipt :one
+SELECT fingerprint,result FROM published.receipt WHERE operation=$1 AND actor=$2 AND key=$3;
+-- name: CreatePublicationReceipt :exec
+INSERT INTO published.receipt(operation,actor,key,fingerprint,result) VALUES ($1,$2,$3,$4,$5);
+-- name: LockPublicationChannel :one
+SELECT generation FROM published.channel WHERE id='public' FOR UPDATE;
+-- name: CreatePublicationActivation :one
+INSERT INTO published.activation(generation,publication,previous_activation,actor,reason,activated_at) VALUES ($1,$2,$3,$4,$5,GREATEST(clock_timestamp(),coalesce((SELECT max(activated_at) FROM published.activation),'-infinity'::timestamptz))) RETURNING *;
+-- name: AdvancePublicationChannel :exec
+UPDATE published.channel SET generation=$1 WHERE id='public';
+-- name: ResolvePublication :one
+SELECT a.*,p.catalog_revision,p.data_cutoff FROM published.activation a JOIN published.publication p ON p.id=a.publication
+WHERE a.activated_at <= sqlc.arg(at)::timestamptz ORDER BY a.generation DESC LIMIT 1;
+-- name: WasPublicationActivated :one
+SELECT EXISTS(SELECT 1 FROM published.activation WHERE publication=$1);

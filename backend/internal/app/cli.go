@@ -14,13 +14,14 @@ import (
 	"margem/backend/internal/period"
 	"margem/backend/internal/platform/objectstore"
 	"margem/backend/internal/platform/postgres"
+	"margem/backend/internal/publications"
 	"os"
 	"time"
 )
 
 func Run(ctx context.Context, args []string, stdout, stderr io.Writer) int {
 	if len(args) == 0 || args[0] == "--help" || args[0] == "-h" {
-		fmt.Fprintln(stdout, "Margem — pipelines e cálculos privados\nComandos: formulas | calculate --manifest ARQUIVO | calculation --id ID | migrate | run --source FONTE [--from DATA --to DATA] | tick [--from DATA --to DATA] | status | verify | import-poc --root DIRETÓRIO")
+		fmt.Fprintln(stdout, "Margem — dados e API\nComandos: serve | prepare --manifest ARQUIVO | activate --manifest ARQUIVO | current | formulas | calculate --manifest ARQUIVO | calculation --id ID | migrate | run --source FONTE [--from DATA --to DATA] | tick [--from DATA --to DATA] | status | verify | import-poc --root DIRETÓRIO")
 		if len(args) == 0 {
 			return 2
 		}
@@ -42,13 +43,13 @@ func Run(ctx context.Context, args []string, stdout, stderr io.Writer) int {
 		if command == "run" {
 			flags.StringVar(&source, "source", "", "fonte")
 		}
-	case "calculate":
+	case "calculate", "prepare", "activate":
 		flags.StringVar(&manifest, "manifest", "", "manifesto JSON com inputs por ID")
 	case "calculation":
 		flags.StringVar(&id, "id", "", "ID da avaliação")
 	case "import-poc":
 		flags.StringVar(&root, "root", "", "raiz da PoC")
-	case "migrate", "status", "verify":
+	case "migrate", "status", "verify", "serve", "current":
 	default:
 		fmt.Fprintln(stderr, "comando desconhecido")
 		return 2
@@ -59,13 +60,28 @@ func Run(ctx context.Context, args []string, stdout, stderr io.Writer) int {
 		}
 		return 2
 	}
-	if flags.NArg() != 0 || command == "run" && source == "" || command == "import-poc" && root == "" || command == "calculate" && manifest == "" || command == "calculation" && id == "" {
+	if flags.NArg() != 0 || command == "run" && source == "" || command == "import-poc" && root == "" || (command == "calculate" || command == "prepare" || command == "activate") && manifest == "" || command == "calculation" && id == "" {
 		fmt.Fprintln(stderr, "argumentos inválidos ou ausentes")
 		return 2
 	}
 	fail := func(e error) int {
 		json.NewEncoder(stderr).Encode(map[string]any{"status": "failed", "error": ingestion.Failure(e)})
 		return 1
+	}
+	var preparation publications.PrepareRequest
+	var activation publications.ActivateRequest
+	if command == "prepare" || command == "activate" {
+		body, e := os.ReadFile(manifest)
+		if e != nil {
+			return fail(e)
+		}
+		var target any = &preparation
+		if command == "activate" {
+			target = &activation
+		}
+		if e = publications.Decode(body, target); e != nil {
+			return fail(e)
+		}
 	}
 	var requests []indicators.Request
 	if command == "calculate" {
@@ -94,6 +110,45 @@ func Run(ctx context.Context, args []string, stdout, stderr io.Writer) int {
 	var result any
 	exit := 0
 	switch command {
+	case "serve":
+		store, e := objectstore.ProjectionFromEnv(ctx)
+		if e != nil {
+			return fail(e)
+		}
+		if e = serve(ctx, publications.Queries{Pool: pool, Store: store}, stdout); e != nil {
+			return fail(e)
+		}
+		return 0
+	case "current":
+		r, e := (publications.Queries{Pool: pool}).Resolve(ctx, time.Time{})
+		if e != nil {
+			return fail(e)
+		}
+		result = r
+	case "prepare", "activate":
+		store, e := objectstore.ProjectionFromEnv(ctx)
+		if e != nil {
+			return fail(e)
+		}
+		commands := publications.Commands{Pool: pool, Store: store}
+		if command == "prepare" {
+			raw, e := objectstore.FromEnv(ctx)
+			if e != nil {
+				return fail(e)
+			}
+			commands.Raw = raw
+			r, e := commands.Prepare(ctx, preparation)
+			if e != nil {
+				return fail(e)
+			}
+			result = r
+		} else {
+			r, e := commands.Activate(ctx, activation)
+			if e != nil {
+				return fail(e)
+			}
+			result = r
+		}
 	case "calculate":
 		r, e := (indicators.Commands{Pool: pool}).Materialize(ctx, requests)
 		if e != nil {

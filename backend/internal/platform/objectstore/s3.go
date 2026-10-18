@@ -81,3 +81,47 @@ func (s *S3) Verify(ctx context.Context, key, sha string, size int64) error {
 	}
 	return nil
 }
+
+// ProjectionFromEnv deliberately uses a different bucket from private raw data.
+func ProjectionFromEnv(ctx context.Context) (*S3, error) {
+	s, e := FromEnv(ctx)
+	if e != nil {
+		return nil, e
+	}
+	bucket := os.Getenv("PUBLIC_BUCKET")
+	if bucket == "" || bucket == s.Bucket {
+		return nil, fmt.Errorf("PUBLIC_BUCKET deve ser distinto de RAW_BUCKET")
+	}
+	s.Bucket = bucket
+	return s, nil
+}
+
+func (s *S3) SaveProjection(ctx context.Context, key string, body []byte) error {
+	_, e := s.Client.PutObject(ctx, &s3.PutObjectInput{Bucket: &s.Bucket, Key: &key, Body: bytes.NewReader(body), IfNoneMatch: aws.String("*"), ContentType: aws.String("application/json; charset=utf-8"), CacheControl: aws.String("public, max-age=31536000, immutable")})
+	if e != nil {
+		var response *smithyhttp.ResponseError
+		if !errors.As(e, &response) || response.HTTPStatusCode() != 412 {
+			return e
+		}
+	}
+	return s.Verify(ctx, key, canonical.Hash(body), int64(len(body)))
+}
+
+func (s *S3) LoadProjection(ctx context.Context, key, sha string, size int64) ([]byte, error) {
+	if size < 1 || size > 16*1024*1024 {
+		return nil, fmt.Errorf("projeção excede limite")
+	}
+	r, e := s.Client.GetObject(ctx, &s3.GetObjectInput{Bucket: &s.Bucket, Key: &key})
+	if e != nil {
+		return nil, e
+	}
+	defer r.Body.Close()
+	b, e := io.ReadAll(io.LimitReader(r.Body, size+1))
+	if e != nil {
+		return nil, e
+	}
+	if int64(len(b)) != size || canonical.Hash(b) != sha {
+		return nil, fmt.Errorf("projeção ausente ou corrompida")
+	}
+	return b, nil
+}

@@ -171,7 +171,7 @@ func TestEngineAcceptedInputsRevisionsAndAtomicity(t *testing.T) {
 		t.Fatal("partial acceptance", before, after)
 	}
 	var publications int
-	pool.QueryRow(ctx, "SELECT count(*) FROM information_schema.tables WHERE table_schema='published'").Scan(&publications)
+	pool.QueryRow(ctx, "SELECT count(*) FROM published.activation").Scan(&publications)
 	if publications != 0 {
 		t.Fatal("public projection changed")
 	}
@@ -239,7 +239,7 @@ func TestEngineMigrationUpgradePreservesAcceptedData(t *testing.T) {
 	s := newScenario(pool, store)
 	s.run(t)
 	// Recreate the pre-engine schema inside this test's disposable database.
-	if _, e := pool.Exec(ctx, "DROP TABLE derived.input; DROP TABLE derived.evaluation; DELETE FROM ops.migration WHERE id='002'"); e != nil {
+	if _, e := pool.Exec(ctx, "DROP SCHEMA published CASCADE; CREATE SCHEMA published; DROP TABLE derived.input; DROP TABLE derived.evaluation; DELETE FROM ops.migration WHERE id IN ('002','003')"); e != nil {
 		t.Fatal(e)
 	}
 	var before, after int
@@ -258,7 +258,7 @@ func TestEngineMigrationUpgradePreservesAcceptedData(t *testing.T) {
 		t.Fatal(before, after)
 	}
 	var migrations int
-	if e := pool.QueryRow(ctx, "SELECT count(*) FROM ops.migration").Scan(&migrations); e != nil || migrations != 2 {
+	if e := pool.QueryRow(ctx, "SELECT count(*) FROM ops.migration").Scan(&migrations); e != nil || migrations != 3 {
 		t.Fatal(migrations, e)
 	}
 	if _, e := pool.Exec(ctx, "UPDATE ops.migration SET sha256='changed' WHERE id='002'"); e != nil {

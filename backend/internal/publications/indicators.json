@@ -1,0 +1,202 @@
+[
+  {
+    "id": "tr1",
+    "slug": "rendimento-real",
+    "name": "Rendimento real do trabalho",
+    "question": "O rendimento do trabalho está comprando mais?",
+    "definition": "Média mensal real habitual de todos os trabalhos, pessoas ocupadas de 14 anos ou mais com rendimento; trimestre civil; R$/mês na base divulgada",
+    "theme": "trabalho-e-renda",
+    "role": "primary",
+    "limitations": "Recortes e métodos distintos não são automaticamente comparáveis. Ausência não equivale a zero."
+  },
+  {
+    "id": "tr2",
+    "slug": "salario-minimo-real",
+    "name": "Salário mínimo real",
+    "question": "O piso nacional ganhou poder de compra?",
+    "definition": "Mínimo nominal mensal deflacionado pelo INPC geral, em reais de dezembro de 2025; mês civil",
+    "theme": "trabalho-e-renda",
+    "role": "primary",
+    "limitations": "Recortes e métodos distintos não são automaticamente comparáveis. Ausência não equivale a zero."
+  },
+  {
+    "id": "tr4",
+    "slug": "desemprego",
+    "name": "Desemprego",
+    "question": "Quem procura trabalho está conseguindo uma ocupação?",
+    "definition": "Taxa de desocupação das pessoas de 14 anos ou mais, sobre a força de trabalho; trimestre civil; %",
+    "theme": "trabalho-e-renda",
+    "role": "primary",
+    "limitations": "Recortes e métodos distintos não são automaticamente comparáveis. Ausência não equivale a zero."
+  },
+  {
+    "id": "tr5",
+    "slug": "informalidade",
+    "name": "Informalidade",
+    "question": "Quanto do trabalho ocorre em ocupações informais?",
+    "definition": "Taxa de informalidade, conforme classificação do IBGE, sobre a população ocupada de 14 anos ou mais; trimestre civil; %",
+    "theme": "trabalho-e-renda",
+    "role": "primary",
+    "limitations": "Recortes e métodos distintos não são automaticamente comparáveis. Ausência não equivale a zero."
+  },
+  {
+    "id": "cv1",
+    "slug": "inflacao",
+    "name": "Inflação ao consumidor",
+    "question": "Quanto subiu a cesta de consumo?",
+    "definition": "IPCA geral, variação mensal e acumulada em 12 meses; mês civil; %",
+    "theme": "custo-de-vida",
+    "role": "primary",
+    "limitations": "Recortes e métodos distintos não são automaticamente comparáveis. Ausência não equivale a zero."
+  },
+  {
+    "id": "cv2",
+    "slug": "inflacao-alimentacao",
+    "name": "Inflação da alimentação em casa",
+    "question": "A comida de casa ficou mais cara?",
+    "definition": "IPCA do subgrupo alimentação no domicílio, variação mensal e acumulada em 12 meses; mês civil; %",
+    "theme": "custo-de-vida",
+    "role": "primary",
+    "limitations": "Recortes e métodos distintos não são automaticamente comparáveis. Ausência não equivale a zero."
+  },
+  {
+    "id": "cv3",
+    "slug": "gasolina",
+    "name": "Preço da gasolina",
+    "question": "Quanto custa um litro no posto?",
+    "definition": "Preço médio de revenda da gasolina C comum, agregado Brasil publicado pela ANP; semana pesquisada; R$/L nominais",
+    "theme": "custo-de-vida",
+    "role": "primary",
+    "limitations": "Recortes e métodos distintos não são automaticamente comparáveis. Ausência não equivale a zero."
+  },
+  {
+    "id": "cv4",
+    "slug": "cesta-basica",
+    "name": "Custo da cesta básica",
+    "question": "Quanto custa a alimentação básica na capital?",
+    "definition": "Custo da cesta de alimentos definida pela pesquisa, por capital e composição regional; mês civil; R$/cesta nominais",
+    "theme": "custo-de-vida",
+    "role": "primary",
+    "limitations": "Recortes e métodos distintos não são automaticamente comparáveis. Ausência não equivale a zero."
+  },
+  {
+    "id": "cv5",
+    "slug": "tempo-por-cesta",
+    "name": "Tempo de trabalho por cesta no salário mínimo",
+    "question": "Quantas horas equivalentes no piso nacional compram essa cesta?",
+    "definition": "Custo nominal da cesta da capital dividido pelo mínimo nominal nacional do mesmo mês, multiplicado por 220 h/mês; h/cesta",
+    "theme": "custo-de-vida",
+    "role": "primary",
+    "limitations": "Recortes e métodos distintos não são automaticamente comparáveis. Ausência não equivale a zero."
+  },
+  {
+    "id": "cv6",
+    "slug": "onus-aluguel",
+    "name": "Ônus excessivo com aluguel urbano",
+    "question": "Quantos domicílios de baixa renda comprometem mais de 30% da renda com aluguel?",
+    "definition": "Número de domicílios urbanos com renda domiciliar de até três salários mínimos classificados no componente de ônus excessivo com aluguel pela FJP; Brasil; anual; domicílios",
+    "theme": "custo-de-vida",
+    "role": "primary",
+    "limitations": "Recortes e métodos distintos não são automaticamente comparáveis. Ausência não equivale a zero."
+  },
+  {
+    "id": "vf1",
+    "slug": "comprometimento-renda",
+    "name": "Comprometimento da renda com dívidas",
+    "question": "Quanto da renda agregada vai para o serviço da dívida?",
+    "definition": "Relação entre pagamentos esperados ao SFN e renda mensal das famílias, média móvel trimestral sem ajuste sazonal, conceito RNDBF; divulgação mensal; %",
+    "theme": "vida-financeira",
+    "role": "primary",
+    "limitations": "Recortes e métodos distintos não são automaticamente comparáveis. Ausência não equivale a zero."
+  },
+  {
+    "id": "qv1",
+    "slug": "pobreza",
+    "name": "Pobreza monetária",
+    "question": "Que parcela das pessoas vive abaixo da linha de renda?",
+    "definition": "Proporção da população abaixo de US$ 6,85 por pessoa/dia em PPC de 2017, série retrospectiva da SIS 2025; anual; %",
+    "theme": "qualidade-de-vida",
+    "role": "primary",
+    "limitations": "Recortes e métodos distintos não são automaticamente comparáveis. Ausência não equivale a zero."
+  },
+  {
+    "id": "qv2",
+    "slug": "desigualdade",
+    "name": "Desigualdade de renda",
+    "question": "Como a renda se distribui entre as pessoas?",
+    "definition": "Índice de Gini do rendimento domiciliar per capita de todas as fontes, incluindo benefícios; anual; escala de 0 a 1",
+    "theme": "qualidade-de-vida",
+    "role": "primary",
+    "limitations": "Recortes e métodos distintos não são automaticamente comparáveis. Ausência não equivale a zero."
+  },
+  {
+    "id": "qv3",
+    "slug": "inseguranca-alimentar",
+    "name": "Insegurança alimentar",
+    "question": "Que parcela dos domicílios enfrenta restrição de acesso à alimentação?",
+    "definition": "Proporção de domicílios particulares com algum grau de insegurança alimentar pela EBIA (leve, moderada ou grave); Brasil; referência anual nas edições disponíveis; % de domicílios",
+    "theme": "qualidade-de-vida",
+    "role": "primary",
+    "limitations": "Recortes e métodos distintos não são automaticamente comparáveis. Ausência não equivale a zero."
+  },
+  {
+    "id": "ee1",
+    "slug": "pib-por-pessoa",
+    "name": "PIB por pessoa",
+    "question": "A produção por habitante cresceu em termos reais?",
+    "definition": "Variação anual em volume do PIB per capita publicada nas Contas Nacionais anuais; %",
+    "theme": "economia-e-estado",
+    "role": "primary",
+    "limitations": "Recortes e métodos distintos não são automaticamente comparáveis. Ausência não equivale a zero."
+  },
+  {
+    "id": "tr3",
+    "slug": "tr3",
+    "name": "Horas trabalhadas",
+    "question": "Horas trabalhadas",
+    "definition": "Horas trabalhadas",
+    "theme": "trabalho-e-renda",
+    "role": "context",
+    "limitations": "Medida auxiliar; não integra os 15 conceitos principais."
+  },
+  {
+    "id": "vf2",
+    "slug": "vf2",
+    "name": "Inadimplência bancária",
+    "question": "Inadimplência bancária",
+    "definition": "Inadimplência bancária",
+    "theme": "vida-financeira",
+    "role": "context",
+    "limitations": "Medida auxiliar; não integra os 15 conceitos principais."
+  },
+  {
+    "id": "context",
+    "slug": "context",
+    "name": "Contextos complementares",
+    "question": "Contextos complementares",
+    "definition": "Contextos complementares",
+    "theme": "trabalho-e-renda",
+    "role": "context",
+    "limitations": "Medida auxiliar; não integra os 15 conceitos principais."
+  },
+  {
+    "id": "tr2-input",
+    "slug": "tr2-input",
+    "name": "Índice INPC",
+    "question": "Índice INPC",
+    "definition": "Índice INPC",
+    "theme": "custo-de-vida",
+    "role": "input",
+    "limitations": "Medida auxiliar; não integra os 15 conceitos principais."
+  },
+  {
+    "id": "tr2-cv5-input",
+    "slug": "tr2-cv5-input",
+    "name": "Salário mínimo nominal",
+    "question": "Salário mínimo nominal",
+    "definition": "Salário mínimo nominal",
+    "theme": "trabalho-e-renda",
+    "role": "input",
+    "limitations": "Medida auxiliar; não integra os 15 conceitos principais."
+  }
+]

@@ -547,6 +547,17 @@ Cálculos são centralizados, reproduzíveis e testáveis.
 
 ## Fase 9 — Margem API
 
+### Estado
+
+Implementada na [API Margem](systems/api.md): manifesto com seleção explícita e catálogo
+fixado, projeção imutável, ativação por geração, retorno e recibos transacionais; HTTP v1
+com temas, indicadores, séries, fontes, auditoria e comparações. Inclui cache HTTP, filtros,
+paginação, erros consistentes e proteção local contra abuso. A [verificação](systems/evidence/api/verification.json)
+comprova coleta oficial IBGE → PostgreSQL → publicação → API, repetição sem novas versões,
+revisões e falhas controladas. A PoC foi retirada após preservar 21 arquivos e 587 observações.
+A integração do shell é a fase 10. Implantação Railway/R2 e comportamento da CDN continuam
+sem ensaio remoto.
+
 ### Objetivo
 
 Criar um contrato estável entre dados e produtos.
@@ -611,7 +622,8 @@ parte obrigatória da conclusão desta transição, antes de integrar o frontend
   duplicação, revisão histórica e tratamento de falhas. Conferir que código, testes e
   documentação ativos não dependem dos artefatos removidos e executar as validações afetadas.
 
-A PoC permanece utilizável até essa substituição ser verificada. Depois dela, somente o
+A substituição foi verificada na fase 9 e a implementação TypeScript foi retirada. O critério
+abaixo permanece como registro da transição: depois dela, somente o
 código incorporado ao backend, os testes relevantes e a documentação necessária permanecem;
 os mecanismos descartáveis da experimentação são apagados.
 

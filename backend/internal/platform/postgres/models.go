@@ -107,6 +107,47 @@ type OpsRun struct {
 	Changed      pgtype.Int4        `json:"changed"`
 }
 
+type PublishedActivation struct {
+	Generation         int64              `json:"generation"`
+	Publication        string             `json:"publication"`
+	PreviousActivation int64              `json:"previous_activation"`
+	ActivatedAt        pgtype.Timestamptz `json:"activated_at"`
+	Actor              string             `json:"actor"`
+	Reason             string             `json:"reason"`
+}
+
+type PublishedChannel struct {
+	ID         string `json:"id"`
+	Generation int64  `json:"generation"`
+}
+
+type PublishedDependency struct {
+	Publication  string      `json:"publication"`
+	ID           string      `json:"id"`
+	NormalizedID pgtype.Text `json:"normalized_id"`
+	DerivedID    pgtype.Text `json:"derived_id"`
+}
+
+type PublishedPublication struct {
+	ID               string             `json:"id"`
+	Manifest         []byte             `json:"manifest"`
+	CatalogRevision  string             `json:"catalog_revision"`
+	DataCutoff       pgtype.Timestamptz `json:"data_cutoff"`
+	BaseActivation   int64              `json:"base_activation"`
+	PreparedAt       pgtype.Timestamptz `json:"prepared_at"`
+	ProjectionKey    string             `json:"projection_key"`
+	ProjectionSha256 string             `json:"projection_sha256"`
+	ProjectionBytes  int64              `json:"projection_bytes"`
+}
+
+type PublishedReceipt struct {
+	Operation   string `json:"operation"`
+	Actor       string `json:"actor"`
+	Key         string `json:"key"`
+	Fingerprint string `json:"fingerprint"`
+	Result      []byte `json:"result"`
+}
+
 type RawCapture struct {
 	ID          pgtype.UUID        `json:"id"`
 	Run         pgtype.UUID        `json:"run"`

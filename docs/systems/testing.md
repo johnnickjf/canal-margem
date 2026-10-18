@@ -27,14 +27,13 @@ A configuração está em [vitest.config.ts](../../vitest.config.ts); os testes 
 |---|---|
 | `presentation-date.ts` | Formato YYYY-MM-DD, calendário, anos bissextos, datas inválidas e preservação do dia em UTC |
 | `format.ts` | Datas editoriais e ISO, mudança de dia/ano por fuso, códigos de episódio, índices, durações de vídeo e tempo de leitura |
-| `ingestion/{catalog,normalize,store,pipeline}.ts` | Pipeline offline com amostras oficiais e replay da captura real: 587 observações, raw/hash, CLI, repetição, revisões, ausências, falhas parciais/de armazenamento, concorrência, retries, schemas e períodos |
 | `headline.ts` | Destaque no começo, meio e fim, texto sem destaque, marcação incompleta, acentos e versão sem colchetes para metadados/busca |
 
 Vitest e o provider V8 ficam fixados na mesma versão. Os testes usam o fuso `America/Sao_Paulo`, para detectar regressões que troquem UTC pelo fuso local.
 
 ### Medição e limites
 
-O relatório inclui **todos os arquivos TypeScript em `src/lib/` e `src/scripts/`** e `src/ingestion/{catalog,normalize,store,pipeline}.ts`, inclusive módulos não importados pelos testes. A CLI é exercitada por subprocessos, fora da instrumentação V8 desses módulos. Arquivos que contêm somente tipos não têm instruções executáveis a cobrir. Configuração, dados, schemas, páginas e componentes Astro ficam fora desse denominador.
+O relatório inclui **todos os arquivos TypeScript em `src/lib/` e `src/scripts/`**, inclusive módulos não importados pelos testes. Os jobs, a CLI e a API são verificados em Go. Arquivos que contêm somente tipos não têm instruções executáveis a cobrir. Configuração, dados, schemas, páginas e componentes Astro ficam fora desse denominador.
 
 A medição inicial de 15/10/2026, com 46 testes unitários, foi:
 
@@ -87,7 +86,7 @@ O workflow foi validado localmente com actionlint. Sua execução no GitHub depe
 ## Limites
 
 Não há testes Firefox, WebKit ou em aparelhos físicos, cobertura de todos os fluxos editoriais, comparação visual automática ou execução contra produção. Axe e navegação por teclado fornecem evidências parciais de acessibilidade; não substituem avaliação assistiva. Os testes locais de SEO não comprovam indexação externa. Fórmulas pertencem à fase 8. Os [pipelines da fase 7](pipelines.md) têm execução local e
-agendamento configurado; operação recorrente remota não foi observada. A [PoC de ingestão](ingestion.md) tem execução local real e testes offline; não há verificação de produção ou teste dependente da disponibilidade das APIs na CI.
+agendamento configurado; operação recorrente remota não foi observada. A [PoC de ingestão](ingestion.md) foi retirada após preservação e substituição verificadas; não há verificação de produção ou teste dependente da disponibilidade das APIs na CI.
 
 
 ## Backend dos pipelines
@@ -110,3 +109,13 @@ os IDs e replay de ponta a ponta; `MIGRATION_POC` acrescenta a importação do a
 Esse corpus não é requisito da CI nem prova de consulta atual aos provedores. A
 [evidência Python](evidence/pipelines/verification.json) permanece histórica. Nenhuma dessas
 verificações comprova implantação Railway/R2.
+
+## API e publicações
+
+A [fase 9](api.md) acrescenta testes Go para isolamento de publicações, paginação após
+ativação, comparação, preparação, corte temporal, linhagem revisada, retorno, concorrência,
+recibos, rollback e permissões. Testes HTTP cobrem ETag, HEAD, cache, parâmetros e limites.
+As suítes usam PostgreSQL/LocalStack em recursos temporários; não dependem de fontes
+externas na CI. A coleta oficial observada e a retirada da PoC estão na
+[evidência da fase 9](evidence/api/verification.json). A cobertura V8 deixou de incluir
+a implementação TypeScript da PoC removida; os testes Go dos adaptadores permanecem.

@@ -66,6 +66,15 @@ func (q *Queries) AcceptedSourceCoverage(ctx context.Context, arg AcceptedSource
 	return items, nil
 }
 
+const advancePublicationChannel = `-- name: AdvancePublicationChannel :exec
+UPDATE published.channel SET generation=$1 WHERE id='public'
+`
+
+func (q *Queries) AdvancePublicationChannel(ctx context.Context, generation int64) error {
+	_, err := q.db.Exec(ctx, advancePublicationChannel, generation)
+	return err
+}
+
 const allRawObjects = `-- name: AllRawObjects :many
 SELECT sha256, key, bytes FROM raw.object ORDER BY sha256
 `
@@ -371,6 +380,112 @@ func (q *Queries) CreateProvenance(ctx context.Context, arg CreateProvenancePara
 	return err
 }
 
+const createPublication = `-- name: CreatePublication :exec
+INSERT INTO published.publication(id,manifest,catalog_revision,data_cutoff,base_activation,projection_key,projection_sha256,projection_bytes)
+VALUES ($1,$2,$3,$4,$5,$6,$7,$8) ON CONFLICT DO NOTHING
+`
+
+type CreatePublicationParams struct {
+	ID               string             `json:"id"`
+	Manifest         []byte             `json:"manifest"`
+	CatalogRevision  string             `json:"catalog_revision"`
+	DataCutoff       pgtype.Timestamptz `json:"data_cutoff"`
+	BaseActivation   int64              `json:"base_activation"`
+	ProjectionKey    string             `json:"projection_key"`
+	ProjectionSha256 string             `json:"projection_sha256"`
+	ProjectionBytes  int64              `json:"projection_bytes"`
+}
+
+func (q *Queries) CreatePublication(ctx context.Context, arg CreatePublicationParams) error {
+	_, err := q.db.Exec(ctx, createPublication,
+		arg.ID,
+		arg.Manifest,
+		arg.CatalogRevision,
+		arg.DataCutoff,
+		arg.BaseActivation,
+		arg.ProjectionKey,
+		arg.ProjectionSha256,
+		arg.ProjectionBytes,
+	)
+	return err
+}
+
+const createPublicationActivation = `-- name: CreatePublicationActivation :one
+INSERT INTO published.activation(generation,publication,previous_activation,actor,reason,activated_at) VALUES ($1,$2,$3,$4,$5,GREATEST(clock_timestamp(),coalesce((SELECT max(activated_at) FROM published.activation),'-infinity'::timestamptz))) RETURNING generation, publication, previous_activation, activated_at, actor, reason
+`
+
+type CreatePublicationActivationParams struct {
+	Generation         int64  `json:"generation"`
+	Publication        string `json:"publication"`
+	PreviousActivation int64  `json:"previous_activation"`
+	Actor              string `json:"actor"`
+	Reason             string `json:"reason"`
+}
+
+func (q *Queries) CreatePublicationActivation(ctx context.Context, arg CreatePublicationActivationParams) (PublishedActivation, error) {
+	row := q.db.QueryRow(ctx, createPublicationActivation,
+		arg.Generation,
+		arg.Publication,
+		arg.PreviousActivation,
+		arg.Actor,
+		arg.Reason,
+	)
+	var i PublishedActivation
+	err := row.Scan(
+		&i.Generation,
+		&i.Publication,
+		&i.PreviousActivation,
+		&i.ActivatedAt,
+		&i.Actor,
+		&i.Reason,
+	)
+	return i, err
+}
+
+const createPublicationDependency = `-- name: CreatePublicationDependency :exec
+INSERT INTO published.dependency(publication,id,normalized_id,derived_id) VALUES ($1,$2,$3,$4) ON CONFLICT DO NOTHING
+`
+
+type CreatePublicationDependencyParams struct {
+	Publication  string      `json:"publication"`
+	ID           string      `json:"id"`
+	NormalizedID pgtype.Text `json:"normalized_id"`
+	DerivedID    pgtype.Text `json:"derived_id"`
+}
+
+func (q *Queries) CreatePublicationDependency(ctx context.Context, arg CreatePublicationDependencyParams) error {
+	_, err := q.db.Exec(ctx, createPublicationDependency,
+		arg.Publication,
+		arg.ID,
+		arg.NormalizedID,
+		arg.DerivedID,
+	)
+	return err
+}
+
+const createPublicationReceipt = `-- name: CreatePublicationReceipt :exec
+INSERT INTO published.receipt(operation,actor,key,fingerprint,result) VALUES ($1,$2,$3,$4,$5)
+`
+
+type CreatePublicationReceiptParams struct {
+	Operation   string `json:"operation"`
+	Actor       string `json:"actor"`
+	Key         string `json:"key"`
+	Fingerprint string `json:"fingerprint"`
+	Result      []byte `json:"result"`
+}
+
+func (q *Queries) CreatePublicationReceipt(ctx context.Context, arg CreatePublicationReceiptParams) error {
+	_, err := q.db.Exec(ctx, createPublicationReceipt,
+		arg.Operation,
+		arg.Actor,
+		arg.Key,
+		arg.Fingerprint,
+		arg.Result,
+	)
+	return err
+}
+
 const createRawObject = `-- name: CreateRawObject :exec
 INSERT INTO raw.object(sha256,key,bytes) VALUES ($1,$2,$3) ON CONFLICT DO NOTHING
 `
@@ -597,6 +712,17 @@ func (q *Queries) LatestSuccessfulRun(ctx context.Context, source string) (OpsRu
 	return i, err
 }
 
+const lockPublicationChannel = `-- name: LockPublicationChannel :one
+SELECT generation FROM published.channel WHERE id='public' FOR UPDATE
+`
+
+func (q *Queries) LockPublicationChannel(ctx context.Context) (int64, error) {
+	row := q.db.QueryRow(ctx, lockPublicationChannel)
+	var generation int64
+	err := row.Scan(&generation)
+	return generation, err
+}
+
 const lockRun = `-- name: LockRun :one
 SELECT id, source, catalog, started_at, finished_at, status, window_start, window_end, error, batch, observations, changed FROM ops.run WHERE id=$1 FOR UPDATE
 `
@@ -618,6 +744,179 @@ func (q *Queries) LockRun(ctx context.Context, id pgtype.UUID) (OpsRun, error) {
 		&i.Observations,
 		&i.Changed,
 	)
+	return i, err
+}
+
+const publicPublication = `-- name: PublicPublication :one
+SELECT p.id, p.manifest, p.catalog_revision, p.data_cutoff, p.base_activation, p.prepared_at, p.projection_key, p.projection_sha256, p.projection_bytes FROM published.publication p WHERE p.id=$1 AND EXISTS(SELECT 1 FROM published.activation a WHERE a.publication=p.id)
+`
+
+func (q *Queries) PublicPublication(ctx context.Context, id string) (PublishedPublication, error) {
+	row := q.db.QueryRow(ctx, publicPublication, id)
+	var i PublishedPublication
+	err := row.Scan(
+		&i.ID,
+		&i.Manifest,
+		&i.CatalogRevision,
+		&i.DataCutoff,
+		&i.BaseActivation,
+		&i.PreparedAt,
+		&i.ProjectionKey,
+		&i.ProjectionSha256,
+		&i.ProjectionBytes,
+	)
+	return i, err
+}
+
+const publicationByID = `-- name: PublicationByID :one
+SELECT id, manifest, catalog_revision, data_cutoff, base_activation, prepared_at, projection_key, projection_sha256, projection_bytes FROM published.publication WHERE id=$1
+`
+
+func (q *Queries) PublicationByID(ctx context.Context, id string) (PublishedPublication, error) {
+	row := q.db.QueryRow(ctx, publicationByID, id)
+	var i PublishedPublication
+	err := row.Scan(
+		&i.ID,
+		&i.Manifest,
+		&i.CatalogRevision,
+		&i.DataCutoff,
+		&i.BaseActivation,
+		&i.PreparedAt,
+		&i.ProjectionKey,
+		&i.ProjectionSha256,
+		&i.ProjectionBytes,
+	)
+	return i, err
+}
+
+const publicationNormalized = `-- name: PublicationNormalized :one
+SELECT o.id,o.series,o.start_date,o.end_date,o.geography,coalesce(o.value::text,'')::text AS value_text,o.status,o.context,o.locator,
+ b.accepted_at,c.retrieved_at,c.url,obj.sha256,obj.key,obj.bytes
+FROM normalized.observation o
+JOIN normalized.member m ON m.observation=o.id
+JOIN normalized.batch b ON b.id=m.batch
+JOIN normalized.receipt r ON r.batch=b.id
+JOIN normalized.provenance p ON p.run=r.run AND p.observation=o.id
+JOIN raw.capture c ON c.id=p.capture
+JOIN raw.object obj ON obj.sha256=c.object
+WHERE o.id=$1 AND b.accepted_at <= $2::timestamptz AND c.retrieved_at <= $2::timestamptz
+ORDER BY b.accepted_at,c.retrieved_at,c.id LIMIT 1
+`
+
+type PublicationNormalizedParams struct {
+	ID     string             `json:"id"`
+	Cutoff pgtype.Timestamptz `json:"cutoff"`
+}
+
+type PublicationNormalizedRow struct {
+	ID          string             `json:"id"`
+	Series      string             `json:"series"`
+	StartDate   pgtype.Date        `json:"start_date"`
+	EndDate     pgtype.Date        `json:"end_date"`
+	Geography   string             `json:"geography"`
+	ValueText   string             `json:"value_text"`
+	Status      string             `json:"status"`
+	Context     []byte             `json:"context"`
+	Locator     string             `json:"locator"`
+	AcceptedAt  pgtype.Timestamptz `json:"accepted_at"`
+	RetrievedAt pgtype.Timestamptz `json:"retrieved_at"`
+	Url         string             `json:"url"`
+	Sha256      string             `json:"sha256"`
+	Key         string             `json:"key"`
+	Bytes       int64              `json:"bytes"`
+}
+
+func (q *Queries) PublicationNormalized(ctx context.Context, arg PublicationNormalizedParams) (PublicationNormalizedRow, error) {
+	row := q.db.QueryRow(ctx, publicationNormalized, arg.ID, arg.Cutoff)
+	var i PublicationNormalizedRow
+	err := row.Scan(
+		&i.ID,
+		&i.Series,
+		&i.StartDate,
+		&i.EndDate,
+		&i.Geography,
+		&i.ValueText,
+		&i.Status,
+		&i.Context,
+		&i.Locator,
+		&i.AcceptedAt,
+		&i.RetrievedAt,
+		&i.Url,
+		&i.Sha256,
+		&i.Key,
+		&i.Bytes,
+	)
+	return i, err
+}
+
+const publicationOrigins = `-- name: PublicationOrigins :many
+SELECT DISTINCT c.url,c.retrieved_at,obj.sha256,obj.key,obj.bytes
+FROM normalized.provenance p
+JOIN normalized.receipt r ON r.run=p.run
+JOIN raw.capture c ON c.id=p.capture
+JOIN raw.object obj ON obj.sha256=c.object
+WHERE p.observation=$1 AND r.accepted_at <= $2::timestamptz AND c.retrieved_at <= $2::timestamptz
+ORDER BY c.retrieved_at,c.url,obj.sha256,obj.key,obj.bytes
+`
+
+type PublicationOriginsParams struct {
+	Observation string             `json:"observation"`
+	Cutoff      pgtype.Timestamptz `json:"cutoff"`
+}
+
+type PublicationOriginsRow struct {
+	Url         string             `json:"url"`
+	RetrievedAt pgtype.Timestamptz `json:"retrieved_at"`
+	Sha256      string             `json:"sha256"`
+	Key         string             `json:"key"`
+	Bytes       int64              `json:"bytes"`
+}
+
+func (q *Queries) PublicationOrigins(ctx context.Context, arg PublicationOriginsParams) ([]PublicationOriginsRow, error) {
+	rows, err := q.db.Query(ctx, publicationOrigins, arg.Observation, arg.Cutoff)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	items := []PublicationOriginsRow{}
+	for rows.Next() {
+		var i PublicationOriginsRow
+		if err := rows.Scan(
+			&i.Url,
+			&i.RetrievedAt,
+			&i.Sha256,
+			&i.Key,
+			&i.Bytes,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+const publicationReceipt = `-- name: PublicationReceipt :one
+SELECT fingerprint,result FROM published.receipt WHERE operation=$1 AND actor=$2 AND key=$3
+`
+
+type PublicationReceiptParams struct {
+	Operation string `json:"operation"`
+	Actor     string `json:"actor"`
+	Key       string `json:"key"`
+}
+
+type PublicationReceiptRow struct {
+	Fingerprint string `json:"fingerprint"`
+	Result      []byte `json:"result"`
+}
+
+func (q *Queries) PublicationReceipt(ctx context.Context, arg PublicationReceiptParams) (PublicationReceiptRow, error) {
+	row := q.db.QueryRow(ctx, publicationReceipt, arg.Operation, arg.Actor, arg.Key)
+	var i PublicationReceiptRow
+	err := row.Scan(&i.Fingerprint, &i.Result)
 	return i, err
 }
 
@@ -664,6 +963,38 @@ func (q *Queries) RecentSuccessExists(ctx context.Context, arg RecentSuccessExis
 	return exists, err
 }
 
+const resolvePublication = `-- name: ResolvePublication :one
+SELECT a.generation, a.publication, a.previous_activation, a.activated_at, a.actor, a.reason,p.catalog_revision,p.data_cutoff FROM published.activation a JOIN published.publication p ON p.id=a.publication
+WHERE a.activated_at <= $1::timestamptz ORDER BY a.generation DESC LIMIT 1
+`
+
+type ResolvePublicationRow struct {
+	Generation         int64              `json:"generation"`
+	Publication        string             `json:"publication"`
+	PreviousActivation int64              `json:"previous_activation"`
+	ActivatedAt        pgtype.Timestamptz `json:"activated_at"`
+	Actor              string             `json:"actor"`
+	Reason             string             `json:"reason"`
+	CatalogRevision    string             `json:"catalog_revision"`
+	DataCutoff         pgtype.Timestamptz `json:"data_cutoff"`
+}
+
+func (q *Queries) ResolvePublication(ctx context.Context, at pgtype.Timestamptz) (ResolvePublicationRow, error) {
+	row := q.db.QueryRow(ctx, resolvePublication, at)
+	var i ResolvePublicationRow
+	err := row.Scan(
+		&i.Generation,
+		&i.Publication,
+		&i.PreviousActivation,
+		&i.ActivatedAt,
+		&i.Actor,
+		&i.Reason,
+		&i.CatalogRevision,
+		&i.DataCutoff,
+	)
+	return i, err
+}
+
 const succeedRun = `-- name: SucceedRun :exec
 UPDATE ops.run SET status='succeeded',finished_at=now(),batch=$2,observations=$3,changed=$4 WHERE id=$1 AND status='running'
 `
@@ -683,4 +1014,15 @@ func (q *Queries) SucceedRun(ctx context.Context, arg SucceedRunParams) error {
 		arg.Changed,
 	)
 	return err
+}
+
+const wasPublicationActivated = `-- name: WasPublicationActivated :one
+SELECT EXISTS(SELECT 1 FROM published.activation WHERE publication=$1)
+`
+
+func (q *Queries) WasPublicationActivated(ctx context.Context, publication string) (bool, error) {
+	row := q.db.QueryRow(ctx, wasPublicationActivated, publication)
+	var exists bool
+	err := row.Scan(&exists)
+	return exists, err
 }
