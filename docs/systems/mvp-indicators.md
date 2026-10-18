@@ -107,7 +107,7 @@ O mínimo nominal e o índice corrente precisam corresponder ao mesmo mês civil
 
 O cálculo exige mínimo nominal positivo e índices positivos na mesma base de índice. Input ausente, unidade incompatível ou quebra sem equivalência impede resultado, com motivo registrado; não preencher com zero. Só há saída para meses com INPC publicado: mínimo nominal já conhecido não torna conhecido o poder de compra do mês corrente. Revisar qualquer input exige nova materialização rastreável, preservando a anterior.
 
-A base monetária ficará fixa até uma mudança de método versionada. A série inicial terá início pretendido em janeiro de 2012, alinhado ao horizonte desejado para o MVP; a fase 4 precisa confirmar a cobertura efetiva. A base é uma escolha de apresentação do poder de compra, não previsão de preços. A precisão e o arredondamento de execução serão fixados com a engine antes de publicar resultados.
+A base monetária ficará fixa até uma mudança de método versionada. A série inicial terá início pretendido em janeiro de 2012, alinhado ao horizonte desejado para o MVP; a fase 4 precisa confirmar a cobertura efetiva. A base é uma escolha de apresentação do poder de compra, não previsão de preços. A [engine da fase 8](indicator-engine.md) fixa aritmética exata e arredondamento half-even da saída em até 12 casas decimais.
 
 ## Contrato do tempo de trabalho por cesta
 
@@ -126,7 +126,7 @@ O método deve registrar a **aplicação territorial do piso nacional à capital
 
 Custo não negativo, mínimo estritamente positivo, mesma moeda e mesmo mês são condições de cálculo. Ausência de input, período parcial não compatível ou quebra não resolvida impede saída numérica; zero publicado para o custo continua distinto de ausência. Preservar IDs de inputs, composição da cesta, parâmetro 220, método, versão e precisão. Revisar o custo ou o mínimo exige nova materialização; mudar a referência de horas exige nova versão e série quando alterar a identidade semântica.
 
-A comparação com o tempo divulgado pelo DIEESE deve respeitar o arredondamento de apresentação e ser definida na engine. Esta especificação não implementa a fórmula. A primeira entrega de tempo de trabalho é CV5; tempo por gasolina permanece uma expansão posterior, sem bloquear a cesta por depender de outra renda/hora.
+A [engine da fase 8](indicator-engine.md) implementa a fórmula e confronta o tempo divulgado pelo DIEESE com tolerância de um minuto, bloqueando divergências maiores. A primeira entrega de tempo de trabalho é CV5; tempo por gasolina permanece uma expansão posterior, sem bloquear a cesta por depender de outra renda/hora.
 
 ## História e comparação pretendidas
 

@@ -14,7 +14,7 @@ PostgreSQL 18 e LocalStack, emulador da API S3 usada pelo cliente R2. O replay n
 a CLI Docker também foi exercitada com coleta real BCB de janeiro/fevereiro de 2025.
 Esses ensaios não comprovam operação na Railway, bucket lock R2, backup nativo, indexação externa
 ou publicação de indicadores. A configuração do cron está entregue; o serviço remoto não foi
-criado. TR2 e CV5 têm seus inputs disponíveis, mas seus cálculos pertencem à fase 8.
+criado. TR2 e CV5 são calculados pela [engine da fase 8](indicator-engine.md), com seleção explícita dos inputs aceitos.
 
 Critérios desta entrega: todas as fontes selecionadas percorrem coleta → raw confirmado →
 normalização → aceitação relacional; repetição não duplica observações/lotes; revisões mantêm

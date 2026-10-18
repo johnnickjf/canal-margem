@@ -119,7 +119,7 @@ func normalizeBasketPages(pages []string, sha string, year, month int, w period.
 	if costColumn > 2 {
 		return nil, observations.Invalid("DIEESE: ordem das colunas desconhecida")
 	}
-	fieldRE := regexp.MustCompile(`-?\d{1,3}(?:\.\d{3})*,\d{2}|\(-\)`)
+	fieldRE := regexp.MustCompile(`-?\d{1,3}(?:\.\d{3})*,\d{1,2}|\(-\)|-`)
 	timeRE := regexp.MustCompile(`(?i)(\d+)\s*h\s*(\d{1,2})\s*m`)
 	missingRE := regexp.MustCompile(`^[\sNDA-]+$`)
 	rows := []observations.Observation{}
@@ -140,7 +140,7 @@ func normalizeBasketPages(pages []string, sha string, year, month int, w period.
 			}
 		}
 		fields := fieldRE.FindAllString(rest, -1)
-		missing := len(fields) == 0 && (strings.TrimSpace(footnote) != "" || missingRE.MatchString(rest))
+		missing := missingRE.MatchString(rest) || len(fields) == 0 && strings.TrimSpace(footnote) != ""
 		context := map[string]any{}
 		value := "..."
 		if missing {

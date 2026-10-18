@@ -501,6 +501,16 @@ Os dados necessários para o MVP são atualizados automaticamente.
 
 ## Fase 8 — Indicator Engine
 
+### Estado
+
+Implementada na [engine de indicadores](systems/indicator-engine.md), no backend Go.
+TR2, CV5, relações cesta/renda, variações, diferenças, base 100 e acumulados compostos usam
+inputs aceitos fixados por ID, fórmulas versionadas, precisão de 12 casas e half-even.
+Avaliações e dependências são imutáveis e transacionais; incompatibilidades registram motivo
+sem número. Testes cobrem repetição, revisões, concorrência, rollback e dados oficiais
+preservados. A conferência do tempo DIEESE também detectou e corrigiu deslocamento de
+colunas em cinco custos históricos. API e seleção/ativação pública continuam na fase 9.
+
 ### Objetivo
 
 Separar dado bruto de interpretação e cálculo.

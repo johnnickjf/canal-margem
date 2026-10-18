@@ -22,6 +22,8 @@ O Canal Margem está preparando a evolução do site editorial para uma platafor
 
 16. [Pipelines do MVP](systems/pipelines.md): jobs das cinco fontes, PostgreSQL e API compatível com S3 (R2 em produção), agendamento, revisões, importação da PoC e evidência real da fase 7.
 
+17. [Engine de indicadores](systems/indicator-engine.md): fórmulas versionadas, inputs fixados por ID, cálculos reproduzíveis e persistência da fase 8.
+
 Os quatro documentos numerados partem dos textos fornecidos pelo responsável pelo projeto e receberam ajustes de clareza e precisão. Definem o produto planejado; a auditoria do frontend registra a fase 0, e os documentos de sistemas registram as entregas posteriores. Exemplos do modelo e do design system são ilustrativos. As amostras em `data-sources/evidence/` são dados oficiais consultados na fase 4, com proveniência, sem integração ao site.
 
 ## Estado e limites
@@ -40,12 +42,13 @@ Os quatro documentos numerados partem dos textos fornecidos pelo responsável pe
 | Ingestão e persistência local | PoC da fase 5 executada com quatro séries e 587 observações; revisões, repetição e falhas testadas |
 | Arquitetura de armazenamento | Fase 6 definida em cinco ADRs: PostgreSQL/Railway, R2, histórico/cache, backup nativo/reconstrução e portabilidade/custos; serviços ainda não implantados |
 | Pipeline do MVP | Fase 7 implementada e verificada localmente: cinco fontes, 6.375 observações, PostgreSQL e API compatível com S3 (R2 em produção), repetição, revisões, falhas e importação da PoC |
-| Engine e API de indicadores | Próximas fases 8 e 9 |
+| Engine de indicadores | Fase 8 implementada no backend Go: TR2, CV5, variações, índices e relações, com avaliações imutáveis |
+| API de indicadores | Próxima fase 9 |
 | Publicação e operação em produção | Não verificadas; Dockerfile e cron Railway preparados, sem serviço remoto implantado |
 
 As rotas atuais são `/temas/:slug`, `/videos/:slug` e `/analises/:slug`. As rotas `/tema/:slug`, `/indicador/:slug`, `/comparar` e `/entenda/:slug` dos documentos são propostas futuras. A convivência entre temas editoriais e dimensões socioeconômicas precisa ser resolvida antes de alterar URLs ou navegação.
 
-O conjunto sugerido de indicadores em UX é uma lista de candidatos. A [seleção da fase 3](systems/mvp-indicators.md) fixa 15 conceitos principais; cesta e tempo por cesta têm recorte por capital. O critério de MVP exige pelo menos 10 indicadores disponíveis e tradução de preços em tempo de trabalho, cuja primeira entrega será a cesta na referência do salário mínimo. Isso está especificado, ainda sem cálculo executável. O [modelo da fase 2](systems/data-model.md) fixa `dataset`, `revision_status`, `methodology_version` e `calculation_version`, distingue revisão de atualização e define `derived` como observações calculadas e `published` como projeção validada de observações externas ou derivadas. Essas camadas não determinam schemas físicos. Exemplos de API com `:id` e `:slug` também não fixam o contrato final.
+O conjunto sugerido de indicadores em UX é uma lista de candidatos. A [seleção da fase 3](systems/mvp-indicators.md) fixa 15 conceitos principais; cesta e tempo por cesta têm recorte por capital. O critério de MVP exige pelo menos 10 indicadores disponíveis e tradução de preços em tempo de trabalho, cuja primeira entrega será a cesta na referência do salário mínimo. Os cálculos de TR2 e CV5 estão implementados na fase 8; a experiência pública permanece posterior. O [modelo da fase 2](systems/data-model.md) fixa `dataset`, `revision_status`, `methodology_version` e `calculation_version`, distingue revisão de atualização e define `derived` como observações calculadas e `published` como projeção validada de observações externas ou derivadas. Essas camadas não determinam schemas físicos. Exemplos de API com `:id` e `:slug` também não fixam o contrato final.
 
 O [manual de marca](brand/MARGEM_Manual_Marca_Conteudo_Site.md) define a direção visual, não certifica sua implementação. Diferenças observadas, limites de contraste e pendências do conteúdo de exemplo estão na [auditoria do frontend](systems/frontend.md).
 
@@ -63,9 +66,8 @@ Manter detalhes de infraestrutura fora da visão e do documento de UX. Registrar
 
 ## Próxima entrega
 
-Implementar a engine da fase 8: cálculos centralizados e reproduzíveis de variações, valores
-reais e relações como TR2 e CV5, com fórmula, versão, inputs, saída e metodologia. Os
-[pipelines da fase 7](systems/pipelines.md) fornecem os dados normalizados; implantação remota,
-backup Railway e validação de bucket lock R2 continuam sem execução. A API vem na fase 9;
-retirar a PoC somente após substituição verificada, conforme o roadmap. A
+Implementar a API da fase 9: contrato estável, filtros, cache, paginação, documentação e
+erros consistentes, com publicação coerente dos dados e cálculos da
+[engine](systems/indicator-engine.md). A retirada da PoC exige substituição verificada,
+conforme o roadmap. Implantação Railway/R2 e backup remoto continuam sem ensaio. A
 [regra permanente de SEO e descoberta por IA](../AGENTS.md) continua obrigatória.

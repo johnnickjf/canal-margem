@@ -8,6 +8,21 @@ import (
 	"github.com/jackc/pgx/v5/pgtype"
 )
 
+type DerivedEvaluation struct {
+	ID           string             `json:"id"`
+	Request      []byte             `json:"request"`
+	Definition   []byte             `json:"definition"`
+	Result       []byte             `json:"result"`
+	CalculatedAt pgtype.Timestamptz `json:"calculated_at"`
+}
+
+type DerivedInput struct {
+	Evaluation   string      `json:"evaluation"`
+	Role         string      `json:"role"`
+	NormalizedID pgtype.Text `json:"normalized_id"`
+	DerivedID    pgtype.Text `json:"derived_id"`
+}
+
 type LegacyFile struct {
 	Import string `json:"import"`
 	Path   string `json:"path"`

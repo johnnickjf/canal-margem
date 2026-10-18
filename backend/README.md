@@ -1,7 +1,7 @@
 # Backend Margem
 
-Monólito modular em Go. A fase 7 implementa os pipelines privados; engine, manifestos de
-publicação e API ficam nas fases 8 e 9. Contratos e evidências estão no
+Monólito modular em Go. A fase 7 implementa os pipelines privados; a fase 8 acrescenta a
+[engine de indicadores](../docs/systems/indicator-engine.md). Manifestos de publicação e API ficam na fase 9. Contratos e evidências estão no
 [manual de operação](../docs/systems/pipelines.md) e no
 [ADR-0007](../docs/adr/0007-go-modular-backend.md).
 
@@ -12,6 +12,7 @@ cmd/margem/                  entrada da CLI e sinais de término
 internal/app/                composição de dependências e tradução de comandos
 internal/catalog/            recortes, unidades, métodos e versão do catálogo
 internal/ingestion/          adaptadores de fontes, HTTP, jobs e saúde operacional
+internal/indicators/         fórmulas versionadas, avaliações imutáveis e linhagem
 internal/observations/       regras, identidades, aceitação de lotes e integridade
 internal/legacy/             preservação/importação conservadora da PoC
 internal/period/             períodos de calendário e janelas
@@ -24,7 +25,7 @@ integration/                 cenários PostgreSQL/LocalStack em recursos tempor�
 
 A organização é por responsabilidade de domínio. Fontes externas são adaptadores de
 ingestão. `raw`, `normalized`, `derived` e `published` são etapas dos dados, sem exigir um
-módulo para cada schema. Novos módulos de indicadores e publicações devem aparecer quando
+módulo para cada schema. Novos módulos de publicações devem aparecer quando
 suas regras forem implementadas; não criar pacotes vazios.
 
 ## Regras de dependência e consistência
@@ -62,6 +63,9 @@ Da raiz do repositório:
 ```bash
 pnpm pipeline --help
 pnpm pipeline migrate
+pnpm pipeline formulas
+pnpm pipeline calculate --manifest .data/calculations.json
+pnpm pipeline calculation --id ID
 pnpm pipeline run --source bcb --from 2025-01-01 --to 2025-12-31
 pnpm pipeline tick
 pnpm pipeline status

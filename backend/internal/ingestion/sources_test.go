@@ -204,3 +204,32 @@ func TestPDFToUnicodeAndPositionedCells(t *testing.T) {
 		t.Fatal("hash ausente")
 	}
 }
+
+func TestBasketKeepsSingleDecimalAndMissingRateColumns(t *testing.T) {
+	var fixtures map[string]struct {
+		Pages []string `json:"pages"`
+	}
+	if e := json.Unmarshal(basketFixtures, &fixtures); e != nil {
+		t.Fatal(e)
+	}
+	for _, tt := range []struct{ code, city, want string }{{"201211", "Rio de Janeiro", "272.1"}, {"201403", "João Pessoa", "263.17"}, {"201403", "Florianópolis", "345.63"}, {"201403", "Vitória", "343.7"}, {"201912", "Brasília", "473.9"}} {
+		y, _ := strconv.Atoi(tt.code[:4])
+		m, _ := strconv.Atoi(tt.code[4:])
+		rows, e := normalizeBasketPages(fixtures[tt.code].Pages, "fixture", y, m, testWindow())
+		if e != nil {
+			t.Fatal(e)
+		}
+		found := false
+		for _, o := range rows {
+			if o.Context["capital"] == tt.city {
+				found = true
+				if o.Value == nil || *o.Value != tt.want {
+					t.Fatalf("%s %s: %v, wanted %s", tt.code, tt.city, o.Value, tt.want)
+				}
+			}
+		}
+		if !found {
+			t.Fatal(tt)
+		}
+	}
+}

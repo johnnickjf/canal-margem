@@ -211,6 +211,48 @@ func (q *Queries) CreateCapture(ctx context.Context, arg CreateCaptureParams) er
 	return err
 }
 
+const createEngineEvaluation = `-- name: CreateEngineEvaluation :exec
+INSERT INTO derived.evaluation(id,request,definition,result) VALUES ($1,$2,$3,$4) ON CONFLICT DO NOTHING
+`
+
+type CreateEngineEvaluationParams struct {
+	ID         string `json:"id"`
+	Request    []byte `json:"request"`
+	Definition []byte `json:"definition"`
+	Result     []byte `json:"result"`
+}
+
+func (q *Queries) CreateEngineEvaluation(ctx context.Context, arg CreateEngineEvaluationParams) error {
+	_, err := q.db.Exec(ctx, createEngineEvaluation,
+		arg.ID,
+		arg.Request,
+		arg.Definition,
+		arg.Result,
+	)
+	return err
+}
+
+const createEngineInput = `-- name: CreateEngineInput :exec
+INSERT INTO derived.input(evaluation,role,normalized_id,derived_id) VALUES ($1,$2,$3,$4) ON CONFLICT DO NOTHING
+`
+
+type CreateEngineInputParams struct {
+	Evaluation   string      `json:"evaluation"`
+	Role         string      `json:"role"`
+	NormalizedID pgtype.Text `json:"normalized_id"`
+	DerivedID    pgtype.Text `json:"derived_id"`
+}
+
+func (q *Queries) CreateEngineInput(ctx context.Context, arg CreateEngineInputParams) error {
+	_, err := q.db.Exec(ctx, createEngineInput,
+		arg.Evaluation,
+		arg.Role,
+		arg.NormalizedID,
+		arg.DerivedID,
+	)
+	return err
+}
+
 const createEvent = `-- name: CreateEvent :exec
 INSERT INTO ops.event(run,event,detail) VALUES ($1,$2,$3)
 `
@@ -379,6 +421,60 @@ func (q *Queries) CreateRun(ctx context.Context, arg CreateRunParams) error {
 		arg.WindowEnd,
 	)
 	return err
+}
+
+const engineEvaluation = `-- name: EngineEvaluation :one
+SELECT id, request, definition, result, calculated_at FROM derived.evaluation WHERE id=$1
+`
+
+func (q *Queries) EngineEvaluation(ctx context.Context, id string) (DerivedEvaluation, error) {
+	row := q.db.QueryRow(ctx, engineEvaluation, id)
+	var i DerivedEvaluation
+	err := row.Scan(
+		&i.ID,
+		&i.Request,
+		&i.Definition,
+		&i.Result,
+		&i.CalculatedAt,
+	)
+	return i, err
+}
+
+const engineNormalizedInput = `-- name: EngineNormalizedInput :one
+SELECT o.id,o.series,o.start_date,o.end_date,o.geography,coalesce(o.value::text,'')::text AS value_text,o.status,o.context
+FROM normalized.observation o
+WHERE o.id=$1 AND EXISTS (
+ SELECT 1 FROM normalized.member m JOIN normalized.receipt r ON r.batch=m.batch
+ JOIN ops.run run ON run.id=r.run
+ WHERE m.observation=o.id AND run.status='succeeded'
+)
+`
+
+type EngineNormalizedInputRow struct {
+	ID        string      `json:"id"`
+	Series    string      `json:"series"`
+	StartDate pgtype.Date `json:"start_date"`
+	EndDate   pgtype.Date `json:"end_date"`
+	Geography string      `json:"geography"`
+	ValueText string      `json:"value_text"`
+	Status    string      `json:"status"`
+	Context   []byte      `json:"context"`
+}
+
+func (q *Queries) EngineNormalizedInput(ctx context.Context, id string) (EngineNormalizedInputRow, error) {
+	row := q.db.QueryRow(ctx, engineNormalizedInput, id)
+	var i EngineNormalizedInputRow
+	err := row.Scan(
+		&i.ID,
+		&i.Series,
+		&i.StartDate,
+		&i.EndDate,
+		&i.Geography,
+		&i.ValueText,
+		&i.Status,
+		&i.Context,
+	)
+	return i, err
 }
 
 const failOrphanedRuns = `-- name: FailOrphanedRuns :exec

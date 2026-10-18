@@ -1,0 +1,84 @@
+{
+  "date": "2026-10-18",
+  "scope": "Phase 8 private Go indicator engine; local verification, no remote deployment or public activation",
+  "corpus": {
+    "source": "Preserved phase-7 originals in .data/go-migration/corpus; basket PDFs reprocessed with corrected parser",
+    "observations": 6375,
+    "unchanged_ids": 6370,
+    "corrections": [
+      {
+        "series": "cv4",
+        "period": "2012-11-01",
+        "geography": "BR-city-3304557",
+        "previous_value": "47.55",
+        "corrected_value": "272.1",
+        "previous_id": "92faf9e413c2e15bc1f88c0bc4245911be30aa82d9733226f52c63002041cac2",
+        "corrected_id": "9be78f306c0c32e53b17bb6a0bffb78e088bdc47ca58458c8ad07241135d1f7d"
+      },
+      {
+        "series": "cv4",
+        "period": "2014-03-01",
+        "geography": "BR-city-4205407",
+        "previous_value": "51.89",
+        "corrected_value": "345.63",
+        "previous_id": "361c73d17f2aadb6dc33cb92ad896dba8f2717149b2202304b0f930cbeb4ef33",
+        "corrected_id": "77392ba1ef58be6f437e9ad46b9c879be0da8ec9fd99ad1a85f81185e239055a"
+      },
+      {
+        "series": "cv4",
+        "period": "2014-03-01",
+        "geography": "BR-city-2507507",
+        "previous_value": "39.51",
+        "corrected_value": "263.17",
+        "previous_id": "0dd7b588cb54ae790b96ea8d0e1673f174a4701eb84eca346098808fbad2a472",
+        "corrected_id": "a7705321e0ec09f3abedf4b9921df11c38a90d9a732718eefacf11dd7a608b17"
+      },
+      {
+        "series": "cv4",
+        "period": "2014-03-01",
+        "geography": "BR-city-3205309",
+        "previous_value": "51.6",
+        "corrected_value": "343.7",
+        "previous_id": "c44e7e581bced40b6a1b4dba2a1966516aa7232c180ff3e7b67e6870894ecd90",
+        "corrected_id": "8b2a7173d2d31fa32c94ad591022689911b3cb38f3f6d87fcf2e0cd79c3648b0"
+      },
+      {
+        "series": "cv4",
+        "period": "2019-12-01",
+        "geography": "BR-city-5300108",
+        "previous_value": "51.61",
+        "corrected_value": "473.9",
+        "previous_id": "014c28d67bfe96fd6f1bb2ef81c6d51eebf2a824c357c7d05cbe15fb25e8edd5",
+        "corrected_id": "7511efd58946c8bc45b682624a6fbb38a565af027466a767b8358e03b3a2a290"
+      }
+    ],
+    "tr2_outputs": 177,
+    "cv5_outputs": 3438,
+    "cv5_blocked": 1,
+    "blocked_reason": "published_work_time_mismatch",
+    "blocked_record": {
+      "period": "2016-02",
+      "geography": "BR-city-3550308",
+      "cost": "443.4",
+      "nominal_minimum": "880",
+      "calculated_hours": "110.85",
+      "published_time": "110h53m",
+      "tolerance_minutes": 1
+    }
+  },
+  "evidence": {
+    "domain": "Seven versioned formulas, exact rational arithmetic, final half-even rounding to 12 decimal places, missing/incompatible inputs and comparison horizons",
+    "integration": "Real PostgreSQL 18 and LocalStack, controlled HTTP responses: ingestion, raw, acceptance, engine persistence, replay, concurrent insertion, revisions, derived dependencies, rollback, migration 001 to 002 and immutable runtime grants",
+    "cli": "Node wrapper with relative manifest path and Go CLI calculate/calculation against isolated PostgreSQL, without R2 configuration",
+    "sqlc": "Regeneration produces identical Go files",
+    "frontend": "87 unit tests and coverage thresholds passed; lint, Astro diagnostics, 38-page build and 35 Playwright tests passed, including SEO checks",
+    "container": "Docker image built successfully; --help and all seven formula definitions match local CLI"
+  },
+  "not_verified": [
+    "New live upstream collection in phase 8",
+    "Railway deployment and remote backups",
+    "Cloudflare R2 service and bucket lock",
+    "Public API and publication/activation (phase 9)",
+    "External indexing"
+  ]
+}

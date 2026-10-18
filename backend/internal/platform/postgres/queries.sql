@@ -67,3 +67,18 @@ WITH accepted AS (
 SELECT series,min(start_date)::date AS first_period,max(end_date)::date AS last_period,
  count(*) AS observations,count(*) FILTER(WHERE status!='observed') AS unavailable
 FROM accepted GROUP BY series ORDER BY series;
+
+-- name: EngineNormalizedInput :one
+SELECT o.id,o.series,o.start_date,o.end_date,o.geography,coalesce(o.value::text,'')::text AS value_text,o.status,o.context
+FROM normalized.observation o
+WHERE o.id=$1 AND EXISTS (
+ SELECT 1 FROM normalized.member m JOIN normalized.receipt r ON r.batch=m.batch
+ JOIN ops.run run ON run.id=r.run
+ WHERE m.observation=o.id AND run.status='succeeded'
+);
+-- name: EngineEvaluation :one
+SELECT * FROM derived.evaluation WHERE id=$1;
+-- name: CreateEngineEvaluation :exec
+INSERT INTO derived.evaluation(id,request,definition,result) VALUES ($1,$2,$3,$4) ON CONFLICT DO NOTHING;
+-- name: CreateEngineInput :exec
+INSERT INTO derived.input(evaluation,role,normalized_id,derived_id) VALUES ($1,$2,$3,$4) ON CONFLICT DO NOTHING;

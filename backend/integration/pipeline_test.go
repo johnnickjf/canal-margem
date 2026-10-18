@@ -374,7 +374,7 @@ func TestPipelineIntegration(t *testing.T) {
 		if _, e = session.Exec(ctx, "SET ROLE "+pgx.Identifier{role}.Sanitize()); e != nil {
 			t.Fatal(e)
 		}
-		for _, sql := range []string{"UPDATE normalized.observation SET value=0", "DELETE FROM raw.capture", "DELETE FROM normalized.receipt", "UPDATE ops.catalog SET definition='{}'"} {
+		for _, sql := range []string{"UPDATE derived.evaluation SET result='{}'", "DELETE FROM derived.input", "DELETE FROM derived.evaluation", "UPDATE normalized.observation SET value=0", "DELETE FROM raw.capture", "DELETE FROM normalized.receipt", "UPDATE ops.catalog SET definition='{}'"} {
 			if _, e = session.Exec(ctx, sql); e == nil {
 				t.Fatalf("runtime permitiu %s", sql)
 			}

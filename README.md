@@ -62,8 +62,9 @@ serviços remotos ainda não foram implantados. A fase 7 implementa os
 agendamento, qualidade, histórico e observabilidade. A coleta local real aceitou 6.375
 observações; a repetição não criou versões. A importação da PoC preserva 21 arquivos e
 587 observações, sem promoção pública. A migração para [Go e monólito modular](docs/adr/0007-go-modular-backend.md) preserva
-os contratos e separa comandos de consultas. A próxima etapa é a engine de indicadores da fase 8;
-implantação Railway/R2 e API permanecem posteriores.
+os contratos e separa comandos de consultas. A fase 8 implementa a [engine de indicadores](docs/systems/indicator-engine.md): TR2, CV5,
+variações, índices e relações cesta/renda, com inputs explícitos, precisão decimal e histórico
+imutável. A próxima etapa é a API da fase 9; implantação Railway/R2 permanece posterior.
 
 ```bash
 pnpm ingestion fetch --from 2025-01 --to 2025-12
@@ -101,7 +102,8 @@ pnpm test           # backend + coverage + test:e2e
 
 Os jobs usam Go 1.26 (imagem fixada em 1.26.6), pgx e sqlc, sem ORM; consulte
 [configuração, comandos e testes de integração](docs/systems/pipelines.md).
-`pnpm pipeline` acessa a CLI; serviços de teste usam `backend/compose.yaml`.
+`pnpm pipeline` acessa a CLI, inclusive `formulas`, `calculate --manifest ARQUIVO` e
+`calculation --id ID`; serviços de teste usam `backend/compose.yaml`.
 
 A CI em [`.github/workflows/tests.yml`](.github/workflows/tests.yml) executa a validação em cada
 PR e push. Sua primeira execução no GitHub depende do envio dessas alterações.

@@ -10,7 +10,7 @@ A fundação reutilizável da fase 1 está em [Design system](design-system.md):
 
 [Operações de leitura, escrita e consistência](data-operations.md) complementa a fase 2 com contratos de consulta, aceitação em lotes, idempotência, concorrência e publicação por manifesto. Inclui exemplos da diferença entre coleta, aceitação e ativação pública, ainda sem execução de infraestrutura.
 
-[Indicadores do MVP](mvp-indicators.md) registra a fase 3: seleção revisada de 15 conceitos principais, incluindo alimentação, tempo de trabalho pelo piso, insegurança alimentar e moradia. Separa contextos e inputs, especifica salário mínimo real pelo INPC e tempo por cesta, e define a passagem para o catálogo da fase 4. O [mapa de fontes](../research/source-map.md) registra evidências, investigações obrigatórias e expansão; a engine continua posterior.
+[Indicadores do MVP](mvp-indicators.md) registra a fase 3: seleção revisada de 15 conceitos principais, incluindo alimentação, tempo de trabalho pelo piso, insegurança alimentar e moradia. Separa contextos e inputs, especifica salário mínimo real pelo INPC e tempo por cesta, e define a passagem para o catálogo da fase 4. O [mapa de fontes](../research/source-map.md) registra evidências, investigações obrigatórias e expansão; a engine está implementada na fase 8.
 
 O [catálogo de fontes](../data-sources/README.md) documenta a fase 4, com recortes, endpoints/arquivos, amostras oficiais, histórico observado e limites por fonte. As [investigações](../research/phase-4-investigations.md) encerram as perguntas de renda/hora, Peic e inflação por renda. A [PoC da fase 5](ingestion.md) implementa TR4, CV1 e VF1 com coleta por comando, raw, validação, persistência local, revisões e exportação. A coleta recorrente continua posterior.
 
@@ -23,6 +23,8 @@ A coleta Python original e sua repetição foram verificadas localmente; o
 [backend Go modular](../adr/0007-go-modular-backend.md) preserva seus contratos, IDs e lotes.
 Não há implantação remota.
 
-Documentos futuros, quando houver desenho ou implementação concreta, poderão cobrir `api.md`, `data-processing.md` e `indicator-engine.md`. A ausência desses sistemas nesta fase é intencional.
+A [engine de indicadores](indicator-engine.md) implementa a fase 8: TR2, CV5, relações, variações e índices com inputs explícitos, cálculo versionado e avaliações imutáveis no PostgreSQL.
+
+Documentos futuros poderão cobrir `api.md` e `data-processing.md`, conforme essas responsabilidades forem implementadas.
 
 Cada documento deve distinguir estado atual de proposta e descrever responsabilidade, entradas e saídas, dependências, fluxos, configuração, falhas, validação e operação relevantes. Requisitos gerais permanecem na [arquitetura técnica](../03-technical-architecture.md); decisões ficam em [adr](../adr/README.md).

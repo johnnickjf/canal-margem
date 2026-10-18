@@ -16,6 +16,11 @@ import (
 //go:embed 001.sql
 var Migration []byte
 
+//go:embed 002.sql
+var EngineMigration []byte
+
+const LatestMigration = "002"
+
 //go:generate go run github.com/sqlc-dev/sqlc/cmd/sqlc@v1.31.1 generate -f ../../../sqlc.yaml
 func Open(ctx context.Context) (*pgxpool.Pool, error) {
 	cfg, e := pgxpool.ParseConfig(os.Getenv("DATABASE_URL"))
@@ -44,20 +49,25 @@ func Migrate(ctx context.Context, pool *pgxpool.Pool) error {
 			return e
 		}
 	}
-	var sha string
-	e = tx.QueryRow(ctx, "SELECT sha256 FROM ops.migration WHERE id='001'").Scan(&sha)
-	if e != nil && !errors.Is(e, pgx.ErrNoRows) {
-		return e
-	}
-	if e == nil && sha != canonical.Hash(Migration) {
-		return fmt.Errorf("migração 001 alterada após aplicação")
-	}
-	if errors.Is(e, pgx.ErrNoRows) {
-		if _, e = tx.Exec(ctx, string(Migration)); e != nil {
+	for _, migration := range []struct {
+		id   string
+		body []byte
+	}{{"001", Migration}, {"002", EngineMigration}} {
+		var sha string
+		e = tx.QueryRow(ctx, "SELECT sha256 FROM ops.migration WHERE id=$1", migration.id).Scan(&sha)
+		if e != nil && !errors.Is(e, pgx.ErrNoRows) {
 			return e
 		}
-		if _, e = tx.Exec(ctx, "INSERT INTO ops.migration(id,sha256) VALUES ('001',$1)", canonical.Hash(Migration)); e != nil {
-			return e
+		if e == nil && sha != canonical.Hash(migration.body) {
+			return fmt.Errorf("migração %s alterada após aplicação", migration.id)
+		}
+		if errors.Is(e, pgx.ErrNoRows) {
+			if _, e = tx.Exec(ctx, string(migration.body)); e != nil {
+				return e
+			}
+			if _, e = tx.Exec(ctx, "INSERT INTO ops.migration(id,sha256) VALUES ($1,$2)", migration.id, canonical.Hash(migration.body)); e != nil {
+				return e
+			}
 		}
 	}
 	if _, e = tx.Exec(ctx, "INSERT INTO ops.catalog(id,definition) VALUES ($1,$2) ON CONFLICT DO NOTHING", catalog.Version, catalog.Definition); e != nil {
