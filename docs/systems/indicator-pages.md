@@ -12,8 +12,8 @@ Os [guias dos 15 indicadores principais](../../src/data/indicator-guides.ts) exp
 significado e os cuidados específicos, incluindo IPCA mensal versus 12 meses, Gini, pobreza,
 média móvel do comprometimento da renda e composição regional da cesta. As medidas auxiliares
 mantêm a definição e os limites do catálogo. Relações entre indicadores são contexto editorial,
-sem atribuição causal. O acesso ao guia de leitura permanece disponível; a camada Entenda
-com conceitos dedicados continua na fase 14.
+sem atribuição causal. A [camada Entenda da fase 14](entenda.md) integra o painel contextual
+e conceitos dedicados; o acesso ao guia de leitura permanece disponível.
 
 [IndicatorDetail](../../src/components/platform/IndicatorDetail.astro) exibe valor decimal,
 unidade, período, geografia, frequência, base temporal, fonte, método, dataset e alertas recebidos.

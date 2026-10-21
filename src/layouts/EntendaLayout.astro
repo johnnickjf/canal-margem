@@ -1,0 +1,57 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import { site } from '@/config/site';
+interface Props {
+  title: string;
+  description: string;
+  term?: { name: string; description: string; sources: string[] };
+}
+const { title, description, term } = Astro.props;
+const canonical = new URL(Astro.url.pathname, site.url).href;
+const index = new URL('/entenda/', site.url).href;
+const breadcrumb = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Início', item: site.url },
+    { '@type': 'ListItem', position: 2, name: 'Entenda', item: index },
+    ...(term ? [{ '@type': 'ListItem', position: 3, name: title, item: canonical }] : []),
+  ],
+};
+const jsonLd = [
+  breadcrumb,
+  ...(term
+    ? [
+        {
+          '@context': 'https://schema.org',
+          '@type': 'DefinedTerm',
+          '@id': `${canonical}#conceito`,
+          name: term.name,
+          description: term.description,
+          url: canonical,
+          inDefinedTermSet: index,
+          subjectOf: {
+            '@type': 'WebPage',
+            url: canonical,
+            inLanguage: 'pt-BR',
+            author: { '@type': 'Organization', name: site.name, url: site.url },
+            citation: term.sources,
+          },
+        },
+      ]
+    : []),
+];
+---
+<BaseLayout title={title} description={description} jsonLd={jsonLd}>
+  <div class="container platform-page entenda-page">
+    <nav aria-label="Caminho"><a href="/">Início</a> / {term ? <><a href="/entenda">Entenda</a> / <span aria-current="page">{title}</span></> : <span aria-current="page">Entenda</span>}</nav>
+    <header><p class="label">Margem / Entenda</p><h1>{title}</h1><p class="platform-intro">{description}</p></header>
+    <slot />
+  </div>
+</BaseLayout>
+<style>
+  .entenda-page > :global(section > p) { max-width: var(--measure); }
+  .entenda-page > :global(section) { scroll-margin-top: var(--space-xl); }
+  .entenda-page > :global(section > ul) { padding-left: var(--space-md); }
+  .entenda-page > :global(section > ul > li + li) { margin-top: var(--space-sm); }
+</style>

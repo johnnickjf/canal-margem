@@ -1,0 +1,35 @@
+---
+import ExplanationDrawer from '@/components/indicators/ExplanationDrawer.astro';
+import { concepts, indicatorConcepts } from '@/data/concepts';
+import { indicatorGuides } from '@/data/indicator-guides';
+import { platform } from '@/lib/platform';
+import type { Indicator } from '@/lib/platform-build';
+interface Props {
+  indicator: Indicator;
+}
+const { indicator } = Astro.props;
+const guide = indicatorGuides[indicator.slug];
+const reading = concepts.filter((item) => indicatorConcepts[indicator.slug]?.includes(item.slug));
+const reference = reading[0]?.sources[0];
+const sourceIds = new Set(
+  (platform.selections[indicator.slug] ?? []).map(({ series }) => series.source),
+);
+const sources = platform.sources.filter((source) => sourceIds.has(source.id));
+const related = platform.indicators.filter((item) => guide?.related.includes(item.slug));
+---
+<ExplanationDrawer id="indicator-explanation" title={indicator.name} definition={indicator.definition}
+  importance={guide?.importance ?? indicator.question}
+  interpretation={guide?.meaning ?? indicator.definition}
+  pitfalls={[guide?.caution ?? indicator.limitations, 'Uma mudança no indicador, por si só, não identifica sua causa.']}
+  source={{ name: 'Margem', dataset: 'Explicação editorial' }}>
+  <section><h3>Fontes dos dados</h3>
+    {sources.length > 0 ? <ul>{sources.map((source) => <li><a href={source.url}>{source.name}</a></li>)}</ul> : <p>Sem fonte de dados publicada para este indicador nesta edição. Consulte a definição e os limites abaixo.</p>}
+    <a href="#dados">Conferir dados, fontes e metodologia por recorte</a>
+  </section>
+  <section><h3>Conceitos para entender este indicador</h3>
+    <ul>{reading.map((item) => <li><a href={`/entenda/${item.slug}`}>{item.title}</a> · {item.question}</li>)}</ul>
+    {reference && <p>Referência conceitual: <a href={reference.url}>{reference.name}</a>. As páginas dos conceitos apresentam as demais referências.</p>}
+    <a href="/entenda/como-ler-os-dados">Como ler os dados e suas limitações</a>
+  </section>
+  <section><h3>Indicadores relacionados</h3><ul>{related.map((item) => <li><a href={`/indicador/${item.slug}`}>{item.name}</a></li>)}</ul></section>
+</ExplanationDrawer>

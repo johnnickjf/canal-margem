@@ -806,6 +806,16 @@ Primeira experiência completa de consumo de um indicador.
 
 ## Fase 14 — Camada “Entenda”
 
+### Estado
+
+Implementada na [camada Entenda](systems/entenda.md): índice e 11 páginas conceituais com
+definição, importância, interpretação, erros comuns, exemplos hipotéticos, referências
+primárias e indicadores relacionados. Os temas levam a conceitos pertinentes; as páginas de
+indicador oferecem painel contextual com fontes, método e aprofundamento, inclusive sem
+JavaScript. A verificação local cobre SEO, acessibilidade automática, teclado e builds com
+e sem API. Compreensão por usuários reais e indexação externa continuam não verificadas.
+A próxima etapa é a busca da fase 15.
+
 ### Objetivo
 
 Remover a necessidade de conhecimento econômico prévio.

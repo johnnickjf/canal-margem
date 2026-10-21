@@ -76,8 +76,10 @@ entradas do cotidiano levam aos temas e indicadores, com navegação sem JavaScr
 editorial preservado. A fase 12 implementa as [páginas temáticas](docs/systems/theme-pages.md): resumos, mudanças
 publicadas, recortes auditáveis, explicações e acesso ao guia do comparador. A fase 13 implementa as
 [páginas de indicador](docs/systems/indicator-pages.md): valores por recorte, tendências publicadas,
-gráficos e tabelas históricas, interpretação, alertas e auditoria. A próxima etapa é a camada
-Entenda da fase 14; implantação Railway/R2 permanece posterior.
+gráficos e tabelas históricas, interpretação, alertas e auditoria. A fase 14 implementa a
+[camada Entenda](docs/systems/entenda.md): 11 conceitos econômicos com referências, exemplos
+hipotéticos e painel contextual nos indicadores, disponível também sem JavaScript.
+A próxima etapa é a busca da fase 15; implantação Railway/R2 permanece posterior.
 
 ```bash
 MARGEM_API_URL=http://127.0.0.1:8080 pnpm build  # API já operando, origem sem caminho

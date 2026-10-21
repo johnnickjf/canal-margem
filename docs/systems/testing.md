@@ -67,7 +67,8 @@ Os limites usam a [configuração oficial do Vitest](https://vitest.dev/config/c
 |---|---|
 | [Design system](../../tests/design-system.spec.ts) | Estados, abas, tooltip, foco e teclado, modais/drawers, URLs e nova aba, formulários, acesso sem JavaScript, overflow, movimento reduzido e axe |
 | [Editorial](../../tests/editorial.spec.ts) | Menu mobile por teclado, fechamento e retorno de foco, navegação e mudança para desktop; busca com/sem acentos, ausência de resultados, limpeza e recuperação por temas |
-| [Indicadores](../../tests/indicators.spec.ts) | Leitura dos 15 principais, relações, SEO e navegação sem JavaScript nos dois perfis |
+| [Indicadores](../../tests/indicators.spec.ts) | Leitura dos 20 indicadores principais e auxiliares, explicação contextual, relações, SEO e navegação sem JavaScript nos dois perfis |
+| [Entenda](../../tests/entenda.spec.ts) | Índice e 11 conceitos sem JavaScript, relações, exemplos, fontes, SEO/JSON-LD e sitemap; axe, largura e drawer com teclado, foco, fechamento, auditoria e aprofundamento nos dois perfis |
 | [Build de conteúdo](../../tests/content-build.spec.ts) | API controlada com histórico paginado, gráfico/tabela, recálculo pendente, múltiplas capitais, auditoria, axe e largura; Publicação e exclusão de rascunhos de episódios, cortes e análises; índice de busca, sitemap, RSS e metadados das páginas |
 
 A suíte do design system também inspeciona o HTML de todas as páginas de `dist/`: conteúdo principal, h1, título, descrição, canonical, links locais, sintaxe do JSON-LD e sitemap, além de `robots.txt`. Preserva a [regra permanente de SEO e descoberta por IA](../../AGENTS.md). A verificação de links não visita destinos externos nem valida todos os fragmentos internos.

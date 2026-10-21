@@ -100,4 +100,5 @@ Esses testes comprovam a integração local com respostas controladas. Operaçã
 remota, atualização automática do site, indexação externa e validação assistiva manual não
 foram verificadas nesta fase. A home orientada a perguntas está implementada na [fase 11](question-home.md).
 As [páginas temáticas da fase 12](theme-pages.md) e as [páginas de indicador da fase 13](indicator-pages.md)
-também estão implementadas. A próxima entrega do roadmap é a camada Entenda da fase 14.
+também estão implementadas. A [camada Entenda da fase 14](entenda.md) acrescenta conceitos
+dedicados e painel contextual nos indicadores. A próxima entrega do roadmap é a busca da fase 15.

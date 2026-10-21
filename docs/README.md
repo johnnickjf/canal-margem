@@ -28,6 +28,7 @@ O Canal Margem está preparando a evolução do site editorial para uma platafor
 20. [Home orientada a perguntas](systems/question-home.md): cinco entradas do cotidiano, caminhos até os indicadores e validação da fase 11.
 21. [Páginas temáticas](systems/theme-pages.md): contexto, mudanças publicadas, indicadores por recorte e explicações da fase 12.
 22. [Páginas de indicador](systems/indicator-pages.md): valores, tendências publicadas, gráficos, tabelas históricas, interpretação e auditoria da fase 13.
+23. [Camada Entenda](systems/entenda.md): 11 conceitos econômicos, referências, exemplos hipotéticos, relações e painel contextual da fase 14.
 
 Os quatro documentos numerados partem dos textos fornecidos pelo responsável pelo projeto e receberam ajustes de clareza e precisão. Definem o produto planejado; a auditoria do frontend registra a fase 0, e os documentos de sistemas registram as entregas posteriores. Exemplos do modelo e do design system são ilustrativos. As amostras em `data-sources/evidence/` são dados oficiais consultados na fase 4, com proveniência, sem integração ao site.
 
@@ -47,7 +48,8 @@ Os quatro documentos numerados partem dos textos fornecidos pelo responsável pe
 | Home orientada a perguntas | Fase 11 implementada: cinco perguntas como entrada principal, temas e indicadores em dois cliques; conteúdo editorial preservado |
 | Páginas temáticas | Fase 12 implementada: resumos, mudanças publicadas, dados por recorte, explicações e guia do comparador |
 | Páginas de indicador | Fase 13 implementada: valores por recorte, tendências, histórico paginado, gráfico SVG, tabela, interpretação e auditoria |
-| Comparador e camada Entenda | Evolução nas fases 14–16; comparador interativo ainda planejado |
+| Camada Entenda | Fase 14 implementada: índice, 11 conceitos, referências e painel contextual com navegação sem JavaScript |
+| Busca de indicadores e comparador | Evolução nas fases 15–16; comparador interativo ainda planejado |
 | Ingestão e persistência local | PoC da fase 5 retirada após substituição verificada na fase 9; 21 arquivos e 587 observações preservados |
 | Arquitetura de armazenamento | Fase 6 definida em cinco ADRs: PostgreSQL/Railway, R2, histórico/cache, backup nativo/reconstrução e portabilidade/custos; serviços ainda não implantados |
 | Pipeline do MVP | Fase 7 implementada e verificada localmente: cinco fontes, 6.375 observações, PostgreSQL e API compatível com S3 (R2 em produção), repetição, revisões, falhas e importação da PoC |
@@ -78,8 +80,8 @@ Manter detalhes de infraestrutura fora da visão e do documento de UX. Registrar
 
 ## Próxima entrega
 
-Implementar a camada Entenda da fase 14 sobre as [páginas de indicador](systems/indicator-pages.md)
-da fase 13.
+Implementar a busca da fase 15 sobre os indicadores e a [camada Entenda](systems/entenda.md)
+da fase 14.
 A fase 10 fixa a mesma publicação no HTML e nas consultas, conforme o [contrato da API](systems/api.md).
 A PoC foi retirada após preservação e substituição verificadas. Implantação Railway/R2 e backup remoto continuam sem ensaio. A
 [regra permanente de SEO e descoberta por IA](../AGENTS.md) continua obrigatória.

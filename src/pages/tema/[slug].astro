@@ -3,6 +3,7 @@ import PlatformLayout from '@/layouts/PlatformLayout.astro';
 import ThemeReading from '@/components/platform/ThemeReading.astro';
 import { themeGuides } from '@/data/theme-guides';
 import { platform } from '@/lib/platform';
+import { concepts } from '@/data/concepts';
 export function getStaticPaths() {
   return platform.themes.map((theme) => ({ params: { slug: theme.slug }, props: { theme } }));
 }
@@ -68,6 +69,7 @@ const changes = indicators.flatMap((indicator) =>
     {guide && <><p>{guide.reading}</p><p>{guide.caution}</p></>}
     <p>Uma mudança no indicador, por si só, não identifica sua causa. Ausência não equivale a zero.</p>
     <a href="/entenda/como-ler-os-dados">Entenda períodos, fontes e limites dos dados</a>
+    <ul>{concepts.filter((concept) => concept.themes.includes(theme.slug)).map((concept) => <li><a href={`/entenda/${concept.slug}`}>{concept.title}</a> · {concept.question}</li>)}</ul>
   </section>
   <section id="comparar" aria-labelledby="comparar-title">
     <h2 id="comparar-title">Compare com contexto</h2>

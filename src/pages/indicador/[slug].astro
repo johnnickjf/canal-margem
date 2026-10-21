@@ -4,6 +4,7 @@ import { platform } from '@/lib/platform';
 import CalculationContext from '@/components/platform/CalculationContext.astro';
 import IndicatorDetail from '@/components/platform/IndicatorDetail.astro';
 import { indicatorGuides } from '@/data/indicator-guides';
+import IndicatorExplanation from '@/components/platform/IndicatorExplanation.astro';
 export function getStaticPaths() {
   return platform.indicators.map((indicator) => ({
     params: { slug: indicator.slug },
@@ -48,7 +49,7 @@ const changes = selections.filter(
       {latest.node && <CalculationContext node={latest.node} />}
     </article>)}</div>
   </section>
-  <section id="significa"><h2>O que isso significa?</h2><p>{guide?.meaning ?? indicator.definition}</p><p>{guide?.caution ?? indicator.limitations}</p><p><a href="/entenda/como-ler-os-dados">Entenda este indicador: como ler os dados e suas limitações</a></p></section>
+  <section id="significa"><h2>O que isso significa?</h2><p>{guide?.meaning ?? indicator.definition}</p><p>{guide?.caution ?? indicator.limitations}</p><IndicatorExplanation indicator={indicator} /></section>
   <section id="dados"><h2>Como sabemos disso?</h2><p>{indicator.definition}</p><p>Valor, série histórica, fonte e metodologia por recorte. A atualização de coleta consta nas origens e no corte da edição ao final da página; ela não é o período de referência nem a data de divulgação pela fonte.</p>
     {selections.length === 0 && <p>Sem cobertura nesta edição. Nenhum valor foi substituído por zero.</p>}
     <div class="indicator-series">{selections.map((selection, index) => <IndicatorDetail selection={selection} index={index} />)}</div>

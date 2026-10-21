@@ -1,0 +1,15 @@
+---
+import EntendaLayout from '@/layouts/EntendaLayout.astro';
+import { concepts } from '@/data/concepts';
+---
+<EntendaLayout title="Entenda a economia" description="Inflação, renda, trabalho e contas públicas: conceitos para ler os indicadores sem precisar conhecer os termos econômicos.">
+  <section aria-labelledby="comecar-title">
+    <h2 id="comecar-title">Comece pela sua dúvida</h2>
+    <p>Escolha uma pergunta para conhecer o conceito, ver um exemplo e conferir os cuidados de interpretação. Os textos explicam medidas; não apresentam resultados de uma edição dos dados.</p>
+    <div class="platform-grid">{concepts.map((concept) => <article class="platform-card">
+      <h3><a href={`/entenda/${concept.slug}`}>{concept.title}</a></h3>
+      <p>{concept.question}</p><p>{concept.definition}</p>
+    </article>)}</div>
+  </section>
+  <section aria-labelledby="guia-title"><h2 id="guia-title">Antes de ler um número</h2><p>Períodos, recortes, fontes e ausências também fazem parte da leitura.</p><a href="/entenda/como-ler-os-dados">Como ler os dados e suas limitações</a></section>
+</EntendaLayout>

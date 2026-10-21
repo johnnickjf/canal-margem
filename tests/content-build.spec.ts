@@ -63,9 +63,17 @@ test('build da plataforma fixa publicação no HTML, preserva decimais e explici
       'indicador/cesta-basica',
       'comparar',
       'entenda/como-ler-os-dados',
+      'entenda',
+      'entenda/inflacao',
+      'entenda/divida-publica',
     ]) {
       const html = await readFile(path.join(dist, route, 'index.html'), 'utf8');
-      expect(html).toContain(`data-publication="${'a'.repeat(64)}"`);
+      if (route === 'entenda' || ['entenda/inflacao', 'entenda/divida-publica'].includes(route)) {
+        expect(html).not.toContain('data-publication=');
+        expect(html).toContain('Margem / Entenda');
+      } else {
+        expect(html).toContain(`data-publication="${'a'.repeat(64)}"`);
+      }
       expect(sitemap).toContain(`https://margem.com.br/${route}`);
       const content = await page.evaluate((html) => {
         const doc = new DOMParser().parseFromString(html, 'text/html');
@@ -205,6 +213,16 @@ test('build da plataforma fixa publicação no HTML, preserva decimais e explici
           await navigation.locator(`a[href="#${id}"]`).click();
           await expect(rendered.locator(`#${id}`)).toBeInViewport();
         }
+        const explanation = rendered.locator('#indicator-explanation-content');
+        await expect(explanation).toBeVisible();
+        await expect(explanation.locator('a[href^="/entenda/"]').first()).toBeVisible();
+        if (slug === 'rendimento-real') {
+          await expect(explanation).toContainText('Sem fonte de dados publicada');
+        } else {
+          await expect(explanation.locator('a[href="https://www.ibge.gov.br/"]')).toHaveText(
+            'IBGE',
+          );
+        }
         if (slug === 'desemprego') {
           await expect(rendered.locator('.trend[data-direction="down"]')).toHaveCount(2);
           await expect(rendered.locator('main')).toContainText('current - previous');
@@ -274,6 +292,13 @@ test('build da plataforma fixa publicação no HTML, preserva decimais e explici
         }));
         expect(layout.width, JSON.stringify(layout)).toBeLessThanOrEqual(layout.viewport);
         await accessiblePage.goto(rendered.url());
+        await accessiblePage
+          .getByRole('link', { name: 'Entenda este indicador', exact: true })
+          .click();
+        const drawer = accessiblePage.getByRole('dialog', { name: /^Entenda:/ });
+        await expect(drawer).toBeVisible();
+        expect((await new AxeBuilder({ page: accessiblePage }).analyze()).violations).toEqual([]);
+        await accessiblePage.keyboard.press('Escape');
         for (const summary of await accessiblePage.locator('.history-table summary').all())
           await summary.click();
         expect((await new AxeBuilder({ page: accessiblePage }).analyze()).violations).toEqual([]);

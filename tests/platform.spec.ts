@@ -12,8 +12,11 @@ test('shell navega da home ao tema e ao indicador sem JavaScript', async ({ brow
   await expect(page).toHaveURL(/\/tema\/trabalho-e-renda\/?$/);
   await page.getByRole('heading', { name: 'Desemprego', exact: true }).getByRole('link').click();
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('Desemprego');
-  await expect(page.getByText('Taxa de desocupação', { exact: false })).toBeVisible();
+  await expect(
+    page.locator('#dados').getByText('Taxa de desocupação', { exact: false }),
+  ).toBeVisible();
   await page
+    .getByRole('complementary', { name: 'Disponibilidade dos dados' })
     .getByRole('link', { name: 'Como ler os dados e suas limitações', exact: true })
     .click();
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('Como ler os dados');

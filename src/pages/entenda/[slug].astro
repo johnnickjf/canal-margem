@@ -1,13 +1,39 @@
 ---
 import PlatformLayout from '@/layouts/PlatformLayout.astro';
-export function getStaticPaths() {
-  return [{ params: { slug: 'como-ler-os-dados' } }];
+import EntendaLayout from '@/layouts/EntendaLayout.astro';
+import { concepts, conceptEditorial, type Concept } from '@/data/concepts';
+import { platform } from '@/lib/platform';
+interface Props {
+  concept?: Concept;
 }
+export function getStaticPaths() {
+  return [
+    { params: { slug: 'como-ler-os-dados' }, props: {} },
+    ...concepts.map((concept) => ({ params: { slug: concept.slug }, props: { concept } })),
+  ];
+}
+const { concept } = Astro.props;
+const indicators = platform.indicators.filter((item) => concept?.indicators.includes(item.slug));
+const related = concepts.filter((item) => concept?.related.includes(item.slug));
 ---
+{concept ? <EntendaLayout title={concept.title} description={concept.question} term={{ name: concept.title, description: concept.definition, sources: concept.sources.map((source) => source.url) }}>
+  <nav class="indicator-nav" aria-label="Nesta página"><a href="#conceito">O que é</a><a href="#importancia">Por que importa</a><a href="#interpretacao">Como interpretar</a><a href="#erros">Erros comuns</a><a href="#indicadores">Indicadores relacionados</a><a href="#fontes">Fontes</a></nav>
+  <section id="conceito"><h2>O que é {concept.title.toLowerCase()}?</h2><p>{concept.definition}</p></section>
+  <section id="importancia"><h2>Por que importa?</h2><p>{concept.importance}</p></section>
+  <section id="interpretacao"><h2>Como interpretar</h2><p>{concept.interpretation}</p><aside class="platform-card" aria-label="Exemplo hipotético"><h3>Exemplo hipotético</h3><p>{concept.example}</p><p>Exemplo educativo; não é um dado observado nem uma previsão.</p></aside></section>
+  <section id="erros"><h2>Erros comuns</h2><ul>{concept.pitfalls.map((pitfall) => <li>{pitfall}</li>)}</ul></section>
+  <section id="indicadores"><h2>Indicadores relacionados</h2><p>Estas medidas ajudam a ampliar a leitura; a relação não demonstra causalidade. Os dados disponíveis e seus recortes constam na página de cada indicador.</p>
+    {['divida-publica', 'deficit', 'selic', 'juros'].includes(concept.slug) && <p>Este conceito não tem uma série própria no MVP. Os indicadores abaixo oferecem contexto; não medem {concept.title.toLowerCase()}.</p>}
+    {indicators.length > 0 ? <ul>{indicators.map((item) => <li><a href={`/indicador/${item.slug}`}>{item.name}</a> · {item.question}</li>)}</ul> : <p>Nenhum indicador relacionado consta no catálogo desta edição.</p>}
+  </section>
+  <section id="aprofundar"><h2>Continue entendendo</h2><ul>{related.map((item) => <li><a href={`/entenda/${item.slug}`}>{item.title}</a> · {item.question}</li>)}</ul><a href="/entenda/como-ler-os-dados">Como ler os dados e suas limitações</a><a href="/entenda">Ver todos os conceitos</a></section>
+  <section id="fontes"><h2>Fontes e responsabilidade editorial</h2><p>Explicação editorial de {conceptEditorial.author}, apoiada nas referências abaixo. Revisão do texto: <time datetime={conceptEditorial.reviewedAt}>21 de outubro de 2026</time>. Esta data não indica atualização das séries.</p><ul>{concept.sources.map((source) => <li><a href={source.url}>{source.name}</a></li>)}</ul></section>
+</EntendaLayout> :
 <PlatformLayout title="Como ler os dados" description="Fontes, períodos, recortes e limites: o que conferir antes de interpretar um número.">
+  <p><a href="/entenda">Ver conceitos de economia no Entenda</a></p>
   <section><h2>O período faz parte do dado</h2><p>Mês, trimestre civil e média móvel trimestral são recortes diferentes. Confira sempre o início e o fim do período, a geografia e a unidade.</p></section>
   <section><h2>Coleta, publicação e revisão</h2><p>A data de coleta indica quando o Margem consultou a fonte. Ela não substitui a data de divulgação pela instituição. Uma revisão pode alterar um período antigo. Cada edição do site fixa uma publicação para manter suas consultas consistentes.</p></section>
   <section><h2>Ausência não é zero</h2><p>Uma série pode estar fora da cobertura ou aguardando recálculo. Quando o último período está indisponível, não mostramos um número anterior como se fosse atual.</p></section>
   <section><h2>Preços e tempo de trabalho</h2><p>Valores nominais e reais não são equivalentes. O tempo por cesta usa o salário mínimo nacional do mesmo mês e a referência de 220 horas mensais. É uma equivalência calculada; não descreve a jornada nem o salário de cada pessoa.</p></section>
   <section><h2>Contexto antes de concluir</h2><p>Indicadores resumem populações e não descrevem todas as experiências. Médias escondem diferenças. Mudanças simultâneas não provam que uma causou a outra.</p><p>Confira as definições em <a href="/tema/trabalho-e-renda">Trabalho e renda</a> e <a href="/tema/custo-de-vida">Custo de vida</a>.</p></section>
-</PlatformLayout>
+</PlatformLayout>}

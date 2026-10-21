@@ -35,7 +35,8 @@ A [home orientada a perguntas da fase 11](question-home.md) coloca cinco pergunt
 na entrada principal e preserva o conteúdo editorial abaixo. As [páginas temáticas da fase 12](theme-pages.md)
 acrescentam resumo, mudanças publicadas, dados por recorte e explicações. As
 [páginas de indicador da fase 13](indicator-pages.md) acrescentam tendências publicadas, gráficos
-e tabelas históricas, interpretação, alertas e auditoria. A próxima etapa é a camada Entenda
-da fase 14.
+e tabelas históricas, interpretação, alertas e auditoria. A [camada Entenda da fase 14](entenda.md)
+acrescenta 11 conceitos econômicos com fontes e exemplos, além do painel contextual nos
+indicadores. A próxima etapa é a busca da fase 15.
 
 Cada documento deve distinguir estado atual de proposta e descrever responsabilidade, entradas e saídas, dependências, fluxos, configuração, falhas, validação e operação relevantes. Requisitos gerais permanecem na [arquitetura técnica](../03-technical-architecture.md); decisões ficam em [adr](../adr/README.md).
