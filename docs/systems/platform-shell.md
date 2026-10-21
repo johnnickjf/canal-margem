@@ -21,7 +21,7 @@ do catálogo também têm definição em `/indicador/:slug`, identificadas como 
 
 O comparador interativo pertence à fase 16. A [fase 12](theme-pages.md) enriquece as páginas temáticas com resumos, mudanças e recortes.
 A [fase 13](indicator-pages.md) acrescenta gráficos, tabelas históricas e a experiência de leitura
-dos indicadores. Filtros interativos, busca de indicadores e comparação continuam nas fases 15–16. O shell não apresenta
+dos indicadores. A [busca de indicadores da fase 15](search.md) acrescenta aliases e filtros de conteúdo; a comparação interativa continua na fase 16. O shell não apresenta
 controles que simulam essas funcionalidades.
 
 ## Publicação fixada no build
@@ -101,4 +101,4 @@ remota, atualização automática do site, indexação externa e validação ass
 foram verificadas nesta fase. A home orientada a perguntas está implementada na [fase 11](question-home.md).
 As [páginas temáticas da fase 12](theme-pages.md) e as [páginas de indicador da fase 13](indicator-pages.md)
 também estão implementadas. A [camada Entenda da fase 14](entenda.md) acrescenta conceitos
-dedicados e painel contextual nos indicadores. A próxima entrega do roadmap é a busca da fase 15.
+dedicados e painel contextual nos indicadores. A [busca da fase 15](search.md) integra indicadores, Entenda e acervo; a próxima entrega é o comparador da fase 16.

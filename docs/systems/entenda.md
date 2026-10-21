@@ -58,5 +58,5 @@ do drawer e páginas conceituais independentes da disponibilidade dos dados.
 Validação local: `pnpm test:coverage` e `pnpm test:e2e` (lint, tipos, build e navegador).
 Capturas de conceito e painel ficam em `test-results/` para inspeção visual. Esses checks
 não comprovam compreensão por usuários reais, leitura assistiva manual, indexação externa
-ou publicação em produção. A próxima etapa é a busca da fase 15; implantação Railway/R2
-continua posterior.
+ou publicação em produção. A [busca da fase 15](search.md) agora inclui os conceitos e o
+guia de leitura. A próxima etapa é o comparador da fase 16; implantação Railway/R2 continua posterior.

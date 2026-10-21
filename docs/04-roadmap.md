@@ -814,7 +814,7 @@ primárias e indicadores relacionados. Os temas levam a conceitos pertinentes; a
 indicador oferecem painel contextual com fontes, método e aprofundamento, inclusive sem
 JavaScript. A verificação local cobre SEO, acessibilidade automática, teclado e builds com
 e sem API. Compreensão por usuários reais e indexação externa continuam não verificadas.
-A próxima etapa é a busca da fase 15.
+A [busca da fase 15](systems/search.md) integra agora esses conceitos aos indicadores e ao acervo.
 
 ### Objetivo
 
@@ -849,6 +849,10 @@ A plataforma também funciona como mecanismo de alfabetização econômica.
 ---
 
 ## Fase 15 — Busca
+
+### Estado
+
+Implementada em [Busca por linguagem cotidiana](systems/search.md): aliases específicos, normalização de acentos e pontuação, filtros e índice estático com indicadores do catálogo do build, conceitos do Entenda e acervo editorial. Inclui recuperação de erros e catálogo navegável sem JavaScript. Verificação local por testes unitários, navegador e build isolado; operação pública e indexação externa não verificadas.
 
 ### Objetivo
 

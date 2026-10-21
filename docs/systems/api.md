@@ -137,7 +137,8 @@ Os slugs dos indicadores são fixados em
 Séries usam IDs do catálogo, como `tr4`, `cv1-monthly`, `cv1-12m` e `cv4`.
 Geografias preservam os IDs de origem normalizados, como `BR` e `BR-city-3550308`.
 `q` faz busca textual sem distinguir caixa em nome, pergunta e slug, limitada a 200 bytes;
-busca com aliases e normalização de acentos pertence à fase 15.
+a [busca de produto da fase 15](search.md) implementa aliases e normalização de acentos
+no índice estático do site, sem alterar esse filtro HTTP.
 
 As respostas de recursos usam:
 

@@ -29,6 +29,7 @@ A configuração está em [vitest.config.ts](../../vitest.config.ts); os testes 
 | `format.ts` | Datas editoriais e ISO, mudança de dia/ano por fuso, códigos de episódio, índices, durações de vídeo e tempo de leitura |
 | `platform-build.ts` | Publicação fixada, paginação de opções e histórico, último período, recortes, decimais, falhas e linhagem transitiva |
 | `indicator-history.ts` | Coordenadas decimais, tempo proporcional, zero, negativos, ponto único, lacunas, métodos e sinal de comparação |
+| `search.ts`, `platform-search.ts` e carregador do cliente | Vocabulário cotidiano, catálogo da edição, conceitos, normalização, filtros, ausências, relevância, cache compartilhado, validação de índice e retry |
 | `headline.ts` | Destaque no começo, meio e fim, texto sem destaque, marcação incompleta, acentos e versão sem colchetes para metadados/busca |
 
 Vitest e o provider V8 ficam fixados na mesma versão. Os testes usam o fuso `America/Sao_Paulo`, para detectar regressões que troquem UTC pelo fuso local.
@@ -48,7 +49,7 @@ A medição inicial de 15/10/2026, com 46 testes unitários, foi:
 
 Após essa medição, foram fixados limites de **100% em cada uma das quatro métricas, individualmente nos três arquivos críticos**. Não existe meta global de cobertura. Reduções nesses arquivos fazem `pnpm test:coverage` falhar; ampliar uma função exige testar também seus novos caminhos.
 
-`content.ts`, `torn.ts` e os scripts do cliente ainda não têm cobertura unitária. Alguns de seus comportamentos são exercitados pelo build e pelo Playwright, mas essas execuções não entram no relatório V8 dos testes unitários. O percentual total baixo explicita essa diferença; não significa que os testes de navegador falharam.
+`content.ts`, `torn.ts` e os scripts de interface, exceto o carregador da busca, ainda não têm cobertura unitária. Alguns de seus comportamentos são exercitados pelo build e pelo Playwright, mas essas execuções não entram no relatório V8 dos testes unitários. O percentual total baixo explicita essa diferença; não significa que os testes de navegador falharam.
 
 Artefatos disponíveis em `coverage/`:
 
@@ -67,9 +68,10 @@ Os limites usam a [configuração oficial do Vitest](https://vitest.dev/config/c
 |---|---|
 | [Design system](../../tests/design-system.spec.ts) | Estados, abas, tooltip, foco e teclado, modais/drawers, URLs e nova aba, formulários, acesso sem JavaScript, overflow, movimento reduzido e axe |
 | [Editorial](../../tests/editorial.spec.ts) | Menu mobile por teclado, fechamento e retorno de foco, navegação e mudança para desktop; busca com/sem acentos, ausência de resultados, limpeza e recuperação por temas |
+| [Busca](../../tests/search.spec.ts) | Termos cotidianos, indicadores e conceitos, filtros, exemplos, URL, teclado, falhas/retry, consultas pendentes, texto seguro, axe, largura, catálogo sem JavaScript e SEO |
 | [Indicadores](../../tests/indicators.spec.ts) | Leitura dos 20 indicadores principais e auxiliares, explicação contextual, relações, SEO e navegação sem JavaScript nos dois perfis |
 | [Entenda](../../tests/entenda.spec.ts) | Índice e 11 conceitos sem JavaScript, relações, exemplos, fontes, SEO/JSON-LD e sitemap; axe, largura e drawer com teclado, foco, fechamento, auditoria e aprofundamento nos dois perfis |
-| [Build de conteúdo](../../tests/content-build.spec.ts) | API controlada com histórico paginado, gráfico/tabela, recálculo pendente, múltiplas capitais, auditoria, axe e largura; Publicação e exclusão de rascunhos de episódios, cortes e análises; índice de busca, sitemap, RSS e metadados das páginas |
+| [Build de conteúdo](../../tests/content-build.spec.ts) | Índice da busca com catálogo da publicação e destinos existentes; API controlada com histórico paginado, gráfico/tabela, recálculo pendente, múltiplas capitais, auditoria, axe e largura; Publicação e exclusão de rascunhos de episódios, cortes e análises; índice de busca, sitemap, RSS e metadados das páginas |
 
 A suíte do design system também inspeciona o HTML de todas as páginas de `dist/`: conteúdo principal, h1, título, descrição, canonical, links locais, sintaxe do JSON-LD e sitemap, além de `robots.txt`. Preserva a [regra permanente de SEO e descoberta por IA](../../AGENTS.md). A verificação de links não visita destinos externos nem valida todos os fragmentos internos.
 

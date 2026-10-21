@@ -2,6 +2,8 @@ import type { APIRoute } from 'astro';
 import { getArticles, getTemas, getVideos, routes } from '@/lib/content';
 import { episodeCode, formatDateMono } from '@/lib/format';
 import { plainHeadline } from '@/lib/headline';
+import { platform } from '@/lib/platform';
+import { platformSearchItems } from '@/lib/platform-search';
 import type { SearchItem } from '@/lib/search';
 
 /** Índice estático para a busca no cliente. Gerado no build, sem servidor. */
@@ -10,6 +12,7 @@ export const GET: APIRoute = async () => {
   const temaName = new Map(temas.map((t) => [t.id, t.data.name]));
 
   const items: SearchItem[] = [
+    ...platformSearchItems(platform),
     ...videos.map((video) => ({
       type: video.data.format === 'corte' ? ('Corte' as const) : ('Episódio' as const),
       title: plainHeadline(video.data.title),

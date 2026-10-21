@@ -2,16 +2,21 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Icon from '@/components/ui/Icon.astro';
 import { getTemas, routes } from '@/lib/content';
+import { platform } from '@/lib/platform';
+import { platformSearchItems } from '@/lib/platform-search';
 
 const temas = await getTemas();
+const catalog = platformSearchItems(platform);
+const explanations = catalog.filter((item) => item.type === 'Entenda');
 ---
 
-<BaseLayout title="Busca" description="Busque episódios, cortes, análises e temas da MARGEM.">
+<BaseLayout title="Busca" description="Encontre indicadores, conceitos econômicos, vídeos e análises com palavras do dia a dia: comida, salário, aluguel e dívida.">
   <section class="search container" aria-labelledby="busca-titulo">
     <p class="label search__label"><span class="search__mark" aria-hidden="true"></span>Busca</p>
-    <h1 id="busca-titulo" class="visually-hidden">Busca</h1>
+    <h1 id="busca-titulo">O que você quer entender?</h1>
+    <p class="search__intro" id="search-hint">Busque com suas palavras. Encontre indicadores, explicações e conteúdo editorial.</p>
 
-    <form class="search__form" role="search" action="/busca" method="get" data-search-form>
+    <form id="search-form" class="search__form" role="search" action="/busca" method="get" data-search-form>
       <label for="q" class="visually-hidden">O que você procura?</label>
       <input
         id="q"
@@ -19,6 +24,8 @@ const temas = await getTemas();
         type="search"
         class="search__input"
         placeholder="Aluguel, jornada, imposto…"
+        aria-describedby="search-hint"
+        maxlength="200"
         autocomplete="off"
         spellcheck="false"
         data-search-input
@@ -29,12 +36,44 @@ const temas = await getTemas();
       </button>
     </form>
 
+    <div class="search__tools">
+      <label for="search-type">Buscar em</label>
+      <select id="search-type" name="tipo" form="search-form" data-search-type>
+        <option value="">Tudo</option>
+        <option value="indicadores">Indicadores</option>
+        <option value="entenda">Entenda</option>
+        <option value="acervo">Vídeos e análises</option>
+        <option value="temas">Temas</option>
+      </select>
+    </div>
+    <ul class="search__temas search__examples" role="list" aria-label="Experimente buscar">
+      {['comida', 'gasolina', 'salário', 'aluguel', 'dívida'].map((word) => <li><a href={`/busca?q=${encodeURIComponent(word)}`} data-search-example={word}>{word}</a></li>)}
+    </ul>
+    <noscript><p class="search__intro">A pesquisa por palavras usa JavaScript. Você pode explorar todos os indicadores e conceitos pelos links abaixo.</p></noscript>
+
     <p class="search__status label" role="status" aria-live="polite" data-search-status></p>
+
+    <button type="button" class="search__retry" data-search-retry hidden>Tentar novamente</button>
 
     <ol class="search__results" role="list" data-search-results></ol>
 
     <div class="search__suggest" data-search-suggest>
-      <p class="label search__suggest-label">Ou navegue por tema</p>
+      <h2>Explore os indicadores</h2>
+      <p>Os resultados levam às definições e aos recortes de cada indicador. A disponibilidade dos dados é informada na página de destino.</p>
+      <div class="search__catalog">
+        {platform.themes.map((theme) => <details>
+          <summary>{theme.name}</summary>
+          <ul role="list">{platform.indicators.filter((indicator) => indicator.theme === theme.slug).map((indicator) => <li>
+            <a href={`/indicador/${indicator.slug}`}>{indicator.name}</a>
+            <p>{indicator.question}</p>
+          </li>)}</ul>
+          <a href={`/tema/${theme.slug}`}>Explorar o tema: {theme.name}</a>
+        </details>)}
+        <details><summary>Entenda a economia</summary>
+          <ul role="list">{explanations.map((item) => <li><a href={item.url}>{item.title}</a></li>)}</ul>
+        </details>
+      </div>
+      <h2>Temas editoriais</h2>
       <ul role="list" class="search__temas">
         {temas.map((tema) => <li><a href={routes.tema(tema.id)}>{tema.data.name}</a></li>)}
       </ul>
@@ -43,69 +82,8 @@ const temas = await getTemas();
 </BaseLayout>
 
 <script>
-  import { createSearch } from '@/scripts/search';
-
-  const form = document.querySelector<HTMLFormElement>('[data-search-form]');
-  const input = document.querySelector<HTMLInputElement>('[data-search-input]');
-  const list = document.querySelector<HTMLOListElement>('[data-search-results]');
-  const status = document.querySelector<HTMLElement>('[data-search-status]');
-  const suggest = document.querySelector<HTMLElement>('[data-search-suggest]');
-
-  if (form && input && list && status && suggest) {
-    const search = createSearch('/busca.json');
-
-    const escape = (value: string) =>
-      value.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]!);
-
-    const render = async (query: string) => {
-      const trimmed = query.trim();
-      suggest.hidden = trimmed.length > 0;
-      if (!trimmed) {
-        list.innerHTML = '';
-        status.textContent = '';
-        return;
-      }
-      const results = await search(trimmed);
-      status.textContent = results.length
-        ? `${results.length} ${results.length === 1 ? 'resultado' : 'resultados'} para “${trimmed}”`
-        : `Nada encontrado para “${trimmed}”. Tente outra palavra ou navegue pelos temas.`;
-      if (!results.length) suggest.hidden = false;
-      list.innerHTML = results
-        .map(
-          (item) => `
-          <li class="result">
-            <a href="${escape(item.url)}">
-              <span class="result__type">${escape(item.type)}</span>
-              <span class="result__title">${escape(item.title)}</span>
-              <span class="result__meta">${escape(item.meta)}</span>
-            </a>
-          </li>`,
-        )
-        .join('');
-    };
-
-    const initial = new URLSearchParams(location.search).get('q') ?? '';
-    input.value = initial;
-    render(initial);
-    input.focus();
-
-    let timer: number | undefined;
-    input.addEventListener('input', () => {
-      window.clearTimeout(timer);
-      timer = window.setTimeout(() => {
-        const url = new URL(location.href);
-        if (input.value) url.searchParams.set('q', input.value);
-        else url.searchParams.delete('q');
-        history.replaceState(null, '', url);
-        render(input.value);
-      }, 120);
-    });
-
-    form.addEventListener('submit', (event) => {
-      event.preventDefault();
-      render(input.value);
-    });
-  }
+  import { mountSearch } from '@/scripts/search-page';
+  mountSearch();
 </script>
 
 <style>
@@ -113,6 +91,26 @@ const temas = await getTemas();
     min-height: 70vh;
     padding-block: var(--space-xl) var(--section-y);
   }
+
+  h1 {
+    margin-top: var(--space-lg);
+    font-family: var(--font-display);
+    font-size: var(--display-md);
+    line-height: 1.1;
+  }
+
+  .search__intro { margin-top: var(--space-sm); max-width: var(--measure); }
+  .search__tools { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-sm); margin-block: var(--space-md); }
+  .search__tools select { max-width: 100%; min-height: 44px; padding: var(--space-xs); border: var(--rule); background: var(--paper); }
+  .search__retry { min-height: 44px; text-decoration: underline; }
+  .search__catalog { display: grid; gap: var(--space-sm); margin-block: var(--space-md) var(--space-lg); }
+  .search__catalog details { border: var(--rule); padding: var(--space-sm) var(--space-md); }
+  .search__catalog summary { cursor: pointer; min-height: 44px; align-content: center; font-weight: 600; }
+  .search__catalog li { margin-block: var(--space-sm); }
+  .search__catalog a { display: inline-block; padding-block: var(--space-xs); }
+  .search__catalog p { font-size: var(--text-sm); }
+  .search__suggest h2 { font-family: var(--font-display); font-size: var(--display-sm); margin-bottom: var(--space-sm); }
+  .search__results :global(.result__description) { max-width: var(--measure); }
 
   .search__label {
     display: flex;
@@ -152,7 +150,7 @@ const temas = await getTemas();
   }
 
   .search__input::placeholder {
-    color: #b3aca2;
+    color: var(--fg-muted);
   }
 
   .search__input:focus-visible {

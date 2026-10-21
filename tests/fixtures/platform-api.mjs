@@ -5,6 +5,8 @@ import { createServer } from 'node:http';
 const indicators = JSON.parse(
   readFileSync(new URL('../../backend/internal/publications/indicators.json', import.meta.url)),
 );
+// Distinguishes the publication catalog from the site's local fallback.
+indicators[0].definition += ' Catálogo da publicação de teste.';
 const publication = 'a'.repeat(64);
 const revision = 'c'.repeat(64);
 const cutoff = '2026-10-18T12:00:00Z';

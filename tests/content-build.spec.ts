@@ -51,6 +51,28 @@ test('build da plataforma fixa publicação no HTML, preserva decimais e explici
     const dist = path.join(sandbox, 'dist');
     const files = await readdir(dist, { recursive: true });
     const sitemap = await readFile(path.join(dist, 'sitemap-0.xml'), 'utf8');
+    const searchIndex = JSON.parse(
+      await readFile(path.join(dist, 'busca.json'), 'utf8'),
+    ) as SearchItem[];
+    expect(searchIndex.find((item) => item.url === '/indicador/rendimento-real')?.text).toContain(
+      'Catálogo da publicação de teste.',
+    );
+    expect(searchIndex.filter((item) => item.type === 'Indicador')).toHaveLength(20);
+    expect(searchIndex.find((item) => item.url === '/indicador/cesta-basica')?.aliases).toContain(
+      'comida',
+    );
+    expect(searchIndex.find((item) => item.url === '/entenda/divida-publica')?.type).toBe(
+      'Entenda',
+    );
+    for (const item of searchIndex) {
+      expect(files, `destino da busca ausente: ${item.url}`).toContain(
+        `${item.url.slice(1)}/index.html`,
+      );
+    }
+    const searchHTML = await readFile(path.join(dist, 'busca/index.html'), 'utf8');
+    expect(searchHTML).toContain('/indicador/rendimento-real');
+    expect(searchHTML).toContain('/entenda/divida-publica');
+    expect(searchHTML).not.toContain('/api/v1/');
     for (const route of [
       '',
       'tema/trabalho-e-renda',

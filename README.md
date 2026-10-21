@@ -79,7 +79,10 @@ publicadas, recortes auditáveis, explicações e acesso ao guia do comparador. 
 gráficos e tabelas históricas, interpretação, alertas e auditoria. A fase 14 implementa a
 [camada Entenda](docs/systems/entenda.md): 11 conceitos econômicos com referências, exemplos
 hipotéticos e painel contextual nos indicadores, disponível também sem JavaScript.
-A próxima etapa é a busca da fase 15; implantação Railway/R2 permanece posterior.
+A fase 15 implementa a [busca por linguagem cotidiana](docs/systems/search.md), com aliases,
+filtros, indicadores, Entenda e acervo editorial no mesmo índice estático; o catálogo
+continua navegável sem JavaScript. A próxima etapa é o comparador da fase 16;
+implantação Railway/R2 permanece posterior.
 
 ```bash
 MARGEM_API_URL=http://127.0.0.1:8080 pnpm build  # API já operando, origem sem caminho

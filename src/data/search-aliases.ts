@@ -1,0 +1,36 @@
+/** Vocabulário editorial de descoberta; não afirma equivalência entre medidas. */
+export const indicatorAliases: Record<string, string[]> = {
+  'rendimento-real': ['salário', 'salários', 'ganho', 'remuneração', 'poder de compra'],
+  'salario-minimo-real': ['salário', 'salários', 'piso salarial', 'poder de compra'],
+  desemprego: ['sem emprego', 'sem trabalho', 'desempregados', 'procurar emprego', 'desocupação'],
+  informalidade: ['bico', 'bicos', 'sem carteira', 'trabalho informal', 'emprego informal'],
+  inflacao: ['carestia', 'preços', 'custo de vida', 'dinheiro compra menos', 'IPCA'],
+  'inflacao-alimentacao': ['comida', 'alimentos', 'mercado', 'supermercado', 'feira'],
+  gasolina: ['combustível', 'combustíveis', 'abastecer', 'posto'],
+  'cesta-basica': ['comida', 'alimentos', 'mercado', 'supermercado', 'feira'],
+  'tempo-por-cesta': ['comida', 'salário', 'salários', 'horas de trabalho', 'cesta básica'],
+  'onus-aluguel': ['moradia', 'habitação', 'aluguel', 'pagar aluguel'],
+  'comprometimento-renda': ['dívida', 'dívidas', 'endividamento', 'parcelas', 'prestação', 'juros'],
+  pobreza: ['baixa renda', 'pobres', 'falta de dinheiro'],
+  desigualdade: ['distribuição de renda', 'concentração de renda', 'ricos e pobres', 'Gini'],
+  'inseguranca-alimentar': ['comida', 'fome', 'falta de alimentos', 'alimentação'],
+  'pib-por-pessoa': ['crescimento econômico', 'produção por habitante', 'PIB per capita'],
+  tr3: ['jornada', 'escala', 'horas de trabalho'],
+  vf2: ['dívida', 'dívidas', 'contas atrasadas', 'atraso', 'calote', 'inadimplência'],
+  'tr2-input': ['inflação', 'preços', 'INPC'],
+  'tr2-cv5-input': ['salário', 'salários', 'piso salarial'],
+};
+
+export const conceptAliases: Record<string, string[]> = {
+  inflacao: ['carestia', 'preços', 'dinheiro compra menos'],
+  'renda-real': ['salário', 'salários', 'poder de compra', 'ganho real'],
+  'renda-nominal': ['salário', 'salários', 'valor em reais'],
+  pib: ['crescimento econômico', 'produção do país'],
+  'pib-per-capita': ['produção por habitante', 'PIB por pessoa'],
+  'divida-publica': ['dívida', 'dívidas', 'dívida do governo', 'contas públicas'],
+  deficit: ['déficit', 'contas públicas', 'gastos do governo'],
+  juros: ['empréstimo', 'empréstimos', 'parcelas', 'prestação', 'crédito', 'dívida', 'dívidas'],
+  selic: ['taxa básica de juros', 'Banco Central', 'Copom'],
+  informalidade: ['bico', 'bicos', 'sem carteira', 'trabalho informal'],
+  desigualdade: ['distribuição de renda', 'ricos e pobres', 'Gini'],
+};
