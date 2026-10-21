@@ -6,7 +6,9 @@ const cutoff = '2026-10-18T12:00:00Z';
 const theme = { slug: 'trabalho-e-renda', name: 'Trabalho e renda', question: 'Pergunta?' };
 const indicator = { id: 'tr4', slug: 'desemprego', theme: theme.slug, role: 'primary' };
 const option = { series: 'tr4', geography: 'BR', unit: '%' };
+const historyPath = '/api/v1/series/tr4';
 function fixture(change: (path: string, body: Record<string, unknown>) => void = () => {}) {
+  let latest: Record<string, unknown>;
   return vi.fn<typeof fetch>(async (input) => {
     const url = new URL(String(input));
     const path = url.pathname;
@@ -17,6 +19,7 @@ function fixture(change: (path: string, body: Record<string, unknown>) => void =
         data_cutoff: cutoff,
         catalog: { revision: 'catalog', themes: [theme], indicators: [indicator], sources: [] },
       };
+    else if (path === historyPath) body.data = [{ ...latest, series: 'tr4', geography: 'BR' }];
     else {
       expect(url.searchParams.get('publication')).toBe(id);
       if (path.endsWith('/series')) body.data = [option];
@@ -27,11 +30,16 @@ function fixture(change: (path: string, body: Record<string, unknown>) => void =
             start: '2025-01-01',
             end: '2025-03-31',
             status: 'observed',
-            node: { observation: { value: '0.000000000000000001' }, origins: [] },
+            node: {
+              observation: { value: '0.000000000000000001', status: 'observed' },
+              origins: [],
+            },
           },
         };
     }
     change(path, body);
+    if (path.endsWith('/desemprego'))
+      latest = (body.data as { latest: Record<string, unknown> }).latest;
     return Response.json(body);
   });
 }
@@ -246,5 +254,132 @@ describe('linhagem de cálculos derivados', () => {
         }),
       ),
     ).rejects.toThrow('cíclica');
+  });
+});
+
+describe('histórico paginado e fixado', () => {
+  it('carrega todas as páginas e mantém os períodos ausentes', async () => {
+    let page = 0;
+    const request = fixture((path, body) => {
+      if (path === historyPath && page++ === 0) {
+        body.data = [
+          {
+            series: 'tr4',
+            geography: 'BR',
+            start: '2024-01-01',
+            end: '2024-03-31',
+            status: 'missing',
+            reason: 'Sem cobertura',
+          },
+        ];
+        body.next_cursor = 'second-history-page';
+      }
+    });
+    const data = await capturePlatform('http://api.test', request);
+    expect(data.selections.desemprego[0].history).toHaveLength(2);
+    expect(data.selections.desemprego[0].history?.[0].status).toBe('missing');
+    expect(
+      request.mock.calls.some(([input]) => String(input).includes('cursor=second-history-page')),
+    ).toBe(true);
+  });
+  for (const [name, mutate, message] of [
+    [
+      'geografia divergente',
+      (point: Record<string, unknown>) => {
+        point.geography = 'São Paulo';
+      },
+      'fora do recorte',
+    ],
+    [
+      'série divergente',
+      (point: Record<string, unknown>) => {
+        point.series = 'cv4';
+      },
+      'fora do recorte',
+    ],
+    [
+      'data inexistente',
+      (point: Record<string, unknown>) => {
+        point.start = '2025-02-30';
+      },
+      'período inválido',
+    ],
+    [
+      'período invertido',
+      (point: Record<string, unknown>) => {
+        point.start = '2025-04-01';
+      },
+      'período inválido',
+    ],
+    [
+      'resumo divergente',
+      (point: Record<string, unknown>) => {
+        point.end = '2025-04-01';
+      },
+      'divergem',
+    ],
+    [
+      'observado sem número',
+      (point: Record<string, unknown>) => {
+        point.node = undefined;
+      },
+      'fora do recorte',
+    ],
+    [
+      'número float',
+      (point: Record<string, unknown>) => {
+        point.node = { observation: { value: 7.1 } };
+      },
+      'decimal',
+    ],
+  ] as const) {
+    it(`interrompe build com ${name}`, async () => {
+      await expect(
+        capturePlatform(
+          'http://api.test',
+          fixture((path, body) => {
+            if (path === historyPath) mutate((body.data as Record<string, unknown>[])[0]);
+          }),
+        ),
+      ).rejects.toThrow(message);
+    });
+  }
+  it('rejeita período duplicado e histórico vazio', async () => {
+    for (const empty of [false, true]) {
+      await expect(
+        capturePlatform(
+          'http://api.test',
+          fixture((path, body) => {
+            if (path === historyPath) {
+              const rows = body.data as unknown[];
+              body.data = empty ? [] : [...rows, ...rows];
+            }
+          }),
+        ),
+      ).rejects.toThrow(empty ? 'divergem' : 'período inválido');
+    }
+  });
+  it('rejeita cursor repetido no histórico', async () => {
+    await expect(
+      capturePlatform(
+        'http://api.test',
+        fixture((path, body) => {
+          if (path === historyPath) {
+            body.data = [];
+            body.next_cursor = 'loop';
+          }
+        }),
+      ),
+    ).rejects.toThrow('Cursor repetido no histórico');
+  });
+  it('rejeita troca de edição no histórico', async () => {
+    await expect(
+      capturePlatform(
+        'http://api.test',
+        fixture((path, body) => {
+          if (path === historyPath) body.publication = 'b'.repeat(64);
+        }),
+      ),
+    ).rejects.toThrow('contexto');
   });
 });

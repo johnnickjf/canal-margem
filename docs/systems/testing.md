@@ -27,6 +27,8 @@ A configuração está em [vitest.config.ts](../../vitest.config.ts); os testes 
 |---|---|
 | `presentation-date.ts` | Formato YYYY-MM-DD, calendário, anos bissextos, datas inválidas e preservação do dia em UTC |
 | `format.ts` | Datas editoriais e ISO, mudança de dia/ano por fuso, códigos de episódio, índices, durações de vídeo e tempo de leitura |
+| `platform-build.ts` | Publicação fixada, paginação de opções e histórico, último período, recortes, decimais, falhas e linhagem transitiva |
+| `indicator-history.ts` | Coordenadas decimais, tempo proporcional, zero, negativos, ponto único, lacunas, métodos e sinal de comparação |
 | `headline.ts` | Destaque no começo, meio e fim, texto sem destaque, marcação incompleta, acentos e versão sem colchetes para metadados/busca |
 
 Vitest e o provider V8 ficam fixados na mesma versão. Os testes usam o fuso `America/Sao_Paulo`, para detectar regressões que troquem UTC pelo fuso local.
@@ -65,7 +67,8 @@ Os limites usam a [configuração oficial do Vitest](https://vitest.dev/config/c
 |---|---|
 | [Design system](../../tests/design-system.spec.ts) | Estados, abas, tooltip, foco e teclado, modais/drawers, URLs e nova aba, formulários, acesso sem JavaScript, overflow, movimento reduzido e axe |
 | [Editorial](../../tests/editorial.spec.ts) | Menu mobile por teclado, fechamento e retorno de foco, navegação e mudança para desktop; busca com/sem acentos, ausência de resultados, limpeza e recuperação por temas |
-| [Build de conteúdo](../../tests/content-build.spec.ts) | Publicação e exclusão de rascunhos de episódios, cortes e análises; índice de busca, sitemap, RSS e metadados das páginas |
+| [Indicadores](../../tests/indicators.spec.ts) | Leitura dos 15 principais, relações, SEO e navegação sem JavaScript nos dois perfis |
+| [Build de conteúdo](../../tests/content-build.spec.ts) | API controlada com histórico paginado, gráfico/tabela, recálculo pendente, múltiplas capitais, auditoria, axe e largura; Publicação e exclusão de rascunhos de episódios, cortes e análises; índice de busca, sitemap, RSS e metadados das páginas |
 
 A suíte do design system também inspeciona o HTML de todas as páginas de `dist/`: conteúdo principal, h1, título, descrição, canonical, links locais, sintaxe do JSON-LD e sitemap, além de `robots.txt`. Preserva a [regra permanente de SEO e descoberta por IA](../../AGENTS.md). A verificação de links não visita destinos externos nem valida todos os fragmentos internos.
 
@@ -73,7 +76,7 @@ O teste de build copia fontes e configuração para uma pasta temporária, reuti
 
 O RSS deve ter XML válido, identidade do canal, somente episódios e análises publicados, links únicos, ordem decrescente de datas e títulos, descrições, datas e canonicals coerentes com as páginas. Os exemplos incluem acentos e `&` para verificar a serialização XML. Cortes ficam no site e na busca, mas fora do feed.
 
-Na execução completa são 34 testes de navegador (17 cenários em dois perfis) e uma integração de build. Capturas e traces ficam em `test-results/`; a CI também gera `playwright-report/`. Capturas não têm comparação automática com uma imagem de referência.
+A execução completa inclui os perfis desktop/celular e as integrações de build editorial e da plataforma. Capturas e traces ficam em `test-results/`; a CI também gera `playwright-report/`. Capturas não têm comparação automática com uma imagem de referência.
 
 ## Integração contínua
 

@@ -1,20 +1,83 @@
 ---
 import PlatformLayout from '@/layouts/PlatformLayout.astro';
+import ThemeReading from '@/components/platform/ThemeReading.astro';
+import { themeGuides } from '@/data/theme-guides';
 import { platform } from '@/lib/platform';
 export function getStaticPaths() {
   return platform.themes.map((theme) => ({ params: { slug: theme.slug }, props: { theme } }));
 }
 const { theme } = Astro.props;
+const guide = themeGuides[theme.slug];
 const indicators = platform.indicators.filter(
   (indicator) => indicator.theme === theme.slug && indicator.role === 'primary',
 );
+// Changes are published engine outputs, never differences computed in a template.
+const changes = indicators.flatMap((indicator) =>
+  (platform.selections[indicator.slug] ?? [])
+    .filter(({ latest }) => {
+      const calculation = latest.node?.evaluation?.request.calculation;
+      const context = latest.node?.observation.context;
+      return (
+        latest.status === 'observed' &&
+        latest.node?.observation.value != null &&
+        ['relative-change', 'difference', 'compound-change'].includes(calculation ?? '') &&
+        context?.comparison_start &&
+        context.comparison_end
+      );
+    })
+    .map((selection) => ({ indicator, selection })),
+);
 ---
 <PlatformLayout title={theme.name} description={theme.question}>
-  <section aria-label="Indicadores do tema" class="platform-grid">
-    {indicators.map((indicator) => <article class="platform-card">
-      <h2><a href={`/indicador/${indicator.slug}`}>{indicator.name}</a></h2>
-      <p>{indicator.question}</p><p>{indicator.definition}</p>
-    </article>)}
+  <nav aria-label="Nesta página" class="theme-navigation">
+    <a href="#resumo">Resumo</a><a href="#mudancas">Principais mudanças</a>
+    <a href="#indicadores">Indicadores</a><a href="#entenda">Entenda o tema</a>
+    <a href="#comparar">Comparar períodos</a>
+  </nav>
+  <section id="resumo" aria-labelledby="resumo-title">
+    <h2 id="resumo-title">O tema em poucas palavras</h2>
+    <p>{guide?.summary ?? theme.question}</p>
+    <p>Os recortes abaixo mostram o último período de cada série nesta edição. Eles podem ter datas e abrangências diferentes.</p>
+  </section>
+  <section id="mudancas" aria-labelledby="mudancas-title">
+    <h2 id="mudancas-title">Principais mudanças</h2>
+    <p>Comparações publicadas para os indicadores deste tema. Cada resultado informa seus próprios períodos; a lista não é um ranking de impactos.</p>
+    {changes.length === 0 ? <p>Nenhuma comparação temporal publicada para este tema nesta edição. Consulte os recortes disponíveis abaixo; a ausência de comparação não significa estabilidade.</p>
+      : <div class="platform-grid">{changes.map(({ indicator, selection }) => <article class="platform-card">
+        <h3>{indicator.name}</h3><ThemeReading selection={selection} />
+        <a href={`/indicador/${indicator.slug}`}>Conferir cálculo e fontes de {indicator.name}</a>
+      </article>)}</div>}
+  </section>
+  <section id="indicadores" aria-labelledby="indicadores-title">
+    <h2 id="indicadores-title">Indicadores do tema</h2>
+    <div class="platform-grid">{indicators.map((indicator) => {
+      const selections = platform.selections[indicator.slug] ?? [];
+      return <article class="platform-card">
+        <h3><a href={`/indicador/${indicator.slug}`}>{indicator.name}</a></h3>
+        <p>{indicator.question}</p><p>{indicator.definition}</p>
+        {selections.length === 0 ? <p>Sem cobertura nesta edição. Nenhum valor foi substituído por zero.</p>
+          : <details><summary>Ver dados por recorte ({selections.length})</summary>
+            {selections.map((selection) => <ThemeReading selection={selection} />)}
+          </details>}
+        <a href={`/indicador/${indicator.slug}`}>Entender {indicator.name} e suas limitações</a>
+      </article>;
+    })}</div>
+  </section>
+  <section id="entenda" aria-labelledby="entenda-title">
+    <h2 id="entenda-title">Entenda o tema</h2>
+    {guide && <><p>{guide.reading}</p><p>{guide.caution}</p></>}
+    <p>Uma mudança no indicador, por si só, não identifica sua causa. Ausência não equivale a zero.</p>
+    <a href="/entenda/como-ler-os-dados">Entenda períodos, fontes e limites dos dados</a>
+  </section>
+  <section id="comparar" aria-labelledby="comparar-title">
+    <h2 id="comparar-title">Compare com contexto</h2>
+    <p>Antes de comparar, confira se unidade, geografia, período e método são compatíveis. O guia do comparador explica esses critérios; a seleção interativa de períodos ainda não está disponível.</p>
+    <a href="/comparar">Acessar o guia do comparador</a>
   </section>
   <p>Para vídeos e análises, visite os <a href="/temas">temas editoriais</a>.</p>
 </PlatformLayout>
+<style>
+  .theme-navigation { display: flex; flex-wrap: wrap; gap: var(--space-md); }
+  section { scroll-margin-top: var(--space-xl); }
+  section > p { max-width: var(--measure); }
+</style>

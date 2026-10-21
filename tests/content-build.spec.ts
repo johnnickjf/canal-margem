@@ -3,7 +3,8 @@ import { cp, mkdir, mkdtemp, readdir, readFile, rm, symlink, writeFile } from 'n
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { promisify } from 'node:util';
-import { expect, test } from '@playwright/test';
+import AxeBuilder from '@axe-core/playwright';
+import { expect, type Route, test } from '@playwright/test';
 import { site } from '../src/config/site';
 import type { SearchItem } from '../src/lib/search';
 
@@ -25,7 +26,8 @@ async function copySite(root: string, sandbox: string) {
 
 test('build da plataforma fixa publicação no HTML, preserva decimais e explicita lacunas', async ({
   page,
-}) => {
+  browser,
+}, testInfo) => {
   test.setTimeout(120_000);
   const root = process.cwd();
   const sandbox = await mkdtemp(path.join(tmpdir(), 'canal-margem-platform-'));
@@ -52,8 +54,13 @@ test('build da plataforma fixa publicação no HTML, preserva decimais e explici
     for (const route of [
       '',
       'tema/trabalho-e-renda',
+      'tema/custo-de-vida',
+      'tema/vida-financeira',
+      'tema/qualidade-de-vida',
+      'tema/economia-e-estado',
       'indicador/desemprego',
       'indicador/inflacao',
+      'indicador/cesta-basica',
       'comparar',
       'entenda/como-ler-os-dados',
     ]) {
@@ -99,6 +106,46 @@ test('build da plataforma fixa publicação no HTML, preserva decimais e explici
           );
         }
       }
+      if (route.startsWith('tema/')) {
+        await page.setContent(html);
+        await expect(page.getByRole('navigation', { name: 'Nesta página' })).toBeVisible();
+        await expect(page.locator('#resumo')).toContainText('último período');
+        await expect(page.locator('#entenda')).toContainText('não identifica sua causa');
+        await expect(page.locator('#comparar a')).toHaveAttribute('href', '/comparar');
+        if (route === 'tema/trabalho-e-renda') {
+          const changes = page.locator('#mudancas');
+          await expect(changes.locator('article')).toHaveCount(2);
+          await expect(changes).toContainText('0,000000000000000001');
+          await expect(changes).toContainText('Comparado ao período de 2024-01-01 a 2024-03-31');
+          await expect(changes).not.toContainText('Índice de base 100');
+          await changes.getByText('Conferir origem e método', { exact: true }).first().click();
+          await expect(changes).toContainText('relative-change/2');
+          await expect(changes.locator('a[href*="/api/v1/"]').first()).toHaveAttribute(
+            'href',
+            /publication=aaaaaaaa/,
+          );
+        } else {
+          await expect(page.locator('#mudancas')).toContainText('não significa estabilidade');
+        }
+        if (route === 'tema/custo-de-vida') {
+          const inflation = page.locator('#indicadores article').filter({
+            has: page.getByRole('heading', { name: 'Inflação ao consumidor', exact: true }),
+          });
+          await inflation.getByText('Ver dados por recorte (1)', { exact: true }).click();
+          await expect(inflation).toContainText('Input revisado');
+          await expect(inflation.locator('.platform-value')).toHaveCount(0);
+          const basket = page.locator('#indicadores article').filter({
+            has: page.getByRole('heading', { name: 'Custo da cesta básica', exact: true }),
+          });
+          await basket.getByText('Ver dados por recorte (2)', { exact: true }).click();
+          await expect(basket).toContainText('São Paulo');
+          await expect(basket).toContainText('Recife');
+          await expect(basket.locator('.platform-value')).toHaveCount(2);
+          await expect(basket.locator('.platform-value').first()).toHaveText(
+            '800,123456789012 R$/cesta',
+          );
+        }
+      }
       if (route === 'indicador/desemprego') {
         expect(content.values[0]).toContain('0,000000000000000001');
         expect(content.text).toContain('Variação percentual');
@@ -124,6 +171,115 @@ test('build da plataforma fixa publicação no HTML, preserva decimais e explici
         expect(content.values).toHaveLength(0);
         expect(content.text).toContain('Input revisado');
       }
+    }
+    // Serve the actual generated HTML and assets through a browser with JavaScript disabled.
+    for (const viewport of [
+      { width: 1440, height: 1000 },
+      { width: 393, height: 851 },
+    ]) {
+      const context = await browser.newContext({ javaScriptEnabled: false, viewport });
+      const serveArtifact = async (route: Route) => {
+        const pathname = decodeURIComponent(new URL(route.request().url()).pathname);
+        const file = path.join(dist, pathname, path.extname(pathname) ? '' : 'index.html');
+        const contentType = file.endsWith('.css')
+          ? 'text/css'
+          : /\.m?js$/.test(file)
+            ? 'text/javascript'
+            : file.endsWith('.woff2')
+              ? 'font/woff2'
+              : file.endsWith('.svg')
+                ? 'image/svg+xml'
+                : 'text/html';
+        await route.fulfill({ body: await readFile(file), contentType });
+      };
+      await context.route('http://indicator.test/**', serveArtifact);
+      const accessibleContext = await browser.newContext({ javaScriptEnabled: true, viewport });
+      await accessibleContext.route('http://indicator.test/**', serveArtifact);
+      const accessiblePage = await accessibleContext.newPage();
+      const rendered = await context.newPage();
+      for (const slug of ['desemprego', 'inflacao', 'cesta-basica', 'rendimento-real']) {
+        await rendered.goto(`http://indicator.test/indicador/${slug}/`);
+        await expect(rendered.locator('h1')).toHaveCount(1);
+        const navigation = rendered.getByRole('navigation', { name: 'Nesta página' });
+        for (const id of ['aconteceu', 'significa', 'dados', 'relacionados']) {
+          await navigation.locator(`a[href="#${id}"]`).click();
+          await expect(rendered.locator(`#${id}`)).toBeInViewport();
+        }
+        if (slug === 'desemprego') {
+          await expect(rendered.locator('.trend[data-direction="down"]')).toHaveCount(2);
+          await expect(rendered.locator('main')).toContainText('current - previous');
+          const history = rendered.locator('.indicator-history').first();
+          await expect(history.locator('circle')).toHaveCount(2);
+          await expect(history.locator('polyline')).toHaveCount(0);
+          await history.locator('summary').focus();
+          await rendered.keyboard.press('Enter');
+          await expect(history.locator('tbody tr')).toHaveCount(3);
+          await expect(history.locator('table')).toContainText('Sem observação na edição');
+          await expect(history.locator('table')).toContainText('0,000000000000000002');
+          await expect(history.locator('a[href*="/observations/"]').first()).toHaveAttribute(
+            'href',
+            /publication=aaaaaaaa/,
+          );
+          await history.scrollIntoViewIfNeeded();
+          await testInfo.attach(`indicator-history-${viewport.width}.png`, {
+            body: await rendered.screenshot({
+              path: testInfo.outputPath(`indicator-history-${viewport.width}.png`),
+            }),
+            contentType: 'image/png',
+          });
+        }
+        if (slug === 'inflacao') {
+          await expect(rendered.locator('#aconteceu')).toContainText('Input revisado');
+          await expect(rendered.locator('.platform-value')).toHaveCount(0);
+          await expect(rendered.locator('.indicator-history circle')).toHaveCount(1);
+        }
+        if (slug === 'cesta-basica') {
+          await expect(rendered.locator('.indicator-detail')).toHaveCount(2);
+          await expect(rendered.locator('#aconteceu')).toContainText('São Paulo');
+          await expect(rendered.locator('#aconteceu')).toContainText('Recife');
+          await expect(rendered.locator('.indicator-history circle')).toHaveCount(2);
+        }
+        if (slug === 'rendimento-real') {
+          await expect(rendered.locator('#dados')).toContainText('Sem cobertura nesta edição');
+          await expect(rendered.locator('.indicator-history')).toHaveCount(0);
+        }
+        const layout = await rendered.evaluate(() => ({
+          width: document.documentElement.scrollWidth,
+          viewport: innerWidth,
+          overflowing: [...document.querySelectorAll('main *')]
+            .filter((element) => {
+              const rect = element.getBoundingClientRect();
+              return rect.width > 0 && (rect.right > innerWidth + 1 || rect.left < -1);
+            })
+            .slice(0, 8)
+            .map((element) => ({
+              tag: element.tagName,
+              class: element.className,
+              text: element.textContent?.slice(0, 100),
+              dimensions: [element, element.parentElement, element.parentElement?.parentElement]
+                .filter(Boolean)
+                .map((node) => {
+                  const element = node as Element;
+                  const style = getComputedStyle(element);
+                  return {
+                    tag: element.tagName,
+                    class: element.className,
+                    width: element.getBoundingClientRect().width,
+                    columns: style.gridTemplateColumns,
+                    overflowWrap: style.overflowWrap,
+                    minWidth: style.minWidth,
+                  };
+                }),
+            })),
+        }));
+        expect(layout.width, JSON.stringify(layout)).toBeLessThanOrEqual(layout.viewport);
+        await accessiblePage.goto(rendered.url());
+        for (const summary of await accessiblePage.locator('.history-table summary').all())
+          await summary.click();
+        expect((await new AxeBuilder({ page: accessiblePage }).analyze()).violations).toEqual([]);
+      }
+      await accessibleContext.close();
+      await context.close();
     }
   } finally {
     fixture.kill();

@@ -26,11 +26,13 @@
     margin-top: var(--space-sm);
   }
   .platform-grid {
+    min-width: 0;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
     gap: var(--space-md);
   }
   .platform-card {
+    grid-template-columns: minmax(0, 1fr);
     padding: var(--space-md);
     border: var(--rule);
     background: var(--surface);
@@ -41,6 +43,7 @@
     overflow-wrap: anywhere;
   }
   .platform-page section {
+    min-width: 0;
     display: grid;
     gap: var(--space-md);
   }
@@ -63,5 +66,82 @@
     display: grid;
     gap: var(--space-sm);
     margin-top: var(--space-sm);
+  }
+}
+
+@layer components {
+  .indicator-nav {
+    min-width: 0;
+    overflow-wrap: anywhere;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm) var(--space-md);
+  }
+  .indicator-series,
+  .indicator-history {
+    grid-template-columns: minmax(0, 1fr);
+    display: grid;
+    gap: var(--space-md);
+    min-width: 0;
+  }
+  .indicator-detail {
+    scroll-margin-top: var(--space-xl);
+  }
+  .indicator-detail > h3,
+  .indicator-detail > h4 {
+    overflow-wrap: anywhere;
+  }
+  .indicator-history figure {
+    margin: 0;
+    min-width: 0;
+  }
+  .indicator-history svg {
+    display: block;
+    width: 100%;
+    max-height: 360px;
+    color: var(--fg);
+  }
+  .indicator-history text {
+    fill: currentColor;
+    font-family: var(--font-mono);
+    font-size: 16px;
+  }
+  .history-axis {
+    stroke: currentColor;
+    fill: none;
+  }
+  .history-line {
+    stroke: var(--red);
+    stroke-width: 2;
+    fill: none;
+  }
+  .history-dot {
+    fill: currentColor;
+  }
+  .history-scale {
+    overflow-wrap: anywhere;
+    font-family: var(--font-mono);
+  }
+  .history-scroll {
+    overflow-x: auto;
+    max-width: 100%;
+    margin-top: var(--space-sm);
+  }
+  .history-scroll table {
+    border-collapse: collapse;
+    width: 100%;
+    font-size: var(--text-sm);
+  }
+  .history-scroll th,
+  .history-scroll td {
+    text-align: left;
+    vertical-align: top;
+    padding: var(--space-sm);
+    border-bottom: var(--rule);
+    min-width: 14ch;
+  }
+  .history-scroll caption {
+    text-align: left;
+    padding-bottom: var(--space-sm);
   }
 }

@@ -73,7 +73,11 @@ entrada do comparador e conteúdo Entenda. O build fixa uma publicação da API 
 páginas e consultas; sem API configurada, exibe definições e indisponibilidade explícita.
 A fase 11 implementa a [home orientada a perguntas](docs/systems/question-home.md): cinco
 entradas do cotidiano levam aos temas e indicadores, com navegação sem JavaScript e conteúdo
-editorial preservado. A próxima etapa é a página temática da fase 12; implantação Railway/R2 permanece posterior.
+editorial preservado. A fase 12 implementa as [páginas temáticas](docs/systems/theme-pages.md): resumos, mudanças
+publicadas, recortes auditáveis, explicações e acesso ao guia do comparador. A fase 13 implementa as
+[páginas de indicador](docs/systems/indicator-pages.md): valores por recorte, tendências publicadas,
+gráficos e tabelas históricas, interpretação, alertas e auditoria. A próxima etapa é a camada
+Entenda da fase 14; implantação Railway/R2 permanece posterior.
 
 ```bash
 MARGEM_API_URL=http://127.0.0.1:8080 pnpm build  # API já operando, origem sem caminho

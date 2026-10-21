@@ -32,7 +32,10 @@ e Entenda ao site editorial. O build fixa uma publicação da API no HTML e nos 
 sem API configurada, exibe definições sem valores.
 
 A [home orientada a perguntas da fase 11](question-home.md) coloca cinco perguntas do cotidiano
-na entrada principal e preserva o conteúdo editorial abaixo. A próxima etapa é a página
-temática da fase 12.
+na entrada principal e preserva o conteúdo editorial abaixo. As [páginas temáticas da fase 12](theme-pages.md)
+acrescentam resumo, mudanças publicadas, dados por recorte e explicações. As
+[páginas de indicador da fase 13](indicator-pages.md) acrescentam tendências publicadas, gráficos
+e tabelas históricas, interpretação, alertas e auditoria. A próxima etapa é a camada Entenda
+da fase 14.
 
 Cada documento deve distinguir estado atual de proposta e descrever responsabilidade, entradas e saídas, dependências, fluxos, configuração, falhas, validação e operação relevantes. Requisitos gerais permanecem na [arquitetura técnica](../03-technical-architecture.md); decisões ficam em [adr](../adr/README.md).

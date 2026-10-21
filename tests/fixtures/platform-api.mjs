@@ -16,6 +16,7 @@ const themes = [
   ['economia-e-estado', 'Economia e Estado', 'Como a economia afeta a vida material?'],
 ].map(([slug, name, question]) => ({ slug, name, question }));
 let resolutions = 0;
+const records = new Map();
 const inputNode = (id, start, end, value) => ({
   observation: {
     id,
@@ -63,7 +64,7 @@ const server = createServer((request, response) => {
         path === `/api/v1/indicators/${item.slug}/series`,
     );
     if (indicator) {
-      const covered = ['desemprego', 'inflacao'].includes(indicator.slug);
+      const covered = ['desemprego', 'inflacao', 'cesta-basica'].includes(indicator.slug);
       const series = {
         series: indicator.slug === 'desemprego' ? 'tr4' : 'cv1-monthly',
         geography: 'BR',
@@ -71,6 +72,9 @@ const server = createServer((request, response) => {
         source: 'ibge',
         dataset: 'fixture',
         method: 'fixture-v1',
+        frequency: 'quarterly',
+        temporal_basis: 'calendar',
+        warnings: ['Não emendar métodos ou recortes automaticamente.'],
       };
       const latest =
         indicator.slug === 'desemprego'
@@ -91,6 +95,38 @@ const server = createServer((request, response) => {
         catalog_revision: revision,
         data: path.endsWith('/series') ? (covered ? [series] : []) : { indicator, series, latest },
       };
+      if (indicator.slug === 'cesta-basica') {
+        const options = ['São Paulo', 'Recife'].map((geography) => ({
+          ...series,
+          series: 'cv4',
+          geography,
+          unit: 'R$/cesta',
+        }));
+        body.data = path.endsWith('/series')
+          ? options
+          : {
+              indicator,
+              series: options.find(
+                (option) => option.geography === url.searchParams.get('geography'),
+              ),
+              latest: {
+                start: '2025-12-01',
+                end: '2025-12-31',
+                status: 'observed',
+                node: {
+                  ...currentInput,
+                  observation: {
+                    ...currentInput.observation,
+                    id: 'f'.repeat(64),
+                    series: 'cv4',
+                    start: '2025-12-01',
+                    end: '2025-12-31',
+                    value: '800.123456789012',
+                  },
+                },
+              },
+            };
+      }
       if (indicator.slug === 'desemprego') {
         const calculations = ['relative-change', 'difference', 'rebase'];
         const choices = calculations.map((calculation, index) => ({
@@ -123,6 +159,12 @@ const server = createServer((request, response) => {
                     ...currentInput.observation,
                     id: String(index + 1).repeat(64),
                     series: choices[index].series,
+                    value:
+                      calculation === 'relative-change'
+                        ? '-50'
+                        : calculation === 'difference'
+                          ? '-0.000000000000000001'
+                          : '50',
                     context:
                       calculation === 'rebase'
                         ? { index_base_period: '2024-01-01/2024-03-31' }
@@ -130,6 +172,16 @@ const server = createServer((request, response) => {
                   },
                   origins: [],
                   evaluation: {
+                    definition: {
+                      formula:
+                        calculation === 'difference'
+                          ? 'current - previous'
+                          : calculation === 'rebase'
+                            ? 'current / base * 100'
+                            : '(current / previous - 1) * 100',
+                      methodology:
+                        'Comparação de períodos compatíveis; sem classificação de bem-estar.',
+                    },
                     request: {
                       calculation,
                       version: '2',
@@ -145,6 +197,59 @@ const server = createServer((request, response) => {
           }
         }
       }
+    }
+    if (indicator && !path.endsWith('/series')) {
+      const { series, latest } = body.data;
+      const point = { ...latest, series: series.series, geography: series.geography };
+      records.set(`${series.series}/${series.geography}`, point);
+    }
+    if (path.startsWith('/api/v1/series/')) {
+      const series = decodeURIComponent(path.slice('/api/v1/series/'.length));
+      const point = records.get(`${series}/${url.searchParams.get('geography')}`);
+      let data = point ? [point] : [];
+      let next_cursor;
+      if (series === 'cv1-monthly') {
+        data.unshift({
+          ...point,
+          start: '2025-11-01',
+          end: '2025-11-30',
+          status: 'observed',
+          reason: undefined,
+          node: {
+            ...currentInput,
+            observation: {
+              ...currentInput.observation,
+              id: '9'.repeat(64),
+              series,
+              start: '2025-11-01',
+              end: '2025-11-30',
+              value: '0.18',
+            },
+          },
+        });
+      }
+      if (series === 'tr4') {
+        if (!url.searchParams.has('cursor')) {
+          data = [
+            {
+              ...point,
+              start: previousInput.observation.start,
+              end: previousInput.observation.end,
+              node: previousInput,
+            },
+            {
+              ...point,
+              start: '2024-04-01',
+              end: '2024-06-30',
+              status: 'missing',
+              reason: 'Sem observação na edição',
+              node: undefined,
+            },
+          ];
+          next_cursor = 'history-page-2';
+        }
+      }
+      body = { publication, catalog_revision: revision, data, next_cursor };
     }
     if (
       path === `/api/v1/observations/${'d'.repeat(64)}` ||

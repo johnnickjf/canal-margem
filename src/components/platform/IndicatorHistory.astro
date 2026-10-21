@@ -1,0 +1,48 @@
+---
+import { apiLink } from '@/lib/platform';
+import { historyChart } from '@/lib/indicator-history';
+import type { Selection } from '@/lib/platform-build';
+interface Props {
+  selection: Selection;
+  id: string;
+}
+const { selection, id } = Astro.props;
+const history = selection.history ?? [];
+const mixedUnits = history.some(
+  (point) =>
+    point.node?.observation.context?.unit &&
+    point.node.observation.context.unit !== selection.series.unit,
+);
+const chart = mixedUnits ? null : historyChart(history);
+---
+<div class="indicator-history">
+  <h4>Série histórica</h4>
+  {chart ? <figure aria-labelledby={`${id}-caption`}>
+    <figcaption id={`${id}-caption`}>Evolução em {selection.series.unit} · {selection.series.geography === 'BR' ? 'Brasil' : selection.series.geography}</figcaption>
+    <svg viewBox="0 0 680 280" role="img" aria-labelledby={`${id}-title ${id}-description`}>
+      <title id={`${id}-title`}>Série histórica de {chart.first} a {chart.last}</title>
+      <desc id={`${id}-description`}>Eixo horizontal: fim do período de referência. Eixo vertical: valor em {selection.series.unit}, de {chart.min.replace('.', ',')} a {chart.max.replace('.', ',')}. Valores exatos e lacunas na tabela abaixo.</desc>
+      <path class="history-axis" d="M30 20V240H650" />
+      {chart.segments.map((points) => <polyline class="history-line" points={points} />)}
+      {chart.dots.map((point) => <circle class="history-dot" cx={point.x} cy={point.y} r="3"><title>{point.label}</title></circle>)}
+      <text x="30" y="267">{chart.first}</text><text x="650" y="267" text-anchor="end">{chart.last}</text>
+    </svg>
+    <p class="history-scale">Escala vertical em {selection.series.unit}: {chart.min.replace('.', ',')} a {chart.max.replace('.', ',')}.</p>
+  </figure> : <p>{mixedUnits ? 'Gráfico indisponível: há unidades diferentes neste histórico. Consulte as unidades de cada período na tabela.' : 'Gráfico indisponível: não há valores observados neste recorte.'}</p>}
+  <p>Os pontos marcam o fim de cada período. Lacunas explícitas e mudanças de método interrompem a linha; não há interpolação. A escala vertical acompanha os valores e pode não começar em zero. Compare apenas recortes e métodos compatíveis.</p>
+  <details class="history-table"><summary>Ver tabela e auditoria da série ({history.length} períodos)</summary>
+    <div class="history-scroll" role="region" aria-label={`Tabela histórica ${id}`} tabindex="0">
+      <table>
+        <caption>Períodos e valores {mixedUnits ? 'com unidades por observação' : `em ${selection.series.unit}`} · {selection.series.geography === 'BR' ? 'Brasil' : selection.series.geography}</caption>
+        <thead><tr><th scope="col">Período de referência</th><th scope="col">Valor e unidade</th><th scope="col">Estado e auditoria</th></tr></thead>
+        <tbody>{history.map((point) => <tr>
+          <th scope="row"><time datetime={point.start}>{point.start}</time> a <time datetime={point.end}>{point.end}</time></th>
+          <td>{point.status === 'observed' && point.node?.observation.value != null ? `${point.node.observation.value.replace('.', ',')} ${point.node.observation.context?.unit ?? selection.series.unit}` : 'Indisponível'}</td>
+          <td>{point.status === 'observed' ? 'Observado' : point.reason || point.status}
+            {point.node && <Fragment><p>Método: {point.node.observation.context?.method ?? selection.series.method}</p><a href={apiLink(`observations/${point.node.observation.id}`)}>Auditar observação</a></Fragment>}
+          </td>
+        </tr>)}</tbody>
+      </table>
+    </div>
+  </details>
+</div>

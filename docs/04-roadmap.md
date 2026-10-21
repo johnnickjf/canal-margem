@@ -721,6 +721,15 @@ Usuários chegam às informações sem precisar conhecer terminologia econômica
 
 ## Fase 12 — Página temática
 
+### Estado
+
+Implementada nas [páginas temáticas](systems/theme-pages.md): cinco dimensões com resumo,
+comparações temporais publicadas pela engine, indicadores com todos os recortes da edição,
+explicações e acesso ao guia do comparador. Sem comparações ou cobertura, a página explicita
+as ausências. Período, geografia, unidade, método e links de auditoria acompanham os dados;
+não há cálculo de mudanças no frontend. Gráficos e experiência completa de indicador continuam
+na fase 13; comparador interativo, na fase 16.
+
 ### Objetivo
 
 Criar um nível intermediário entre pergunta e indicador.
@@ -754,6 +763,16 @@ Os dados ganham narrativa sem perder auditabilidade.
 ---
 
 ## Fase 13 — Página de indicador
+
+### Estado
+
+Implementada nas [páginas de indicador](systems/indicator-pages.md): valor por recorte,
+tendência e comparação publicadas, histórico paginado com gráfico SVG e tabela auditável,
+interpretação dos 15 principais, fonte, coleta, metodologia, alertas e indicadores relacionados.
+HTML e links mantêm a publicação do build, com navegação sem JavaScript. Lacunas interrompem
+a linha; ausência no último período não recebe um valor anterior. A verificação local cobre
+precisão decimal, paginação, falhas de contexto, desktop/celular, acessibilidade automática e SEO.
+A camada Entenda dedicada continua na fase 14; comparação interativa, na fase 16.
 
 ### Objetivo
 

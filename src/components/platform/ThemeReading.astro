@@ -1,0 +1,32 @@
+---
+import CalculationContext from './CalculationContext.astro';
+import { apiLink, platform } from '@/lib/platform';
+import type { Selection } from '@/lib/platform-build';
+interface Props {
+  selection: Selection;
+}
+const {
+  selection: { series, latest },
+} = Astro.props;
+const source = platform.sources.find((item) => item.id === series.source);
+const value = latest.node?.observation.value;
+---
+<div class="theme-reading">
+  <p><strong>{series.geography === 'BR' ? 'Brasil' : series.geography}</strong> · <code>{series.series}</code></p>
+  <p>Período: <time datetime={latest.start}>{latest.start}</time> a <time datetime={latest.end}>{latest.end}</time></p>
+  {latest.status === 'observed' && value != null
+    ? <p class="platform-value">{value.replace('.', ',')} <span>{series.unit}</span></p>
+    : <p><strong>Dados indisponíveis</strong> · {latest.reason || latest.status}</p>}
+  {latest.node && <CalculationContext node={latest.node} />}
+  {source && <p>Fonte: <a href={source.url}>{source.name}</a></p>}
+  <details><summary>Conferir origem e método</summary>
+    <dl><dt>Fonte responsável</dt><dd>{source?.name ?? series.source}</dd><dt>Dataset</dt><dd>{series.dataset}</dd><dt>Método</dt><dd>{series.method}</dd><dt>Unidade</dt><dd>{series.unit}</dd></dl>
+    {latest.node?.origins.map((origin) => <p><a href={origin.url}>Consulta de origem</a> · Coleta: <time datetime={origin.retrieved_at}>{origin.retrieved_at}</time></p>)}
+    <a href={apiLink(`series/${encodeURIComponent(series.series)}`, { geography: series.geography })}>Consultar série desta publicação (JSON)</a>
+  </details>
+</div>
+<style>
+  .theme-reading { display: grid; gap: var(--space-sm); padding-block: var(--space-sm); border-top: var(--rule); }
+  details > :not(summary) { margin-top: var(--space-sm); }
+  code { font-size: var(--text-sm); overflow-wrap: anywhere; }
+</style>

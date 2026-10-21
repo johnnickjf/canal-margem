@@ -13,7 +13,9 @@ test('shell navega da home ao tema e ao indicador sem JavaScript', async ({ brow
   await page.getByRole('heading', { name: 'Desemprego', exact: true }).getByRole('link').click();
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('Desemprego');
   await expect(page.getByText('Taxa de desocupação', { exact: false })).toBeVisible();
-  await page.getByRole('link', { name: 'Como ler os dados e suas limitações' }).click();
+  await page
+    .getByRole('link', { name: 'Como ler os dados e suas limitações', exact: true })
+    .click();
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('Como ler os dados');
   await context.close();
 });

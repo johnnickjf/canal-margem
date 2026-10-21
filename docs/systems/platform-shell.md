@@ -19,8 +19,9 @@ acesso aos temas, ao comparador e à explicação dos dados, inclusive sem JavaS
 dimensões do catálogo da API. Nenhuma URL editorial foi substituída. As páginas auxiliares
 do catálogo também têm definição em `/indicador/:slug`, identificadas como medidas auxiliares.
 
-O comparador interativo pertence à fase 16. Gráficos, filtros interativos, busca de indicadores
-e a experiência completa de cada página continuam nas fases 12–16. O shell não apresenta
+O comparador interativo pertence à fase 16. A [fase 12](theme-pages.md) enriquece as páginas temáticas com resumos, mudanças e recortes.
+A [fase 13](indicator-pages.md) acrescenta gráficos, tabelas históricas e a experiência de leitura
+dos indicadores. Filtros interativos, busca de indicadores e comparação continuam nas fases 15–16. O shell não apresenta
 controles que simulam essas funcionalidades.
 
 ## Publicação fixada no build
@@ -44,10 +45,12 @@ A integração em [astro.config.mjs](../../astro.config.mjs) executa
 2. Consulta o manifesto por ID e verifica publicação, revisão do catálogo e corte.
 3. Pagina todas as opções de série/geografia de cada indicador, usando o ID fixado.
 4. Obtém o resumo de cada recorte e confere o contexto de cada resposta.
-5. Para cálculos derivados, consulta os inputs transitivos por ID de observação na mesma
+5. Desde a fase 13, pagina o histórico de cada série/geografia e confere o último período
+   contra o resumo, conforme as [páginas de indicador](indicator-pages.md).
+6. Para cálculos derivados, consulta os inputs transitivos por ID de observação na mesma
    publicação. Reutiliza observações já consultadas e rejeita ciclos, profundidade acima de
    32 níveis ou respostas com outro ID/contexto.
-6. Grava `.astro/margem-publication.json`, consumido por todas as páginas do build.
+7. Grava `.astro/margem-publication.json`, consumido por todas as páginas do build.
 
 As consultas são sequenciais, com timeout de dez segundos por requisição. Um HTTP 429
 permite uma tentativa adicional na mesma URL, quando `Retry-After` informa até 60 segundos.
@@ -96,4 +99,5 @@ rascunhos, busca e RSS.
 Esses testes comprovam a integração local com respostas controladas. Operação com uma API
 remota, atualização automática do site, indexação externa e validação assistiva manual não
 foram verificadas nesta fase. A home orientada a perguntas está implementada na [fase 11](question-home.md).
-A próxima entrega do roadmap é a página temática da fase 12.
+As [páginas temáticas da fase 12](theme-pages.md) e as [páginas de indicador da fase 13](indicator-pages.md)
+também estão implementadas. A próxima entrega do roadmap é a camada Entenda da fase 14.

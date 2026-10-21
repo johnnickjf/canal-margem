@@ -47,5 +47,6 @@ que os rascunhos editoriais continuam excluídos.
 
 A implementação permite testar a hipótese de navegação por perguntas. Ela não comprova
 compreensão ou facilidade de uso por pessoas reais: isso exige observar usuários. Indexação
-externa e publicação remota também não foram verificadas. A próxima etapa é enriquecer a
-página temática na fase 12; gráficos e comparador interativo pertencem às fases seguintes.
+externa e publicação remota também não foram verificadas. As [páginas temáticas da fase 12](theme-pages.md) enriquecem os destinos dessas perguntas.
+As [páginas de indicador da fase 13](indicator-pages.md) acrescentam gráficos e tabelas históricas.
+O comparador interativo continua na fase 16.

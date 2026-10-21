@@ -16,10 +16,17 @@ export type ObservationNode = {
       comparison_start?: string;
       comparison_end?: string;
       index_base_period?: string;
+      method?: string;
+      unit?: string;
+      method_segment?: string;
+      monetary_base?: string;
+      composition?: string;
+      deflator?: string;
     };
   };
   origins: { url: string; retrieved_at: string }[];
   evaluation?: {
+    definition?: { formula: string; methodology: string; parameters?: Record<string, string> };
     request: { calculation: string; version: string; inputs: Record<string, string> };
   };
 };
@@ -31,6 +38,9 @@ export type Selection = {
     source: string;
     dataset: string;
     method: string;
+    frequency?: string;
+    temporal_basis?: string;
+    warnings?: string[];
   };
   latest: {
     start: string;
@@ -39,8 +49,10 @@ export type Selection = {
     reason?: string;
     node?: ObservationNode;
   };
+  history?: HistoryPoint[];
   inputs?: ObservationNode[];
 };
+export type HistoryPoint = Selection['latest'] & { series: string; geography: string };
 export type Platform = {
   publication: string | null;
   cutoff: string | null;
@@ -221,6 +233,61 @@ export async function capturePlatform(
       const value = data.latest.node?.observation?.value;
       if (value != null && (typeof value !== 'string' || !/^-?\d+(\.\d+)?$/.test(value)))
         throw new Error('Valor decimal inválido.');
+      const history: HistoryPoint[] = [];
+      let historyCursor = '';
+      const historyCursors = new Set<string>();
+      const periods = new Set<string>();
+      do {
+        const historyQuery = new URLSearchParams({
+          publication: id,
+          geography: option.geography,
+          limit: '200',
+          ...(historyCursor ? { cursor: historyCursor } : {}),
+        });
+        const body = await pinned(`series/${encodeURIComponent(option.series)}?${historyQuery}`);
+        if (!Array.isArray(body.data)) throw new Error('Histórico de série inválido.');
+        for (const point of body.data as HistoryPoint[]) {
+          const value = point.node?.observation.value;
+          if (value != null && (typeof value !== 'string' || !/^-?\d+(\.\d+)?$/.test(value)))
+            throw new Error('Valor decimal inválido no histórico.');
+          const validDate = (date: string) =>
+            typeof date === 'string' &&
+            /^\d{4}-\d{2}-\d{2}$/.test(date) &&
+            Number.isFinite(Date.parse(date)) &&
+            new Date(date).toISOString().slice(0, 10) === date;
+          const key = `${point.start}/${point.end}`;
+          if (
+            point.series !== option.series ||
+            point.geography !== option.geography ||
+            !validDate(point.start) ||
+            !validDate(point.end) ||
+            point.start > point.end ||
+            periods.has(key) ||
+            typeof point.status !== 'string' ||
+            (point.status === 'observed' &&
+              (value == null || point.node?.observation.status !== 'observed'))
+          )
+            throw new Error('Histórico fora do recorte ou período inválido.');
+          periods.add(key);
+          history.push(point);
+        }
+        historyCursor = body.next_cursor || '';
+        if (historyCursor && historyCursors.has(historyCursor))
+          throw new Error('Cursor repetido no histórico.');
+        historyCursors.add(historyCursor);
+      } while (historyCursor);
+      history.sort((a, b) => a.end.localeCompare(b.end) || a.start.localeCompare(b.start));
+      const last = history.at(-1);
+      if (
+        !last ||
+        last.start !== data.latest.start ||
+        last.end !== data.latest.end ||
+        last.status !== data.latest.status ||
+        last.node?.observation.id !== data.latest.node?.observation.id ||
+        last.node?.observation.value !== data.latest.node?.observation.value
+      )
+        throw new Error('Histórico e último período divergem.');
+      data.history = history;
       data.inputs = data.latest.node ? await lineage(data.latest.node) : [];
       selections[indicator.slug].push(data);
     }

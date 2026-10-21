@@ -1,0 +1,49 @@
+---
+import CalculationContext from './CalculationContext.astro';
+import IndicatorHistory from './IndicatorHistory.astro';
+import Trend from '@/components/indicators/Trend.astro';
+import { apiLink, platform } from '@/lib/platform';
+import { decimalDirection } from '@/lib/indicator-history';
+import type { Selection } from '@/lib/platform-build';
+interface Props {
+  selection: Selection;
+  index: number;
+}
+const { selection, index } = Astro.props;
+const { series, latest, inputs = [] } = selection;
+const source = platform.sources.find((item) => item.id === series.source);
+const value = latest.node?.observation.value;
+const calculation = latest.node?.evaluation?.request.calculation;
+const isChange = ['relative-change', 'difference', 'compound-change'].includes(calculation ?? '');
+---
+<article class="platform-card indicator-detail" id={`recorte-${index}`}>
+  <h3>Recorte: {series.geography === 'BR' ? 'Brasil' : series.geography} · {series.series}</h3>
+  <p>Período: <time datetime={latest.start}>{latest.start}</time> a <time datetime={latest.end}>{latest.end}</time></p>
+  {latest.node && <CalculationContext node={latest.node} />}
+  {latest.status === 'observed' && value != null ? <p class="platform-value">{value.replace('.', ',')} <span>{series.unit}</span></p> : <p><strong>Dados indisponíveis</strong> · {latest.reason || latest.status}</p>}
+  {isChange && latest.status === 'observed' && value != null && <Trend direction={decimalDirection(value)} change={`${value.replace('.', ',')} ${series.unit}`} comparison="Comparação desta edição; os períodos estão identificados acima." />}
+  {series.warnings && series.warnings.length > 0 && <aside aria-label={`Alertas do recorte ${index + 1}`}><h4>Cuidados de leitura</h4><ul>{series.warnings.map((warning) => <li>{warning}</li>)}</ul></aside>}
+  <IndicatorHistory selection={selection} id={`historico-${index}`} />
+  <h4>Fonte e metodologia</h4>
+  <dl><dt>Unidade</dt><dd>{series.unit}</dd><dt>Dataset</dt><dd>{series.dataset}</dd><dt>Método</dt><dd>{series.method}</dd>{series.frequency && <Fragment><dt>Frequência</dt><dd>{series.frequency}</dd></Fragment>}{series.temporal_basis && <Fragment><dt>Base temporal</dt><dd>{series.temporal_basis}</dd></Fragment>}</dl>
+  {latest.node?.evaluation?.definition && <details><summary>Como o cálculo foi feito</summary>
+    <p>{latest.node.evaluation.definition.methodology}</p>
+    <p>Fórmula: <code>{latest.node.evaluation.definition.formula}</code></p>
+    {Object.entries(latest.node.evaluation.definition.parameters ?? {}).map(([name, value]) => <p>{name}: {value}</p>)}
+  </details>}
+  {source && <p>Fonte: <a href={source.url}>{source.name}</a></p>}
+  {latest.node?.origins.map((origin) => <p><a href={origin.url}>Consulta de origem</a> · Coleta: <time datetime={origin.retrieved_at}>{origin.retrieved_at}</time></p>)}
+  {inputs.length > 0 && <details class="platform-inputs"><summary>Fontes e observações usadas no cálculo</summary><ul>{inputs.map((input) => {
+    const observation = input.observation;
+    const inputSource = platform.sources.find((item) => item.id === observation.context?.source);
+    return <li>
+      <p><a href={apiLink(`observations/${observation.id}`)}>Observação de entrada: {observation.series}</a></p>
+      <p>Período: <time datetime={observation.start}>{observation.start}</time> a <time datetime={observation.end}>{observation.end}</time></p>
+      <CalculationContext node={input} />
+      {inputSource && <p>Fonte: <a href={inputSource.url}>{inputSource.name}</a></p>}
+      {observation.context?.dataset && <p>Dataset: {observation.context.dataset}</p>}
+      {input.origins.map((origin) => <p><a href={origin.url}>Consulta de origem</a> · Coleta: <time datetime={origin.retrieved_at}>{origin.retrieved_at}</time></p>)}
+    </li>;
+  })}</ul></details>}
+  <a href={apiLink(`series/${encodeURIComponent(series.series)}`, { geography: series.geography })}>Consultar série desta publicação (JSON)</a>
+</article>

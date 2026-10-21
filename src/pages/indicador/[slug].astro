@@ -1,7 +1,9 @@
 ---
 import PlatformLayout from '@/layouts/PlatformLayout.astro';
-import { apiLink, platform } from '@/lib/platform';
+import { platform } from '@/lib/platform';
 import CalculationContext from '@/components/platform/CalculationContext.astro';
+import IndicatorDetail from '@/components/platform/IndicatorDetail.astro';
+import { indicatorGuides } from '@/data/indicator-guides';
 export function getStaticPaths() {
   return platform.indicators.map((indicator) => ({
     params: { slug: indicator.slug },
@@ -12,39 +14,46 @@ const { indicator } = Astro.props;
 const theme = platform.themes.find((item) => item.slug === indicator.theme);
 if (!theme) throw new Error('Tema do indicador ausente no catálogo.');
 const selections = platform.selections[indicator.slug] ?? [];
+const guide = indicatorGuides[indicator.slug];
+const related = platform.indicators.filter(
+  (item) =>
+    item.slug !== indicator.slug &&
+    (guide
+      ? guide.related.includes(item.slug)
+      : item.theme === indicator.theme && item.role === 'primary'),
+);
+const changes = selections.filter(
+  ({ latest }) =>
+    latest.status === 'observed' &&
+    latest.node?.observation.value != null &&
+    ['relative-change', 'difference', 'compound-change'].includes(
+      latest.node?.evaluation?.request.calculation ?? '',
+    ),
+);
 ---
 <PlatformLayout title={indicator.name} description={indicator.question}>
   <p><a href={`/tema/${theme.slug}`}>{theme.name}</a> / {indicator.role === 'primary' ? 'Indicador principal' : 'Medida auxiliar'}</p>
-  <section><h2>O que este indicador mede</h2><p>{indicator.definition}</p></section>
-  <section><h2>Dados por recorte</h2>
+  <nav class="indicator-nav" aria-label="Nesta página"><a href="#aconteceu">O que aconteceu</a><a href="#significa">O que significa</a><a href="#dados">Dados e metodologia</a><a href="#relacionados">Indicadores relacionados</a></nav>
+  <section id="aconteceu"><h2>O que aconteceu?</h2>
+    <p>Os valores abaixo mostram o último período de cada recorte desta edição, inclusive quando indisponível. As datas de referência podem diferir entre séries.</p>
+    {selections.length === 0 && <p>Sem dados publicados para este indicador nesta edição.</p>}
+    {changes.length === 0 && <p>Variação indisponível: não há comparação temporal publicada nesta edição. Isso não significa estabilidade.</p>}
+    {changes.length > 0 && <p>As comparações publicadas aparecem junto aos respectivos recortes, com unidade e período de referência. Alta e queda descrevem a direção matemática; seu significado depende do indicador.</p>}
+    <div class="platform-grid">{selections.map(({ series, latest }, index) => <article class="platform-card">
+      <h3><a href={`#recorte-${index}`}>{series.geography === 'BR' ? 'Brasil' : series.geography} · {series.series}</a></h3>
+      <p><time datetime={latest.start}>{latest.start}</time> a <time datetime={latest.end}>{latest.end}</time></p>
+      {latest.status === 'observed' && latest.node?.observation.value != null
+        ? <p class="indicator-current"><strong>{latest.node.observation.value.replace('.', ',')} {series.unit}</strong></p>
+        : <p><strong>Dados indisponíveis</strong> · {latest.reason || latest.status}</p>}
+      {latest.node && <CalculationContext node={latest.node} />}
+    </article>)}</div>
+  </section>
+  <section id="significa"><h2>O que isso significa?</h2><p>{guide?.meaning ?? indicator.definition}</p><p>{guide?.caution ?? indicator.limitations}</p><p><a href="/entenda/como-ler-os-dados">Entenda este indicador: como ler os dados e suas limitações</a></p></section>
+  <section id="dados"><h2>Como sabemos disso?</h2><p>{indicator.definition}</p><p>Valor, série histórica, fonte e metodologia por recorte. A atualização de coleta consta nas origens e no corte da edição ao final da página; ela não é o período de referência nem a data de divulgação pela fonte.</p>
     {selections.length === 0 && <p>Sem cobertura nesta edição. Nenhum valor foi substituído por zero.</p>}
-    <div class="platform-grid">{selections.map(({ series, latest, inputs = [] }) => {
-      const source = platform.sources.find((item) => item.id === series.source);
-      const value = latest.node?.observation.value;
-      return <article class="platform-card">
-        <h3>{series.geography === 'BR' ? 'Brasil' : series.geography} · {series.series}</h3>
-        <p>Período: <time datetime={latest.start}>{latest.start}</time> a <time datetime={latest.end}>{latest.end}</time></p>
-        {latest.node && <CalculationContext node={latest.node} />}
-        {latest.status === 'observed' && value != null ? <p class="platform-value">{value.replace('.', ',')} <span>{series.unit}</span></p> : <p><strong>Dados indisponíveis</strong> · {latest.reason || latest.status}</p>}
-        <dl><dt>Unidade</dt><dd>{series.unit}</dd><dt>Dataset</dt><dd>{series.dataset}</dd><dt>Método</dt><dd>{series.method}</dd></dl>
-        {source && <p>Fonte: <a href={source.url}>{source.name}</a></p>}
-        {latest.node?.origins.map((origin) => <p><a href={origin.url}>Consulta de origem</a> · Coleta: <time datetime={origin.retrieved_at}>{origin.retrieved_at}</time></p>)}
-        {inputs.length > 0 && <details class="platform-inputs"><summary>Fontes e observações usadas no cálculo</summary><ul>{inputs.map((input) => {
-          const observation = input.observation;
-          const inputSource = platform.sources.find((item) => item.id === observation.context?.source);
-          return <li>
-            <p><a href={apiLink(`observations/${observation.id}`)}>Observação de entrada: {observation.series}</a></p>
-            <p>Período: <time datetime={observation.start}>{observation.start}</time> a <time datetime={observation.end}>{observation.end}</time></p>
-            <CalculationContext node={input} />
-            {inputSource && <p>Fonte: <a href={inputSource.url}>{inputSource.name}</a></p>}
-            {observation.context?.dataset && <p>Dataset: {observation.context.dataset}</p>}
-            {input.origins.map((origin) => <p><a href={origin.url}>Consulta de origem</a> · Coleta: <time datetime={origin.retrieved_at}>{origin.retrieved_at}</time></p>)}
-          </li>;
-        })}</ul></details>}
-        <a href={apiLink(`series/${encodeURIComponent(series.series)}`, { geography: series.geography })}>Consultar série desta publicação (JSON)</a>
-      </article>;
-    })}</div>
+    <div class="indicator-series">{selections.map((selection, index) => <IndicatorDetail selection={selection} index={index} />)}</div>
   </section>
   <section><h2>Limites de interpretação</h2><p>{indicator.limitations}</p><p>Uma mudança no indicador, por si só, não identifica sua causa.</p></section>
+  <section id="relacionados"><h2>Indicadores relacionados</h2><p>Leia outras medidas em conjunto para ampliar o contexto. Uma relação entre medidas não demonstra causalidade.</p><ul>{related.map((item) => <li><a href={`/indicador/${item.slug}`}>{item.name}</a> · {item.question}</li>)}</ul></section>
   <p><a href="/comparar">Sobre a comparação de períodos</a></p>
 </PlatformLayout>
