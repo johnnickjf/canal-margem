@@ -56,5 +56,5 @@ const changes = selections.filter(
   </section>
   <section><h2>Limites de interpretação</h2><p>{indicator.limitations}</p><p>Uma mudança no indicador, por si só, não identifica sua causa.</p></section>
   <section id="relacionados"><h2>Indicadores relacionados</h2><p>Leia outras medidas em conjunto para ampliar o contexto. Uma relação entre medidas não demonstra causalidade.</p><ul>{related.map((item) => <li><a href={`/indicador/${item.slug}`}>{item.name}</a> · {item.question}</li>)}</ul></section>
-  <p><a href="/comparar">Sobre a comparação de períodos</a></p>
+  <p><a href="/comparar">Comparar períodos e indicadores</a></p>
 </PlatformLayout>

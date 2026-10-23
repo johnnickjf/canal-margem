@@ -882,6 +882,18 @@ O usuário não precisa conhecer o nome oficial de uma série.
 
 ## Fase 16 — Comparador
 
+### Estado
+
+Implementada no [comparador](systems/comparator.md): seleção de temas, vários indicadores,
+recortes e extremos temporais, com diferença absoluta ou variação percentual calculada
+pela API na publicação do build. Regras versionadas explicitam melhora, piora e igualdade
+por medida; preços nominais, inflação e outras séries sem direção favorável inequívoca
+exigem contexto. Ausência, incompatibilidade e falha de consulta são distintas de estabilidade.
+Cada resultado expande períodos, valores, fórmula, regra, fontes e observações usadas.
+Verificação local cobre backend, integração, build e navegador em desktop/celular, com
+SEO, axe e catálogo sem JavaScript. Governos dependem da fase 18; não há score agregado
+nem atribuição de causalidade. A próxima etapa é tempo de trabalho, na fase 17.
+
 ### Objetivo
 
 Permitir análise histórica sem produzir um score político opaco.

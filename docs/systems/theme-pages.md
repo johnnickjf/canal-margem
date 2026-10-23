@@ -34,8 +34,8 @@ linhagem dos inputs já implementada no shell. Todos os links JSON mantêm a pub
 e a nota da edição informa o corte de coleta. Nenhuma consulta é disparada pelo navegador.
 
 As explicações incluem limites específicos, como inflação menor não equivaler a preços
-menores e PIB por pessoa não equivaler à renda individual. O acesso ao comparador leva ao
-guia existente, com indicação explícita de que a seleção interativa pertence à fase 16.
+menores e PIB por pessoa não equivaler à renda individual. O acesso ao [comparador da fase 16](comparator.md) leva à seleção de períodos, temas,
+indicadores e recortes com regras explícitas e auditoria.
 Sem API configurada, as páginas mantêm os textos e definições e informam a falta de cobertura.
 Uma API configurada com falha continua interrompendo o build.
 
@@ -56,5 +56,4 @@ As páginas mantêm `PlatformLayout`, `BaseLayout` e `Seo`, conforme a
 
 Essas verificações são locais. Não comprovam indexação externa, implantação remota ou
 compreensão por usuários reais. As [páginas de indicador da fase 13](indicator-pages.md)
-acrescentam gráficos, tabelas históricas e interpretação por medida. O comparador interativo
-continua na fase 16.
+acrescentam gráficos, tabelas históricas e interpretação por medida. O [comparador interativo](comparator.md) está implementado na fase 16.

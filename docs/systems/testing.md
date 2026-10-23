@@ -125,3 +125,14 @@ As suítes usam PostgreSQL/LocalStack em recursos temporários; não dependem de
 externas na CI. A coleta oficial observada e a retirada da PoC estão na
 [evidência da fase 9](evidence/api/verification.json). A cobertura V8 deixou de incluir
 a implementação TypeScript da PoC removida; os testes Go dos adaptadores permanecem.
+
+
+## Comparador
+
+A [fase 16](comparator.md) acrescenta testes de contrato do cliente, interpretação exata
+no handler Go e leitura sobre publicação persistida em PostgreSQL/S3 locais. O build
+isolado também executa seleção múltipla, filtros, geografia, auditoria, compartilhamento
+e histórico, erro/retry, edição antiga e descarte de resposta atrasada. Os fluxos rodam
+em desktop e celular com axe, teclado, capturas, verificação de largura e catálogo sem
+JavaScript. A permissão de rede local do Chromium é concedida apenas ao contexto que
+acessa a fixture HTTP em loopback; a configuração da aplicação não muda.

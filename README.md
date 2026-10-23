@@ -81,7 +81,9 @@ gráficos e tabelas históricas, interpretação, alertas e auditoria. A fase 14
 hipotéticos e painel contextual nos indicadores, disponível também sem JavaScript.
 A fase 15 implementa a [busca por linguagem cotidiana](docs/systems/search.md), com aliases,
 filtros, indicadores, Entenda e acervo editorial no mesmo índice estático; o catálogo
-continua navegável sem JavaScript. A próxima etapa é o comparador da fase 16;
+continua navegável sem JavaScript. A fase 16 implementa o [comparador](docs/systems/comparator.md),
+com seleção de temas, indicadores, recortes e períodos, cálculos pela API e critérios de leitura
+versionados com auditoria. A próxima etapa é tempo de trabalho, na fase 17;
 implantação Railway/R2 permanece posterior.
 
 ```bash

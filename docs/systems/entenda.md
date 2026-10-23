@@ -59,4 +59,4 @@ Validação local: `pnpm test:coverage` e `pnpm test:e2e` (lint, tipos, build e 
 Capturas de conceito e painel ficam em `test-results/` para inspeção visual. Esses checks
 não comprovam compreensão por usuários reais, leitura assistiva manual, indexação externa
 ou publicação em produção. A [busca da fase 15](search.md) agora inclui os conceitos e o
-guia de leitura. A próxima etapa é o comparador da fase 16; implantação Railway/R2 continua posterior.
+guia de leitura. O [comparador da fase 16](comparator.md) já está implementado; a próxima etapa é tempo de trabalho, na fase 17; implantação Railway/R2 continua posterior.

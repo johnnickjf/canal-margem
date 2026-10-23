@@ -1,9 +1,79 @@
 ---
 import PlatformLayout from '@/layouts/PlatformLayout.astro';
+import { comparisonCatalog } from '@/lib/comparison';
 import { platform } from '@/lib/platform';
+const catalog = comparisonCatalog(platform);
 ---
-<PlatformLayout title="Comparar períodos" description="O que mudou ao longo do tempo? Comece entendendo o indicador e seus recortes.">
-  <section><h2>Comparador em preparação</h2><p>A seleção interativa de períodos será disponibilizada em uma próxima etapa. Por enquanto, consulte a definição, a cobertura e as fontes de cada indicador.</p></section>
-  <section><h2>O que torna uma comparação válida?</h2><p>Compare a mesma série, geografia, unidade e metodologia. Os dois períodos devem ter dados na mesma publicação. Ausência de dados não significa estabilidade nem valor zero.</p><p>Diferença absoluta e variação percentual respondem a perguntas distintas. Nenhuma delas demonstra causalidade.</p></section>
-  <section><h2>Escolha um indicador para conhecer</h2><ul>{platform.indicators.filter((item) => item.role === 'primary').map((indicator) => <li><a href={`/indicador/${indicator.slug}`}>{indicator.name}</a></li>)}</ul></section>
+<PlatformLayout title="Comparar períodos" description="O que mudou? Compare indicadores da vida no Brasil, com critérios explícitos, fontes e dados de cada período.">
+  <section aria-labelledby="como-comparar">
+    <h2 id="como-comparar">Escolha o que você quer entender</h2>
+    <p>Selecione um tema, os indicadores e um recorte de cada um. Informe o início do primeiro período e o fim do último: a comparação usa os valores desses dois períodos completos, sem somar ou tirar a média do intervalo.</p>
+    <p>Mensal, trimestral e anual têm calendários diferentes. Por exemplo, para comparar o primeiro trimestre de 2024 ao primeiro de 2025, use 01/01/2024 e 31/03/2025. Se o extremo não estiver publicado, o resultado será “sem dados suficientes”; não buscamos outro período.</p>
+    <p><a href="#catalogo">Consultar indicadores e cobertura</a> · <a href="#criterios">Entender os critérios de leitura</a></p>
+    {!platform.publication && <p><strong>Comparação indisponível:</strong> ainda não há publicação de dados configurada. As definições e os critérios continuam disponíveis abaixo.</p>}
+    <noscript><p>A seleção interativa precisa de JavaScript. Consulte os indicadores abaixo para ler valores, históricos, métodos e fontes em HTML.</p></noscript>
+    <p data-comparison-init>Os controles interativos precisam de JavaScript. Se não carregarem, consulte os indicadores abaixo.</p>
+    <form data-comparison-form hidden>
+      <div class="platform-grid comparison-dates">
+        <div><label for="comparison-theme">Tema</label><select id="comparison-theme" name="theme"><option value="">Todos os temas</option>{catalog.themes.map((theme) => <option value={theme.slug}>{theme.name}</option>)}</select></div>
+        <label>Início do primeiro período<input type="date" name="from" required list="comparison-starts" /></label>
+        <label>Fim do último período<input type="date" name="to" required list="comparison-ends" /></label>
+        <div><label for="comparison-calculation">Medida da mudança</label><select id="comparison-calculation" name="calculation"><option value="difference">Diferença absoluta</option><option value="relative-change">Variação percentual</option></select></div>
+      </div>
+      <datalist id="comparison-starts">{catalog.starts.map((date) => <option value={date} />)}</datalist>
+      <datalist id="comparison-ends">{catalog.ends.map((date) => <option value={date} />)}</datalist>
+      <p>Compare um ou vários indicadores. Cada resultado tem sua própria unidade e critério; não há nota geral de tema ou governo.</p>
+      <div class="platform-grid">
+        {catalog.themes.map((theme) => <fieldset data-comparison-theme={theme.slug}>
+          <legend>{theme.name}</legend>
+          {catalog.indicators.filter((indicator) => indicator.theme === theme.slug).map((indicator) => <div class="comparison-choice" data-comparison-choice={indicator.slug}>
+            <label><input type="checkbox" name="indicator" value={indicator.slug} /> {indicator.name}</label>
+            <div><label for={`selection-${indicator.slug}`}>Recorte de {indicator.name}</label><select id={`selection-${indicator.slug}`} name={`selection-${indicator.slug}`}>
+              {indicator.selections.length === 0 && <option value="">Sem cobertura nesta publicação</option>}
+              {indicator.selections.map((selection, index) => <option value={index}>{selection.geography === 'BR' ? 'Brasil' : selection.geography} · {selection.unit} · {selection.frequency} · {selection.series}</option>)}
+            </select></div>
+          </div>)}
+        </fieldset>)}
+      </div>
+      <button type="submit" class="comparison-submit">Comparar períodos selecionados</button>
+    </form>
+    <p data-comparison-status role="status" aria-live="polite" tabindex="-1"></p>
+    <div data-comparison-results class="comparison-results" aria-busy="false"></div>
+  </section>
+  <section id="criterios" aria-labelledby="criterios-title">
+    <h2 id="criterios-title">Como ler as conclusões</h2>
+    <p>“Melhorou” e “piorou” seguem critérios explícitos por medida: maior renda real; menor desemprego, informalidade, pobreza, desigualdade, insegurança alimentar, comprometimento da renda ou tempo equivalente para comprar a cesta. A regra aplicada acompanha cada resultado.</p>
+    <p>“Estável” significa igualdade exata dos dois valores publicados. Não usamos margem de tolerância nem teste de significância estatística. Pequenas diferenças podem aparecer arredondadas a zero no cálculo; a direção considera os valores originais.</p>
+    <p>Preços nominais, inflação, crescimento do PIB e séries transformadas exigem contexto: a direção matemática, sozinha, não define melhora. Inflação menor não significa preços menores. “Sem dados suficientes” inclui ausência, incompatibilidade ou cálculo inviável; falhas de rede são informadas separadamente.</p>
+    <p>Uma comparação válida mantém série, geografia, unidade e método. Frequências e bases monetárias incompatíveis impedem o cálculo. Os extremos não descrevem tudo o que aconteceu entre eles. Nenhum resultado atribui causalidade a governo ou política pública.</p>
+    <p><a href="/entenda/renda-real">Renda real</a> · <a href="/entenda/inflacao">Inflação</a> · <a href="/entenda/como-ler-os-dados">Fontes e limitações</a></p>
+  </section>
+  <section id="catalogo" aria-labelledby="catalogo-title">
+    <h2 id="catalogo-title">Indicadores e cobertura desta edição</h2>
+    <div class="platform-grid">{catalog.indicators.map((indicator) => <article class="platform-card">
+      <h3><a href={`/indicador/${indicator.slug}`}>{indicator.name}</a></h3>
+      <p>{indicator.definition}</p>
+      <p>{indicator.selections.length ? `${indicator.selections.length} recorte(s) publicado(s). Consulte períodos, valores, fontes e método na página do indicador.` : 'Sem cobertura nesta edição. Isso não significa valor zero ou estabilidade.'}</p>
+    </article>)}</div>
+  </section>
+  <script id="comparison-catalog" type="application/json" set:html={JSON.stringify(catalog).replace(/</g, '\\u003c')} />
 </PlatformLayout>
+<script>
+  import { mountComparison } from '@/scripts/comparison-page';
+  mountComparison();
+</script>
+<style>
+  form[data-comparison-form] { display: grid; gap: var(--space-md); min-width: 0; }
+  form[data-comparison-form][hidden], fieldset[hidden] { display: none; }
+  .comparison-dates > div, .comparison-dates > label, .comparison-choice { display: grid; gap: var(--space-xs); min-width: 0; }
+  fieldset { min-width: 0; border: var(--rule); padding: var(--space-md); }
+  legend { font-weight: 700; padding-inline: var(--space-xs); }
+  .comparison-choice { margin-bottom: var(--space-md); }
+  select, input[type='date'] { display: block; width: 100%; min-width: 0; padding: var(--space-sm); border: var(--rule); background: var(--surface); color: var(--fg); font: inherit; }
+  input[type='checkbox'] { width: 1.2em; height: 1.2em; vertical-align: middle; accent-color: var(--red); }
+  .comparison-choice label { overflow-wrap: anywhere; }
+  .comparison-choice div > label { font-size: var(--text-sm); }
+  .comparison-submit { justify-self: start; border: var(--rule); padding: var(--space-sm) var(--space-md); background: var(--fg); color: var(--bg); font: inherit; cursor: pointer; }
+  .comparison-results { display: grid; gap: var(--space-md); min-width: 0; }
+  [data-comparison-status]:empty { display: none; }
+</style>

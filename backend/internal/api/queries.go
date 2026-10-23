@@ -197,7 +197,7 @@ func (a *API) read(w http.ResponseWriter, r *http.Request) {
 	case "/api/v1/series/{series}":
 		allowed = append(allowed, "geography", "from", "to", "limit", "cursor")
 	case "/api/v1/comparisons":
-		allowed = append(allowed, "series", "geography", "from", "to", "calculation", "version")
+		allowed = append(allowed, "series", "geography", "from", "to", "calculation", "version", "assessment")
 	case "/api/v1/publications/{publication}":
 		allowed = nil
 	}
@@ -384,23 +384,36 @@ func compare(r *http.Request, s publications.Snapshot) (any, error) {
 		return nil, e
 	}
 	v := r.URL.Query()
+	if v.Get("assessment") != "" && v.Get("assessment") != "material-v1" {
+		return nil, publications.Fail("invalid_request", "assessment aceita somente material-v1")
+	}
 	calculation, version := v.Get("calculation"), v.Get("version")
 	if (calculation != "difference" && calculation != "relative-change") || version != "2" || v.Get("series") == "" || v.Get("geography") == "" {
 		return nil, publications.Fail("invalid_request", "informe série, geografia, calculation=difference|relative-change e version=2")
 	}
 	rows := points(s, v.Get("series"), v.Get("geography"))
 	var previous, current *point
+	previousCount, currentCount := 0, 0
 	for _, row := range rows {
 		if row.Start == from {
+			previousCount++
 			copy := row
 			previous = &copy
 		}
 		if row.End == to {
+			currentCount++
 			copy := row
 			current = &copy
 		}
 	}
 	result := map[string]any{"from": from, "to": to, "calculation": calculation, "version": version, "status": "not_comparable", "value": nil, "reason": "endpoint_not_covered"}
+	if v.Get("assessment") != "" {
+		result["assessment"] = materialAssessment(v.Get("series"), nil, nil)
+	}
+	if previousCount > 1 || currentCount > 1 {
+		result["reason"] = "ambiguous_endpoints"
+		return result, nil
+	}
 	if previous == nil || current == nil {
 		return result, nil
 	}
@@ -421,6 +434,9 @@ func compare(r *http.Request, s publications.Snapshot) (any, error) {
 	if ev.Output.Value != nil {
 		result["status"] = "computed"
 		result["interpretation"] = "Variação matemática; não classifica bem-estar ou causalidade."
+		if v.Get("assessment") != "" {
+			result["assessment"] = materialAssessment(v.Get("series"), previous.Node.Input.Value, current.Node.Input.Value)
+		}
 	}
 	return result, nil
 }

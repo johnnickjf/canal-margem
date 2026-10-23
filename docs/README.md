@@ -30,6 +30,7 @@ O Canal Margem está preparando a evolução do site editorial para uma platafor
 22. [Páginas de indicador](systems/indicator-pages.md): valores, tendências publicadas, gráficos, tabelas históricas, interpretação e auditoria da fase 13.
 23. [Camada Entenda](systems/entenda.md): 11 conceitos econômicos, referências, exemplos hipotéticos, relações e painel contextual da fase 14.
 24. [Busca por linguagem cotidiana](systems/search.md): aliases, filtros, índice estático integrado, recuperação de erros e catálogo em HTML da fase 15.
+25. [Comparador](systems/comparator.md): períodos, temas, indicadores e recortes, cálculos pela API, critérios versionados e auditoria da fase 16.
 
 Os quatro documentos numerados partem dos textos fornecidos pelo responsável pelo projeto e receberam ajustes de clareza e precisão. Definem o produto planejado; a auditoria do frontend registra a fase 0, e os documentos de sistemas registram as entregas posteriores. Exemplos do modelo e do design system são ilustrativos. As amostras em `data-sources/evidence/` são dados oficiais consultados na fase 4, com proveniência, sem integração ao site.
 
@@ -51,7 +52,7 @@ Os quatro documentos numerados partem dos textos fornecidos pelo responsável pe
 | Páginas de indicador | Fase 13 implementada: valores por recorte, tendências, histórico paginado, gráfico SVG, tabela, interpretação e auditoria |
 | Camada Entenda | Fase 14 implementada: índice, 11 conceitos, referências e painel contextual com navegação sem JavaScript |
 | Busca por linguagem cotidiana | Fase 15 implementada: aliases, filtros, indicadores, Entenda e acervo; catálogo navegável sem JavaScript |
-| Comparador interativo | Próxima etapa, fase 16 |
+| Comparador interativo | Fase 16 implementada: seleção múltipla, cálculos e critérios versionados no backend, resultados expansíveis, publicação fixada e recuperação de erros |
 | Ingestão e persistência local | PoC da fase 5 retirada após substituição verificada na fase 9; 21 arquivos e 587 observações preservados |
 | Arquitetura de armazenamento | Fase 6 definida em cinco ADRs: PostgreSQL/Railway, R2, histórico/cache, backup nativo/reconstrução e portabilidade/custos; serviços ainda não implantados |
 | Pipeline do MVP | Fase 7 implementada e verificada localmente: cinco fontes, 6.375 observações, PostgreSQL e API compatível com S3 (R2 em produção), repetição, revisões, falhas e importação da PoC |
@@ -82,7 +83,8 @@ Manter detalhes de infraestrutura fora da visão e do documento de UX. Registrar
 
 ## Próxima entrega
 
-Implementar o comparador da fase 16 sobre as páginas de indicadores e a API existentes.
+Implementar a tradução de preços em tempo de trabalho da fase 17.
+O [comparador da fase 16](systems/comparator.md) permite comparar períodos com critérios explícitos e auditoria.
 A [busca da fase 15](systems/search.md) integra indicadores, Entenda e acervo editorial.
 A fase 10 fixa a mesma publicação no HTML e nas consultas, conforme o [contrato da API](systems/api.md).
 A PoC foi retirada após preservação e substituição verificadas. Implantação Railway/R2 e backup remoto continuam sem ensaio. A

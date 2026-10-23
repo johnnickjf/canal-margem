@@ -262,8 +262,82 @@ const server = createServer((request, response) => {
         catalog_revision: revision,
         data: path.endsWith('d'.repeat(64)) ? currentInput : previousInput,
       };
+    if (path === '/api/v1/comparisons') {
+      const from = url.searchParams.get('from');
+      const to = url.searchParams.get('to');
+      const calculation = url.searchParams.get('calculation');
+      const data = {
+        from,
+        to,
+        calculation,
+        version: '2',
+        status: 'not_comparable',
+        value: null,
+        reason: 'endpoint_not_covered',
+        assessment: {
+          version: 'material-v1',
+          status: 'insufficient_data',
+          direction: 'unavailable',
+          rule: 'Sem dois períodos observados e comparáveis, não há conclusão.',
+        },
+      };
+      if (
+        url.searchParams.get('series') === 'tr4' &&
+        url.searchParams.get('geography') === 'BR' &&
+        from === '2024-01-01' &&
+        to === '2025-03-31'
+      ) {
+        const point = (node) => ({
+          series: 'tr4',
+          geography: 'BR',
+          start: node.observation.start,
+          end: node.observation.end,
+          status: 'observed',
+          node,
+        });
+        data.status = 'computed';
+        data.value = calculation === 'difference' ? '0' : '-50';
+        delete data.reason;
+        data.previous = point(previousInput);
+        data.current = point(currentInput);
+        data.assessment = {
+          version: 'material-v1',
+          status: 'improved',
+          direction: 'down',
+          rule: 'Menor taxa de desocupação é favorável nesta medida; participação e qualidade do trabalho exigem leitura conjunta. Estável significa igualdade exata dos valores publicados.',
+        };
+        data.evaluation = {
+          definition: {
+            formula:
+              calculation === 'difference'
+                ? 'current - previous'
+                : '(current / previous - 1) * 100',
+            methodology: 'Períodos completos compatíveis; sem classificação de bem-estar.',
+            precision: 12,
+            rounding: 'half_even',
+          },
+          request: {
+            calculation,
+            version: '2',
+            inputs: {
+              current: currentInput.observation.id,
+              previous: previousInput.observation.id,
+            },
+          },
+          output: {
+            value: data.value,
+            context: { unit: calculation === 'difference' ? 'percentage_points' : '%' },
+          },
+          warnings: [],
+        };
+      }
+      body = { publication, catalog_revision: revision, data };
+    }
   }
-  response.writeHead(body ? 200 : 400, { 'Content-Type': 'application/json' });
+  response.writeHead(body ? 200 : 400, {
+    'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin': '*',
+  });
   response.end(JSON.stringify(body ?? { error: { code: 'invalid_request' } }));
 });
 server.listen(0, '127.0.0.1', () => {

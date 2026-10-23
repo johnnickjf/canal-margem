@@ -79,4 +79,4 @@ A página mantém título, descrição, canonical sem parâmetros e metadados de
 pela base compartilhada. O catálogo é legível em HTML; sitemap e `robots.txt` mantêm a rota
 pública, conforme a [regra permanente de SEO e descoberta por IA](../../AGENTS.md).
 Validações locais não comprovam indexação externa, uso por pessoas reais ou produção.
-A próxima etapa é o comparador da fase 16; implantação Railway/R2 permanece posterior.
+O [comparador da fase 16](comparator.md) já está implementado; a próxima etapa é tempo de trabalho, na fase 17; implantação Railway/R2 permanece posterior.

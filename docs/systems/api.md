@@ -128,7 +128,7 @@ ativação há `not_covered`. Usar o ID retornado em **todas** as próximas cons
 | `/api/v1/series/:series` | `geography`, `from`, `to`, `limit`, `cursor` | Observações e lacunas declaradas no escopo |
 | `/api/v1/sources/:id` | — | Identidade e URL institucional |
 | `/api/v1/observations/:id` | — | Observação, método, aceitação, origens e cálculo/inputs quando derivados |
-| `/api/v1/comparisons` | `series`, `geography`, `from`, `to`, `calculation`, `version` | Comparação entre extremos explícitos da mesma publicação |
+| `/api/v1/comparisons` | `series`, `geography`, `from`, `to`, `calculation`, `version`, `assessment` | Comparação entre extremos explícitos da mesma publicação |
 | `/api/v1/publications/:id` | Nenhum, ID no caminho | Manifesto completo, catálogo e dependências da publicação ativada |
 
 Os slugs dos indicadores são fixados em
@@ -168,7 +168,10 @@ Comparação exige as seis entradas da tabela. `from` identifica o início do pe
 `difference` e `relative-change`, ambas versão `2`, calculadas pela engine sobre IDs da
 publicação, sem escrita. O resultado traz extremos, fórmula, inputs, valor ou motivo.
 Datas sem cobertura ou dados incompatíveis produzem `not_comparable`, sem número.
-Não há classificação automática de bem-estar nem causalidade.
+A opção `assessment=material-v1` acrescenta direção e leitura por medida com regra explícita,
+conforme o [comparador da fase 16](comparator.md). Versões desconhecidas são rejeitadas.
+Sem essa opção, a resposta continua matemática. Mais de um período no extremo solicitado
+produz `ambiguous_endpoints`, sem número. Não há score agregado nem atribuição de causalidade.
 
 Paginação tem padrão de 50 e máximo de 200 itens. O cursor base64 opaco fixa operação,
 publicação, filtros, limite, ordenação e posição. Não é um token de autorização.

@@ -212,6 +212,11 @@ func TestPublicationLifecycle(t *testing.T) {
 	if !strings.Contains(comparison.Body.String(), `"value":"0.2"`) {
 		t.Fatal(comparison.Body.String())
 	}
+	interpreted := get(handler, "/api/v1/comparisons?publication="+p2.Publication+"&series=vf1&geography=BR&from=2025-01-01&to=2025-02-28&calculation=difference&version=2&assessment=material-v1")
+	expectStatus(t, interpreted, 200)
+	if !strings.Contains(interpreted.Body.String(), `"status":"worsened"`) || !strings.Contains(interpreted.Body.String(), `"version":"material-v1"`) {
+		t.Fatal(interpreted.Body.String())
+	}
 	for _, path := range []string{"/api/v1/themes", "/api/v1/themes/vida-financeira", "/api/v1/indicators?role=primary", "/api/v1/indicators/comprometimento-renda", "/api/v1/indicators/comprometimento-renda/series", "/api/v1/sources/bcb", "/api/v1/observations/" + slots[0].ID} {
 		sep := "?"
 		if strings.Contains(path, "?") {

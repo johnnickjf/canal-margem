@@ -19,10 +19,9 @@ acesso aos temas, ao comparador e à explicação dos dados, inclusive sem JavaS
 dimensões do catálogo da API. Nenhuma URL editorial foi substituída. As páginas auxiliares
 do catálogo também têm definição em `/indicador/:slug`, identificadas como medidas auxiliares.
 
-O comparador interativo pertence à fase 16. A [fase 12](theme-pages.md) enriquece as páginas temáticas com resumos, mudanças e recortes.
+O [comparador interativo](comparator.md) está implementado na fase 16. A [fase 12](theme-pages.md) enriquece as páginas temáticas com resumos, mudanças e recortes.
 A [fase 13](indicator-pages.md) acrescenta gráficos, tabelas históricas e a experiência de leitura
-dos indicadores. A [busca de indicadores da fase 15](search.md) acrescenta aliases e filtros de conteúdo; a comparação interativa continua na fase 16. O shell não apresenta
-controles que simulam essas funcionalidades.
+dos indicadores. A [busca de indicadores da fase 15](search.md) acrescenta aliases e filtros de conteúdo; a [fase 16](comparator.md) acrescenta comparação interativa com cálculo pela API.
 
 ## Publicação fixada no build
 
@@ -101,4 +100,4 @@ remota, atualização automática do site, indexação externa e validação ass
 foram verificadas nesta fase. A home orientada a perguntas está implementada na [fase 11](question-home.md).
 As [páginas temáticas da fase 12](theme-pages.md) e as [páginas de indicador da fase 13](indicator-pages.md)
 também estão implementadas. A [camada Entenda da fase 14](entenda.md) acrescenta conceitos
-dedicados e painel contextual nos indicadores. A [busca da fase 15](search.md) integra indicadores, Entenda e acervo; a próxima entrega é o comparador da fase 16.
+dedicados e painel contextual nos indicadores. A [busca da fase 15](search.md) integra indicadores, Entenda e acervo; o [comparador da fase 16](comparator.md) compara períodos com critérios explícitos.

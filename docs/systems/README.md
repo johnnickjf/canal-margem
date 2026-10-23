@@ -38,7 +38,9 @@ acrescentam resumo, mudanças publicadas, dados por recorte e explicações. As
 e tabelas históricas, interpretação, alertas e auditoria. A [camada Entenda da fase 14](entenda.md)
 acrescenta 11 conceitos econômicos com fontes e exemplos, além do painel contextual nos
 indicadores. A [busca da fase 15](search.md) integra indicadores, Entenda e acervo com aliases
-e filtros, recuperação de falhas e catálogo em HTML sem JavaScript. A próxima etapa é o
-comparador da fase 16.
+e filtros, recuperação de falhas e catálogo em HTML sem JavaScript. O
+[comparador da fase 16](comparator.md) permite selecionar temas, indicadores, recortes e
+períodos, com cálculos e regras de leitura versionados no backend e resultados auditáveis.
+A próxima etapa é tempo de trabalho, na fase 17.
 
 Cada documento deve distinguir estado atual de proposta e descrever responsabilidade, entradas e saídas, dependências, fluxos, configuração, falhas, validação e operação relevantes. Requisitos gerais permanecem na [arquitetura técnica](../03-technical-architecture.md); decisões ficam em [adr](../adr/README.md).

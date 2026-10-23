@@ -7,6 +7,7 @@ import AxeBuilder from '@axe-core/playwright';
 import { expect, type Route, test } from '@playwright/test';
 import { site } from '../src/config/site';
 import type { SearchItem } from '../src/lib/search';
+import { verifyComparator } from './fixtures/verify-comparator';
 
 const run = promisify(execFile);
 // Astro's content loader uses the linked dependencies; isolate build executions.
@@ -28,7 +29,7 @@ test('build da plataforma fixa publicação no HTML, preserva decimais e explici
   page,
   browser,
 }, testInfo) => {
-  test.setTimeout(120_000);
+  test.setTimeout(180_000);
   const root = process.cwd();
   const sandbox = await mkdtemp(path.join(tmpdir(), 'canal-margem-platform-'));
   const fixture = spawn(process.execPath, ['tests/fixtures/platform-api.mjs'], {
@@ -222,13 +223,13 @@ test('build da plataforma fixa publicação no HTML, preserva decimais e explici
                 : 'text/html';
         await route.fulfill({ body: await readFile(file), contentType });
       };
-      await context.route('http://indicator.test/**', serveArtifact);
+      await context.route('http://127.0.0.1:4323/**', serveArtifact);
       const accessibleContext = await browser.newContext({ javaScriptEnabled: true, viewport });
-      await accessibleContext.route('http://indicator.test/**', serveArtifact);
+      await accessibleContext.route('http://127.0.0.1:4323/**', serveArtifact);
       const accessiblePage = await accessibleContext.newPage();
       const rendered = await context.newPage();
       for (const slug of ['desemprego', 'inflacao', 'cesta-basica', 'rendimento-real']) {
-        await rendered.goto(`http://indicator.test/indicador/${slug}/`);
+        await rendered.goto(`http://127.0.0.1:4323/indicador/${slug}/`);
         await expect(rendered.locator('h1')).toHaveCount(1);
         const navigation = rendered.getByRole('navigation', { name: 'Nesta página' });
         for (const id of ['aconteceu', 'significa', 'dados', 'relacionados']) {
@@ -325,6 +326,7 @@ test('build da plataforma fixa publicação no HTML, preserva decimais e explici
           await summary.click();
         expect((await new AxeBuilder({ page: accessiblePage }).analyze()).violations).toEqual([]);
       }
+      await verifyComparator(accessiblePage, rendered, testInfo, viewport.width);
       await accessibleContext.close();
       await context.close();
     }

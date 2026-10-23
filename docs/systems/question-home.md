@@ -49,4 +49,4 @@ A implementação permite testar a hipótese de navegação por perguntas. Ela n
 compreensão ou facilidade de uso por pessoas reais: isso exige observar usuários. Indexação
 externa e publicação remota também não foram verificadas. As [páginas temáticas da fase 12](theme-pages.md) enriquecem os destinos dessas perguntas.
 As [páginas de indicador da fase 13](indicator-pages.md) acrescentam gráficos e tabelas históricas.
-O comparador interativo continua na fase 16.
+O [comparador interativo](comparator.md) está implementado na fase 16.
