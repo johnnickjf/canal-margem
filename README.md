@@ -90,8 +90,11 @@ catálogo editorial de políticas, legislação, governos e vigências, com font
 investigáveis e faixas no mesmo eixo temporal dos indicadores. A fase 19 implementa
 [evidência e causalidade](docs/systems/evidence.md): estudos, métodos, contrafactuais,
 hipóteses e limites, associados às políticas e aos indicadores sem atribuição automática
-de efeitos. A próxima etapa é a calculadora socioeconômica, na fase 20;
-implantação Railway/R2 permanece posterior.
+de efeitos. A fase 20 implementa a [calculadora socioeconômica](docs/systems/calculator.md):
+orçamento familiar, cenário hipotético de renda, cesta por capital/mês e tempo pela renda
+individual declarada, com políticas e estudos relacionados, auditoria e perfil sem persistência.
+O catálogo atual não permite estimar efeitos individuais. A próxima etapa é escala e performance,
+na fase 21; implantação Railway/R2 permanece posterior.
 
 ```bash
 MARGEM_API_URL=http://127.0.0.1:8080 pnpm build  # API já operando, origem sem caminho

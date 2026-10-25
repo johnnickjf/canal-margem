@@ -179,16 +179,26 @@ publicação, filtros, limite, ordenação e posição. Não é um token de auto
 Mudar o contexto exige reiniciar; uma ativação não troca o conjunto paginado.
 As séries ordenam por início/fim dentro do recorte; há no máximo um ID por recorte/período.
 
+## Calculadora de perfis
+
+A fase 20 acrescenta `POST /api/v1/calculator`, com perfil e publicação no corpo JSON
+limitado a 4096 bytes. O resultado é um cenário declarado, sem persistência, ativação ou
+escrita em indicadores. Responde `no-store`, sem ETag; CORS deste recurso aceita
+POST/OPTIONS e Content-Type. O [contrato da calculadora](calculator.md) documenta campos,
+cálculos, referências e privacidade. As leituras GET existentes continuam sem corpo.
+
 ## Cache, erros e limites
 
 | Resposta | Cache-Control |
 |---|---|
 | Alias atual/histórico bem-sucedido | `public, max-age=0, s-maxage=60, must-revalidate` |
 | Leitura por publicação e projeção bem-sucedidas | `public, max-age=31536000, immutable` |
+| Calculadora de perfis, inclusive sucesso | `no-store`, sem ETag |
 | Erro, saúde ou requisição com Authorization/Cookie | `no-store` |
 
 GET e HEAD oferecem ETag de bytes canônicos e `If-None-Match`/304. CORS da API permite
-origem `*`, GET/HEAD/OPTIONS, sem credenciais. O [ADR-0003](../adr/0003-data-versioning-and-cache.md)
+origem `*`, GET/HEAD/OPTIONS nas leituras, sem credenciais. A calculadora aceita
+POST/OPTIONS com Content-Type, sem credenciais. O [ADR-0003](../adr/0003-data-versioning-and-cache.md)
 define configuração obrigatória da CDN/R2, domínio e CORS dos objetos; os headers locais
 não comprovam cache na borda. Não servir alias vencido em erro nem armazenar 4xx/5xx.
 
@@ -200,6 +210,7 @@ Erros usam `{"error":{"code":"...","message":"..."}}` e `no-store`:
 | 404 | `not_found`, `not_covered` |
 | 409 | `ambiguous_selection` |
 | 405 | `method_not_allowed` |
+| 415 | `invalid_request`, tipo de mídia incorreto na calculadora |
 | 429 | `rate_limited`, com Retry-After |
 | 503 | `temporarily_unavailable`, inclusive objeto retido ausente/corrompido |
 

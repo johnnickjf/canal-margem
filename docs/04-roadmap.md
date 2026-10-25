@@ -1060,6 +1060,18 @@ A plataforma não usa simples correlação temporal como argumento causal.
 
 ## Fase 20 — Calculadora socioeconômica
 
+### Estado
+
+Implementada na [calculadora socioeconômica](systems/calculator.md): perfil de renda,
+composição familiar, despesas, capital/mês, vínculo e prioridades; orçamento e cenário
+hipotético calculados no backend, referência publicada de cesta e tempo pela renda individual.
+Políticas e estudos relacionados exibem motivos, resultados históricos, métodos e limites.
+O catálogo atual não sustenta efeito individual ou elegibilidade; o cenário não é um efeito
+atribuído a políticas. O perfil não é persistido, incluído na URL ou cacheado. A página
+preserva métodos e fontes sem JavaScript; a simulação depende da API Margem. Verificação
+local cobre contrato, precisão, falhas, build com API controlada, desktop/celular, SEO e axe.
+Operação remota, indexação externa e compreensão por usuários permanecem não verificadas.
+
 ### Objetivo
 
 Somente depois que dados, comparação, UX e metodologia estiverem maduros, desenvolver a ferramenta originalmente imaginada.

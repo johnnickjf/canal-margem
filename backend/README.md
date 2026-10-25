@@ -2,7 +2,8 @@
 
 Monólito modular em Go. A fase 7 implementa os pipelines privados; a fase 8 acrescenta a
 [engine de indicadores](../docs/systems/indicator-engine.md). A fase 9 implementa
-[publicações e API](../docs/systems/api.md). Contratos e evidências estão no
+[publicações e API](../docs/systems/api.md). A fase 20 acrescenta a
+[calculadora socioeconômica](../docs/systems/calculator.md), com POST sem cache ou persistência do perfil. Contratos e evidências estão no
 [manual de operação](../docs/systems/pipelines.md) e no
 [ADR-0007](../docs/adr/0007-go-modular-backend.md).
 
@@ -14,6 +15,7 @@ internal/app/                composição de dependências e tradução de coman
 internal/catalog/            recortes, unidades, métodos e versão do catálogo
 internal/ingestion/          adaptadores de fontes, HTTP, jobs e saúde operacional
 internal/indicators/         fórmulas versionadas, avaliações imutáveis e linhagem
+internal/calculator/         cenários declarados e orçamento familiar, sem persistência
 internal/observations/       regras, identidades, aceitação de lotes e integridade
 internal/publications/       preparação, projeções imutáveis, ativação e histórico
 internal/api/                HTTP v1, cache, filtros, paginação e limites

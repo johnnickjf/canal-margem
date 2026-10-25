@@ -35,6 +35,8 @@ O Canal Margem está preparando a evolução do site editorial para uma platafor
 27. [Políticas públicas e linha histórica](systems/policy-history.md): catálogo de políticas, legislação, governos e vigências; contexto no eixo dos indicadores, fontes e limites da fase 18.
 28. [Evidência e causalidade](systems/evidence.md): estudos associados às políticas e aos indicadores, classificação da inferência, contrafactuais, hipóteses, aplicabilidade e limites da fase 19.
 
+29. [Calculadora socioeconômica](systems/calculator.md): orçamento declarado, cenários, referência de cesta, políticas e evidências relacionadas, privacidade e contrato da fase 20.
+
 Os quatro documentos numerados partem dos textos fornecidos pelo responsável pelo projeto e receberam ajustes de clareza e precisão. Definem o produto planejado; a auditoria do frontend registra a fase 0, e os documentos de sistemas registram as entregas posteriores. Exemplos do modelo e do design system são ilustrativos. As amostras em `data-sources/evidence/` são dados oficiais consultados na fase 4, com proveniência, sem integração ao site.
 
 ## Estado e limites
@@ -59,6 +61,7 @@ Os quatro documentos numerados partem dos textos fornecidos pelo responsável pe
 | Comparador interativo | Fase 16 implementada: seleção múltipla, cálculos e critérios versionados no backend, resultados expansíveis, publicação fixada e recuperação de erros |
 | Políticas públicas e linha histórica | Fase 18 implementada: quatro políticas federais, legislação, governos e vigências; faixas no eixo dos indicadores, relações investigáveis e fontes; sem causalidade atribuída |
 | Evidência e causalidade | Fase 19 implementada: três referências iniciais, classificação editorial da inferência, contrafactual/hipóteses para estimativas causais, vínculos históricos explícitos, fichas, JSON e busca; sem transporte automático de efeitos |
+| Calculadora socioeconômica | Fase 20 implementada: orçamento familiar, cenário hipotético, referência de cesta por capital/mês e tempo individual, políticas e estudos relacionados; perfil sem persistência e sem efeito individual presumido |
 | Ingestão e persistência local | PoC da fase 5 retirada após substituição verificada na fase 9; 21 arquivos e 587 observações preservados |
 | Arquitetura de armazenamento | Fase 6 definida em cinco ADRs: PostgreSQL/Railway, R2, histórico/cache, backup nativo/reconstrução e portabilidade/custos; serviços ainda não implantados |
 | Pipeline do MVP | Fase 7 implementada e verificada localmente: cinco fontes, 6.375 observações, PostgreSQL e API compatível com S3 (R2 em produção), repetição, revisões, falhas e importação da PoC |
@@ -89,7 +92,9 @@ Manter detalhes de infraestrutura fora da visão e do documento de UX. Registrar
 
 ## Próxima entrega
 
-Implementar a calculadora socioeconômica da fase 20, sobre os dados, comparações e métodos existentes.
+A próxima etapa é escala e performance (fase 21), conforme evidências de uso. A
+[calculadora da fase 20](systems/calculator.md) usa orçamento declarado, cenário hipotético,
+cesta publicada e políticas/estudos relacionados, com métodos explícitos e perfil sem persistência.
 A [fase 19](systems/evidence.md) associa estudos e avaliações, distinguindo análise contábil,
 estimativa causal condicionada e referência metodológica, com aplicabilidade e limites explícitos.
 A [fase 18](systems/policy-history.md) apresenta políticas, legislação, governos e vigências junto aos indicadores, sem atribuição automática de causalidade.

@@ -73,6 +73,7 @@ func (a *API) Handler() http.Handler {
 	r.Get("/api/v1/sources/{source}", a.read)
 	r.Get("/api/v1/comparisons", a.read)
 	r.Get("/api/v1/work-time", a.read)
+	r.Post("/api/v1/calculator", a.calculate)
 	r.Get("/api/v1/observations/{id}", a.read)
 	r.Get("/api/v1/publications/{publication}", a.read)
 	r.NotFound(func(w http.ResponseWriter, r *http.Request) {
@@ -80,6 +81,9 @@ func (a *API) Handler() http.Handler {
 	})
 	r.MethodNotAllowed(func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Allow", "GET, HEAD, OPTIONS")
+		if r.URL.Path == "/api/v1/calculator" {
+			w.Header().Set("Allow", "POST, OPTIONS")
+		}
 		a.failStatus(w, 405, "method_not_allowed", "método não permitido")
 	})
 	return r
@@ -99,7 +103,8 @@ func (a *API) guard(next http.Handler) http.Handler {
 				a.failStatus(w, 500, "internal_error", "falha interna")
 			}
 		}()
-		if len(r.RequestURI) > 4096 || r.ContentLength > 0 || r.ContentLength < 0 {
+		calculatorPost := r.Method == http.MethodPost && r.URL.Path == "/api/v1/calculator"
+		if len(r.RequestURI) > 4096 || (!calculatorPost && (r.ContentLength > 0 || r.ContentLength < 0)) || (calculatorPost && r.ContentLength > 4096) {
 			a.failStatus(w, 400, "invalid_request", "requisição excede limites ou contém corpo")
 			return
 		}
@@ -111,6 +116,10 @@ func (a *API) guard(next http.Handler) http.Handler {
 		if r.Method == http.MethodOptions {
 			w.Header().Set("Access-Control-Allow-Methods", "GET, HEAD, OPTIONS")
 			w.Header().Set("Access-Control-Allow-Headers", "If-None-Match")
+			if r.URL.Path == "/api/v1/calculator" {
+				w.Header().Set("Access-Control-Allow-Methods", "POST, OPTIONS")
+				w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
+			}
 			w.WriteHeader(204)
 			return
 		}

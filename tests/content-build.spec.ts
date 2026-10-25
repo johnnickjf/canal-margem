@@ -7,6 +7,7 @@ import AxeBuilder from '@axe-core/playwright';
 import { expect, type Route, test } from '@playwright/test';
 import { site } from '../src/config/site';
 import type { SearchItem } from '../src/lib/search';
+import { verifyCalculator } from './fixtures/verify-calculator';
 import { verifyComparator } from './fixtures/verify-comparator';
 
 const run = promisify(execFile);
@@ -86,6 +87,7 @@ test('build da plataforma fixa publicação no HTML, preserva decimais e explici
       'indicador/cesta-basica',
       'indicador/tempo-por-cesta',
       'comparar',
+      'calculadora',
       'politicas',
       'politicas/bolsa-familia-2023',
       'evidencias',
@@ -434,6 +436,7 @@ test('build da plataforma fixa publicação no HTML, preserva decimais e explici
         await summary.click();
       expect((await new AxeBuilder({ page: accessiblePage }).analyze()).violations).toEqual([]);
       await verifyComparator(accessiblePage, rendered, testInfo, viewport.width);
+      await verifyCalculator(accessiblePage, rendered, testInfo, viewport.width);
       await accessibleContext.close();
       await context.close();
     }

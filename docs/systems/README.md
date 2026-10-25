@@ -47,7 +47,9 @@ A [fase 18](policy-history.md) acrescenta políticas, legislação, governos e v
 com fontes e contexto no mesmo eixo temporal dos indicadores, sem atribuição causal.
 A [fase 19](evidence.md) associa estudos e referências metodológicas às políticas e aos
 indicadores, com classificação editorial da inferência, contrafactuais, hipóteses,
-aplicabilidade histórica e limites explícitos. A próxima etapa é a calculadora
-socioeconômica da fase 20.
+aplicabilidade histórica e limites explícitos. A [calculadora socioeconômica da fase 20](calculator.md)
+acrescenta orçamento familiar, cenário hipotético, cesta por capital/mês, tempo pela renda
+individual e políticas/estudos relacionados, com perfil sem persistência e sem inferir efeito
+individual. A próxima etapa é escala e performance (fase 21), conforme evidências de uso.
 
 Cada documento deve distinguir estado atual de proposta e descrever responsabilidade, entradas e saídas, dependências, fluxos, configuração, falhas, validação e operação relevantes. Requisitos gerais permanecem na [arquitetura técnica](../03-technical-architecture.md); decisões ficam em [adr](../adr/README.md).

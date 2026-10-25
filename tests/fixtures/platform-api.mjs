@@ -64,7 +64,7 @@ const workEvaluation = (calculation, formula, value) => ({
   },
   output: { value },
 });
-const server = createServer((request, response) => {
+const server = createServer(async (request, response) => {
   const url = new URL(request.url, 'http://127.0.0.1');
   const path = url.pathname;
   let body;
@@ -453,9 +453,73 @@ const server = createServer((request, response) => {
       body = { publication, catalog_revision: revision, data };
     }
   }
-  response.writeHead(body ? 200 : 400, {
+  if (path === '/api/v1/calculator' && request.method === 'POST') {
+    let raw = '';
+    for await (const chunk of request) raw += chunk;
+    const input = JSON.parse(raw);
+    if (input.publication === publication && input.version === 'profile-v1') {
+      body = {
+        publication,
+        catalog_revision: revision,
+        data: {
+          version: 'profile-v1',
+          precision: 12,
+          rounding: 'half_even',
+          geography: input.geography,
+          month: input.month,
+          baseline: {
+            income: '3000',
+            per_person: '1000',
+            expenses: '2000',
+            remaining: '1000',
+            expense_share: '66.666666666667',
+          },
+          scenario: {
+            income: '3500',
+            per_person: '1166.666666666667',
+            expenses: '2000',
+            remaining: '1500',
+            expense_share: '57.142857142857',
+          },
+          basket_share:
+            input.geography === 'São Paulo' && input.month === '2025-12' ? '26.670781892967' : null,
+          basket_hours: null,
+          reference_status:
+            input.geography === 'São Paulo' && input.month === '2025-12'
+              ? 'observed'
+              : 'not_computed',
+          reference_reason: 'endpoint_not_covered',
+          ...(input.geography === 'São Paulo' && input.month === '2025-12'
+            ? {
+                price: {
+                  series: 'cv4',
+                  geography: 'São Paulo',
+                  start: '2025-12-01',
+                  end: '2025-12-31',
+                  status: 'observed',
+                  node: basketInput,
+                },
+              }
+            : {}),
+          formulas: {
+            per_person: 'income / members',
+            expenses: 'housing + transport + other',
+            remaining: 'income - expenses',
+            expense_share: 'expenses / income * 100',
+            scenario_income: 'income + income_change',
+            basket_share: 'basket / income * 100',
+            basket_hours: 'basket * monthly_hours / labor_income',
+          },
+        },
+      };
+    }
+  }
+  response.writeHead(request.method === 'OPTIONS' ? 204 : body ? 200 : 400, {
     'Content-Type': 'application/json',
     'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type',
+    'Cache-Control': 'no-store',
   });
   response.end(JSON.stringify(body ?? { error: { code: 'invalid_request' } }));
 });

@@ -4,6 +4,7 @@ const path = Astro.url.pathname.replace(/\/$/, '');
 const links = [
   ...platform.themes.map((theme) => ({ href: `/tema/${theme.slug}`, name: theme.name })),
   { href: '/comparar', name: 'Comparar' },
+  { href: '/calculadora', name: 'Calculadora' },
   { href: '/politicas', name: 'Políticas e história' },
   { href: '/evidencias', name: 'Estudos e evidências' },
   { href: '/entenda', name: 'Entenda os dados' },

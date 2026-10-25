@@ -1,0 +1,80 @@
+---
+import PlatformLayout from '@/layouts/PlatformLayout.astro';
+import { platform } from '@/lib/platform';
+import { calculatorCatalog, employmentLabels, priorityIndicators } from '@/lib/calculator';
+import { policyCatalog } from '@/data/policies';
+import { evidenceCatalog } from '@/data/evidence';
+const catalog = calculatorCatalog(platform);
+---
+<PlatformLayout title="Calculadora socioeconômica" description="Explore seu orçamento familiar, compare um cenário de renda e conheça políticas e evidências relacionadas às suas prioridades.">
+  <section aria-labelledby="como-funciona"><h2 id="como-funciona">Como a renda encontra a vida cotidiana</h2>
+    <p>Informe valores mensais em reais do mês escolhido. A calculadora mostra renda por pessoa, despesas declaradas e saldo. Uma mudança de renda cria um cenário hipotético com as mesmas despesas.</p>
+    <p>A cesta básica é uma referência de alimentos para um adulto na capital selecionada, não o custo completo de vida da família. Não multiplicamos seu preço pelo número de moradores. Capitais não representam automaticamente o interior ou o estado inteiro.</p>
+    <p>Políticas e estudos são apresentados pelas prioridades e pelo vínculo declarados, com fontes, resultados históricos e limites. Não há previsão de benefício, elegibilidade, efeito individual ou recomendação de voto.</p>
+  </section>
+  <section aria-labelledby="seu-perfil"><h2 id="seu-perfil">Seu perfil e cenário</h2>
+    <p>Seus valores são enviados à API Margem somente ao calcular. A aplicação não os grava, não cria links com o perfil e não usa armazenamento do navegador. Use valores aproximados se preferir. Infraestrutura de rede pode registrar metadados da conexão.</p>
+    <noscript><p>A simulação precisa de JavaScript e da API Margem. Os métodos, indicadores, políticas e estudos abaixo continuam disponíveis.</p></noscript>
+    {catalog.api && catalog.publication ? <>
+      <p data-calculator-start>Aguarde a preparação do formulário. Se ele não aparecer, consulte os métodos e referências abaixo.</p>
+      <form data-calculator-form hidden autocomplete="off">
+        <fieldset><legend>Orçamento familiar mensal</legend><div class="calculator-grid">
+          <label>Renda familiar disponível (R$)<input name="income" type="number" min="0" max="999999999.99" step="0.01" required inputmode="decimal" /></label>
+          <label>Pessoas que vivem dessa renda<input name="members" type="number" min="1" max="100" step="1" required /></label>
+          <label>Moradia: aluguel ou demais custos (R$)<input name="housing" type="number" min="0" max="999999999.99" step="0.01" required inputmode="decimal" /></label>
+          <label>Transporte (R$)<input name="transport" type="number" min="0" max="999999999.99" step="0.01" required inputmode="decimal" /></label>
+          <label>Demais despesas, inclusive alimentação (R$)<input name="other" type="number" min="0" max="999999999.99" step="0.01" required inputmode="decimal" /></label>
+          <label>Mudança hipotética na renda mensal (R$)<input name="income_change" type="number" min="-999999999.99" max="999999999.99" step="0.01" required value="0" inputmode="decimal" /></label>
+        </div><p>Inclua rendas do trabalho, transferências e outras fontes já disponíveis à família. Não desconte as despesas duas vezes. A cesta de referência não será somada às despesas.</p></fieldset>
+        <fieldset><legend>Referência de preços</legend><div class="calculator-grid">
+          <label>Capital da cesta<select name="geography" required><option value="">Escolha uma capital</option>{catalog.references.map((item) => <option value={item.geography}>{item.name}</option>)}<option value="not-covered">Minha região não está na lista</option></select></label>
+          <label>Mês dos valores<input name="month" type="month" required /></label>
+        </div><p>Consulte o <a href="/indicador/cesta-basica">histórico da cesta e a cobertura por capital</a>. Um mês sem cobertura mantém o orçamento e informa a ausência da referência.</p></fieldset>
+        <fieldset><legend>Trabalho e prioridades</legend>
+          <label>Seu vínculo principal<select name="employment">{Object.entries(employmentLabels).map(([value, label]) => <option value={value} selected={value === 'other'}>{label}</option>)}</select></label>
+          <p>Para converter a cesta em horas, preencha os dois campos opcionais da mesma pessoa e do mesmo mês. A renda individual deve integrar a renda familiar. A conversão usa a jornada declarada, sem impor 220 horas.</p>
+          <div class="calculator-grid"><label>Sua renda disponível do trabalho (R$)<input name="labor_income" type="number" min="0.01" max="999999999.99" step="0.01" inputmode="decimal" /></label><label>Suas horas de trabalho no mês<input name="monthly_hours" type="number" min="0.01" max="744" step="0.01" inputmode="decimal" /></label></div>
+          <p>Quais dimensões você quer investigar?</p>{Object.entries(priorityIndicators).map(([value, item]) => <label class="calculator-check"><input type="checkbox" name="priority" value={value} /> {item.name}</label>)}
+        </fieldset>
+        <div class="calculator-actions"><button type="submit">Calcular cenário</button><button type="reset">Limpar perfil</button></div>
+      </form>
+      <p data-calculator-status role="status" aria-live="polite"></p>
+      <div data-calculator-results></div>
+      <script id="calculator-catalog" type="application/json" set:html={JSON.stringify({ ...catalog, policies: policyCatalog, evidence: evidenceCatalog }).replace(/</g, '\\u003c')} />
+    </> : <p>Simulação indisponível: nenhuma publicação da API Margem está configurada neste site. As definições, fontes e referências continuam disponíveis abaixo.</p>}
+  </section>
+  <section id="metodo"><h2>Fórmulas, hipóteses e limites</h2>
+    <p>Método profile-v1. Os cálculos usam decimais, com resultados em até 12 casas e arredondamento para o par mais próximo. Renda zero permite saldo e renda por pessoa; proporções com denominador zero ficam sem número.</p>
+    <dl><dt>Renda por pessoa</dt><dd>Renda familiar ÷ moradores. É uma divisão contábil, sem escala de equivalência por idade.</dd><dt>Saldo declarado</dt><dd>Renda − moradia − transporte − demais despesas. Saldo negativo indica que as despesas declaradas excedem a renda; custos omitidos não são estimados.</dd><dt>Comprometimento declarado</dt><dd>Despesas ÷ renda × 100. Não equivale à série de comprometimento com dívidas do Banco Central.</dd><dt>Cenário</dt><dd>Renda + mudança hipotética, mantendo moradores e despesas. Não prevê inflação, tributos, emprego, benefícios ou respostas comportamentais.</dd><dt>Cesta em renda e tempo</dt><dd>Preço publicado ÷ renda familiar × 100; opcionalmente, preço × horas individuais ÷ renda individual do trabalho. O cenário não altera automaticamente essa renda individual.</dd></dl>
+    <p>A renda informada e os preços são nominais do mesmo mês; não comparamos poder de compra entre meses sem deflator. Referência ausente, pendente ou incompatível não recebe número nem é substituída por outra região ou data.</p>
+    <p>Seleção editorial relevance-v1: prioridades remetem aos indicadores relacionados nas fichas das políticas; aposentadoria também remete à reforma previdenciária. Essa seleção não avalia incidência jurídica, efeito ou relevância relativa. Nenhum ranking ou score é calculado. Revisão das políticas: {policyCatalog.revision}; estudos: {evidenceCatalog.revision}.</p>
+  </section>
+  <section id="referencias"><h2>Indicadores, políticas e evidências</h2>
+    <p><a href="/indicador/cesta-basica">Cesta básica por capital</a> · <a href="/indicador/tempo-por-cesta">Tempo pelo salário mínimo</a> · <a href="/comparar">Comparar períodos publicados</a></p>
+    <p>O catálogo atual não fornece uma estimativa individual transportável para este perfil. Os estudos empíricos de transferências tratam do programa Bolsa Família anterior a 2023. Seus resultados históricos não avaliam a lei atual.</p>
+    <div class="platform-grid">{policyCatalog.policies.map((policy) => <article class="platform-card"><h3><a href={`/politicas/${policy.id}`}>{policy.name}</a></h3><p>{policy.description}</p><p>{policy.limitations}</p></article>)}</div>
+    <ul>{evidenceCatalog.studies.map((study) => <li><a href={`/evidencias/${study.id}`}>{study.title}</a> — {study.finding}</li>)}</ul>
+    <p><a href="/evidencias">Como ler resultados, contrafactuais e limitações</a></p>
+  </section>
+</PlatformLayout>
+<script>
+  import { mountCalculator } from '@/scripts/calculator-page';
+  mountCalculator();
+</script>
+<style>
+  form { display: grid; gap: var(--space-md); }
+  form[hidden] { display: none; }
+  fieldset { min-width: 0; padding: var(--space-md); border: var(--rule); }
+  legend { font-weight: 700; padding-inline: var(--space-xs); }
+  .calculator-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: var(--space-md); }
+  label { display: grid; gap: var(--space-xs); }
+  input:not([type='checkbox']), select { min-width: 0; width: 100%; padding: var(--space-sm); font: inherit; color: var(--fg); background: var(--surface); border: var(--rule); }
+  .calculator-check { display: block; min-height: 44px; }
+  input[type='checkbox'] { width: 1.2em; height: 1.2em; accent-color: var(--red); }
+  .calculator-actions { display: flex; flex-wrap: wrap; gap: var(--space-md); }
+  button { font: inherit; padding: var(--space-sm) var(--space-md); min-height: 44px; border: var(--rule); cursor: pointer; }
+  button[type='submit'] { color: var(--bg); background: var(--fg); }
+  [data-calculator-results] { display: grid; grid-template-columns: minmax(0, 1fr); min-width: 0; gap: var(--space-md); overflow-wrap: anywhere; }
+  [data-calculator-results] :global(section) { grid-template-columns: minmax(0, 1fr); }
+  [data-calculator-results] :global(p), [data-calculator-results] :global(pre) { overflow-wrap: anywhere; }
+</style>
