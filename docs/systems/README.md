@@ -53,6 +53,7 @@ individual e políticas/estudos relacionados, com perfil sem persistência e sem
 individual. A [fase 21](performance.md) mede consultas locais, implementa cache limitado
 de projeções verificadas e expiração de IPs por fila, e avalia CDN, caches, materialização,
 réplicas, filas, processamento incremental e banco analítico. Capacidade e infraestrutura
-remotas dependem de demanda medida. A próxima etapa é observabilidade e operação (fase 22).
+remotas dependem de demanda medida. A [fase 22](operations.md) acrescenta métricas HTTP/cache,
+prontidão do canal, monitoramento de frescor e orientação para alertas e resposta operacional.
 
 Cada documento deve distinguir estado atual de proposta e descrever responsabilidade, entradas e saídas, dependências, fluxos, configuração, falhas, validação e operação relevantes. Requisitos gerais permanecem na [arquitetura técnica](../03-technical-architecture.md); decisões ficam em [adr](../adr/README.md).

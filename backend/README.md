@@ -11,6 +11,10 @@ A [fase 21](../docs/systems/performance.md) acrescenta cache limitado de projeç
 verificadas no comando `serve` e expiração de IPs por fila. O cache pode ser desativado
 com `API_SNAPSHOT_CACHE=false`; não inclui aliases, perfis ou resultados pessoais.
 `pnpm bench:backend` mede CPU/alocações locais sem PostgreSQL/S3 e não comprova capacidade remota.
+A [fase 22](../docs/systems/operations.md) acrescenta métricas HTTP/cache em `/metrics`,
+prontidão em `/readyz`, duração dos jobs nos logs e `pnpm pipeline monitor` para verificar
+frescor. Alertas podem usar `MARGEM_ALERT_WEBHOOK_URL` ou o código de saída observado pelo
+scheduler; notificações ativas dependem dessa configuração.
 
 ## Organização
 
@@ -22,6 +26,7 @@ internal/ingestion/          adaptadores de fontes, HTTP, jobs e saúde operacio
 internal/indicators/         fórmulas versionadas, avaliações imutáveis e linhagem
 internal/calculator/         cenários declarados e orçamento familiar, sem persistência
 internal/observations/       regras, identidades, aceitação de lotes e integridade
+internal/observability/     métricas HTTP e de processo com rótulos limitados
 internal/publications/       preparação, projeções imutáveis, ativação e histórico
 internal/api/                HTTP v1, cache, filtros, paginação e limites
 internal/legacy/             importação do arquivo histórico da PoC retirada
@@ -82,6 +87,7 @@ pnpm pipeline calculation --id ID
 pnpm pipeline run --source bcb --from 2025-01-01 --to 2025-12-31
 pnpm pipeline tick
 pnpm pipeline status
+pnpm pipeline monitor
 pnpm pipeline verify
 pnpm pipeline import-poc --root .data/ingestion
 pnpm generate:backend

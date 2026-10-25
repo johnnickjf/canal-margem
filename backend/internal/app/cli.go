@@ -21,7 +21,7 @@ import (
 
 func Run(ctx context.Context, args []string, stdout, stderr io.Writer) int {
 	if len(args) == 0 || args[0] == "--help" || args[0] == "-h" {
-		fmt.Fprintln(stdout, "Margem — dados e API\nComandos: serve | prepare --manifest ARQUIVO | activate --manifest ARQUIVO | current | formulas | calculate --manifest ARQUIVO | calculation --id ID | migrate | run --source FONTE [--from DATA --to DATA] | tick [--from DATA --to DATA] | status | verify | import-poc --root DIRETÓRIO")
+		fmt.Fprintln(stdout, "Margem — dados e API\nComandos: serve | prepare --manifest ARQUIVO | activate --manifest ARQUIVO | current | formulas | calculate --manifest ARQUIVO | calculation --id ID | migrate | run --source FONTE [--from DATA --to DATA] | tick [--from DATA --to DATA] | status | monitor | verify | import-poc --root DIRETÓRIO")
 		if len(args) == 0 {
 			return 2
 		}
@@ -49,7 +49,7 @@ func Run(ctx context.Context, args []string, stdout, stderr io.Writer) int {
 		flags.StringVar(&id, "id", "", "ID da avaliação")
 	case "import-poc":
 		flags.StringVar(&root, "root", "", "raiz da PoC")
-	case "migrate", "status", "verify", "serve", "current":
+	case "migrate", "status", "monitor", "verify", "serve", "current":
 	default:
 		fmt.Fprintln(stderr, "comando desconhecido")
 		return 2
@@ -170,12 +170,45 @@ func Run(ctx context.Context, args []string, stdout, stderr io.Writer) int {
 			return fail(e)
 		}
 		result = map[string]any{"migration": postgres.LatestMigration, "status": "succeeded"}
-	case "status":
+	case "status", "monitor":
 		r, e := (ingestion.Queries{Pool: pool}).Health(ctx)
 		if e != nil {
+			if command == "monitor" {
+				checkedAt := time.Now().UTC()
+				failure := ingestion.Failure(e)
+				alertCtx := context.WithoutCancel(ctx)
+				unhealthy := ingestion.Health{Healthy: false}
+				configured, alertErr := sendHealthAlert(alertCtx, unhealthy, checkedAt, failure)
+				if alertErr != nil {
+					json.NewEncoder(stderr).Encode(map[string]any{"status": "failed", "error": failure, "alert_error": alertErr.Error(), "alert_delivery": "failed"})
+					return 1
+				}
+				if configured {
+					json.NewEncoder(stderr).Encode(map[string]any{"status": "failed", "error": failure, "alert_delivery": "webhook_sent"})
+					return 1
+				}
+			}
 			return fail(e)
 		}
-		result = r
+		if command == "monitor" {
+			status := "healthy"
+			if !r.Healthy {
+				status = "unhealthy"
+			}
+			checkedAt := time.Now().UTC()
+			configured, alertErr := sendHealthAlert(ctx, r, checkedAt, "")
+			if alertErr != nil {
+				json.NewEncoder(stderr).Encode(map[string]any{"status": "failed", "error": alertErr.Error()})
+				return 1
+			}
+			delivery := "scheduler_exit_status"
+			if configured {
+				delivery = "webhook_sent"
+			}
+			result = map[string]any{"checked_at": checkedAt, "status": status, "alert_delivery": delivery, "health": r}
+		} else {
+			result = r
+		}
 		if !r.Healthy {
 			exit = 1
 		}

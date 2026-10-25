@@ -15,6 +15,7 @@ import (
 	"time"
 
 	"github.com/go-chi/chi/v5"
+	"margem/backend/internal/observability"
 	"margem/backend/internal/platform/canonical"
 	"margem/backend/internal/publications"
 )
@@ -61,11 +62,23 @@ func (a *API) Handler() http.Handler {
 	if a.slots == nil {
 		a.slots = make(chan struct{}, 8)
 	}
+	metrics := observability.New()
+	root := chi.NewRouter()
+	root.Use(metrics.Middleware)
 	r := chi.NewRouter()
 	r.Use(a.guard)
+	r.Method(http.MethodGet, "/metrics", metrics.Handler(a.cacheStats))
 	r.Get("/healthz", func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Cache-Control", "no-store")
 		a.write(w, r, map[string]string{"status": "ok"}, false)
+	})
+	r.Get("/readyz", func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Cache-Control", "no-store")
+		if _, err := a.Reader.Resolve(r.Context(), time.Time{}); err != nil {
+			a.failStatus(w, http.StatusServiceUnavailable, "temporarily_unavailable", "canal sem publicação disponível")
+			return
+		}
+		a.write(w, r, map[string]string{"status": "ready"}, false)
 	})
 	r.Get("/api/v1/publications/current", a.current)
 	r.Get("/api/v1/themes", a.read)
@@ -90,7 +103,28 @@ func (a *API) Handler() http.Handler {
 		}
 		a.failStatus(w, 405, "method_not_allowed", "método não permitido")
 	})
-	return r
+	root.Mount("/", r)
+	return root
+}
+
+type cacheStatsReader interface {
+	SnapshotCacheStats() (publications.CacheStats, bool)
+}
+
+func (a *API) cacheStats() (observability.CacheStats, bool) {
+	reader, ok := a.Reader.(cacheStatsReader)
+	if !ok {
+		return observability.CacheStats{}, false
+	}
+	stats, ok := reader.SnapshotCacheStats()
+	return observability.CacheStats{
+		Hits:            stats.Hits,
+		Misses:          stats.Misses,
+		Coalesced:       stats.Coalesced,
+		Errors:          stats.Errors,
+		Entries:         stats.Entries,
+		SerializedBytes: stats.SerializedBytes,
+	}, ok
 }
 func (a *API) guard(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {

@@ -59,6 +59,11 @@ func recordEvent(ctx context.Context, db postgres.DBTX, run pgtype.UUID, event s
 	slog.Info("pipeline", "run", postgres.UUIDString(run), "event", event, "detail", detail)
 	return nil
 }
+func (f *HTTPFetcher) recordFetchFailure(ctx context.Context, url string, attempt int, started time.Time, cause error) error {
+	return recordEvent(ctx, f.DB, f.Run, "fetch_failed", map[string]any{
+		"url": url, "attempt": attempt, "duration_ms": time.Since(started).Milliseconds(), "error": Failure(cause),
+	})
+}
 func (f *HTTPFetcher) capture(ctx context.Context, u string, status int, headers map[string]string, body []byte) error {
 	sha, key, e := f.Store.Save(ctx, body)
 	if e != nil {
@@ -117,18 +122,29 @@ func (f *HTTPFetcher) attempt(ctx context.Context, original string, attempt int)
 			return nil, false, e
 		}
 		req.Header.Set("User-Agent", "MargemPipeline/0.1")
+		started := time.Now()
 		response, e := f.Client.Do(req)
 		if e != nil {
+			if recordErr := f.recordFetchFailure(ctx, current, attempt, started, e); recordErr != nil {
+				return nil, false, recordErr
+			}
 			var netErr net.Error
 			return nil, errors.As(e, &netErr), e
 		}
 		body, e := io.ReadAll(io.LimitReader(response.Body, 64<<20+1))
 		response.Body.Close()
 		if e != nil {
+			if recordErr := f.recordFetchFailure(ctx, current, attempt, started, e); recordErr != nil {
+				return nil, false, recordErr
+			}
 			return nil, true, e
 		}
 		if len(body) > 64<<20 {
-			return nil, false, observations.Invalid("resposta excede 64 MiB")
+			e = observations.Invalid("resposta excede 64 MiB")
+			if recordErr := f.recordFetchFailure(ctx, current, attempt, started, e); recordErr != nil {
+				return nil, false, recordErr
+			}
+			return nil, false, e
 		}
 		headers := map[string]string{}
 		for _, k := range []string{"content-type", "etag", "last-modified", "location"} {
@@ -139,7 +155,7 @@ func (f *HTTPFetcher) attempt(ctx context.Context, original string, attempt int)
 		if e = f.capture(ctx, current, response.StatusCode, headers, body); e != nil {
 			return nil, false, e
 		}
-		if e = recordEvent(ctx, f.DB, f.Run, "fetch", map[string]any{"url": current, "status": response.StatusCode, "bytes": len(body), "attempt": attempt}); e != nil {
+		if e = recordEvent(ctx, f.DB, f.Run, "fetch", map[string]any{"url": current, "status": response.StatusCode, "bytes": len(body), "attempt": attempt, "duration_ms": time.Since(started).Milliseconds()}); e != nil {
 			return nil, false, e
 		}
 		status := response.StatusCode

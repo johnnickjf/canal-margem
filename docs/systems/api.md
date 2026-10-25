@@ -244,6 +244,10 @@ Além das variáveis de [pipelines](pipelines.md), definir `PUBLIC_BUCKET`, dist
 `API_ADDR` tem padrão `127.0.0.1:8080`; para um container publicado, configurar endereço
 externo explicitamente. A imagem aceita `margem serve` como comando em vez do cron `tick`.
 `GET /healthz` indica processo vivo; não certifica disponibilidade de uma publicação.
+`GET /readyz` verifica se o canal tem uma publicação ativa, sem baixar sua projeção.
+`GET /metrics` expõe contadores/histogramas HTTP e sinais de processo/cache em formato
+Prometheus; rótulos não incluem IPs, queries ou IDs. Contratos e limites estão em
+[Observabilidade e operação](operations.md).
 O servidor encerra com os sinais do processo e prazo de 10 s para conexões em andamento.
 
 ```bash

@@ -96,8 +96,11 @@ individual declarada, com políticas e estudos relacionados, auditoria e perfil 
 O catálogo atual não permite estimar efeitos individuais. A fase 21 implementa
 [escala e performance](docs/systems/performance.md): benchmarks reproduzíveis, cache limitado
 de projeções verificadas e expiração de IPs sem varredura completa por requisição. A avaliação
-local adia novas camadas de infraestrutura até haver demanda medida. A próxima etapa é
-observabilidade e operação, na fase 22; implantação Railway/R2 permanece posterior.
+local adia novas camadas de infraestrutura até haver demanda medida. A fase 22 acrescenta
+métricas HTTP e do cache, prontidão da publicação, logs de duração dos jobs e um check de saúde
+com código de saída ou webhook para alertas externos. O [runbook](docs/systems/operations.md)
+registra a configuração necessária; Railway/R2, notificações ativas, CDN e disponibilidade do
+frontend permanecem posteriores.
 
 ```bash
 MARGEM_API_URL=http://127.0.0.1:8080 pnpm build  # API já operando, origem sem caminho
@@ -107,6 +110,7 @@ MARGEM_API_URL=http://127.0.0.1:8080 pnpm build  # API já operando, origem sem 
 pnpm pipeline run --source ibge --from 2025-01-01 --to 2025-12-31
 pnpm pipeline prepare --manifest .data/publication.json
 pnpm pipeline activate --manifest .data/activation.json
+pnpm pipeline monitor
 pnpm pipeline serve                # http://127.0.0.1:8080
 ```
 

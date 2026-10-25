@@ -1139,6 +1139,15 @@ Arquitetura escala de acordo com demanda observada.
 
 ## Fase 22 — Observabilidade e operação
 
+### Estado
+
+Implementada localmente em [Observabilidade e operação](systems/operations.md): `/metrics`
+registra volume e latência HTTP com rótulos limitados, sinais do processo e do cache; `/readyz`
+confere se há publicação ativa; os jobs registram duração estruturada; `pnpm pipeline monitor`
+retorna falha quando fontes, cobertura ou frescor estão insalubres. Coletor, notificações,
+frontend publicado e entrega de alertas dependem da implantação e configuração do webhook ou
+scheduler.
+
 ### Objetivo
 
 Garantir confiabilidade contínua.

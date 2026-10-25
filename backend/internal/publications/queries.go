@@ -16,6 +16,13 @@ type Queries struct {
 	Cache *SnapshotCache
 }
 
+func (q Queries) SnapshotCacheStats() (CacheStats, bool) {
+	if q.Cache == nil {
+		return CacheStats{}, false
+	}
+	return q.Cache.Stats(), true
+}
+
 func (q Queries) Resolve(ctx context.Context, at time.Time) (Activation, error) {
 	if at.IsZero() {
 		at = time.Now().UTC()

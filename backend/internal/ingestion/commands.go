@@ -45,6 +45,23 @@ func Failure(err error) string {
 
 func (c Commands) Run(ctx context.Context, source string, w period.Window, force bool) (result Result, err error) {
 	result = Result{Source: source}
+	started := time.Now()
+	defer func() {
+		status := result.Status
+		if err != nil {
+			status = "failed"
+		}
+		fields := []any{"source", source, "status", status, "duration_ms", time.Since(started).Milliseconds()}
+		if result.Acceptance != nil {
+			fields = append(fields, "run", result.Acceptance.Run, "batch", result.Acceptance.Batch, "observations", result.Acceptance.Observations, "changed", result.Acceptance.Changed)
+		}
+		if err != nil {
+			fields = append(fields, "error", Failure(err))
+			slog.Error("pipeline job finalizado", fields...)
+			return
+		}
+		slog.Info("pipeline job finalizado", fields...)
+	}()
 	index := -1
 	for i, s := range catalog.Sources {
 		if s == source {
@@ -62,6 +79,7 @@ func (c Commands) Run(ctx context.Context, source string, w period.Window, force
 	if job == nil {
 		return result, observations.Invalid("adaptador ausente")
 	}
+	slog.Info("pipeline job iniciado", "source", source, "window_start", w.Start.Format(period.Layout), "window_end", w.End.Format(period.Layout), "forced", force)
 	session, e := c.Pool.Acquire(ctx)
 	if e != nil {
 		return result, e
@@ -157,7 +175,6 @@ func (c Commands) Run(ctx context.Context, source string, w period.Window, force
 	}
 	result.Status = "succeeded"
 	result.Acceptance = &accepted
-	slog.Info("lote aceito", "source", source, "run", accepted.Run, "batch", accepted.Batch, "observations", accepted.Observations, "changed", accepted.Changed)
 	return result, nil
 }
 func (c Commands) Tick(ctx context.Context, w period.Window) []Result {

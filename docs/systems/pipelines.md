@@ -172,6 +172,7 @@ pnpm pipeline run --source dieese
 pnpm pipeline run --source fjp
 pnpm pipeline tick
 pnpm pipeline status
+pnpm pipeline monitor
 pnpm pipeline verify
 ```
 
@@ -209,7 +210,11 @@ anterior do diagnóstico. `missing_series` identifica recortes do catálogo sem 
 aceitas; `stale_series` identifica séries abertas cuja última referência venceu a tolerância.
 Ambas as condições tornam a fonte não saudável, inclusive quando a série ausente pertence
 a um segmento histórico encerrado. A tolerância de atraso só se aplica a séries abertas. Um monitor
-externo pode executar `status`; entrega de alerta remoto não foi configurada nesta etapa.
+externo pode executar `status`; a fase 22 acrescenta `pnpm pipeline monitor`, com o mesmo
+critério, `checked_at` e estado geral, para uso em schedulers. O comando retorna 1 quando o
+diagnóstico está insalubre. Os jobs registram início, status e duração estruturados. O comando
+pode enviar eventos a um webhook HTTPS configurado ou deixar o scheduler notificar pelo código
+de saída. A configuração está em [Observabilidade e operação](operations.md).
 
 ## Implantação e validação
 

@@ -37,6 +37,7 @@ O Canal Margem está preparando a evolução do site editorial para uma platafor
 
 29. [Calculadora socioeconômica](systems/calculator.md): orçamento declarado, cenários, referência de cesta, políticas e evidências relacionadas, privacidade e contrato da fase 20.
 30. [Escala e performance](systems/performance.md): benchmarks locais, cache limitado de projeções verificadas, expiração de IPs por fila e avaliação das alternativas da fase 21.
+31. [Observabilidade e operação](systems/operations.md): métricas HTTP/cache, liveness/readiness, saúde de fontes, check para alertas e rotina de resposta da fase 22.
 
 Os quatro documentos numerados partem dos textos fornecidos pelo responsável pelo projeto e receberam ajustes de clareza e precisão. Definem o produto planejado; a auditoria do frontend registra a fase 0, e os documentos de sistemas registram as entregas posteriores. Exemplos do modelo e do design system são ilustrativos. As amostras em `data-sources/evidence/` são dados oficiais consultados na fase 4, com proveniência, sem integração ao site.
 
@@ -64,6 +65,7 @@ Os quatro documentos numerados partem dos textos fornecidos pelo responsável pe
 | Evidência e causalidade | Fase 19 implementada: três referências iniciais, classificação editorial da inferência, contrafactual/hipóteses para estimativas causais, vínculos históricos explícitos, fichas, JSON e busca; sem transporte automático de efeitos |
 | Calculadora socioeconômica | Fase 20 implementada: orçamento familiar, cenário hipotético, referência de cesta por capital/mês e tempo individual, políticas e estudos relacionados; perfil sem persistência e sem efeito individual presumido |
 | Escala e performance | Fase 21 implementada e medida localmente: cache de projeções limitado por edição/tamanho/TTL, expiração de IPs por fila e avaliação de infraestrutura; sem capacidade de produção comprovada |
+| Observabilidade e operação | Fase 22 implementada localmente: endpoint Prometheus, métricas do cache, liveness/readiness, logs de duração de jobs e comando monitor com código de falha/webhook; coletor e notificações externas dependem de implantação |
 | Ingestão e persistência local | PoC da fase 5 retirada após substituição verificada na fase 9; 21 arquivos e 587 observações preservados |
 | Arquitetura de armazenamento | Fase 6 definida em cinco ADRs: PostgreSQL/Railway, R2, histórico/cache, backup nativo/reconstrução e portabilidade/custos; serviços ainda não implantados |
 | Pipeline do MVP | Fase 7 implementada e verificada localmente: cinco fontes, 6.375 observações, PostgreSQL e API compatível com S3 (R2 em produção), repetição, revisões, falhas e importação da PoC |
@@ -94,7 +96,9 @@ Manter detalhes de infraestrutura fora da visão e do documento de UX. Registrar
 
 ## Próxima entrega
 
-A próxima etapa é observabilidade e operação (fase 22). A [fase 21](systems/performance.md)
+A [fase 22](systems/operations.md) acrescenta sinais locais e um check de saúde preparado para
+alertas pelo scheduler; coletor, notificações e operação remota dependem da implantação. A
+próxima etapa do roadmap é auditoria e transparência pública (fase 23). A [fase 21](systems/performance.md)
 mede o caminho local de leitura, implementa cache limitado e expiração de IPs por fila,
 e condiciona novas camadas de infraestrutura a demanda observada. A
 [calculadora da fase 20](systems/calculator.md) usa orçamento declarado, cenário hipotético,

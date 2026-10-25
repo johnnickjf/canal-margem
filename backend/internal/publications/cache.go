@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"sync"
+	"sync/atomic"
 	"time"
 )
 
@@ -13,14 +14,24 @@ import (
 // The budget counts serialized bytes, not Go heap usage. At most two decoded
 // snapshots are retained; in-flight requests can temporarily exceed that budget.
 type SnapshotCache struct {
-	store   ProjectionStore
-	budget  int64
-	ttl     time.Duration
-	mu      sync.Mutex
-	entries map[projectionKey]*cachedSnapshot
-	flights map[projectionKey]*snapshotFlight
-	bytes   int64
-	clock   func() time.Time
+	store     ProjectionStore
+	budget    int64
+	ttl       time.Duration
+	mu        sync.Mutex
+	entries   map[projectionKey]*cachedSnapshot
+	flights   map[projectionKey]*snapshotFlight
+	bytes     int64
+	clock     func() time.Time
+	hits      atomic.Uint64
+	misses    atomic.Uint64
+	coalesced atomic.Uint64
+	errors    atomic.Uint64
+}
+
+type CacheStats struct {
+	Hits, Misses, Coalesced, Errors uint64
+	Entries                         int
+	SerializedBytes                 int64
 }
 
 type projectionKey struct {
@@ -62,10 +73,12 @@ func (c *SnapshotCache) Load(ctx context.Context, key, sha string, size int64) (
 	}
 	if entry := c.entries[k]; entry != nil {
 		entry.used = now
+		c.hits.Add(1)
 		c.mu.Unlock()
 		return entry.snapshot, nil
 	}
 	if flight := c.flights[k]; flight != nil {
+		c.coalesced.Add(1)
 		c.mu.Unlock()
 		select {
 		case <-ctx.Done():
@@ -76,11 +89,15 @@ func (c *SnapshotCache) Load(ctx context.Context, key, sha string, size int64) (
 	}
 	flight := &snapshotFlight{done: make(chan struct{})}
 	c.flights[k] = flight
+	c.misses.Add(1)
 	c.mu.Unlock()
 
 	flight.snapshot, flight.err = loadSnapshot(ctx, c.store, key, sha, size)
 	if err := ctx.Err(); err != nil {
 		flight.snapshot, flight.err = Snapshot{}, err
+	}
+	if flight.err != nil {
+		c.errors.Add(1)
 	}
 	c.mu.Lock()
 	defer c.mu.Unlock()
@@ -103,6 +120,20 @@ func (c *SnapshotCache) Load(ctx context.Context, key, sha string, size int64) (
 	delete(c.flights, k)
 	close(flight.done)
 	return flight.snapshot, flight.err
+}
+
+func (c *SnapshotCache) Stats() CacheStats {
+	c.mu.Lock()
+	stats := CacheStats{
+		Hits:            c.hits.Load(),
+		Misses:          c.misses.Load(),
+		Coalesced:       c.coalesced.Load(),
+		Errors:          c.errors.Load(),
+		Entries:         len(c.entries),
+		SerializedBytes: c.bytes,
+	}
+	c.mu.Unlock()
+	return stats
 }
 
 func loadSnapshot(ctx context.Context, store ProjectionStore, key, sha string, size int64) (Snapshot, error) {
