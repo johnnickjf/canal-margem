@@ -17,6 +17,9 @@ type reader struct{ snapshot publications.Snapshot }
 func (r reader) Resolve(context.Context, time.Time) (publications.Activation, error) {
 	return publications.Activation{Generation: 1, Publication: r.snapshot.Publication}, nil
 }
+func (reader) History(context.Context, int64, int) ([]publications.Activation, error) {
+	return []publications.Activation{}, nil
+}
 func (r reader) Snapshot(context.Context, string) (publications.Snapshot, error) {
 	return r.snapshot, nil
 }

@@ -789,6 +789,56 @@ func (q *Queries) PublicationByID(ctx context.Context, id string) (PublishedPubl
 	return i, err
 }
 
+const publicationHistory = `-- name: PublicationHistory :many
+SELECT a.generation,a.publication,a.previous_activation,a.activated_at,a.reason,p.catalog_revision,p.data_cutoff
+FROM published.activation a JOIN published.publication p ON p.id=a.publication
+WHERE $1::bigint = 0 OR a.generation < $1::bigint
+ORDER BY a.generation DESC LIMIT $2::integer
+`
+
+type PublicationHistoryParams struct {
+	BeforeGeneration int64 `json:"before_generation"`
+	PageLimit        int32 `json:"page_limit"`
+}
+
+type PublicationHistoryRow struct {
+	Generation         int64              `json:"generation"`
+	Publication        string             `json:"publication"`
+	PreviousActivation int64              `json:"previous_activation"`
+	ActivatedAt        pgtype.Timestamptz `json:"activated_at"`
+	Reason             string             `json:"reason"`
+	CatalogRevision    string             `json:"catalog_revision"`
+	DataCutoff         pgtype.Timestamptz `json:"data_cutoff"`
+}
+
+func (q *Queries) PublicationHistory(ctx context.Context, arg PublicationHistoryParams) ([]PublicationHistoryRow, error) {
+	rows, err := q.db.Query(ctx, publicationHistory, arg.BeforeGeneration, arg.PageLimit)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	items := []PublicationHistoryRow{}
+	for rows.Next() {
+		var i PublicationHistoryRow
+		if err := rows.Scan(
+			&i.Generation,
+			&i.Publication,
+			&i.PreviousActivation,
+			&i.ActivatedAt,
+			&i.Reason,
+			&i.CatalogRevision,
+			&i.DataCutoff,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
 const publicationNormalized = `-- name: PublicationNormalized :one
 SELECT o.id,o.series,o.start_date,o.end_date,o.geography,coalesce(o.value::text,'')::text AS value_text,o.status,o.context,o.locator,
  b.accepted_at,c.retrieved_at,c.url,obj.sha256,obj.key,obj.bytes

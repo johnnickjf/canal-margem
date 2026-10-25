@@ -55,5 +55,7 @@ de projeções verificadas e expiração de IPs por fila, e avalia CDN, caches, 
 réplicas, filas, processamento incremental e banco analítico. Capacidade e infraestrutura
 remotas dependem de demanda medida. A [fase 22](operations.md) acrescenta métricas HTTP/cache,
 prontidão do canal, monitoramento de frescor e orientação para alertas e resposta operacional.
+A [fase 23](audit-transparency.md) publica o histórico de edições ativadas e uma trilha por
+indicador até série, dataset e fonte, com consultas JSON fixadas na mesma publicação.
 
 Cada documento deve distinguir estado atual de proposta e descrever responsabilidade, entradas e saídas, dependências, fluxos, configuração, falhas, validação e operação relevantes. Requisitos gerais permanecem na [arquitetura técnica](../03-technical-architecture.md); decisões ficam em [adr](../adr/README.md).

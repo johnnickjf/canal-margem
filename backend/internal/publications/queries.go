@@ -34,7 +34,23 @@ func (q Queries) Resolve(ctx context.Context, at time.Time) (Activation, error) 
 	if e != nil {
 		return Activation{}, e
 	}
-	return Activation{a.Generation, a.Publication, a.PreviousActivation, a.ActivatedAt.Time, a.CatalogRevision, a.DataCutoff.Time}, nil
+	return Activation{a.Generation, a.Publication, a.PreviousActivation, a.ActivatedAt.Time, a.Reason, a.CatalogRevision, a.DataCutoff.Time}, nil
+}
+
+// History returns activated editions newest first. A zero cursor starts at the latest edition.
+func (q Queries) History(ctx context.Context, beforeGeneration int64, limit int) ([]Activation, error) {
+	rows, e := postgres.New(q.Pool).PublicationHistory(ctx, postgres.PublicationHistoryParams{
+		BeforeGeneration: beforeGeneration,
+		PageLimit:        int32(limit),
+	})
+	if e != nil {
+		return nil, e
+	}
+	items := make([]Activation, 0, len(rows))
+	for _, a := range rows {
+		items = append(items, Activation{a.Generation, a.Publication, a.PreviousActivation, a.ActivatedAt.Time, a.Reason, a.CatalogRevision, a.DataCutoff.Time})
+	}
+	return items, nil
 }
 
 // Snapshot returns a read-only view. With Cache configured its maps, slices and

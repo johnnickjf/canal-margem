@@ -114,7 +114,7 @@ GET /api/v1/publications/current
 GET /api/v1/publications/current?at=2026-10-18T12%3A00%3A00Z
 ```
 
-Retorna `generation`, `publication`, `previous_activation`, `activated_at`,
+Retorna `generation`, `publication`, `previous_activation`, `activated_at`, `reason`,
 `catalog_revision` e `data_cutoff`. `at` é um instante passado com fuso; antes da primeira
 ativação há `not_covered`. Usar o ID retornado em **todas** as próximas consultas:
 
@@ -130,6 +130,7 @@ ativação há `not_covered`. Usar o ID retornado em **todas** as próximas cons
 | `/api/v1/observations/:id` | — | Observação, método, aceitação, origens e cálculo/inputs quando derivados |
 | `/api/v1/comparisons` | `series`, `geography`, `from`, `to`, `calculation`, `version`, `assessment` | Comparação entre extremos explícitos da mesma publicação |
 | `/api/v1/work-time` | `series`, `geography`, `from`, `to` | [Cesta em reais, percentual do mínimo e tempo equivalente](work-time.md), com inputs e fórmulas versionadas |
+| `/api/v1/publications` | `limit`, `cursor` (sem parâmetro `publication`) | Histórico paginado de todas as ativações, em geração decrescente; inclui motivo, publicação e corte |
 | `/api/v1/publications/:id` | Nenhum, ID no caminho | Manifesto completo, catálogo e dependências da publicação ativada |
 
 Os slugs dos indicadores são fixados em
@@ -141,12 +142,34 @@ Geografias preservam os IDs de origem normalizados, como `BR` e `BR-city-3550308
 a [busca de produto da fase 15](search.md) implementa aliases e normalização de acentos
 no índice estático do site, sem alterar esse filtro HTTP.
 
-As respostas de recursos usam:
+As respostas de recursos fixados a uma publicação usam:
 
 ```json
 {
   "publication": "ID_IMUTAVEL", "catalog_revision": "ID_DO_CATALOGO",
   "data": [], "next_cursor": "CURSOR_OPACO_QUANDO_HOUVER_PROXIMA_PAGINA"
+}
+```
+
+`GET /api/v1/publications` é o histórico global e não usa esse envelope: como cada item pode
+pertencer a uma publicação e revisão de catálogo diferentes, a resposta contém somente `data`
+e `next_cursor`. Cada item identifica sua própria publicação, revisão do catálogo, geração,
+ativação, motivo e corte dos dados:
+
+```json
+{
+  "data": [
+    {
+      "generation": 3,
+      "publication": "ID_IMUTAVEL",
+      "previous_activation": 2,
+      "activated_at": "2026-10-18T12:00:00Z",
+      "reason": "Qualidade e cobertura conferidas.",
+      "catalog_revision": "ID_DO_CATALOGO",
+      "data_cutoff": "2026-10-18T11:00:00Z"
+    }
+  ],
+  "next_cursor": "CURSOR_OPACO_QUANDO_HOUVER_PROXIMA_PAGINA"
 }
 ```
 
@@ -192,6 +215,7 @@ cálculos, referências e privacidade. As leituras GET existentes continuam sem 
 | Resposta | Cache-Control |
 |---|---|
 | Alias atual/histórico bem-sucedido | `public, max-age=0, s-maxage=60, must-revalidate` |
+| Histórico de edições | `public, max-age=0, s-maxage=60, must-revalidate` |
 | Leitura por publicação e projeção bem-sucedidas | `public, max-age=31536000, immutable` |
 | Calculadora de perfis, inclusive sucesso | `no-store`, sem ETag |
 | Erro, saúde ou requisição com Authorization/Cookie | `no-store` |

@@ -16,6 +16,9 @@ type serverReader struct{}
 func (serverReader) Resolve(context.Context, time.Time) (publications.Activation, error) {
 	return publications.Activation{}, nil
 }
+func (serverReader) History(context.Context, int64, int) ([]publications.Activation, error) {
+	return []publications.Activation{}, nil
+}
 func (serverReader) Snapshot(context.Context, string) (publications.Snapshot, error) {
 	return publications.Snapshot{}, nil
 }

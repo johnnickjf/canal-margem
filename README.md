@@ -100,7 +100,11 @@ local adia novas camadas de infraestrutura até haver demanda medida. A fase 22 
 métricas HTTP e do cache, prontidão da publicação, logs de duração dos jobs e um check de saúde
 com código de saída ou webhook para alertas externos. O [runbook](docs/systems/operations.md)
 registra a configuração necessária; Railway/R2, notificações ativas, CDN e disponibilidade do
-frontend permanecem posteriores.
+frontend permanecem posteriores. A fase 23 implementa o [histórico público de edições e a
+auditoria dos dados](docs/systems/audit-transparency.md): a página `/auditoria` percorre
+indicador, cálculo, série, dataset e fonte; a API pagina as ativações e preserva links para
+manifestos e séries JSON. Revisões oficiais só aparecem quando incorporadas a uma nova edição;
+os objetos raw continuam privados.
 
 ```bash
 MARGEM_API_URL=http://127.0.0.1:8080 pnpm build  # API já operando, origem sem caminho

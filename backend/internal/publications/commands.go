@@ -313,7 +313,7 @@ func (c Commands) Activate(ctx context.Context, r ActivateRequest) (Activation, 
 	if e = db.AdvancePublicationChannel(ctx, a.Generation); e != nil {
 		return result, e
 	}
-	result = Activation{a.Generation, a.Publication, a.PreviousActivation, a.ActivatedAt.Time, p.CatalogRevision, p.DataCutoff.Time}
+	result = Activation{a.Generation, a.Publication, a.PreviousActivation, a.ActivatedAt.Time, a.Reason, p.CatalogRevision, p.DataCutoff.Time}
 	if e = saveReceipt(ctx, db, op, r.Actor, r.Key, fp, result); e != nil {
 		return Activation{}, e
 	}

@@ -22,6 +22,7 @@ import (
 
 type Reader interface {
 	Resolve(context.Context, time.Time) (publications.Activation, error)
+	History(context.Context, int64, int) ([]publications.Activation, error)
 	// Snapshot returns borrowed immutable data. Handlers must not mutate it.
 	Snapshot(context.Context, string) (publications.Snapshot, error)
 }
@@ -43,6 +44,10 @@ type envelope struct {
 	CatalogRevision string `json:"catalog_revision"`
 	Data            any    `json:"data"`
 	NextCursor      string `json:"next_cursor,omitempty"`
+}
+type historyEnvelope struct {
+	Data       []publications.Activation `json:"data"`
+	NextCursor string                    `json:"next_cursor,omitempty"`
 }
 type errorBody struct {
 	Error struct {
@@ -81,6 +86,7 @@ func (a *API) Handler() http.Handler {
 		a.write(w, r, map[string]string{"status": "ready"}, false)
 	})
 	r.Get("/api/v1/publications/current", a.current)
+	r.Get("/api/v1/publications", a.history)
 	r.Get("/api/v1/themes", a.read)
 	r.Get("/api/v1/themes/{slug}", a.read)
 	r.Get("/api/v1/indicators", a.read)

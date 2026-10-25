@@ -44,6 +44,9 @@ type projectionReader struct {
 func (r projectionReader) Resolve(context.Context, time.Time) (publications.Activation, error) {
 	return publications.Activation{}, nil
 }
+func (projectionReader) History(context.Context, int64, int) ([]publications.Activation, error) {
+	return []publications.Activation{}, nil
+}
 func (r projectionReader) Snapshot(_ context.Context, _ string) (publications.Snapshot, error) {
 	// Include the current full-projection integrity and decoding cost, but no I/O.
 	_ = canonical.Hash(r.body)

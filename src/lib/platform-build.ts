@@ -2,10 +2,21 @@ import definitions from '../../backend/internal/publications/indicators.json';
 
 export type Indicator = (typeof definitions)[number];
 export type Theme = { slug: string; name: string; question: string };
+export type PublicationEdition = {
+  generation: number;
+  publication: string;
+  previous_activation: number;
+  activated_at: string;
+  reason: string;
+  catalog_revision: string;
+  data_cutoff: string;
+};
 export type ObservationNode = {
+  accepted_at?: string;
   observation: {
     id: string;
     series?: string;
+    geography?: string;
     start?: string;
     end?: string;
     value?: string | null;
@@ -24,7 +35,7 @@ export type ObservationNode = {
       deflator?: string;
     };
   };
-  origins: { url: string; retrieved_at: string }[];
+  origins: { url: string; retrieved_at: string; sha256: string }[];
   evaluation?: {
     definition?: { formula: string; methodology: string; parameters?: Record<string, string> };
     request: { calculation: string; version: string; inputs: Record<string, string> };
@@ -70,7 +81,10 @@ export type WorkTime = {
 export type Platform = {
   publication: string | null;
   cutoff: string | null;
+  selectionReason: string | null;
   api: string | null;
+  history: PublicationEdition[];
+  historyNextCursor: string | null;
   themes: Theme[];
   indicators: Indicator[];
   selections: Record<string, Selection[]>;
@@ -102,7 +116,10 @@ export async function capturePlatform(
     return {
       publication: null,
       cutoff: null,
+      selectionReason: null,
       api: null,
+      history: [],
+      historyNextCursor: null,
       themes,
       indicators: definitions,
       selections: {},
@@ -140,7 +157,48 @@ export async function capturePlatform(
   }
   const current = await get('publications/current');
   const id = current.publication;
-  if (typeof id !== 'string' || !/^[a-f0-9]{64}$/.test(id)) throw new Error('Publicação inválida.');
+  if (
+    typeof id !== 'string' ||
+    !/^[a-f0-9]{64}$/.test(id) ||
+    !Number.isSafeInteger(current.generation) ||
+    current.generation < 1
+  )
+    throw new Error('Publicação inválida.');
+  const history: PublicationEdition[] = [];
+  let previousGeneration = Number.POSITIVE_INFINITY;
+  const historyBody = await get('publications?limit=200');
+  if (!Array.isArray(historyBody.data)) throw new Error('Histórico de publicações inválido.');
+  for (const edition of historyBody.data as PublicationEdition[]) {
+    if (
+      !Number.isSafeInteger(edition.generation) ||
+      edition.generation < 1 ||
+      edition.generation >= previousGeneration ||
+      !/^[a-f0-9]{64}$/.test(edition.publication) ||
+      !Number.isSafeInteger(edition.previous_activation) ||
+      edition.previous_activation !== edition.generation - 1 ||
+      typeof edition.reason !== 'string' ||
+      typeof edition.catalog_revision !== 'string' ||
+      !/^\d{4}-\d{2}-\d{2}T/.test(edition.activated_at) ||
+      !Number.isFinite(Date.parse(edition.activated_at)) ||
+      !/^\d{4}-\d{2}-\d{2}T/.test(edition.data_cutoff) ||
+      !Number.isFinite(Date.parse(edition.data_cutoff))
+    )
+      throw new Error('Edição inválida no histórico de publicações.');
+    previousGeneration = edition.generation;
+    history.push(edition);
+  }
+  const historyNextCursor = historyBody.next_cursor ?? null;
+  if (
+    historyNextCursor !== null &&
+    (typeof historyNextCursor !== 'string' || historyNextCursor.length > 512)
+  )
+    throw new Error('Cursor inválido no histórico de publicações.');
+  if (
+    history[0]?.generation !== current.generation ||
+    history[0]?.publication !== id ||
+    history[0]?.catalog_revision !== current.catalog_revision
+  )
+    throw new Error('Histórico e publicação atual divergem.');
   async function pinned(path: string) {
     const body = await get(path);
     if (body.publication !== id || body.catalog_revision !== current.catalog_revision)
@@ -148,6 +206,8 @@ export async function capturePlatform(
     return body;
   }
   const { data: manifest } = await pinned(`publications/${id}`);
+  if (typeof manifest.selection_reason !== 'string')
+    throw new Error('Motivo da seleção da publicação inválido.');
   const catalog = manifest.catalog;
   if (catalog.revision !== current.catalog_revision || manifest.data_cutoff !== current.data_cutoff)
     throw new Error('Manifesto e ativação divergem.');
@@ -364,7 +424,10 @@ export async function capturePlatform(
   return {
     publication: id,
     cutoff: current.data_cutoff,
+    selectionReason: manifest.selection_reason,
     api: base.origin,
+    history,
+    historyNextCursor,
     themes: catalog.themes,
     indicators: catalog.indicators,
     selections,

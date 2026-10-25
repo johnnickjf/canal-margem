@@ -12,11 +12,27 @@ function fixture(change: (path: string, body: Record<string, unknown>) => void =
   return vi.fn<typeof fetch>(async (input) => {
     const url = new URL(String(input));
     const path = url.pathname;
-    const body: Record<string, unknown> = { publication: id, catalog_revision: 'catalog' };
-    if (path.endsWith('/current')) body.data_cutoff = cutoff;
+    const body: Record<string, unknown> =
+      path === '/api/v1/publications' ? {} : { publication: id, catalog_revision: 'catalog' };
+    if (path.endsWith('/current')) {
+      body.data_cutoff = cutoff;
+      body.generation = 1;
+    } else if (path === '/api/v1/publications')
+      body.data = [
+        {
+          generation: 1,
+          publication: id,
+          previous_activation: 0,
+          activated_at: cutoff,
+          reason: 'Edição de teste',
+          catalog_revision: 'catalog',
+          data_cutoff: cutoff,
+        },
+      ];
     else if (path.includes('/publications/'))
       body.data = {
         data_cutoff: cutoff,
+        selection_reason: 'Edição de teste',
         catalog: { revision: 'catalog', themes: [theme], indicators: [indicator], sources: [] },
       };
     else if (path === historyPath) body.data = [{ ...latest, series: 'tr4', geography: 'BR' }];
@@ -158,7 +174,7 @@ describe('linhagem de cálculos derivados', () => {
   const sourceID = '3'.repeat(64);
   const source = {
     observation: { id: sourceID, series: 'tr4', status: 'observed' },
-    origins: [{ url: 'https://ibge.gov.br/dados', retrieved_at: cutoff }],
+    origins: [{ url: 'https://ibge.gov.br/dados', retrieved_at: cutoff, sha256: 'b'.repeat(64) }],
   };
   const derived = {
     observation: { id: derivedID, status: 'observed' },

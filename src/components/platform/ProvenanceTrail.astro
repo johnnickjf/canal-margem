@@ -1,0 +1,129 @@
+---
+import { apiLink, platform } from '@/lib/platform';
+import type { Indicator, ObservationNode, Selection } from '@/lib/platform-build';
+interface Props {
+  indicator: Indicator;
+  selection: Selection;
+  index: number;
+}
+const { indicator, selection, index } = Astro.props;
+const { series, latest, inputs = [] } = selection;
+const node = latest.node;
+const source = platform.sources.find((item) => item.id === series.source);
+const observationURL = node ? apiLink(`observations/${node.observation.id}`) : undefined;
+const observationLink = (id: string) => apiLink(`observations/${id}`);
+const datasetURL = apiLink(`series/${encodeURIComponent(series.series)}`, {
+  geography: series.geography,
+});
+const observationSource = (item: ObservationNode) =>
+  platform.sources.find((sourceItem) => sourceItem.id === item.observation.context?.source);
+const safeExternal = (value: string) => {
+  try {
+    const url = new URL(value);
+    const sensitiveParameter = [...url.searchParams.keys()].some((name) =>
+      /token|key|secret|password|auth|credential|signature/i.test(name),
+    );
+    return url.protocol === 'https:' &&
+      !url.username &&
+      !url.password &&
+      !url.hash &&
+      !sensitiveParameter
+      ? url.href
+      : undefined;
+  } catch {
+    return undefined;
+  }
+};
+const origins = [...(node?.origins ?? []), ...inputs.flatMap((input) => input.origins)];
+const uniqueOrigins = [
+  ...new Map(origins.map((origin) => [`${origin.url}/${origin.sha256}`, origin])).values(),
+];
+---
+
+<article class="audit-trail" id={`${indicator.slug}-${index}`}>
+  <h3><a href={`/indicador/${indicator.slug}`}>{indicator.name}</a> · {series.geography === 'BR' ? 'Brasil' : series.geography} · {series.series}</h3>
+  <ol class="audit-trail__chain">
+    <li>
+      <strong>Indicador</strong>
+      <p><a href={`/indicador/${indicator.slug}`}>{indicator.name}</a> · {indicator.definition}</p>
+    </li>
+    <li>
+      <strong>Cálculo</strong>
+      {node?.evaluation?.definition ? <div>
+        <p>{node.evaluation.definition.methodology} · Versão {node.evaluation.request.calculation}/{node.evaluation.request.version}</p>
+        <p>Fórmula: <code>{node.evaluation.definition.formula}</code></p>
+        {Object.entries(node.evaluation.definition.parameters ?? {}).map(([name, value]) => <p>{name}: {value}</p>)}
+        {Object.entries(node.evaluation.request.inputs).length > 0 && <ul class="audit-trail__calculation-inputs">
+          {Object.entries(node.evaluation.request.inputs).map(([role, id]) => <li>
+            {role}: {observationLink(id) ? <a href={observationLink(id)}><code>{id}</code></a> : <code>{id}</code>}
+          </li>)}
+        </ul>}
+      </div> : <p>Série publicada sem cálculo derivado nesta etapa.</p>}
+    </li>
+    <li>
+      <strong>Série e observação</strong>
+      <p>{series.series} · {series.geography} · {latest.start} a {latest.end} · {latest.status === 'observed' && node?.observation.value != null ? `${node.observation.value} ${series.unit}` : `indisponível (${latest.reason ?? latest.status})`}</p>
+      {node && <p>ID da observação: <a href={observationURL}><code>{node.observation.id}</code> (JSON)</a></p>}
+    </li>
+    <li>
+      <strong>Dataset</strong>
+      <p>{series.dataset} · unidade {series.unit} · método {series.method}</p>
+      {datasetURL && <p><a href={datasetURL}>Consultar a série paginada desta publicação (JSON)</a></p>}
+    </li>
+    <li>
+      <strong>Fonte</strong>
+      {source ? <p><a href={source.url}>{source.name}</a></p> : <p>{series.source}</p>}
+      {node?.accepted_at && <p>Aceita em <time datetime={node.accepted_at}>{node.accepted_at}</time>.</p>}
+    </li>
+  </ol>
+
+  {uniqueOrigins.length > 0 && <section class="audit-trail__sources" aria-label="Capturas de origem">
+    <h4>Capturas de origem</h4>
+    <ul>{uniqueOrigins.map((origin) => <li>
+      {safeExternal(origin.url) ? <a href={safeExternal(origin.url)} rel="noopener noreferrer">Consulta original</a> : <span>URL original indisponível como link seguro</span>}
+      <span> · coletada em <time datetime={origin.retrieved_at}>{origin.retrieved_at}</time> · SHA-256 <code>{origin.sha256}</code></span>
+    </li>)}</ul>
+  </section>}
+
+  {inputs.length > 0 && <details class="audit-trail__inputs">
+    <summary>Ver observações usadas no cálculo ({inputs.length})</summary>
+    <ol>{inputs.map((input) => {
+      const inputSource = observationSource(input);
+      const inputURL = observationLink(input.observation.id);
+      return <li>
+        <p><strong>{input.observation.series}</strong> · {input.observation.geography} · {input.observation.start} a {input.observation.end} · ID <code>{input.observation.id}</code></p>
+        <p>{input.observation.status === 'observed' && input.observation.value != null
+          ? `Valor ${input.observation.value}${input.observation.context?.unit ? ` ${input.observation.context.unit}` : ''}`
+          : `indisponível (${input.observation.status})`}</p>
+        <p>{input.observation.context?.dataset ?? 'Dataset não identificado'} · {input.observation.context?.method ?? 'método não identificado'}</p>
+        {input.evaluation?.definition && <div class="audit-trail__derived">
+          <p><strong>Cálculo derivado:</strong> {input.evaluation.definition.methodology} · Versão {input.evaluation.request.calculation}/{input.evaluation.request.version}</p>
+          <p>Fórmula: <code>{input.evaluation.definition.formula}</code></p>
+          {Object.entries(input.evaluation.definition.parameters ?? {}).map(([name, value]) => <p>{name}: {value}</p>)}
+          {Object.entries(input.evaluation.request.inputs).length > 0 && <ul class="audit-trail__calculation-inputs">
+            {Object.entries(input.evaluation.request.inputs).map(([role, id]) => <li>
+              {role}: {observationLink(id) ? <a href={observationLink(id)}><code>{id}</code></a> : <code>{id}</code>}
+            </li>)}
+          </ul>}
+        </div>}
+        {inputURL && <p><a href={inputURL}>Auditar observação de entrada (JSON)</a></p>}
+        {inputSource && <p>Fonte: <a href={inputSource.url}>{inputSource.name}</a></p>}
+      </li>;
+    })}</ol>
+  </details>}
+</article>
+
+<style>
+  .audit-trail { border-top: var(--rule); padding-block: var(--space-lg); }
+  .audit-trail__chain { display: grid; gap: var(--space-md); padding-left: 1.5rem; }
+  .audit-trail__chain li { padding-left: 0.35rem; }
+  .audit-trail__chain li::marker { color: var(--red); font-family: var(--font-mono); }
+  .audit-trail__chain strong, .audit-trail h4 { font-family: var(--font-mono); }
+  .audit-trail p { margin-block: 0.35rem; }
+  .audit-trail code { overflow-wrap: anywhere; }
+  .audit-trail__sources, .audit-trail__inputs { margin-top: var(--space-md); }
+  .audit-trail__sources ul, .audit-trail__inputs ol { display: grid; gap: 0.6rem; }
+  .audit-trail__sources li span { overflow-wrap: anywhere; }
+  .audit-trail__derived { margin-block: var(--space-sm); padding-left: var(--space-md); border-left: var(--rule); }
+  .audit-trail__calculation-inputs { display: grid; gap: 0.25rem; margin-block: var(--space-sm); }
+</style>

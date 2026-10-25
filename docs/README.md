@@ -39,6 +39,8 @@ O Canal Margem está preparando a evolução do site editorial para uma platafor
 30. [Escala e performance](systems/performance.md): benchmarks locais, cache limitado de projeções verificadas, expiração de IPs por fila e avaliação das alternativas da fase 21.
 31. [Observabilidade e operação](systems/operations.md): métricas HTTP/cache, liveness/readiness, saúde de fontes, check para alertas e rotina de resposta da fase 22.
 
+32. [Auditoria e transparência pública](systems/audit-transparency.md): histórico de edições ativadas, trilha de proveniência por indicador e acesso aos datasets JSON da fase 23.
+
 Os quatro documentos numerados partem dos textos fornecidos pelo responsável pelo projeto e receberam ajustes de clareza e precisão. Definem o produto planejado; a auditoria do frontend registra a fase 0, e os documentos de sistemas registram as entregas posteriores. Exemplos do modelo e do design system são ilustrativos. As amostras em `data-sources/evidence/` são dados oficiais consultados na fase 4, com proveniência, sem integração ao site.
 
 ## Estado e limites
@@ -66,6 +68,7 @@ Os quatro documentos numerados partem dos textos fornecidos pelo responsável pe
 | Calculadora socioeconômica | Fase 20 implementada: orçamento familiar, cenário hipotético, referência de cesta por capital/mês e tempo individual, políticas e estudos relacionados; perfil sem persistência e sem efeito individual presumido |
 | Escala e performance | Fase 21 implementada e medida localmente: cache de projeções limitado por edição/tamanho/TTL, expiração de IPs por fila e avaliação de infraestrutura; sem capacidade de produção comprovada |
 | Observabilidade e operação | Fase 22 implementada localmente: endpoint Prometheus, métricas do cache, liveness/readiness, logs de duração de jobs e comando monitor com código de falha/webhook; coletor e notificações externas dependem de implantação |
+| Auditoria e transparência pública | Fase 23 implementada: histórico paginado de edições ativadas, página HTML com linhagem e links para observações, séries, manifestos e fontes; revisões de fonte aparecem quando incorporadas a uma edição |
 | Ingestão e persistência local | PoC da fase 5 retirada após substituição verificada na fase 9; 21 arquivos e 587 observações preservados |
 | Arquitetura de armazenamento | Fase 6 definida em cinco ADRs: PostgreSQL/Railway, R2, histórico/cache, backup nativo/reconstrução e portabilidade/custos; serviços ainda não implantados |
 | Pipeline do MVP | Fase 7 implementada e verificada localmente: cinco fontes, 6.375 observações, PostgreSQL e API compatível com S3 (R2 em produção), repetição, revisões, falhas e importação da PoC |
@@ -96,19 +99,8 @@ Manter detalhes de infraestrutura fora da visão e do documento de UX. Registrar
 
 ## Próxima entrega
 
-A [fase 22](systems/operations.md) acrescenta sinais locais e um check de saúde preparado para
-alertas pelo scheduler; coletor, notificações e operação remota dependem da implantação. A
-próxima etapa do roadmap é auditoria e transparência pública (fase 23). A [fase 21](systems/performance.md)
-mede o caminho local de leitura, implementa cache limitado e expiração de IPs por fila,
-e condiciona novas camadas de infraestrutura a demanda observada. A
-[calculadora da fase 20](systems/calculator.md) usa orçamento declarado, cenário hipotético,
-cesta publicada e políticas/estudos relacionados, com métodos explícitos e perfil sem persistência.
-A [fase 19](systems/evidence.md) associa estudos e avaliações, distinguindo análise contábil,
-estimativa causal condicionada e referência metodológica, com aplicabilidade e limites explícitos.
-A [fase 18](systems/policy-history.md) apresenta políticas, legislação, governos e vigências junto aos indicadores, sem atribuição automática de causalidade.
-A [fase 17](systems/work-time.md) traduz o preço da cesta em percentual do mínimo bruto e horas/minutos.
-O [comparador da fase 16](systems/comparator.md) permite comparar períodos com critérios explícitos e auditoria.
-A [busca da fase 15](systems/search.md) integra indicadores, Entenda e acervo editorial.
-A fase 10 fixa a mesma publicação no HTML e nas consultas, conforme o [contrato da API](systems/api.md).
-A PoC foi retirada após preservação e substituição verificadas. Implantação Railway/R2 e backup remoto continuam sem ensaio. A
-[regra permanente de SEO e descoberta por IA](../AGENTS.md) continua obrigatória.
+A fase 23 conclui as entregas previstas no roadmap local: o histórico público registra as
+edições ativadas e `/auditoria` liga cada valor publicado à série, dataset, fórmula e fonte.
+Publicação Railway/R2, alertas remotos, operação do frontend e indexação externa ainda dependem
+de implantação e observação. A [regra permanente de SEO e descoberta por IA](../AGENTS.md)
+continua obrigatória.

@@ -1,0 +1,88 @@
+---
+import PlatformLayout from '@/layouts/PlatformLayout.astro';
+import ProvenanceTrail from '@/components/platform/ProvenanceTrail.astro';
+import { platform } from '@/lib/platform';
+
+const manifestURL = (publication: string) =>
+  platform.api ? `${platform.api}/api/v1/publications/${publication}` : undefined;
+const historyURL = platform.api ? `${platform.api}/api/v1/publications?limit=200` : undefined;
+const nextHistoryURL =
+  platform.api && platform.historyNextCursor
+    ? `${platform.api}/api/v1/publications?${new URLSearchParams({ limit: '200', cursor: platform.historyNextCursor })}`
+    : undefined;
+const currentEdition = platform.history[0];
+---
+
+<PlatformLayout
+  title="Auditoria e transparência dos dados"
+  description="Consulte a origem dos indicadores do Margem: cálculo, série, dataset, fonte, edição publicada e referências verificáveis."
+>
+  <nav aria-label="Nesta página" class="audit-nav">
+    <a href="#edicoes">Edições publicadas</a>
+    <a href="#linhagem">Linhagem dos indicadores</a>
+  </nav>
+
+  <section id="edicoes" aria-labelledby="edicoes-title">
+    <h2 id="edicoes-title">Edições publicadas</h2>
+    <p>Uma edição é um conjunto imutável de dados escolhido e ativado pelo Margem. O corte informa até quando as capturas puderam entrar; não é a data de divulgação da fonte.</p>
+    {platform.publication && currentEdition ? <>
+      <dl class="audit-edition">
+        <dt>Edição em uso neste site</dt><dd><code>{platform.publication}</code></dd>
+        <dt>Geração ativa</dt><dd>{currentEdition.generation}</dd>
+        <dt>Corte de dados</dt><dd><time datetime={platform.cutoff ?? currentEdition.data_cutoff}>{platform.cutoff ?? currentEdition.data_cutoff}</time></dd>
+        <dt>Motivo da seleção</dt><dd>{platform.selectionReason ?? currentEdition.reason}</dd>
+      </dl>
+      {manifestURL(platform.publication) && <p><a href={manifestURL(platform.publication)}>Consultar manifesto e escopo completos desta edição (JSON)</a></p>}
+      {historyURL && <p><a href={historyURL}>Consultar o histórico paginado de edições (JSON)</a></p>}
+      {nextHistoryURL && <p><a href={nextHistoryURL}>Consultar edições anteriores à lista desta página (JSON)</a></p>}
+    </> : <p>Nenhuma publicação da API foi fixada neste build. As definições dos indicadores continuam disponíveis, sem valores de exemplo.</p>}
+
+    {platform.history.length > 0 && <div class="audit-table-wrap">
+      <table>
+        <caption>Ativações públicas registradas, da mais recente para a mais antiga</caption>
+        <thead><tr><th scope="col">Geração</th><th scope="col">Ativada em</th><th scope="col">Corte dos dados</th><th scope="col">Edição</th><th scope="col">Motivo</th></tr></thead>
+        <tbody>{platform.history.map((edition) => <tr>
+          <th scope="row">{edition.generation}</th>
+          <td><time datetime={edition.activated_at}>{edition.activated_at}</time></td>
+          <td><time datetime={edition.data_cutoff}>{edition.data_cutoff}</time></td>
+          <td>{manifestURL(edition.publication) ? <a href={manifestURL(edition.publication)}><code>{edition.publication}</code> · manifesto JSON</a> : <code>{edition.publication}</code>}</td>
+          <td>{edition.reason}</td>
+        </tr>)}</tbody>
+      </table>
+    </div>}
+
+    <aside class="audit-scope">
+      <h3>O que este histórico registra</h3>
+      <p>Ele registra as edições ativadas pelo Margem e preserva o identificador e o motivo de cada ativação. Não é um inventário de todas as revisões divulgadas pelas fontes oficiais. Uma revisão da fonte aparece quando uma nova edição seleciona dados aceitos que a incorporam; edições antigas permanecem consultáveis pelo manifesto.</p>
+    </aside>
+  </section>
+
+  <section id="linhagem" aria-labelledby="linhagem-title">
+    <h2 id="linhagem-title">Linhagem dos indicadores</h2>
+    <p>Em cada recorte, siga a afirmação até a observação publicada, o dataset, a fonte e a captura original. Cálculos derivados mostram a fórmula e as observações de entrada. Os links JSON usam a mesma edição fixada no HTML; séries longas podem exigir seguir o cursor de paginação da API.</p>
+    {platform.indicators.map((indicator) => {
+      const selections = platform.selections[indicator.slug] ?? [];
+      return <section class="audit-indicator" id={indicator.slug} aria-labelledby={`${indicator.slug}-title`}>
+        <h3 id={`${indicator.slug}-title`}><a href={`/indicador/${indicator.slug}`}>{indicator.name}</a></h3>
+        {selections.length > 0
+          ? selections.map((selection, index) => <ProvenanceTrail indicator={indicator} selection={selection} index={index} />)
+          : <p>Sem observações publicadas nesta edição. <a href={`/indicador/${indicator.slug}`}>Consultar definição, cobertura e limitações do indicador.</a></p>}
+      </section>;
+    })}
+  </section>
+</PlatformLayout>
+
+<style>
+  .audit-nav { display: flex; flex-wrap: wrap; gap: var(--space-md); margin-block: var(--space-lg); }
+  .audit-edition { display: grid; grid-template-columns: minmax(10rem, 0.35fr) 1fr; gap: 0.5rem 1rem; }
+  .audit-edition dt { font-family: var(--font-mono); }
+  .audit-edition dd { margin: 0; overflow-wrap: anywhere; }
+  .audit-table-wrap { max-width: 100%; overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; text-align: left; }
+  caption { padding-block: var(--space-sm); text-align: left; }
+  th, td { border-bottom: var(--rule); padding: 0.75rem; vertical-align: top; }
+  td, th { overflow-wrap: anywhere; }
+  .audit-scope { margin-block: var(--space-xl); padding: var(--space-md); border-left: var(--rule-strong); background: var(--surface); }
+  .audit-indicator { margin-top: var(--space-xl); }
+  @media (max-width: 600px) { .audit-edition { grid-template-columns: 1fr; gap: 0.2rem; } .audit-edition dd { margin-bottom: 0.6rem; } }
+</style>

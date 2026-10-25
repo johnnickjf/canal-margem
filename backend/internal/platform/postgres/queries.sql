@@ -125,5 +125,10 @@ UPDATE published.channel SET generation=$1 WHERE id='public';
 -- name: ResolvePublication :one
 SELECT a.*,p.catalog_revision,p.data_cutoff FROM published.activation a JOIN published.publication p ON p.id=a.publication
 WHERE a.activated_at <= sqlc.arg(at)::timestamptz ORDER BY a.generation DESC LIMIT 1;
+-- name: PublicationHistory :many
+SELECT a.generation,a.publication,a.previous_activation,a.activated_at,a.reason,p.catalog_revision,p.data_cutoff
+FROM published.activation a JOIN published.publication p ON p.id=a.publication
+WHERE sqlc.arg(before_generation)::bigint = 0 OR a.generation < sqlc.arg(before_generation)::bigint
+ORDER BY a.generation DESC LIMIT sqlc.arg(page_limit)::integer;
 -- name: WasPublicationActivated :one
 SELECT EXISTS(SELECT 1 FROM published.activation WHERE publication=$1);

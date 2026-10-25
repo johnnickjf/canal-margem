@@ -39,7 +39,7 @@ const changes = selections.filter(
 ---
 <PlatformLayout title={indicator.name} description={indicator.question}>
   <p><a href={`/tema/${theme.slug}`}>{theme.name}</a> / {indicator.role === 'primary' ? 'Indicador principal' : 'Medida auxiliar'}</p>
-  <nav class="indicator-nav" aria-label="Nesta página"><a href="#aconteceu">O que aconteceu</a><a href="#significa">O que significa</a><a href="#dados">Dados e metodologia</a><a href="#politicas">Políticas e história</a><a href="#relacionados">Indicadores relacionados</a></nav>
+  <nav class="indicator-nav" aria-label="Nesta página"><a href="#aconteceu">O que aconteceu</a><a href="#significa">O que significa</a><a href="#dados">Dados e metodologia</a><a href="#politicas">Políticas e história</a><a href="#relacionados">Indicadores relacionados</a><a href={`/auditoria#${indicator.slug}`}>Auditoria e fontes</a></nav>
   <section id="aconteceu"><h2>O que aconteceu?</h2>
     <p>Os valores abaixo mostram o último período de cada recorte desta edição, inclusive quando indisponível. As datas de referência podem diferir entre séries.</p>
     {selections.length === 0 && <p>Sem dados publicados para este indicador nesta edição.</p>}

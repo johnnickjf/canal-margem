@@ -149,6 +149,7 @@ type Activation struct {
 	Publication        string    `json:"publication"`
 	PreviousActivation int64     `json:"previous_activation"`
 	ActivatedAt        time.Time `json:"activated_at"`
+	Reason             string    `json:"reason"`
 	CatalogRevision    string    `json:"catalog_revision"`
 	DataCutoff         time.Time `json:"data_cutoff"`
 }
