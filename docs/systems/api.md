@@ -229,7 +229,13 @@ substitui limite de tráfego distribuído. Não há benchmark de carga de produ�
 Manifestos/projeções têm até 16 MiB, 20 mil recortes, 30 mil dependências e profundidade 32.
 A API lê a projeção completa, limitada e verificada por hash, antes de filtrar/paginar.
 Isso simplifica consistência para o volume atual; leitura seletiva e projeções particionadas
-podem ser avaliadas se volume/latência medidos exigirem. Não há cache residente adicional.
+podem ser avaliadas se volume/latência medidos exigirem. A [fase 21](performance.md)
+adiciona cache residente de projeções verificadas: até duas edições, orçamento serializado
+de 16 MiB e validade de 60 s, sem renovação em acertos. A autorização da publicação continua
+consultada no PostgreSQL em cada leitura. Objeto removido pode permanecer legível no cache
+até essa validade; depois dela, falhas retornam 503 sem conteúdo vencido. Mapas e ponteiros
+do snapshot são compartilhados somente para leitura. Perfis/resultados pessoais e aliases
+não entram nesse cache. `API_SNAPSHOT_CACHE=false` o desativa no comando `serve`.
 
 ## Configuração e verificação
 

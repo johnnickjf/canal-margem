@@ -1102,6 +1102,17 @@ Ferramenta baseada em indicadores auditáveis e metodologia explícita.
 
 ## Fase 21 — Escala e performance
 
+### Estado
+
+Implementada em [Escala e performance](systems/performance.md): benchmarks locais
+reproduzíveis, avaliação das nove alternativas e duas otimizações medidas. O cache de
+projeções verificadas tem teto de duas edições/16 MiB serializados e TTL de 60 s, com
+autorização por publicação no PostgreSQL em cada leitura; aliases e perfis pessoais ficam
+fora dele. A expiração de IPs usa fila limitada em vez de varredura completa por requisição.
+Verificação local cobre concorrência, expiração, falhas, isolamento e fluxo PostgreSQL/S3.
+Os resultados sintéticos não comprovam carga de produção. CDN, réplicas, filas e banco
+analítico permanecem condicionados a demanda observada; implantação remota continua posterior.
+
 ### Objetivo
 
 Preparar o sistema conforme uso real justificar.

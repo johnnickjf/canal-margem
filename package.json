@@ -24,6 +24,7 @@
     "test:e2e:ui": "playwright test --ui",
     "pipeline": "node backend/scripts/run.mjs",
     "test:backend": "sh backend/scripts/check.sh",
+    "bench:backend": "go -C backend test ./internal/api -run '^$' -bench 'Benchmark(RateLimiter|PublicationAPI|CachedPublicationAPI)$' -benchmem -benchtime=300ms -count=3",
     "generate:backend": "go -C backend generate ./internal/platform/postgres"
   },
   "dependencies": {

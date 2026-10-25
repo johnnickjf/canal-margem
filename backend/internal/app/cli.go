@@ -115,7 +115,11 @@ func Run(ctx context.Context, args []string, stdout, stderr io.Writer) int {
 		if e != nil {
 			return fail(e)
 		}
-		if e = serve(ctx, publications.Queries{Pool: pool, Store: store}, stdout); e != nil {
+		cache, e := snapshotCache(store)
+		if e != nil {
+			return fail(e)
+		}
+		if e = serve(ctx, publications.Queries{Pool: pool, Store: store, Cache: cache}, stdout); e != nil {
 			return fail(e)
 		}
 		return 0

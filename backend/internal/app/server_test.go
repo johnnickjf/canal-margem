@@ -53,3 +53,13 @@ func TestServerStartsAndShutsDown(t *testing.T) {
 		t.Fatal("server did not shut down")
 	}
 }
+
+func TestSnapshotCacheConfiguration(t *testing.T) {
+	for _, value := range []string{"", "true", "false", "invalid"} {
+		t.Setenv("API_SNAPSHOT_CACHE", value)
+		cache, err := snapshotCache(nil)
+		if (err != nil) != (value == "invalid") || (cache != nil) != (value == "" || value == "true") {
+			t.Fatalf("%q: cache=%v err=%v", value, cache, err)
+		}
+	}
+}

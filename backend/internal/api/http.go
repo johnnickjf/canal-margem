@@ -2,6 +2,7 @@
 package api
 
 import (
+	"container/list"
 	"context"
 	"encoding/json"
 	"errors"
@@ -20,16 +21,19 @@ import (
 
 type Reader interface {
 	Resolve(context.Context, time.Time) (publications.Activation, error)
+	// Snapshot returns borrowed immutable data. Handlers must not mutate it.
 	Snapshot(context.Context, string) (publications.Snapshot, error)
 }
 type API struct {
 	Reader  Reader
 	Rate    int
 	mu      sync.Mutex
-	clients map[string]window
+	clients map[string]*list.Element
+	windows list.List
 	slots   chan struct{}
 }
 type window struct {
+	ip    string
 	at    time.Time
 	count int
 }
@@ -47,12 +51,12 @@ type errorBody struct {
 }
 
 func New(reader Reader) http.Handler {
-	a := &API{Reader: reader, Rate: 120, clients: map[string]window{}, slots: make(chan struct{}, 8)}
+	a := &API{Reader: reader, Rate: 120, slots: make(chan struct{}, 8)}
 	return a.Handler()
 }
 func (a *API) Handler() http.Handler {
 	if a.clients == nil {
-		a.clients = map[string]window{}
+		a.clients = map[string]*list.Element{}
 	}
 	if a.slots == nil {
 		a.slots = make(chan struct{}, 8)
@@ -151,26 +155,38 @@ func (a *API) allow(remote string) bool {
 	if e != nil {
 		ip = remote
 	}
-	now := time.Now()
+	return a.allowAt(ip, time.Time{})
+}
+
+func (a *API) allowAt(ip string, now time.Time) bool {
 	a.mu.Lock()
 	defer a.mu.Unlock()
-	for key, value := range a.clients {
-		if now.Sub(value.at) >= time.Minute {
-			delete(a.clients, key)
-		}
+	if now.IsZero() {
+		now = time.Now()
 	}
-	value, exists := a.clients[ip]
-	if !exists {
+	// Fixed windows expire in insertion order. Each IP is removed once rather
+	// than scanning every live IP under the mutex on every request.
+	for a.windows.Front() != nil {
+		entry := a.windows.Front()
+		if now.Sub(entry.Value.(*window).at) < time.Minute {
+			break
+		}
+		delete(a.clients, entry.Value.(*window).ip)
+		a.windows.Remove(entry)
+	}
+	entry := a.clients[ip]
+	if entry == nil {
 		if len(a.clients) >= 10000 {
 			return false
 		}
-		value.at = now
+		entry = a.windows.PushBack(&window{ip: ip, at: now})
+		a.clients[ip] = entry
 	}
+	value := entry.Value.(*window)
 	if a.Rate > 0 && value.count >= a.Rate {
 		return false
 	}
 	value.count++
-	a.clients[ip] = value
 	return true
 }
 func (a *API) fail(w http.ResponseWriter, e error) {

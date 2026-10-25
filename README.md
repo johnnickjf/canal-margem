@@ -93,8 +93,11 @@ hipóteses e limites, associados às políticas e aos indicadores sem atribuiç�
 de efeitos. A fase 20 implementa a [calculadora socioeconômica](docs/systems/calculator.md):
 orçamento familiar, cenário hipotético de renda, cesta por capital/mês e tempo pela renda
 individual declarada, com políticas e estudos relacionados, auditoria e perfil sem persistência.
-O catálogo atual não permite estimar efeitos individuais. A próxima etapa é escala e performance,
-na fase 21; implantação Railway/R2 permanece posterior.
+O catálogo atual não permite estimar efeitos individuais. A fase 21 implementa
+[escala e performance](docs/systems/performance.md): benchmarks reproduzíveis, cache limitado
+de projeções verificadas e expiração de IPs sem varredura completa por requisição. A avaliação
+local adia novas camadas de infraestrutura até haver demanda medida. A próxima etapa é
+observabilidade e operação, na fase 22; implantação Railway/R2 permanece posterior.
 
 ```bash
 MARGEM_API_URL=http://127.0.0.1:8080 pnpm build  # API já operando, origem sem caminho
@@ -132,6 +135,7 @@ pnpm test:unit      # testes unitários de datas, formatação e títulos
 pnpm test:coverage  # relatório V8 e limites de cobertura por módulo
 pnpm test:e2e       # lint, tipos, build e Playwright
 pnpm test:backend   # gofmt + vet + go test -race; serviços por variáveis de teste
+pnpm bench:backend  # microbenchmarks locais de CPU, cache e limitador; sem serviços
 pnpm test           # backend + coverage + test:e2e
 ```
 

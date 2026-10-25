@@ -1,0 +1,33 @@
+goos: linux
+goarch: amd64
+pkg: margem/backend/internal/api
+cpu: AMD Ryzen 7 5700                               
+BenchmarkRateLimiter/1-16     	 2830220	       126.7 ns/op	       0 B/op	       0 allocs/op
+BenchmarkRateLimiter/1-16     	 2810643	       128.0 ns/op	       0 B/op	       0 allocs/op
+BenchmarkRateLimiter/1-16     	 2820432	       126.7 ns/op	       0 B/op	       0 allocs/op
+BenchmarkRateLimiter/1000-16  	   30753	     11794 ns/op	       0 B/op	       0 allocs/op
+BenchmarkRateLimiter/1000-16  	   31420	     11591 ns/op	       0 B/op	       0 allocs/op
+BenchmarkRateLimiter/1000-16  	   31374	     11530 ns/op	       0 B/op	       0 allocs/op
+BenchmarkRateLimiter/10000-16 	    3333	    108602 ns/op	       0 B/op	       0 allocs/op
+BenchmarkRateLimiter/10000-16 	    3309	    109791 ns/op	       0 B/op	       0 allocs/op
+BenchmarkRateLimiter/10000-16 	    3315	    108031 ns/op	       0 B/op	       0 allocs/op
+BenchmarkPublicationAPI/slots=100/decode=false-16         	    3678	     91623 ns/op	   58794 B/op	     709 allocs/op
+BenchmarkPublicationAPI/slots=100/decode=false-16         	    4117	     86972 ns/op	   58757 B/op	     709 allocs/op
+BenchmarkPublicationAPI/slots=100/decode=false-16         	    3924	     84839 ns/op	   58743 B/op	     709 allocs/op
+BenchmarkPublicationAPI/slots=100/decode=true-16          	     321	   1121313 ns/op	  264744 B/op	    4873 allocs/op
+BenchmarkPublicationAPI/slots=100/decode=true-16          	     315	   1151450 ns/op	  264829 B/op	    4873 allocs/op
+BenchmarkPublicationAPI/slots=100/decode=true-16          	     298	   1180294 ns/op	  264713 B/op	    4873 allocs/op
+BenchmarkPublicationAPI/slots=6375/decode=false-16        	     340	   1002272 ns/op	  775729 B/op	    7128 allocs/op
+BenchmarkPublicationAPI/slots=6375/decode=false-16        	     357	   1027281 ns/op	  776777 B/op	    7128 allocs/op
+BenchmarkPublicationAPI/slots=6375/decode=false-16        	     314	   1037052 ns/op	  777356 B/op	    7128 allocs/op
+BenchmarkPublicationAPI/slots=6375/decode=true-16         	       6	  55558777 ns/op	12263670 B/op	  224707 allocs/op
+BenchmarkPublicationAPI/slots=6375/decode=true-16         	       6	  53789015 ns/op	12251761 B/op	  224703 allocs/op
+BenchmarkPublicationAPI/slots=6375/decode=true-16         	       6	  53533968 ns/op	12262744 B/op	  224706 allocs/op
+BenchmarkPublicationAPI/slots=20000/decode=false-16       	     265	   1236581 ns/op	 1215887 B/op	    7635 allocs/op
+BenchmarkPublicationAPI/slots=20000/decode=false-16       	     292	   1191033 ns/op	 1215269 B/op	    7635 allocs/op
+BenchmarkPublicationAPI/slots=20000/decode=false-16       	     294	   1217559 ns/op	 1214325 B/op	    7635 allocs/op
+BenchmarkPublicationAPI/slots=20000/decode=true-16        	       2	 171953409 ns/op	36799548 B/op	  688570 allocs/op
+BenchmarkPublicationAPI/slots=20000/decode=true-16        	       2	 156224448 ns/op	36799564 B/op	  688570 allocs/op
+BenchmarkPublicationAPI/slots=20000/decode=true-16        	       2	 161464520 ns/op	36766664 B/op	  688562 allocs/op
+PASS
+ok  	margem/backend/internal/api	11.256s

@@ -7,6 +7,11 @@ Monólito modular em Go. A fase 7 implementa os pipelines privados; a fase 8 acr
 [manual de operação](../docs/systems/pipelines.md) e no
 [ADR-0007](../docs/adr/0007-go-modular-backend.md).
 
+A [fase 21](../docs/systems/performance.md) acrescenta cache limitado de projeções
+verificadas no comando `serve` e expiração de IPs por fila. O cache pode ser desativado
+com `API_SNAPSHOT_CACHE=false`; não inclui aliases, perfis ou resultados pessoais.
+`pnpm bench:backend` mede CPU/alocações locais sem PostgreSQL/S3 e não comprova capacidade remota.
+
 ## Organização
 
 ```text

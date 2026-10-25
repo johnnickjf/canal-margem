@@ -1,0 +1,51 @@
+goos: linux
+goarch: amd64
+pkg: margem/backend/internal/api
+cpu: AMD Ryzen 7 5700                               
+BenchmarkRateLimiter/1-16           	 4812412	        74.47 ns/op	       0 B/op	       0 allocs/op
+BenchmarkRateLimiter/1-16           	 4813645	        75.12 ns/op	       0 B/op	       0 allocs/op
+BenchmarkRateLimiter/1-16           	 4163223	        82.12 ns/op	       0 B/op	       0 allocs/op
+BenchmarkRateLimiter/1000-16        	 4544572	        79.39 ns/op	       0 B/op	       0 allocs/op
+BenchmarkRateLimiter/1000-16        	 4562914	        78.85 ns/op	       0 B/op	       0 allocs/op
+BenchmarkRateLimiter/1000-16        	 4524406	        79.23 ns/op	       0 B/op	       0 allocs/op
+BenchmarkRateLimiter/10000-16       	 4549207	        80.76 ns/op	       0 B/op	       0 allocs/op
+BenchmarkRateLimiter/10000-16       	 4577343	        78.53 ns/op	       0 B/op	       0 allocs/op
+BenchmarkRateLimiter/10000-16       	 4540251	        79.20 ns/op	       0 B/op	       0 allocs/op
+BenchmarkPublicationAPI/slots=100/decode=false-16         	    3744	     92781 ns/op	     89892 projection-bytes	   58764 B/op	     709 allocs/op
+BenchmarkPublicationAPI/slots=100/decode=false-16         	    4057	     90082 ns/op	     89892 projection-bytes	   58767 B/op	     709 allocs/op
+BenchmarkPublicationAPI/slots=100/decode=false-16         	    4113	     93447 ns/op	     89892 projection-bytes	   58793 B/op	     709 allocs/op
+BenchmarkPublicationAPI/slots=100/decode=true-16          	     310	   1159244 ns/op	     89892 projection-bytes	  264887 B/op	    4873 allocs/op
+BenchmarkPublicationAPI/slots=100/decode=true-16          	     306	   1209427 ns/op	     89892 projection-bytes	  264888 B/op	    4873 allocs/op
+BenchmarkPublicationAPI/slots=100/decode=true-16          	     309	   1165826 ns/op	     89892 projection-bytes	  264784 B/op	    4873 allocs/op
+BenchmarkPublicationAPI/slots=6375/decode=false-16        	     362	    942380 ns/op	   4494942 projection-bytes	  775978 B/op	    7128 allocs/op
+BenchmarkPublicationAPI/slots=6375/decode=false-16        	     358	    952989 ns/op	   4494942 projection-bytes	  776763 B/op	    7128 allocs/op
+BenchmarkPublicationAPI/slots=6375/decode=false-16        	     381	    937968 ns/op	   4494942 projection-bytes	  776415 B/op	    7128 allocs/op
+BenchmarkPublicationAPI/slots=6375/decode=true-16         	       6	  55986448 ns/op	   4494942 projection-bytes	12251002 B/op	  224703 allocs/op
+BenchmarkPublicationAPI/slots=6375/decode=true-16         	       6	  54176439 ns/op	   4494942 projection-bytes	12250961 B/op	  224703 allocs/op
+BenchmarkPublicationAPI/slots=6375/decode=true-16         	       6	  53974226 ns/op	   4494942 projection-bytes	12262722 B/op	  224706 allocs/op
+BenchmarkPublicationAPI/slots=20000/decode=false-16       	     267	   1246581 ns/op	  14059692 projection-bytes	 1214372 B/op	    7635 allocs/op
+BenchmarkPublicationAPI/slots=20000/decode=false-16       	     291	   1219390 ns/op	  14059692 projection-bytes	 1213902 B/op	    7634 allocs/op
+BenchmarkPublicationAPI/slots=20000/decode=false-16       	     286	   1205757 ns/op	  14059692 projection-bytes	 1214639 B/op	    7635 allocs/op
+BenchmarkPublicationAPI/slots=20000/decode=true-16        	       2	 177550464 ns/op	  14059692 projection-bytes	36766552 B/op	  688562 allocs/op
+BenchmarkPublicationAPI/slots=20000/decode=true-16        	       2	 168105294 ns/op	  14059692 projection-bytes	36766552 B/op	  688562 allocs/op
+BenchmarkPublicationAPI/slots=20000/decode=true-16        	       2	 164179588 ns/op	  14059692 projection-bytes	36766552 B/op	  688562 allocs/op
+BenchmarkCachedPublicationAPI/slots=100/cold=false-16     	    3856	     93002 ns/op	     89892 projection-bytes	   58872 B/op	     709 allocs/op
+BenchmarkCachedPublicationAPI/slots=100/cold=false-16     	    3999	     92237 ns/op	     89892 projection-bytes	   58896 B/op	     709 allocs/op
+BenchmarkCachedPublicationAPI/slots=100/cold=false-16     	    4062	     93228 ns/op	     89892 projection-bytes	   58904 B/op	     709 allocs/op
+BenchmarkCachedPublicationAPI/slots=100/cold=true-16      	     313	   1193780 ns/op	     89892 projection-bytes	  266643 B/op	    4883 allocs/op
+BenchmarkCachedPublicationAPI/slots=100/cold=true-16      	     300	   1185849 ns/op	     89892 projection-bytes	  266782 B/op	    4883 allocs/op
+BenchmarkCachedPublicationAPI/slots=100/cold=true-16      	     312	   1171308 ns/op	     89892 projection-bytes	  266653 B/op	    4883 allocs/op
+BenchmarkCachedPublicationAPI/slots=6375/cold=false-16    	     370	    928305 ns/op	   4494942 projection-bytes	  773499 B/op	    7127 allocs/op
+BenchmarkCachedPublicationAPI/slots=6375/cold=false-16    	     391	    916649 ns/op	   4494942 projection-bytes	  774552 B/op	    7127 allocs/op
+BenchmarkCachedPublicationAPI/slots=6375/cold=false-16    	     391	    918007 ns/op	   4494942 projection-bytes	  773711 B/op	    7127 allocs/op
+BenchmarkCachedPublicationAPI/slots=6375/cold=true-16     	       6	  53597781 ns/op	   4494942 projection-bytes	12276730 B/op	  224720 allocs/op
+BenchmarkCachedPublicationAPI/slots=6375/cold=true-16     	       6	  52474982 ns/op	   4494942 projection-bytes	12242637 B/op	  224711 allocs/op
+BenchmarkCachedPublicationAPI/slots=6375/cold=true-16     	       6	  52605438 ns/op	   4494942 projection-bytes	12264589 B/op	  224716 allocs/op
+BenchmarkCachedPublicationAPI/slots=20000/cold=false-16   	     277	   1242667 ns/op	  14059692 projection-bytes	 1213691 B/op	    7634 allocs/op
+BenchmarkCachedPublicationAPI/slots=20000/cold=false-16   	     279	   1245344 ns/op	  14059692 projection-bytes	 1213437 B/op	    7634 allocs/op
+BenchmarkCachedPublicationAPI/slots=20000/cold=false-16   	     283	   1218467 ns/op	  14059692 projection-bytes	 1214338 B/op	    7634 allocs/op
+BenchmarkCachedPublicationAPI/slots=20000/cold=true-16    	       2	 171613724 ns/op	  14059692 projection-bytes	36804864 B/op	  688584 allocs/op
+BenchmarkCachedPublicationAPI/slots=20000/cold=true-16    	       2	 184746482 ns/op	  14059692 projection-bytes	36804856 B/op	  688584 allocs/op
+BenchmarkCachedPublicationAPI/slots=20000/cold=true-16    	       2	 164049578 ns/op	  14059692 projection-bytes	36804856 B/op	  688584 allocs/op
+PASS
+ok  	margem/backend/internal/api	17.618s

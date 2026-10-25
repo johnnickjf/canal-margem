@@ -8,10 +8,27 @@ import (
 	"net"
 	"net/http"
 	"os"
+	"strconv"
 	"time"
 
 	"margem/backend/internal/api"
+	"margem/backend/internal/publications"
 )
+
+func snapshotCache(store publications.ProjectionStore) (*publications.SnapshotCache, error) {
+	enabled := true
+	if value := os.Getenv("API_SNAPSHOT_CACHE"); value != "" {
+		var err error
+		enabled, err = strconv.ParseBool(value)
+		if err != nil {
+			return nil, errors.New("API_SNAPSHOT_CACHE deve ser true ou false")
+		}
+	}
+	if !enabled {
+		return nil, nil
+	}
+	return publications.NewSnapshotCache(store, publications.MaxProjection, time.Minute), nil
+}
 
 func serve(ctx context.Context, reader api.Reader, stdout io.Writer) error {
 	addr := os.Getenv("API_ADDR")

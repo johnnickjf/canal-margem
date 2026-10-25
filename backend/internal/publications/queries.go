@@ -2,7 +2,6 @@ package publications
 
 import (
 	"context"
-	"encoding/json"
 	"errors"
 	"time"
 
@@ -14,6 +13,7 @@ import (
 type Queries struct {
 	Pool  *pgxpool.Pool
 	Store ProjectionStore
+	Cache *SnapshotCache
 }
 
 func (q Queries) Resolve(ctx context.Context, at time.Time) (Activation, error) {
@@ -29,6 +29,9 @@ func (q Queries) Resolve(ctx context.Context, at time.Time) (Activation, error) 
 	}
 	return Activation{a.Generation, a.Publication, a.PreviousActivation, a.ActivatedAt.Time, a.CatalogRevision, a.DataCutoff.Time}, nil
 }
+
+// Snapshot returns a read-only view. With Cache configured its maps, slices and
+// pointers may be shared by concurrent requests; callers must not mutate them.
 func (q Queries) Snapshot(ctx context.Context, id string) (Snapshot, error) {
 	if !hashPattern.MatchString(id) {
 		return Snapshot{}, Fail("invalid_request", "ID de publicação inválido")
@@ -40,16 +43,8 @@ func (q Queries) Snapshot(ctx context.Context, id string) (Snapshot, error) {
 	if e != nil {
 		return Snapshot{}, e
 	}
-	if q.Store == nil {
-		return Snapshot{}, Fail("temporarily_unavailable", "armazenamento não configurado")
+	if q.Cache != nil {
+		return q.Cache.Load(ctx, p.ProjectionKey, p.ProjectionSha256, p.ProjectionBytes)
 	}
-	b, e := q.Store.LoadProjection(ctx, p.ProjectionKey, p.ProjectionSha256, p.ProjectionBytes)
-	if e != nil {
-		return Snapshot{}, e
-	}
-	var snapshot Snapshot
-	if e = json.Unmarshal(b, &snapshot); e != nil {
-		return Snapshot{}, e
-	}
-	return snapshot, nil
+	return loadSnapshot(ctx, q.Store, p.ProjectionKey, p.ProjectionSha256, p.ProjectionBytes)
 }
