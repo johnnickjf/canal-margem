@@ -136,3 +136,13 @@ e histórico, erro/retry, edição antiga e descarte de resposta atrasada. Os fl
 em desktop e celular com axe, teclado, capturas, verificação de largura e catálogo sem
 JavaScript. A permissão de rede local do Chromium é concedida apenas ao contexto que
 acessa a fixture HTTP em loopback; a configuração da aplicação não muda.
+
+
+## Tempo de trabalho
+
+A [fase 17](work-time.md) verifica o handler HTTP com CV5/1 e price-income/1, os bloqueios
+de dados/método e o arredondamento de apresentação. A integração local percorre ingestão,
+aceitação, cálculo, publicação, ativação e revisão, preservando a leitura da edição anterior.
+A captura estática rejeita conversões de outro recorte ou sem referências; o build isolado
+verifica reais, percentual, horas/minutos, ausência explícita, auditoria por teclado e links
+da publicação, em desktop/celular sem JavaScript, com SEO, axe e capturas.

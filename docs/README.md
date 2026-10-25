@@ -31,6 +31,7 @@ O Canal Margem está preparando a evolução do site editorial para uma platafor
 23. [Camada Entenda](systems/entenda.md): 11 conceitos econômicos, referências, exemplos hipotéticos, relações e painel contextual da fase 14.
 24. [Busca por linguagem cotidiana](systems/search.md): aliases, filtros, índice estático integrado, recuperação de erros e catálogo em HTML da fase 15.
 25. [Comparador](systems/comparator.md): períodos, temas, indicadores e recortes, cálculos pela API, critérios versionados e auditoria da fase 16.
+26. [Tempo de trabalho](systems/work-time.md): cesta em reais, percentual do mínimo bruto e horas/minutos com referência e auditoria da fase 17.
 
 Os quatro documentos numerados partem dos textos fornecidos pelo responsável pelo projeto e receberam ajustes de clareza e precisão. Definem o produto planejado; a auditoria do frontend registra a fase 0, e os documentos de sistemas registram as entregas posteriores. Exemplos do modelo e do design system são ilustrativos. As amostras em `data-sources/evidence/` são dados oficiais consultados na fase 4, com proveniência, sem integração ao site.
 
@@ -52,6 +53,7 @@ Os quatro documentos numerados partem dos textos fornecidos pelo responsável pe
 | Páginas de indicador | Fase 13 implementada: valores por recorte, tendências, histórico paginado, gráfico SVG, tabela, interpretação e auditoria |
 | Camada Entenda | Fase 14 implementada: índice, 11 conceitos, referências e painel contextual com navegação sem JavaScript |
 | Busca por linguagem cotidiana | Fase 15 implementada: aliases, filtros, indicadores, Entenda e acervo; catálogo navegável sem JavaScript |
+| Tempo de trabalho | Fase 17 implementada: cesta em reais, percentual do mínimo bruto e horas/minutos; inputs da mesma publicação/mês e auditoria |
 | Comparador interativo | Fase 16 implementada: seleção múltipla, cálculos e critérios versionados no backend, resultados expansíveis, publicação fixada e recuperação de erros |
 | Ingestão e persistência local | PoC da fase 5 retirada após substituição verificada na fase 9; 21 arquivos e 587 observações preservados |
 | Arquitetura de armazenamento | Fase 6 definida em cinco ADRs: PostgreSQL/Railway, R2, histórico/cache, backup nativo/reconstrução e portabilidade/custos; serviços ainda não implantados |
@@ -65,7 +67,7 @@ As rotas editoriais `/temas/:slug`, `/videos/:slug` e `/analises/:slug` convivem
 [shell da fase 10](systems/platform-shell.md). `/temas` mantém os 12 pilares editoriais;
 `/tema` apresenta as cinco dimensões socioeconômicas, sem substituir URLs existentes.
 
-O conjunto sugerido de indicadores em UX é uma lista de candidatos. A [seleção da fase 3](systems/mvp-indicators.md) fixa 15 conceitos principais; cesta e tempo por cesta têm recorte por capital. O critério de MVP exige pelo menos 10 indicadores disponíveis e tradução de preços em tempo de trabalho, cuja primeira entrega será a cesta na referência do salário mínimo. Os cálculos de TR2 e CV5 estão implementados na fase 8; o shell da fase 10 apresenta recortes quando há uma publicação configurada. A publicação remota e as próximas camadas de produto permanecem posteriores. O [modelo da fase 2](systems/data-model.md) fixa `dataset`, `revision_status`, `methodology_version` e `calculation_version`, distingue revisão de atualização e define `derived` como observações calculadas e `published` como projeção validada de observações externas ou derivadas. Essas camadas não determinam schemas físicos. Exemplos de API com `:id` e `:slug` também não fixam o contrato final.
+O conjunto sugerido de indicadores em UX é uma lista de candidatos. A [seleção da fase 3](systems/mvp-indicators.md) fixa 15 conceitos principais; cesta e tempo por cesta têm recorte por capital. O critério de MVP exige pelo menos 10 indicadores disponíveis e tradução de preços em tempo de trabalho, cuja primeira entrega é a cesta na referência do salário mínimo, implementada na [fase 17](systems/work-time.md). Os cálculos de TR2 e CV5 estão implementados na fase 8; o shell da fase 10 apresenta recortes quando há uma publicação configurada. A publicação remota e as próximas camadas de produto permanecem posteriores. O [modelo da fase 2](systems/data-model.md) fixa `dataset`, `revision_status`, `methodology_version` e `calculation_version`, distingue revisão de atualização e define `derived` como observações calculadas e `published` como projeção validada de observações externas ou derivadas. Essas camadas não determinam schemas físicos. Exemplos de API com `:id` e `:slug` também não fixam o contrato final.
 
 O [manual de marca](brand/MARGEM_Manual_Marca_Conteudo_Site.md) define a direção visual, não certifica sua implementação. Diferenças observadas, limites de contraste e pendências do conteúdo de exemplo estão na [auditoria do frontend](systems/frontend.md).
 
@@ -83,7 +85,8 @@ Manter detalhes de infraestrutura fora da visão e do documento de UX. Registrar
 
 ## Próxima entrega
 
-Implementar a tradução de preços em tempo de trabalho da fase 17.
+Implementar políticas públicas e linha histórica da fase 18, sem atribuição automática de causalidade.
+A [fase 17](systems/work-time.md) traduz o preço da cesta em percentual do mínimo bruto e horas/minutos.
 O [comparador da fase 16](systems/comparator.md) permite comparar períodos com critérios explícitos e auditoria.
 A [busca da fase 15](systems/search.md) integra indicadores, Entenda e acervo editorial.
 A fase 10 fixa a mesma publicação no HTML e nas consultas, conforme o [contrato da API](systems/api.md).

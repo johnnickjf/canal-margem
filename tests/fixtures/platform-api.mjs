@@ -33,6 +33,37 @@ const inputNode = (id, start, end, value) => ({
 });
 const currentInput = inputNode('d'.repeat(64), '2025-01-01', '2025-03-31', '0.000000000000000001');
 const previousInput = inputNode('e'.repeat(64), '2024-01-01', '2024-03-31', '0.000000000000000002');
+const nominalInput = {
+  ...currentInput,
+  observation: {
+    ...currentInput.observation,
+    id: '8'.repeat(64),
+    series: 'minimum-nominal',
+    start: '2025-12-01',
+    end: '2025-12-31',
+    value: '1500',
+  },
+};
+const basketInput = {
+  ...currentInput,
+  observation: {
+    ...currentInput.observation,
+    id: 'f'.repeat(64),
+    series: 'cv4',
+    start: '2025-12-01',
+    end: '2025-12-31',
+    value: '800.123456789012',
+  },
+};
+const workEvaluation = (calculation, formula, value) => ({
+  definition: { formula, methodology: 'Mínimo nacional bruto e referência de 220 horas mensais.' },
+  request: {
+    calculation,
+    version: '1',
+    inputs: { basket: 'f'.repeat(64), nominal: '8'.repeat(64) },
+  },
+  output: { value },
+});
 const server = createServer((request, response) => {
   const url = new URL(request.url, 'http://127.0.0.1');
   const path = url.pathname;
@@ -55,7 +86,10 @@ const server = createServer((request, response) => {
           themes,
           indicators,
           series: [{ id: 'tr4', source: 'ibge', dataset: 'fixture' }],
-          sources: [{ id: 'ibge', name: 'IBGE', url: 'https://www.ibge.gov.br/' }],
+          sources: [
+            { id: 'ibge', name: 'IBGE', url: 'https://www.ibge.gov.br/' },
+            { id: 'margem', name: 'Margem — cálculos derivados', url: 'https://margem.com.br/' },
+          ],
         },
       },
     };
@@ -125,6 +159,43 @@ const server = createServer((request, response) => {
                     end: '2025-12-31',
                     value: '800.123456789012',
                   },
+                },
+              },
+            };
+      }
+      if (indicator.slug === 'tempo-por-cesta') {
+        const option = {
+          ...series,
+          series: 'cv5',
+          geography: 'São Paulo',
+          unit: 'h/basket',
+          source: 'margem',
+          dataset: 'indicator-engine',
+          method: 'cv5/1',
+          frequency: 'monthly',
+        };
+        body.data = path.endsWith('/series')
+          ? [option]
+          : {
+              indicator,
+              series: option,
+              latest: {
+                start: '2025-12-01',
+                end: '2025-12-31',
+                status: 'observed',
+                node: {
+                  observation: {
+                    ...basketInput.observation,
+                    id: '7'.repeat(64),
+                    series: 'cv5',
+                    value: '117.351440329055',
+                  },
+                  origins: [],
+                  evaluation: workEvaluation(
+                    'cv5',
+                    'basket * reference_monthly_hours / nominal',
+                    '117.351440329055',
+                  ),
                 },
               },
             };
@@ -262,6 +333,54 @@ const server = createServer((request, response) => {
         catalog_revision: revision,
         data: path.endsWith('d'.repeat(64)) ? currentInput : previousInput,
       };
+    if (
+      path === `/api/v1/observations/${'8'.repeat(64)}` ||
+      path === `/api/v1/observations/${'f'.repeat(64)}`
+    ) {
+      body = {
+        publication,
+        catalog_revision: revision,
+        data: path.endsWith('8'.repeat(64)) ? nominalInput : basketInput,
+      };
+    }
+    if (path === '/api/v1/work-time') {
+      const geography = url.searchParams.get('geography');
+      const price = records.get(`cv4/${geography}`);
+      body = {
+        publication,
+        catalog_revision: revision,
+        data: {
+          series: url.searchParams.get('series'),
+          geography,
+          from: url.searchParams.get('from'),
+          to: url.searchParams.get('to'),
+          ...(geography === 'Recife'
+            ? {
+                status: 'not_computed',
+                reason: 'reference_not_covered',
+              }
+            : {
+                status: 'computed',
+                price,
+                income: {
+                  series: 'minimum-nominal',
+                  geography: 'BR',
+                  start: '2025-12-01',
+                  end: '2025-12-31',
+                  status: 'observed',
+                  node: nominalInput,
+                },
+                hours: workEvaluation(
+                  'cv5',
+                  'basket * reference_monthly_hours / nominal',
+                  '117.351440329055',
+                ),
+                share: workEvaluation('price-income', 'basket / nominal * 100', '53.341563785934'),
+                rounded_minutes: '7041',
+              }),
+        },
+      };
+    }
     if (path === '/api/v1/comparisons') {
       const from = url.searchParams.get('from');
       const to = url.searchParams.get('to');

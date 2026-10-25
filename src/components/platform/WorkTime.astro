@@ -1,0 +1,50 @@
+---
+import type { Selection } from '@/lib/platform-build';
+import { apiLink } from '@/lib/platform';
+interface Props {
+  selection: Selection;
+}
+const { selection } = Astro.props;
+const translation = selection.workTime;
+const eligible = ['cv4', 'cv5', 'price-income'].includes(selection.series.series);
+const reasons: Record<string, string> = {
+  endpoint_not_covered: 'O período solicitado não está coberto nesta edição.',
+  endpoint_unavailable: 'O último período está indisponível; nenhum período anterior foi usado.',
+  reference_not_covered: 'Falta o preço ou o salário mínimo do mesmo mês nesta edição.',
+  reference_unavailable: 'O preço ou o salário mínimo está indisponível nesta edição.',
+  published_work_time_mismatch:
+    'O tempo informado pela fonte diverge do cálculo além da tolerância de um minuto.',
+  published_work_time_invalid: 'O tempo informado pela fonte não pôde ser validado.',
+  invalid_price_or_denominator: 'O custo precisa ser não negativo e o salário mínimo, positivo.',
+  incompatible_basket_inputs: 'Preço e renda não têm os recortes e períodos exigidos pelo método.',
+};
+const minutes = BigInt(
+  translation?.status === 'computed' ? (translation.rounded_minutes ?? '0') : '0',
+);
+const price = translation?.price?.node?.observation;
+const income = translation?.income?.node?.observation;
+---
+{eligible && <section class="work-time" aria-label={`Preço em tempo de trabalho: ${selection.series.geography} · ${selection.series.series}`}>
+  <h4>Quanto trabalho compra esta cesta?</h4>
+  {translation?.status === 'computed' ? <Fragment>
+    <dl>
+      <dt>Preço de uma cesta</dt><dd>R$ {price?.value?.replace('.', ',')}</dd>
+      <dt>Parcela do salário mínimo bruto</dt><dd>{translation.share?.output.value.replace('.', ',')}%</dd>
+      <dt>Tempo equivalente</dt><dd><strong>{minutes / 60n} h {minutes % 60n} min</strong> · aproximadamente {minutes.toString()} minutos</dd>
+    </dl>
+    <p>Referência: salário mínimo nacional bruto de R$ {income?.value?.replace('.', ',')} por mês, com 220 horas mensais. Não representa salário líquido, renda local ou jornada observada.</p>
+    <p>Preço e renda do mesmo mês: <time datetime={translation.from}>{translation.from}</time> a <time datetime={translation.to}>{translation.to}</time>. O piso nacional é aplicado à capital da cesta.</p>
+    <details><summary>Conferir cálculo e renda de referência</summary>
+      <p>Horas decimais: {translation.hours?.output.value.replace('.', ',')} h/cesta. O tempo em horas e minutos é arredondado ao minuto mais próximo, com empates para o par.</p>
+      {[translation.hours, translation.share].map((evaluation) => <p>Fórmula: <code>{evaluation?.definition?.formula}</code> · {evaluation?.request.calculation}/{evaluation?.request.version}.</p>)}
+      <ul>{[translation.price, translation.income].map((point) => <li><a href={apiLink(`observations/${point?.node?.observation.id}`)}>{point?.series} · {point?.geography} · {point?.start} a {point?.end}</a>{point?.node?.origins.map((origin) => <p><a href={origin.url}>Fonte original</a> · Coleta: <time datetime={origin.retrieved_at}>{origin.retrieved_at}</time></p>)}</li>)}</ul>
+    </details>
+  </Fragment> : <p><strong>Conversão indisponível.</strong> {reasons[translation?.reason ?? ''] ?? 'Os dados desta edição não permitem uma conversão válida.'}</p>}
+  <p><a href="/indicador/tempo-por-cesta">Entenda o tempo de trabalho por cesta</a> · <a href="/entenda/renda-nominal">O que é renda nominal?</a></p>
+  {translation && <a href={apiLink('work-time', { series: selection.series.series, geography: selection.series.geography, from: selection.latest.start, to: selection.latest.end })}>Consultar conversão desta publicação (JSON)</a>}
+</section>}
+<style>
+  .work-time { margin-block: var(--space-md); padding: var(--space-sm); border-inline-start: 3px solid var(--red); background: var(--paper); }
+  dd { margin-inline-start: 0; margin-block-end: var(--space-xs); overflow-wrap: anywhere; }
+  dt { font-weight: 600; }
+</style>

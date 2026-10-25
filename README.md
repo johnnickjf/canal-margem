@@ -83,8 +83,10 @@ A fase 15 implementa a [busca por linguagem cotidiana](docs/systems/search.md), 
 filtros, indicadores, Entenda e acervo editorial no mesmo índice estático; o catálogo
 continua navegável sem JavaScript. A fase 16 implementa o [comparador](docs/systems/comparator.md),
 com seleção de temas, indicadores, recortes e períodos, cálculos pela API e critérios de leitura
-versionados com auditoria. A próxima etapa é tempo de trabalho, na fase 17;
-implantação Railway/R2 permanece posterior.
+versionados com auditoria. A fase 17 implementa a tradução de [preços em tempo de trabalho](docs/systems/work-time.md):
+cesta em reais, percentual do salário mínimo bruto e horas/minutos, com referência de 220 horas
+mensais, mesma edição/mês e auditoria. A próxima etapa é políticas públicas e linha histórica,
+na fase 18; implantação Railway/R2 permanece posterior.
 
 ```bash
 MARGEM_API_URL=http://127.0.0.1:8080 pnpm build  # API já operando, origem sem caminho

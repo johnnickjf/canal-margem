@@ -84,6 +84,7 @@ test('build da plataforma fixa publicação no HTML, preserva decimais e explici
       'indicador/desemprego',
       'indicador/inflacao',
       'indicador/cesta-basica',
+      'indicador/tempo-por-cesta',
       'comparar',
       'entenda/como-ler-os-dados',
       'entenda',
@@ -228,7 +229,13 @@ test('build da plataforma fixa publicação no HTML, preserva decimais e explici
       await accessibleContext.route('http://127.0.0.1:4323/**', serveArtifact);
       const accessiblePage = await accessibleContext.newPage();
       const rendered = await context.newPage();
-      for (const slug of ['desemprego', 'inflacao', 'cesta-basica', 'rendimento-real']) {
+      for (const slug of [
+        'desemprego',
+        'inflacao',
+        'cesta-basica',
+        'tempo-por-cesta',
+        'rendimento-real',
+      ]) {
         await rendered.goto(`http://127.0.0.1:4323/indicador/${slug}/`);
         await expect(rendered.locator('h1')).toHaveCount(1);
         const navigation = rendered.getByRole('navigation', { name: 'Nesta página' });
@@ -241,6 +248,10 @@ test('build da plataforma fixa publicação no HTML, preserva decimais e explici
         await expect(explanation.locator('a[href^="/entenda/"]').first()).toBeVisible();
         if (slug === 'rendimento-real') {
           await expect(explanation).toContainText('Sem fonte de dados publicada');
+        } else if (slug === 'tempo-por-cesta') {
+          await expect(explanation.locator('a[href="https://margem.com.br/"]')).toHaveText(
+            'Margem — cálculos derivados',
+          );
         } else {
           await expect(explanation.locator('a[href="https://www.ibge.gov.br/"]')).toHaveText(
             'IBGE',
@@ -275,10 +286,47 @@ test('build da plataforma fixa publicação no HTML, preserva decimais e explici
           await expect(rendered.locator('.indicator-history circle')).toHaveCount(1);
         }
         if (slug === 'cesta-basica') {
+          const translation = rendered.getByRole('region', {
+            name: /^Preço em tempo de trabalho:/,
+          });
+          await expect(translation).toHaveCount(2);
+          await expect(translation.first()).toContainText('117 h 21 min');
+          await expect(translation.first()).toContainText('7041 minutos');
+          await expect(translation.first()).toContainText('53,341563785934%');
+          await expect(translation.first()).toContainText(
+            'salário mínimo nacional bruto de R$ 1500',
+          );
+          await expect(translation.last()).toContainText('Conversão indisponível');
+          await expect(translation.last()).not.toContainText('117 h');
+          await translation.first().getByText('Conferir cálculo e renda de referência').focus();
+          await rendered.keyboard.press('Enter');
+          await expect(translation.first()).toContainText('cv5/1');
+          await expect(translation.first()).toContainText('price-income/1');
+          await expect(translation.first().locator('a[href*="/observations/"]')).toHaveCount(2);
+          await expect(translation.first().locator('a[href*="/work-time?"]')).toHaveAttribute(
+            'href',
+            /publication=aaaaaaaa/,
+          );
+          await translation.first().scrollIntoViewIfNeeded();
+          await testInfo.attach(`work-time-${viewport.width}.png`, {
+            body: await rendered.screenshot({
+              path: testInfo.outputPath(`work-time-${viewport.width}.png`),
+            }),
+            contentType: 'image/png',
+          });
           await expect(rendered.locator('.indicator-detail')).toHaveCount(2);
           await expect(rendered.locator('#aconteceu')).toContainText('São Paulo');
           await expect(rendered.locator('#aconteceu')).toContainText('Recife');
           await expect(rendered.locator('.indicator-history circle')).toHaveCount(2);
+        }
+        if (slug === 'tempo-por-cesta') {
+          const translation = rendered.getByRole('region', {
+            name: /^Preço em tempo de trabalho:/,
+          });
+          await expect(translation).toHaveCount(1);
+          await expect(translation).toContainText('117 h 21 min');
+          await expect(translation).toContainText('53,341563785934%');
+          await expect(translation).toContainText('R$ 800,123456789012');
         }
         if (slug === 'rendimento-real') {
           await expect(rendered.locator('#dados')).toContainText('Sem cobertura nesta edição');

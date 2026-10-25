@@ -51,8 +51,22 @@ export type Selection = {
   };
   history?: HistoryPoint[];
   inputs?: ObservationNode[];
+  workTime?: WorkTime;
 };
 export type HistoryPoint = Selection['latest'] & { series: string; geography: string };
+export type WorkTime = {
+  series: string;
+  geography: string;
+  from: string;
+  to: string;
+  status: 'computed' | 'not_computed';
+  reason?: string;
+  price?: HistoryPoint;
+  income?: HistoryPoint;
+  hours?: NonNullable<ObservationNode['evaluation']> & { output: { value: string } };
+  share?: NonNullable<ObservationNode['evaluation']> & { output: { value: string } };
+  rounded_minutes?: string;
+};
 export type Platform = {
   publication: string | null;
   cutoff: string | null;
@@ -289,6 +303,61 @@ export async function capturePlatform(
         throw new Error('Histórico e último período divergem.');
       data.history = history;
       data.inputs = data.latest.node ? await lineage(data.latest.node) : [];
+      if (['cv4', 'cv5', 'price-income'].includes(option.series)) {
+        const query = new URLSearchParams({
+          publication: id,
+          series: option.series,
+          geography: option.geography,
+          from: data.latest.start,
+          to: data.latest.end,
+        });
+        const { data: translation } = await pinned(`work-time?${query}`);
+        if (
+          translation.series !== option.series ||
+          translation.geography !== option.geography ||
+          translation.from !== data.latest.start ||
+          translation.to !== data.latest.end ||
+          !['computed', 'not_computed'].includes(translation.status)
+        )
+          throw new Error('Tempo de trabalho fora do recorte solicitado.');
+        if (
+          translation.status === 'computed' &&
+          (data.latest.status !== 'observed' ||
+            typeof translation.rounded_minutes !== 'string' ||
+            !/^\d+$/.test(translation.rounded_minutes) ||
+            [translation.hours?.output?.value, translation.share?.output?.value].some(
+              (value) => typeof value !== 'string' || !/^\d+(\.\d+)?$/.test(value),
+            ) ||
+            [translation.price, translation.income].some(
+              (point) =>
+                !point?.node ||
+                point.status !== 'observed' ||
+                point.node.observation.status !== 'observed' ||
+                point.start !== data.latest.start ||
+                point.end !== data.latest.end ||
+                point.node.observation.start !== point.start ||
+                point.node.observation.end !== point.end ||
+                typeof point.node.observation.value !== 'string' ||
+                !/^\d+(\.\d+)?$/.test(point.node.observation.value),
+            ) ||
+            translation.price?.series !== 'cv4' ||
+            translation.price?.geography !== option.geography ||
+            translation.income?.series !== 'minimum-nominal' ||
+            translation.income?.geography !== 'BR' ||
+            (option.series === 'cv4' &&
+              translation.price?.node?.observation.id !== data.latest.node?.observation.id) ||
+            [translation.hours, translation.share].some(
+              (evaluation) =>
+                evaluation?.request?.version !== '1' ||
+                evaluation?.request?.inputs?.basket !== translation.price?.node?.observation.id ||
+                evaluation?.request?.inputs?.nominal !== translation.income?.node?.observation.id,
+            ) ||
+            translation.hours?.request?.calculation !== 'cv5' ||
+            translation.share?.request?.calculation !== 'price-income')
+        )
+          throw new Error('Tempo de trabalho sem valores ou referências válidas.');
+        data.workTime = translation;
+      }
       selections[indicator.slug].push(data);
     }
   }

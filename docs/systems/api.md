@@ -129,6 +129,7 @@ ativação há `not_covered`. Usar o ID retornado em **todas** as próximas cons
 | `/api/v1/sources/:id` | — | Identidade e URL institucional |
 | `/api/v1/observations/:id` | — | Observação, método, aceitação, origens e cálculo/inputs quando derivados |
 | `/api/v1/comparisons` | `series`, `geography`, `from`, `to`, `calculation`, `version`, `assessment` | Comparação entre extremos explícitos da mesma publicação |
+| `/api/v1/work-time` | `series`, `geography`, `from`, `to` | [Cesta em reais, percentual do mínimo e tempo equivalente](work-time.md), com inputs e fórmulas versionadas |
 | `/api/v1/publications/:id` | Nenhum, ID no caminho | Manifesto completo, catálogo e dependências da publicação ativada |
 
 Os slugs dos indicadores são fixados em

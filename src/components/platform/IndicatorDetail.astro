@@ -1,6 +1,7 @@
 ---
 import CalculationContext from './CalculationContext.astro';
 import IndicatorHistory from './IndicatorHistory.astro';
+import WorkTime from './WorkTime.astro';
 import Trend from '@/components/indicators/Trend.astro';
 import { apiLink, platform } from '@/lib/platform';
 import { decimalDirection } from '@/lib/indicator-history';
@@ -22,6 +23,7 @@ const isChange = ['relative-change', 'difference', 'compound-change'].includes(c
   {latest.node && <CalculationContext node={latest.node} />}
   {latest.status === 'observed' && value != null ? <p class="platform-value">{value.replace('.', ',')} <span>{series.unit}</span></p> : <p><strong>Dados indisponíveis</strong> · {latest.reason || latest.status}</p>}
   {isChange && latest.status === 'observed' && value != null && <Trend direction={decimalDirection(value)} change={`${value.replace('.', ',')} ${series.unit}`} comparison="Comparação desta edição; os períodos estão identificados acima." />}
+  <WorkTime selection={selection} />
   {series.warnings && series.warnings.length > 0 && <aside aria-label={`Alertas do recorte ${index + 1}`}><h4>Cuidados de leitura</h4><ul>{series.warnings.map((warning) => <li>{warning}</li>)}</ul></aside>}
   <IndicatorHistory selection={selection} id={`historico-${index}`} />
   <h4>Fonte e metodologia</h4>

@@ -892,7 +892,7 @@ exigem contexto. Ausência, incompatibilidade e falha de consulta são distintas
 Cada resultado expande períodos, valores, fórmula, regra, fontes e observações usadas.
 Verificação local cobre backend, integração, build e navegador em desktop/celular, com
 SEO, axe e catálogo sem JavaScript. Governos dependem da fase 18; não há score agregado
-nem atribuição de causalidade. A próxima etapa é tempo de trabalho, na fase 17.
+nem atribuição de causalidade. A tradução em tempo de trabalho está na fase 17.
 
 ### Objetivo
 
@@ -923,6 +923,17 @@ Primeira ferramenta analítica propriamente dita do Margem.
 ---
 
 ## Fase 17 — Tempo de trabalho
+
+### Estado
+
+Implementada em [Tempo de trabalho](systems/work-time.md): cesta em reais, percentual do
+salário mínimo bruto e horas/minutos, nas páginas de cesta e tempo por cesta. O backend
+reutiliza CV5/1 e price-income/1, com referência de 220 horas mensais, inputs da mesma
+publicação/mês e auditoria. Ausência, renda incompatível e divergência com a fonte impedem
+conversão. Verificação local cobre HTTP, PostgreSQL/S3, revisões, build, desktop/celular,
+SEO e acessibilidade automática sem JavaScript. Outras rendas/hora e gasolina continuam
+como expansão; operação remota e compreensão por usuários reais não foram verificadas.
+A próxima etapa é políticas públicas e linha histórica, na fase 18.
 
 ### Objetivo
 

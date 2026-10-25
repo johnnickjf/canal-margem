@@ -72,6 +72,7 @@ func (a *API) Handler() http.Handler {
 	r.Get("/api/v1/series/{series}", a.read)
 	r.Get("/api/v1/sources/{source}", a.read)
 	r.Get("/api/v1/comparisons", a.read)
+	r.Get("/api/v1/work-time", a.read)
 	r.Get("/api/v1/observations/{id}", a.read)
 	r.Get("/api/v1/publications/{publication}", a.read)
 	r.NotFound(func(w http.ResponseWriter, r *http.Request) {

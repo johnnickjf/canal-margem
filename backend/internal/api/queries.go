@@ -198,6 +198,8 @@ func (a *API) read(w http.ResponseWriter, r *http.Request) {
 		allowed = append(allowed, "geography", "from", "to", "limit", "cursor")
 	case "/api/v1/comparisons":
 		allowed = append(allowed, "series", "geography", "from", "to", "calculation", "version", "assessment")
+	case "/api/v1/work-time":
+		allowed = append(allowed, "series", "geography", "from", "to")
 	case "/api/v1/publications/{publication}":
 		allowed = nil
 	}
@@ -344,6 +346,8 @@ func (a *API) read(w http.ResponseWriter, r *http.Request) {
 		}
 	case "/api/v1/comparisons":
 		response.Data, e = compare(r, s)
+	case "/api/v1/work-time":
+		response.Data, e = workTime(r, s)
 	case "/api/v1/publications/{publication}":
 		response.Data = s.Manifest
 	}

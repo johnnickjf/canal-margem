@@ -383,3 +383,147 @@ describe('histórico paginado e fixado', () => {
     ).rejects.toThrow('contexto');
   });
 });
+
+describe('tempo de trabalho da publicação', () => {
+  function workTimeFixture(change: (data: Record<string, unknown>) => void = () => {}) {
+    const series = { ...option, series: 'cv4', geography: 'BR-city-3550308' };
+    const latest = {
+      start: '2025-01-01',
+      end: '2025-01-31',
+      status: 'observed',
+      node: { observation: { id: 'f'.repeat(64), value: '750', status: 'observed' }, origins: [] },
+    };
+    const request = fixture((path, body) => {
+      if (path.endsWith('/desemprego/series')) body.data = [series];
+      if (path.endsWith('/desemprego')) body.data = { series, latest };
+      if (path === '/api/v1/series/cv4')
+        body.data = [{ ...latest, series: series.series, geography: series.geography }];
+      if (path === '/api/v1/work-time') {
+        const translation: Record<string, unknown> = {
+          series: series.series,
+          geography: series.geography,
+          from: latest.start,
+          to: latest.end,
+          status: 'not_computed',
+          reason: 'reference_not_covered',
+        };
+        change(translation);
+        body.data = translation;
+      }
+    });
+    return request;
+  }
+  it('fixa publicação e mês sem substituir renda ausente por um valor', async () => {
+    const request = workTimeFixture();
+    const data = await capturePlatform('http://api.test', request);
+    expect(data.selections.desemprego[0].workTime?.reason).toBe('reference_not_covered');
+    const call = request.mock.calls.find(([input]) => String(input).includes('/work-time?'));
+    const url = new URL(String(call?.[0]));
+    expect(url.searchParams.get('publication')).toBe(id);
+    expect(url.searchParams.get('from')).toBe('2025-01-01');
+    expect(url.searchParams.get('to')).toBe('2025-01-31');
+  });
+  function computedTranslation(data: Record<string, unknown>) {
+    const price = {
+      series: 'cv4',
+      geography: 'BR-city-3550308',
+      start: '2025-01-01',
+      end: '2025-01-31',
+      status: 'observed',
+      node: {
+        observation: {
+          id: 'f'.repeat(64),
+          start: '2025-01-01',
+          end: '2025-01-31',
+          value: '750',
+          status: 'observed',
+        },
+        origins: [],
+      },
+    };
+    const income = {
+      ...price,
+      series: 'minimum-nominal',
+      geography: 'BR',
+      node: {
+        ...price.node,
+        observation: { ...price.node.observation, id: '8'.repeat(64), value: '1500' },
+      },
+    };
+    const evaluation = (calculation: string, value: string) => ({
+      request: {
+        calculation,
+        version: '1',
+        inputs: { basket: price.node.observation.id, nominal: income.node.observation.id },
+      },
+      output: { value },
+    });
+    Object.assign(data, {
+      status: 'computed',
+      reason: undefined,
+      price,
+      income,
+      hours: evaluation('cv5', '110'),
+      share: evaluation('price-income', '50'),
+      rounded_minutes: '6600',
+    });
+  }
+  it('preserva os decimais e os IDs de uma conversão calculada pela API', async () => {
+    const data = await capturePlatform('http://api.test', workTimeFixture(computedTranslation));
+    expect(data.selections.desemprego[0].workTime?.hours?.output.value).toBe('110');
+    expect(data.selections.desemprego[0].workTime?.income?.node?.observation.id).toBe(
+      '8'.repeat(64),
+    );
+  });
+  type MutableTranslation = {
+    income: { start: string };
+    hours: { request: { inputs: { nominal: string } }; output: { value: unknown } };
+    rounded_minutes: unknown;
+  };
+  for (const mutate of [
+    (data: MutableTranslation) => {
+      data.income.start = '2024-12-01';
+    },
+    (data: MutableTranslation) => {
+      data.hours.request.inputs.nominal = '9'.repeat(64);
+    },
+    (data: MutableTranslation) => {
+      data.rounded_minutes = 6600;
+    },
+    (data: MutableTranslation) => {
+      data.hours.output.value = 110;
+    },
+  ]) {
+    it('rejeita mês, IDs ou tipos decimais incompatíveis com a conversão', async () => {
+      await expect(
+        capturePlatform(
+          'http://api.test',
+          workTimeFixture((data) => {
+            computedTranslation(data);
+            mutate(data as Parameters<typeof mutate>[0]);
+          }),
+        ),
+      ).rejects.toThrow('referências válidas');
+    });
+  }
+  it('interrompe build quando a conversão é de outro recorte', async () => {
+    await expect(
+      capturePlatform(
+        'http://api.test',
+        workTimeFixture((data) => {
+          data.geography = 'BR';
+        }),
+      ),
+    ).rejects.toThrow('fora do recorte');
+  });
+  it('rejeita conversão declarada calculada sem números e referências', async () => {
+    await expect(
+      capturePlatform(
+        'http://api.test',
+        workTimeFixture((data) => {
+          data.status = 'computed';
+        }),
+      ),
+    ).rejects.toThrow('referências válidas');
+  });
+});
