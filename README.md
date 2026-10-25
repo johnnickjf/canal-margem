@@ -85,8 +85,10 @@ continua navegável sem JavaScript. A fase 16 implementa o [comparador](docs/sys
 com seleção de temas, indicadores, recortes e períodos, cálculos pela API e critérios de leitura
 versionados com auditoria. A fase 17 implementa a tradução de [preços em tempo de trabalho](docs/systems/work-time.md):
 cesta em reais, percentual do salário mínimo bruto e horas/minutos, com referência de 220 horas
-mensais, mesma edição/mês e auditoria. A próxima etapa é políticas públicas e linha histórica,
-na fase 18; implantação Railway/R2 permanece posterior.
+mensais, mesma edição/mês e auditoria. A fase 18 implementa [políticas públicas e linha histórica](docs/systems/policy-history.md):
+catálogo editorial de políticas, legislação, governos e vigências, com fontes, relações
+investigáveis e faixas no mesmo eixo temporal dos indicadores. A próxima etapa é evidência
+e causalidade, na fase 19; implantação Railway/R2 permanece posterior.
 
 ```bash
 MARGEM_API_URL=http://127.0.0.1:8080 pnpm build  # API já operando, origem sem caminho

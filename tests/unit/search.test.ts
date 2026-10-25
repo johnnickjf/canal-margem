@@ -65,6 +65,7 @@ describe('descoberta em linguagem cotidiana', () => {
       ['entenda', ['Entenda']],
       ['acervo', ['Análise', 'Episódio', 'Corte']],
       ['temas', ['Tema']],
+      ['politicas', ['Política']],
     ] as const) {
       const results = searchItems(index, filter === 'temas' ? 'vida' : 'salário', filter);
       expect(results.length).toBeGreaterThan(0);
@@ -75,6 +76,8 @@ describe('descoberta em linguagem cotidiana', () => {
     expect(searchFilter('desconhecido')).toBe('');
     expect(searchFilter(null)).toBe('');
     expect(searchFilter('entenda')).toBe('entenda');
+    expect(searchFilter('politicas')).toBe('politicas');
+    expect(urls('reforma trabalhista')).toContain('/politicas/reforma-trabalhista-2017');
   });
 
   it('indexa todas as rotas da edição e os conceitos sem inventar indicadores', () => {

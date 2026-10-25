@@ -1,4 +1,5 @@
 import type { HistoryPoint } from './platform-build';
+import { timelineX } from './policy-catalog';
 
 export function decimalDirection(value: string): 'up' | 'down' | 'flat' {
   if (/^-?0+(\.0+)?$/.test(value)) return 'flat';
@@ -20,8 +21,6 @@ export function historyChart(history: HistoryPoint[]) {
   const numbers = values.map(integer);
   const min = numbers.reduce((a, b) => (a < b ? a : b));
   const max = numbers.reduce((a, b) => (a > b ? a : b));
-  const first = Date.parse(history[0].end);
-  const last = Date.parse(history[history.length - 1].end);
   const segments: string[] = [];
   const dots: { x: number; y: number; label: string }[] = [];
   let segment: string[] = [];
@@ -48,7 +47,7 @@ export function historyChart(history: HistoryPoint[]) {
     ]);
     if (comparability !== previousContext) flush();
     previousContext = comparability;
-    const x = last === first ? 340 : 30 + ((Date.parse(point.end) - first) / (last - first)) * 620;
+    const x = timelineX(point.end, history[0].end, history[history.length - 1].end);
     const y =
       max === min ? 130 : 230 - Number(((integer(value) - min) * 200_000n) / (max - min)) / 1000;
     segment.push(`${x},${y}`);

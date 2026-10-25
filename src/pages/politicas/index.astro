@@ -1,0 +1,37 @@
+---
+import PlatformLayout from '@/layouts/PlatformLayout.astro';
+import { policyCatalog } from '@/data/policies';
+const ordered = [...policyCatalog.policies].sort((a, b) =>
+  a.effective_periods[0].start.localeCompare(b.effective_periods[0].start),
+);
+---
+<PlatformLayout title="Políticas públicas e linha histórica" description="Explore políticas federais, legislação, vigências e governos junto aos indicadores. Contexto temporal com fontes, sem atribuição automática de causalidade.">
+  <section aria-labelledby="leitura"><h2 id="leitura">Aconteceu durante não significa foi causado por</h2>
+    <p>{policyCatalog.scope}</p>
+    <p>As datas de assinatura ou promulgação, publicação e vigência são distintas. Uma política pode atravessar vários governos e ter prazos diferentes por dispositivo. O vínculo com um governo descreve contexto de implementação, sem autoria exclusiva.</p>
+    <p>Curadoria: {policyCatalog.author} · Conferência das fontes: <time datetime={policyCatalog.reviewed_at}>{policyCatalog.reviewed_at}</time> · Revisão {policyCatalog.revision}.</p>
+    <a href="/politicas/catalogo.json">Consultar catálogo, relações e referências (JSON)</a>
+  </section>
+  <section><h2>Políticas por início de vigência</h2>
+    <div class="platform-grid">{ordered.map((policy) => <article class="platform-card">
+      <h3><a href={`/politicas/${policy.id}`}>{policy.name}</a></h3>
+      <p>{policy.description}</p>
+      <p>Primeiro marco catalogado: <time datetime={policy.effective_periods[0].start}>{policy.effective_periods[0].start}</time> · Brasil.</p>
+      <p>{policy.affected_indicators.length} indicadores relacionados para investigação.</p>
+    </article>)}</div>
+  </section>
+  <section><h2>Governos como contexto temporal</h2>
+    <p>Seleção limitada aos períodos usados nesta entrega. Governos sucessores aparecem no gráfico quando interceptam a janela dos dados. Não há ranking ou score político.</p>
+    {policyCatalog.governments.map((government) => <article class="platform-card" id={government.id}>
+      <h3>{government.name}</h3>
+      <p>{government.office} · Brasil · <time datetime={government.start}>{government.start}</time> a {government.end ? <time datetime={government.end}>{government.end}</time> : 'fim em aberto'}.</p>
+      <p>{government.note}</p>
+      <ul>{government.sources.map((source) => <li><a href={source.url}>{source.label}</a></li>)}</ul>
+    </article>)}
+  </section>
+  <section><h2>Como investigar uma relação</h2>
+    <p>Abra uma política, confira o dispositivo e seus limites e consulte as séries relacionadas. As faixas legais e os dados usam o mesmo eixo de datas nos gráficos disponíveis. Lacunas de dados permanecem visíveis.</p>
+    <p>Uma avaliação causal exige estudos, método e comparação adequada. Esta camada organiza contexto e perguntas; não estima efeitos nem recomenda voto.</p>
+    <a href="/comparar">Comparar períodos com dados e critérios explícitos</a>
+  </section>
+</PlatformLayout>

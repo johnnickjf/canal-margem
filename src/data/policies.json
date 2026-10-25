@@ -1,0 +1,341 @@
+{
+  "version": "1",
+  "revision": "2026-10-25.1",
+  "reviewed_at": "2026-10-25",
+  "author": "Margem",
+  "scope": "Seleção editorial inicial de quatro políticas federais. Não é um inventário completo da legislação, dos governos ou das alterações de cada norma. Relações com indicadores são hipóteses de investigação, sem efeito causal estimado.",
+  "legislation": [
+    {
+      "id": "lei-13467-2017",
+      "name": "Lei nº 13.467/2017",
+      "enacted_at": "2017-07-13",
+      "published_at": "2017-07-14",
+      "sources": [
+        {
+          "label": "Planalto — texto legal",
+          "url": "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2017/lei/l13467.htm"
+        }
+      ]
+    },
+    {
+      "id": "ec-103-2019",
+      "name": "Emenda Constitucional nº 103/2019",
+      "enacted_at": "2019-11-12",
+      "published_at": "2019-11-13",
+      "sources": [
+        {
+          "label": "Planalto — texto legal",
+          "url": "https://www.planalto.gov.br/ccivil_03/constituicao/emendas/emc/emc103.htm"
+        }
+      ]
+    },
+    {
+      "id": "lei-14663-2023",
+      "name": "Lei nº 14.663/2023",
+      "enacted_at": "2023-08-28",
+      "published_at": "2023-08-28",
+      "sources": [
+        {
+          "label": "Planalto — texto legal",
+          "url": "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2023/lei/l14663.htm"
+        }
+      ]
+    },
+    {
+      "id": "lei-15077-2024",
+      "name": "Lei nº 15.077/2024",
+      "enacted_at": "2024-12-27",
+      "published_at": "2024-12-27",
+      "sources": [
+        {
+          "label": "Planalto — texto legal",
+          "url": "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2024/lei/l15077.htm"
+        }
+      ]
+    },
+    {
+      "id": "lei-14601-2023",
+      "name": "Lei nº 14.601/2023",
+      "enacted_at": "2023-06-19",
+      "published_at": "2023-06-20",
+      "sources": [
+        {
+          "label": "Planalto — texto legal",
+          "url": "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2023/lei/l14601.htm"
+        }
+      ]
+    }
+  ],
+  "governments": [
+    {
+      "id": "temer-efetivo",
+      "name": "Michel Temer · período efetivo",
+      "office": "Presidência da República",
+      "geography": "BR",
+      "start": "2016-08-31",
+      "end": "2018-12-31",
+      "note": "Este recorte começa na posse efetiva. A interinidade iniciada em maio de 2016 não está representada.",
+      "sources": [
+        {
+          "label": "Secretaria-Geral — acervo de Michel Temer",
+          "url": "https://www.gov.br/secretariageral/pt-br/centrais-de-conteudo/biblioteca-da-pr/galeria-dos-ex-presidentes/capa-dados-ex-presidente"
+        }
+      ]
+    },
+    {
+      "id": "bolsonaro-2019",
+      "name": "Jair Bolsonaro · 2019–2022",
+      "office": "Presidência da República",
+      "geography": "BR",
+      "start": "2019-01-01",
+      "end": "2022-12-31",
+      "note": "Período presidencial encerrado; não atribui ao Executivo autoria exclusiva de emendas constitucionais.",
+      "sources": [
+        {
+          "label": "Senado — posse de Jair Bolsonaro para o período de 2019 a 2022",
+          "url": "https://www12.senado.leg.br/noticias/materias/2019/01/01/jair-bolsonaro-toma-posse-no-congresso-e-se-torna-38o-presidente-do-brasil"
+        }
+      ]
+    },
+    {
+      "id": "lula-2023",
+      "name": "Luiz Inácio Lula da Silva · iniciado em 2023",
+      "office": "Presidência da República",
+      "geography": "BR",
+      "start": "2023-01-01",
+      "end": null,
+      "note": "Fim em aberto no catálogo. Não é previsão de término ou registro dos mandatos anteriores.",
+      "sources": [
+        {
+          "label": "Senado — posse em 1º de janeiro de 2023",
+          "url": "https://www12.senado.leg.br/noticias/materias/2023/01/01/congresso-empossa-lula-e-alckmin-na-presidencia-da-republica"
+        }
+      ]
+    }
+  ],
+  "policies": [
+    {
+      "id": "reforma-trabalhista-2017",
+      "name": "Reforma trabalhista de 2017",
+      "description": "Alterações na CLT e em outras leis sobre relações de trabalho. O marco temporal é a entrada em vigor da Lei nº 13.467/2017.",
+      "geography": "BR",
+      "limitations": "A data identifica a entrada em vigor, não uma regra uniforme para todos os contratos. Alterações posteriores, decisões judiciais e a MP nº 808/2017 exigem investigação própria. Desemprego e informalidade também respondem à atividade econômica e a outras condições.",
+      "legal_references": [
+        {
+          "legislation": "lei-13467-2017",
+          "locator": "Arts. 1º e 6º; publicação no DOU de 14/07/2017"
+        }
+      ],
+      "effective_periods": [
+        {
+          "id": "entrada-geral",
+          "start": "2017-11-11",
+          "end": null,
+          "scope": "Entrada em vigor geral; não representa a vigência individual de cada dispositivo",
+          "references": [
+            {
+              "legislation": "lei-13467-2017",
+              "locator": "Art. 6º: 120 dias após a publicação"
+            }
+          ]
+        }
+      ],
+      "affected_indicators": [
+        {
+          "indicator": "desemprego",
+          "relationship": "contextual",
+          "note": "As regras de contratação são contexto para investigar ocupação; a taxa agregada não isola seu efeito."
+        },
+        {
+          "indicator": "informalidade",
+          "relationship": "contextual",
+          "note": "Mudanças nas relações formais de trabalho podem ser investigadas junto à composição da ocupação."
+        },
+        {
+          "indicator": "rendimento-real",
+          "relationship": "contextual",
+          "note": "Remuneração do trabalho pode ser lida junto às mudanças contratuais, sem atribuição automática de efeito."
+        }
+      ],
+      "government_periods": [
+        {
+          "government": "temer-efetivo",
+          "note": "Sanção e entrada em vigor no período efetivo de Michel Temer; participação do Congresso e de outros atores não é substituída por este vínculo."
+        }
+      ]
+    },
+    {
+      "id": "reforma-previdenciaria-2019",
+      "name": "Reforma previdenciária de 2019",
+      "description": "A EC nº 103/2019 mudou regras previdenciárias e estabeleceu transições. Há inícios distintos por dispositivo e por regime.",
+      "geography": "BR",
+      "limitations": "Os intervalos representam a regra geral e um grupo específico de contribuições. Regimes estaduais e municipais dependem das condições do art. 36, II, e não recebem uma data nacional única. Não há estimativa de efeito sobre renda ou distribuição.",
+      "legal_references": [
+        {
+          "legislation": "ec-103-2019",
+          "locator": "Arts. 11, 28, 32 e 36"
+        }
+      ],
+      "effective_periods": [
+        {
+          "id": "regra-geral",
+          "start": "2019-11-13",
+          "end": null,
+          "scope": "Regra geral, ressalvadas as exceções do art. 36",
+          "references": [
+            {
+              "legislation": "ec-103-2019",
+              "locator": "Art. 36, III; DOU de 13/11/2019"
+            }
+          ]
+        },
+        {
+          "id": "contribuicoes",
+          "start": "2020-03-01",
+          "end": null,
+          "scope": "Dispositivos dos arts. 11, 28 e 32",
+          "references": [
+            {
+              "legislation": "ec-103-2019",
+              "locator": "Art. 36, I: primeiro dia do quarto mês subsequente à publicação"
+            }
+          ]
+        }
+      ],
+      "affected_indicators": [
+        {
+          "indicator": "desigualdade",
+          "relationship": "contextual",
+          "note": "Rendimentos previdenciários integram a renda domiciliar; estudar distribuição requer separar grupos e regras de transição."
+        },
+        {
+          "indicator": "pobreza",
+          "relationship": "contextual",
+          "note": "Benefícios previdenciários compõem rendas familiares, mas a pobreza agregada não mede isoladamente o efeito da reforma."
+        }
+      ],
+      "government_periods": [
+        {
+          "government": "bolsonaro-2019",
+          "note": "Promulgação pelo Congresso no período presidencial de Jair Bolsonaro; o contexto temporal não equivale a autoria exclusiva."
+        }
+      ]
+    },
+    {
+      "id": "valorizacao-salario-minimo-2024",
+      "name": "Valorização do salário mínimo a partir de 2024",
+      "description": "Diretrizes de reajuste anual do piso nacional, com preservação pelo INPC e componente de crescimento real. Há um limite adicional para 2025–2030.",
+      "geography": "BR",
+      "limitations": "A regra de reajuste não é o valor nominal de cada ano. O limite de 2025–2030 deve ser lido com o art. 4º da Lei nº 15.077/2024. O tempo por cesta depende também do preço local dos alimentos, da mesma referência mensal e do método de 220 horas.",
+      "legal_references": [
+        {
+          "legislation": "lei-14663-2023",
+          "locator": "Art. 3º"
+        },
+        {
+          "legislation": "lei-15077-2024",
+          "locator": "Art. 4º"
+        }
+      ],
+      "effective_periods": [
+        {
+          "id": "diretrizes",
+          "start": "2024-01-01",
+          "end": null,
+          "scope": "Diretrizes anuais da Lei nº 14.663/2023",
+          "references": [
+            {
+              "legislation": "lei-14663-2023",
+              "locator": "Art. 3º"
+            }
+          ]
+        },
+        {
+          "id": "limite-real",
+          "start": "2025-01-01",
+          "end": "2030-12-31",
+          "scope": "Limite adicional do aumento real para os reajustes de 2025 a 2030",
+          "references": [
+            {
+              "legislation": "lei-15077-2024",
+              "locator": "Art. 4º; vigência da lei no art. 10"
+            }
+          ]
+        }
+      ],
+      "affected_indicators": [
+        {
+          "indicator": "salario-minimo-real",
+          "relationship": "contextual",
+          "note": "O piso nominal é input do indicador real; o resultado depende também do deflator e da base monetária."
+        },
+        {
+          "indicator": "tempo-por-cesta",
+          "relationship": "contextual",
+          "note": "O mínimo nominal é o denominador da conversão; o custo da cesta também muda."
+        },
+        {
+          "indicator": "tr2-cv5-input",
+          "relationship": "contextual",
+          "note": "A série do piso nominal permite conferir o valor usado em cada mês."
+        }
+      ],
+      "government_periods": [
+        {
+          "government": "lula-2023",
+          "note": "Sanção das duas leis no mandato iniciado em 2023; normas e decisões anuais não são atribuídas exclusivamente a uma pessoa."
+        }
+      ]
+    },
+    {
+      "id": "bolsa-familia-2023",
+      "name": "Bolsa Família — lei de 2023",
+      "description": "A Lei nº 14.601/2023 instituiu o programa em substituição ao Auxílio Brasil. O marco aqui é a vigência da lei de conversão, não o primeiro pagamento nem toda a história do programa.",
+      "geography": "BR",
+      "limitations": "O catálogo não reconstrói as etapas anteriores, a MP nº 1.164/2023 ou todas as regras operacionais posteriores. Benefícios e elegibilidade variam por família. A evolução de pobreza, desigualdade ou insegurança alimentar não identifica o efeito do programa.",
+      "legal_references": [
+        {
+          "legislation": "lei-14601-2023",
+          "locator": "Arts. 1º, 4º, 7º e 34"
+        }
+      ],
+      "effective_periods": [
+        {
+          "id": "lei-conversao",
+          "start": "2023-06-20",
+          "end": null,
+          "scope": "Vigência da lei de conversão, exceto os dispositivos do art. 34, I",
+          "references": [
+            {
+              "legislation": "lei-14601-2023",
+              "locator": "Art. 34, II; DOU de 20/06/2023"
+            }
+          ]
+        }
+      ],
+      "affected_indicators": [
+        {
+          "indicator": "pobreza",
+          "relationship": "contextual",
+          "note": "Transferências integram a renda das famílias; medir impacto requer contrafactual e recortes adequados."
+        },
+        {
+          "indicator": "desigualdade",
+          "relationship": "contextual",
+          "note": "Benefícios estão na renda domiciliar de todas as fontes, usada no Gini."
+        },
+        {
+          "indicator": "inseguranca-alimentar",
+          "relationship": "contextual",
+          "note": "Acesso à alimentação é dimensão a investigar junto às transferências; a EBIA tem cobertura e períodos próprios."
+        }
+      ],
+      "government_periods": [
+        {
+          "government": "lula-2023",
+          "note": "Lei de conversão sancionada no mandato iniciado em 2023; contexto não substitui a atuação do Congresso e a gestão federativa."
+        }
+      ]
+    }
+  ]
+}

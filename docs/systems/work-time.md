@@ -83,5 +83,5 @@ permanecem.
 
 As fontes da integração são controladas; S3 é emulado por LocalStack. Esses testes não
 comprovam operação Railway/R2, disponibilidade das fontes oficiais, compreensão por
-usuários reais ou indexação externa. A fase 18 acrescentará contexto de políticas públicas;
+usuários reais ou indexação externa. A [fase 18](policy-history.md) acrescenta contexto de políticas públicas;
 não há causalidade ou score político nesta tradução.

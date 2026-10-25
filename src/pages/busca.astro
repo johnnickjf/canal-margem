@@ -44,6 +44,7 @@ const explanations = catalog.filter((item) => item.type === 'Entenda');
         <option value="entenda">Entenda</option>
         <option value="acervo">Vídeos e análises</option>
         <option value="temas">Temas</option>
+        <option value="politicas">Políticas públicas</option>
       </select>
     </div>
     <ul class="search__temas search__examples" role="list" aria-label="Experimente buscar">
@@ -71,6 +72,10 @@ const explanations = catalog.filter((item) => item.type === 'Entenda');
         </details>)}
         <details><summary>Entenda a economia</summary>
           <ul role="list">{explanations.map((item) => <li><a href={item.url}>{item.title}</a></li>)}</ul>
+        </details>
+        <details><summary>Políticas públicas e história</summary>
+          <ul role="list">{catalog.filter((item) => item.type === 'Política').map((item) => <li><a href={item.url}>{item.title}</a></li>)}</ul>
+          <a href="/politicas">Explorar legislação, vigências e governos</a>
         </details>
       </div>
       <h2>Temas editoriais</h2>

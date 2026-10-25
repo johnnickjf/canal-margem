@@ -933,7 +933,7 @@ publicação/mês e auditoria. Ausência, renda incompatível e divergência com
 conversão. Verificação local cobre HTTP, PostgreSQL/S3, revisões, build, desktop/celular,
 SEO e acessibilidade automática sem JavaScript. Outras rendas/hora e gasolina continuam
 como expansão; operação remota e compreensão por usuários reais não foram verificadas.
-A próxima etapa é políticas públicas e linha histórica, na fase 18.
+A fase 18 acrescenta o contexto de políticas públicas e linha histórica.
 
 ### Objetivo
 
@@ -966,6 +966,18 @@ Indicadores abstratos passam a ter tradução material imediata.
 ---
 
 ## Fase 18 — Políticas públicas e linha histórica
+
+### Estado
+
+Implementada em [Políticas e linha histórica](systems/policy-history.md): catálogo editorial
+validado de políticas, legislação, governos, vigências por dispositivo e relações com
+indicadores. Quatro políticas federais iniciais têm fontes oficiais, limites e revisão
+editorial explícita. Índice, páginas e JSON público são estáticos; gráficos de indicadores
+mostram faixas de contexto no mesmo eixo de datas da série, com intervalos completos e
+auditoria. A busca inclui políticas. Verificação local cobre contratos, build com API
+controlada, desktop/celular, teclado, ausência de dados, SEO e acessibilidade automática.
+Não há atribuição causal, score político ou seleção por governo no comparador. Estudos de
+impacto pertencem à fase 19; compreensão por usuários e indexação externa não verificadas.
 
 ### Objetivo
 

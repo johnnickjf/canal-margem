@@ -78,7 +78,7 @@ Entidades auxiliares preservam a origem e o cálculo:
 
 Os temas estatísticos não substituem os 12 pilares de [temas.json](../../src/content/temas.json). A [seleção da fase 3](mvp-indicators.md) agrupa os indicadores nas cinco dimensões da visão; o mapeamento para o acervo e as URLs fica para o shell. Este modelo não altera `/temas/:slug`.
 
-`Policy` e `GovernmentPeriod` são contratos conceituais mínimos. `effective_periods` contém intervalos de vigência com referências documentais; promulgação e vigência podem ocorrer em datas diferentes. `related_indicators` registra uma relação investigável com justificativa. `government_periods` registra contexto de implementação, não autoria exclusiva. Nenhuma dessas relações permite inferir efeito causal ou pontuar governos. Evidências de impacto e legislação como entidade própria pertencem às fases 18 e 19.
+`Policy` e `GovernmentPeriod` são contratos conceituais mínimos. `effective_periods` contém intervalos de vigência com referências documentais; promulgação e vigência podem ocorrer em datas diferentes. `related_indicators` registra uma relação investigável com justificativa. `government_periods` registra contexto de implementação, não autoria exclusiva. Nenhuma dessas relações permite inferir efeito causal ou pontuar governos. A [fase 18](policy-history.md) concretiza esses contratos no catálogo editorial, com `Government`, legislação como entidade própria e relações `affected_indicators` explicitamente contextuais. Evidências de impacto pertencem à fase 19.
 
 ## Identidade e comparabilidade das séries
 

@@ -1,0 +1,63 @@
+---
+import PlatformLayout from '@/layouts/PlatformLayout.astro';
+import IndicatorHistory from '@/components/platform/IndicatorHistory.astro';
+import { policies, policyCatalog } from '@/data/policies';
+import { platform } from '@/lib/platform';
+export function getStaticPaths() {
+  return policies.map((policy) => ({ params: { slug: policy.id }, props: { policy } }));
+}
+const { policy } = Astro.props;
+const laws = policyCatalog.legislation.filter((law) =>
+  policy.legal_references.some((reference) => reference.legislation === law.id),
+);
+const governments = policy.government_periods.map((context) => {
+  const government = policyCatalog.governments.find((item) => item.id === context.government);
+  if (!government) throw new Error('Governo da política ausente.');
+  return { ...context, government };
+});
+const related = policy.affected_indicators.map((relation) => {
+  const indicator = platform.indicators.find((item) => item.slug === relation.indicator);
+  if (!indicator) throw new Error('Indicador de política ausente na publicação.');
+  return { ...relation, indicator, selections: platform.selections[indicator.slug] ?? [] };
+});
+---
+<PlatformLayout title={policy.name} description={policy.description}>
+  <p><a href="/politicas">Políticas públicas e linha histórica</a> / Contexto nacional, Brasil</p>
+  <nav class="indicator-nav" aria-label="Nesta página"><a href="#vigencias">Vigências</a><a href="#legislacao">Legislação</a><a href="#governos">Governos</a><a href="#indicadores">Dados na linha histórica</a></nav>
+  <section><h2>O que este contexto permite investigar?</h2>
+    <p>{policy.description}</p><p>Relações investigáveis, sem efeito causal estimado. Acontecer durante uma política não prova ter sido causado por ela.</p>
+    <p>{policy.limitations}</p>
+    <p>Curadoria: {policyCatalog.author} · Conferência: <time datetime={policyCatalog.reviewed_at}>{policyCatalog.reviewed_at}</time> · Revisão editorial {policyCatalog.revision}.</p>
+  </section>
+  <section id="vigencias"><h2>Vigências por dispositivo</h2>
+    <p>Intervalos com extremos inclusivos. Fim em aberto significa que não há término registrado para este recorte; não é garantia de que todos os dispositivos permaneçam inalterados. Intervalos podem se sobrepor quando descrevem dispositivos diferentes.</p>
+    {policy.effective_periods.map((period) => <article class="platform-card">
+      <h3>{period.scope}</h3><p><time datetime={period.start}>{period.start}</time> a {period.end ? <time datetime={period.end}>{period.end}</time> : 'fim em aberto'}</p>
+      <ul>{period.references.map((reference) => <li><a href={`#${reference.legislation}`}>{policyCatalog.legislation.find((law) => law.id === reference.legislation)?.name}</a> · {reference.locator}</li>)}</ul>
+    </article>)}
+  </section>
+  <section id="legislacao"><h2>Legislação e fontes</h2>
+    {laws.map((law) => <article class="platform-card" id={law.id}>
+      <h3>{law.name}</h3>
+      <dl><dt>Assinatura ou promulgação</dt><dd><time datetime={law.enacted_at}>{law.enacted_at}</time></dd><dt>Publicação oficial</dt><dd><time datetime={law.published_at}>{law.published_at}</time></dd></dl>
+      <ul>{policy.legal_references.filter((reference) => reference.legislation === law.id).map((reference) => <li>{reference.locator}</li>)}</ul>
+      <ul>{law.sources.map((source) => <li><a href={source.url}>{source.label}: {law.name}</a></li>)}</ul>
+    </article>)}
+    <a href="/politicas/catalogo.json">Catálogo editorial completo (JSON)</a>
+  </section>
+  <section id="governos"><h2>Contexto de governo</h2>
+    {governments.map(({ government, note }) => <article class="platform-card"><h3><a href={`/politicas#${government.id}`}>{government.name}</a></h3><p>{note}</p><p>O vínculo não delimita toda a vigência da política. Governos sucessores podem estar sob as mesmas regras.</p></article>)}
+  </section>
+  <section id="indicadores"><h2>Dados na mesma linha histórica</h2>
+    <p>As faixas de políticas e governos compartilham o eixo de datas com os valores da série. Elas mostram coincidência temporal, sem demonstrar causalidade. A geografia, unidade, frequência e método continuam sendo os de cada recorte. Os gráficos também podem incluir outras políticas relacionadas ao indicador.</p>
+    {related.map(({ indicator, note, selections }, index) => <article class="platform-card">
+      <h3><a href={`/indicador/${indicator.slug}`}>{indicator.name}</a></h3><p>{note}</p>
+      {selections.length === 0 ? <p>Sem dados publicados para este indicador nesta edição. A vigência legal não preenche a lacuna dos dados.</p> : selections.map((selection, selectionIndex) => <div class="indicator-history">
+        <h4>{selection.series.geography} · {selection.series.series}</h4>
+        <p>Unidade: {selection.series.unit} · Frequência: {selection.series.frequency ?? 'não informada'} · Método: {selection.series.method}</p>
+        <IndicatorHistory selection={selection} indicatorSlug={indicator.slug} id={`politica-${index}-${selectionIndex}`} />
+      </div>)}
+      <a href={`/indicador/${indicator.slug}#dados`}>Consultar fontes, metodologia e limitações de {indicator.name}</a>
+    </article>)}
+  </section>
+</PlatformLayout>

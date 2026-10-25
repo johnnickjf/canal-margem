@@ -3,7 +3,9 @@
 import { mkdir, writeFile } from 'node:fs/promises';
 import sitemap from '@astrojs/sitemap';
 import { defineConfig } from 'astro/config';
+import policyData from './src/data/policies.json' with { type: 'json' };
 import { capturePlatform } from './src/lib/platform-build';
+import { validatePolicyCatalog } from './src/lib/policy-catalog';
 
 // Domínio definitivo: atualize também `site.url` em src/config/site.ts.
 export default defineConfig({
@@ -16,6 +18,10 @@ export default defineConfig({
         'astro:config:setup': async ({ command }) => {
           if (command !== 'build' && command !== 'dev') return;
           const snapshot = await capturePlatform(process.env.MARGEM_API_URL);
+          validatePolicyCatalog(
+            policyData,
+            snapshot.indicators.map((item) => item.slug),
+          );
           await mkdir(new URL('./.astro/', import.meta.url), { recursive: true });
           await writeFile(
             new URL('./.astro/margem-publication.json', import.meta.url),

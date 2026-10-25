@@ -86,6 +86,9 @@ test('build da plataforma fixa publicação no HTML, preserva decimais e explici
       'indicador/cesta-basica',
       'indicador/tempo-por-cesta',
       'comparar',
+      'politicas',
+      'politicas/reforma-trabalhista-2017',
+      'politicas/valorizacao-salario-minimo-2024',
       'entenda/como-ler-os-dados',
       'entenda',
       'entenda/inflacao',
@@ -261,9 +264,9 @@ test('build da plataforma fixa publicação no HTML, preserva decimais e explici
           await expect(rendered.locator('.trend[data-direction="down"]')).toHaveCount(2);
           await expect(rendered.locator('main')).toContainText('current - previous');
           const history = rendered.locator('.indicator-history').first();
-          await expect(history.locator('circle')).toHaveCount(2);
+          await expect(history.locator('.history-dot')).toHaveCount(2);
           await expect(history.locator('polyline')).toHaveCount(0);
-          await history.locator('summary').focus();
+          await history.locator('.history-table > summary').focus();
           await rendered.keyboard.press('Enter');
           await expect(history.locator('tbody tr')).toHaveCount(3);
           await expect(history.locator('table')).toContainText('Sem observação na edição');
@@ -374,6 +377,48 @@ test('build da plataforma fixa publicação no HTML, preserva decimais e explici
           await summary.click();
         expect((await new AxeBuilder({ page: accessiblePage }).analyze()).violations).toEqual([]);
       }
+      await rendered.goto('http://127.0.0.1:4323/politicas/reforma-trabalhista-2017');
+      const firstChart = rendered.locator('#indicadores svg').first();
+      await expect(firstChart.locator('.history-dot')).toHaveCount(2);
+      await expect(firstChart.locator('.history-context-row')).toHaveCount(2);
+      await expect(firstChart.locator('.history-context-row line').first()).toHaveAttribute(
+        'x1',
+        '30',
+      );
+      await expect(firstChart.locator('.history-context-row line').first()).toHaveAttribute(
+        'x2',
+        '650',
+      );
+      const legend = rendered.locator('#indicadores .policy-context').first();
+      await legend.locator('summary').focus();
+      await rendered.keyboard.press('Enter');
+      await expect(legend).toContainText('2017-11-11');
+      await expect(legend).toContainText('fim em aberto');
+      await expect(legend).toContainText('Luiz Inácio Lula da Silva');
+      await expect(legend).toContainText('não demonstra causalidade');
+      const table = rendered.locator('#indicadores .history-table').first();
+      await table.locator('summary').click();
+      await expect(table).toContainText('Sem observação na edição');
+      await expect(table).toContainText('0,000000000000000001');
+      for (const href of await rendered
+        .locator('#indicadores a[href*="/api/v1/"]')
+        .evaluateAll((links) => links.map((link) => (link as HTMLAnchorElement).href))) {
+        expect(new URL(href).searchParams.get('publication')).toBe('a'.repeat(64));
+      }
+      expect(
+        await rendered.evaluate(() => document.documentElement.scrollWidth <= innerWidth),
+      ).toBe(true);
+      await firstChart.scrollIntoViewIfNeeded();
+      await testInfo.attach(`policy-timeline-${viewport.width}.png`, {
+        body: await rendered.screenshot({
+          path: testInfo.outputPath(`policy-timeline-${viewport.width}.png`),
+        }),
+        contentType: 'image/png',
+      });
+      await accessiblePage.goto(rendered.url());
+      for (const summary of await accessiblePage.locator('#indicadores details > summary').all())
+        await summary.click();
+      expect((await new AxeBuilder({ page: accessiblePage }).analyze()).violations).toEqual([]);
       await verifyComparator(accessiblePage, rendered, testInfo, viewport.width);
       await accessibleContext.close();
       await context.close();

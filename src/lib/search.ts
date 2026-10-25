@@ -1,6 +1,6 @@
 /** Item do índice de busca gerado em /busca.json. */
 export type SearchItem = {
-  type: 'Episódio' | 'Corte' | 'Análise' | 'Tema' | 'Indicador' | 'Entenda';
+  type: 'Episódio' | 'Corte' | 'Análise' | 'Tema' | 'Indicador' | 'Entenda' | 'Política';
   title: string;
   text: string;
   url: string;
@@ -23,10 +23,14 @@ const stopWords = new Set(
   ),
 );
 
-export type SearchFilter = '' | 'indicadores' | 'entenda' | 'acervo' | 'temas';
+export type SearchFilter = '' | 'indicadores' | 'entenda' | 'acervo' | 'temas' | 'politicas';
 
 export function searchFilter(value: string | null): SearchFilter {
-  return value === 'indicadores' || value === 'entenda' || value === 'acervo' || value === 'temas'
+  return value === 'indicadores' ||
+    value === 'entenda' ||
+    value === 'acervo' ||
+    value === 'temas' ||
+    value === 'politicas'
     ? value
     : '';
 }
@@ -59,6 +63,7 @@ export function searchItems(index: IndexedItem[], query: string, filter: SearchF
       if (filter === 'indicadores') return item.type === 'Indicador';
       if (filter === 'entenda') return item.type === 'Entenda';
       if (filter === 'temas') return item.type === 'Tema';
+      if (filter === 'politicas') return item.type === 'Política';
       if (filter === 'acervo') return ['Episódio', 'Corte', 'Análise'].includes(item.type);
       return true;
     })

@@ -1,4 +1,5 @@
 import { concepts } from '@/data/concepts';
+import { policies } from '@/data/policies';
 import { conceptAliases, indicatorAliases } from '@/data/search-aliases';
 import type { Platform } from './platform-build';
 import type { SearchItem } from './search';
@@ -7,6 +8,13 @@ import type { SearchItem } from './search';
 export function platformSearchItems(platform: Platform): SearchItem[] {
   const themes = new Map(platform.themes.map((theme) => [theme.slug, theme.name]));
   return [
+    ...policies.map((policy) => ({
+      type: 'Política' as const,
+      title: policy.name,
+      text: `${policy.description} ${policy.affected_indicators.map((item) => item.note).join(' ')}`,
+      url: `/politicas/${policy.id}`,
+      meta: 'Política federal / Contexto temporal sem causalidade estimada',
+    })),
     ...platform.indicators.map((indicator) => ({
       type: 'Indicador' as const,
       title: indicator.name,

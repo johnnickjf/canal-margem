@@ -2,11 +2,14 @@
 import { apiLink } from '@/lib/platform';
 import { historyChart } from '@/lib/indicator-history';
 import type { Selection } from '@/lib/platform-build';
+import { policyCatalog } from '@/data/policies';
+import { policyTimeline } from '@/lib/policy-catalog';
 interface Props {
   selection: Selection;
   id: string;
+  indicatorSlug: string;
 }
-const { selection, id } = Astro.props;
+const { selection, id, indicatorSlug } = Astro.props;
 const history = selection.history ?? [];
 const mixedUnits = history.some(
   (point) =>
@@ -14,22 +17,39 @@ const mixedUnits = history.some(
     point.node.observation.context.unit !== selection.series.unit,
 );
 const chart = mixedUnits ? null : historyChart(history);
+const context = chart ? policyTimeline(policyCatalog, indicatorSlug, chart.first, chart.last) : [];
+const height = context.length ? 300 + context.length * 32 : 280;
 ---
 <div class="indicator-history">
   <h4>Série histórica</h4>
   {chart ? <figure aria-labelledby={`${id}-caption`}>
     <figcaption id={`${id}-caption`}>Evolução em {selection.series.unit} · {selection.series.geography === 'BR' ? 'Brasil' : selection.series.geography}</figcaption>
-    <svg viewBox="0 0 680 280" role="img" aria-labelledby={`${id}-title ${id}-description`}>
+    <svg class:list={{ 'history-with-context': context.length > 0 }} viewBox={`0 0 680 ${height}`} role="img" aria-labelledby={`${id}-title ${id}-description`}>
       <title id={`${id}-title`}>Série histórica de {chart.first} a {chart.last}</title>
-      <desc id={`${id}-description`}>Eixo horizontal: fim do período de referência. Eixo vertical: valor em {selection.series.unit}, de {chart.min.replace('.', ',')} a {chart.max.replace('.', ',')}. Valores exatos e lacunas na tabela abaixo.</desc>
+      <desc id={`${id}-description`}>Eixo horizontal: fim do período de referência. Eixo vertical: valor em {selection.series.unit}, de {chart.min.replace('.', ',')} a {chart.max.replace('.', ',')}. Valores exatos e lacunas na tabela abaixo. {context.length > 0 && 'Faixas numeradas abaixo usam o mesmo eixo de datas para políticas e governos. Coincidência temporal não demonstra causalidade. Datas completas na lista após o gráfico.'}</desc>
       <path class="history-axis" d="M30 20V240H650" />
       {chart.segments.map((points) => <polyline class="history-line" points={points} />)}
       {chart.dots.map((point) => <circle class="history-dot" cx={point.x} cy={point.y} r="3"><title>{point.label}</title></circle>)}
       <text x="30" y="267">{chart.first}</text><text x="650" y="267" text-anchor="end">{chart.last}</text>
+      {context.map((row, index) => <g class:list={['history-context-row', { 'history-government': row.kind === 'government' }]}>
+        <title>{index + 1}. {row.label}: {row.start} a {row.end ?? 'fim em aberto'}. Brasil.</title>
+        <text x="3" y={302 + index * 32}>{index + 1}</text>
+        <line x1={row.x1} x2={row.x2} y1={296 + index * 32} y2={296 + index * 32} />
+        <circle cx={row.x1} cy={296 + index * 32} r="3" />
+        <circle cx={row.x2} cy={296 + index * 32} r="3" />
+      </g>)}
     </svg>
     <p class="history-scale">Escala vertical em {selection.series.unit}: {chart.min.replace('.', ',')} a {chart.max.replace('.', ',')}.</p>
   </figure> : <p>{mixedUnits ? 'Gráfico indisponível: há unidades diferentes neste histórico. Consulte as unidades de cada período na tabela.' : 'Gráfico indisponível: não há valores observados neste recorte.'}</p>}
   <p>Os pontos marcam o fim de cada período. Lacunas explícitas e mudanças de método interrompem a linha; não há interpolação. A escala vertical acompanha os valores e pode não começar em zero. Compare apenas recortes e métodos compatíveis.</p>
+  {context.length > 0 ? <details class="policy-context"><summary>Políticas e governos no mesmo eixo de datas ({context.length} faixas)</summary>
+    <p>Contexto nacional, Brasil. As faixas são recortadas pela janela do gráfico; seus números correspondem à lista abaixo. Não medem intensidade ou impacto. Fim em aberto não é a data atual. A presença de uma política durante uma mudança não demonstra causalidade.</p>
+    <ol>{context.map((row) => <li>
+      {row.kind === 'policy' ? <a href={`/politicas/${row.policy}`}>{row.label}</a> : <a href={`/politicas#${row.id}`}>{row.label}</a>}
+      <p><time datetime={row.start}>{row.start}</time> a {row.end ? <time datetime={row.end}>{row.end}</time> : 'fim em aberto'} · {row.kind === 'policy' ? 'Vigência do recorte legal' : 'Período de governo'}</p>
+    </li>)}</ol>
+    <p>Catálogo editorial {policyCatalog.revision}, conferido em {policyCatalog.reviewed_at}. As séries numéricas usam a publicação indicada nesta página.</p>
+  </details> : <p class="policy-context">{chart ? 'Sem política catalogada relacionada que intercepte esta janela histórica. Isso não significa ausência de políticas ou de efeitos.' : 'Contexto no gráfico indisponível sem uma série numérica representável.'} <a href="/politicas">Consultar catálogo de políticas e suas limitações</a>.</p>}
   <details class="history-table"><summary>Ver tabela e auditoria da série ({history.length} períodos)</summary>
     <div class="history-scroll" role="region" aria-label={`Tabela histórica ${id}`} tabindex="0">
       <table>

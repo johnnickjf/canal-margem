@@ -13,9 +13,15 @@ export function createSearch(endpoint: string) {
           items.some(
             (item) =>
               !item ||
-              !['Episódio', 'Corte', 'Análise', 'Tema', 'Indicador', 'Entenda'].includes(
-                item.type,
-              ) ||
+              ![
+                'Episódio',
+                'Corte',
+                'Análise',
+                'Tema',
+                'Indicador',
+                'Entenda',
+                'Política',
+              ].includes(item.type) ||
               ['title', 'text', 'url', 'meta'].some((key) => typeof item[key] !== 'string') ||
               !/^\/(?![\\/])/.test(item.url) ||
               Array.from(item.url as string).some(

@@ -43,6 +43,8 @@ e filtros, recuperação de falhas e catálogo em HTML sem JavaScript. O
 períodos, com cálculos e regras de leitura versionados no backend e resultados auditáveis.
 A [tradução em tempo de trabalho da fase 17](work-time.md) apresenta cesta em reais, percentual
 do mínimo bruto e horas/minutos, com referência explícita, mesma publicação/mês e auditoria.
-A próxima etapa é políticas públicas e linha histórica, na fase 18.
+A [fase 18](policy-history.md) acrescenta políticas, legislação, governos e vigências,
+com fontes e contexto no mesmo eixo temporal dos indicadores, sem atribuição causal.
+A próxima etapa é evidência e causalidade, na fase 19.
 
 Cada documento deve distinguir estado atual de proposta e descrever responsabilidade, entradas e saídas, dependências, fluxos, configuração, falhas, validação e operação relevantes. Requisitos gerais permanecem na [arquitetura técnica](../03-technical-architecture.md); decisões ficam em [adr](../adr/README.md).

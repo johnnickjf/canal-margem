@@ -5,6 +5,7 @@ import CalculationContext from '@/components/platform/CalculationContext.astro';
 import IndicatorDetail from '@/components/platform/IndicatorDetail.astro';
 import { indicatorGuides } from '@/data/indicator-guides';
 import IndicatorExplanation from '@/components/platform/IndicatorExplanation.astro';
+import { policies } from '@/data/policies';
 export function getStaticPaths() {
   return platform.indicators.map((indicator) => ({
     params: { slug: indicator.slug },
@@ -16,6 +17,9 @@ const theme = platform.themes.find((item) => item.slug === indicator.theme);
 if (!theme) throw new Error('Tema do indicador ausente no catálogo.');
 const selections = platform.selections[indicator.slug] ?? [];
 const guide = indicatorGuides[indicator.slug];
+const contextPolicies = policies.filter((policy) =>
+  policy.affected_indicators.some((item) => item.indicator === indicator.slug),
+);
 const related = platform.indicators.filter(
   (item) =>
     item.slug !== indicator.slug &&
@@ -34,7 +38,7 @@ const changes = selections.filter(
 ---
 <PlatformLayout title={indicator.name} description={indicator.question}>
   <p><a href={`/tema/${theme.slug}`}>{theme.name}</a> / {indicator.role === 'primary' ? 'Indicador principal' : 'Medida auxiliar'}</p>
-  <nav class="indicator-nav" aria-label="Nesta página"><a href="#aconteceu">O que aconteceu</a><a href="#significa">O que significa</a><a href="#dados">Dados e metodologia</a><a href="#relacionados">Indicadores relacionados</a></nav>
+  <nav class="indicator-nav" aria-label="Nesta página"><a href="#aconteceu">O que aconteceu</a><a href="#significa">O que significa</a><a href="#dados">Dados e metodologia</a><a href="#politicas">Políticas e história</a><a href="#relacionados">Indicadores relacionados</a></nav>
   <section id="aconteceu"><h2>O que aconteceu?</h2>
     <p>Os valores abaixo mostram o último período de cada recorte desta edição, inclusive quando indisponível. As datas de referência podem diferir entre séries.</p>
     {selections.length === 0 && <p>Sem dados publicados para este indicador nesta edição.</p>}
@@ -52,7 +56,12 @@ const changes = selections.filter(
   <section id="significa"><h2>O que isso significa?</h2><p>{guide?.meaning ?? indicator.definition}</p><p>{guide?.caution ?? indicator.limitations}</p><IndicatorExplanation indicator={indicator} /></section>
   <section id="dados"><h2>Como sabemos disso?</h2><p>{indicator.definition}</p><p>Valor, série histórica, fonte e metodologia por recorte. A atualização de coleta consta nas origens e no corte da edição ao final da página; ela não é o período de referência nem a data de divulgação pela fonte.</p>
     {selections.length === 0 && <p>Sem cobertura nesta edição. Nenhum valor foi substituído por zero.</p>}
-    <div class="indicator-series">{selections.map((selection, index) => <IndicatorDetail selection={selection} index={index} />)}</div>
+    <div class="indicator-series">{selections.map((selection, index) => <IndicatorDetail selection={selection} index={index} indicatorSlug={indicator.slug} />)}</div>
+  </section>
+  <section id="politicas"><h2>Políticas no contexto histórico</h2>
+    <p>Relações para investigar, sem atribuição automática de causalidade. O contexto é nacional; a cobertura e a geografia dos dados continuam sendo as de cada recorte.</p>
+    {contextPolicies.length === 0 ? <p>Nenhuma política relacionada neste catálogo inicial. Isso não significa ausência de políticas ou de efeitos.</p> : <ul>{contextPolicies.map((policy) => <li><a href={`/politicas/${policy.id}`}>{policy.name}</a> · {policy.affected_indicators.find((item) => item.indicator === indicator.slug)?.note}</li>)}</ul>}
+    <a href="/politicas">Explorar políticas, legislação e governos</a>
   </section>
   <section><h2>Limites de interpretação</h2><p>{indicator.limitations}</p><p>Uma mudança no indicador, por si só, não identifica sua causa.</p></section>
   <section id="relacionados"><h2>Indicadores relacionados</h2><p>Leia outras medidas em conjunto para ampliar o contexto. Uma relação entre medidas não demonstra causalidade.</p><ul>{related.map((item) => <li><a href={`/indicador/${item.slug}`}>{item.name}</a> · {item.question}</li>)}</ul></section>

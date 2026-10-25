@@ -9,8 +9,9 @@ import type { Selection } from '@/lib/platform-build';
 interface Props {
   selection: Selection;
   index: number;
+  indicatorSlug: string;
 }
-const { selection, index } = Astro.props;
+const { selection, index, indicatorSlug } = Astro.props;
 const { series, latest, inputs = [] } = selection;
 const source = platform.sources.find((item) => item.id === series.source);
 const value = latest.node?.observation.value;
@@ -25,7 +26,7 @@ const isChange = ['relative-change', 'difference', 'compound-change'].includes(c
   {isChange && latest.status === 'observed' && value != null && <Trend direction={decimalDirection(value)} change={`${value.replace('.', ',')} ${series.unit}`} comparison="Comparação desta edição; os períodos estão identificados acima." />}
   <WorkTime selection={selection} />
   {series.warnings && series.warnings.length > 0 && <aside aria-label={`Alertas do recorte ${index + 1}`}><h4>Cuidados de leitura</h4><ul>{series.warnings.map((warning) => <li>{warning}</li>)}</ul></aside>}
-  <IndicatorHistory selection={selection} id={`historico-${index}`} />
+  <IndicatorHistory selection={selection} id={`historico-${index}`} indicatorSlug={indicatorSlug} />
   <h4>Fonte e metodologia</h4>
   <dl><dt>Unidade</dt><dd>{series.unit}</dd><dt>Dataset</dt><dd>{series.dataset}</dd><dt>Método</dt><dd>{series.method}</dd>{series.frequency && <Fragment><dt>Frequência</dt><dd>{series.frequency}</dd></Fragment>}{series.temporal_basis && <Fragment><dt>Base temporal</dt><dd>{series.temporal_basis}</dd></Fragment>}</dl>
   {latest.node?.evaluation?.definition && <details><summary>Como o cálculo foi feito</summary>
