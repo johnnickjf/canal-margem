@@ -1,6 +1,7 @@
 ---
 import PlatformLayout from '@/layouts/PlatformLayout.astro';
 import IndicatorHistory from '@/components/platform/IndicatorHistory.astro';
+import EvidenceReading from '@/components/platform/EvidenceReading.astro';
 import { policies, policyCatalog } from '@/data/policies';
 import { platform } from '@/lib/platform';
 export function getStaticPaths() {
@@ -23,7 +24,7 @@ const related = policy.affected_indicators.map((relation) => {
 ---
 <PlatformLayout title={policy.name} description={policy.description}>
   <p><a href="/politicas">Políticas públicas e linha histórica</a> / Contexto nacional, Brasil</p>
-  <nav class="indicator-nav" aria-label="Nesta página"><a href="#vigencias">Vigências</a><a href="#legislacao">Legislação</a><a href="#governos">Governos</a><a href="#indicadores">Dados na linha histórica</a></nav>
+  <nav class="indicator-nav" aria-label="Nesta página"><a href="#vigencias">Vigências</a><a href="#legislacao">Legislação</a><a href="#governos">Governos</a><a href="#indicadores">Dados na linha histórica</a><a href="#evidencias">Estudos e evidências</a></nav>
   <section><h2>O que este contexto permite investigar?</h2>
     <p>{policy.description}</p><p>Relações investigáveis, sem efeito causal estimado. Acontecer durante uma política não prova ter sido causado por ela.</p>
     <p>{policy.limitations}</p>
@@ -60,4 +61,5 @@ const related = policy.affected_indicators.map((relation) => {
       <a href={`/indicador/${indicator.slug}#dados`}>Consultar fontes, metodologia e limitações de {indicator.name}</a>
     </article>)}
   </section>
+  <EvidenceReading kind="policy" id={policy.id} />
 </PlatformLayout>

@@ -33,6 +33,7 @@ O Canal Margem está preparando a evolução do site editorial para uma platafor
 25. [Comparador](systems/comparator.md): períodos, temas, indicadores e recortes, cálculos pela API, critérios versionados e auditoria da fase 16.
 26. [Tempo de trabalho](systems/work-time.md): cesta em reais, percentual do mínimo bruto e horas/minutos com referência e auditoria da fase 17.
 27. [Políticas públicas e linha histórica](systems/policy-history.md): catálogo de políticas, legislação, governos e vigências; contexto no eixo dos indicadores, fontes e limites da fase 18.
+28. [Evidência e causalidade](systems/evidence.md): estudos associados às políticas e aos indicadores, classificação da inferência, contrafactuais, hipóteses, aplicabilidade e limites da fase 19.
 
 Os quatro documentos numerados partem dos textos fornecidos pelo responsável pelo projeto e receberam ajustes de clareza e precisão. Definem o produto planejado; a auditoria do frontend registra a fase 0, e os documentos de sistemas registram as entregas posteriores. Exemplos do modelo e do design system são ilustrativos. As amostras em `data-sources/evidence/` são dados oficiais consultados na fase 4, com proveniência, sem integração ao site.
 
@@ -57,6 +58,7 @@ Os quatro documentos numerados partem dos textos fornecidos pelo responsável pe
 | Tempo de trabalho | Fase 17 implementada: cesta em reais, percentual do mínimo bruto e horas/minutos; inputs da mesma publicação/mês e auditoria |
 | Comparador interativo | Fase 16 implementada: seleção múltipla, cálculos e critérios versionados no backend, resultados expansíveis, publicação fixada e recuperação de erros |
 | Políticas públicas e linha histórica | Fase 18 implementada: quatro políticas federais, legislação, governos e vigências; faixas no eixo dos indicadores, relações investigáveis e fontes; sem causalidade atribuída |
+| Evidência e causalidade | Fase 19 implementada: três referências iniciais, classificação editorial da inferência, contrafactual/hipóteses para estimativas causais, vínculos históricos explícitos, fichas, JSON e busca; sem transporte automático de efeitos |
 | Ingestão e persistência local | PoC da fase 5 retirada após substituição verificada na fase 9; 21 arquivos e 587 observações preservados |
 | Arquitetura de armazenamento | Fase 6 definida em cinco ADRs: PostgreSQL/Railway, R2, histórico/cache, backup nativo/reconstrução e portabilidade/custos; serviços ainda não implantados |
 | Pipeline do MVP | Fase 7 implementada e verificada localmente: cinco fontes, 6.375 observações, PostgreSQL e API compatível com S3 (R2 em produção), repetição, revisões, falhas e importação da PoC |
@@ -87,7 +89,9 @@ Manter detalhes de infraestrutura fora da visão e do documento de UX. Registrar
 
 ## Próxima entrega
 
-Implementar evidência e causalidade da fase 19, com estudos e avaliações de impacto.
+Implementar a calculadora socioeconômica da fase 20, sobre os dados, comparações e métodos existentes.
+A [fase 19](systems/evidence.md) associa estudos e avaliações, distinguindo análise contábil,
+estimativa causal condicionada e referência metodológica, com aplicabilidade e limites explícitos.
 A [fase 18](systems/policy-history.md) apresenta políticas, legislação, governos e vigências junto aos indicadores, sem atribuição automática de causalidade.
 A [fase 17](systems/work-time.md) traduz o preço da cesta em percentual do mínimo bruto e horas/minutos.
 O [comparador da fase 16](systems/comparator.md) permite comparar períodos com critérios explícitos e auditoria.

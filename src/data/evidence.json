@@ -1,0 +1,178 @@
+{
+  "version": "1",
+  "revision": "2026-10-25.1",
+  "author": "Margem",
+  "reviewed_at": "2026-10-25",
+  "scope": "Curadoria inicial e não exaustiva. Classificações editoriais descrevem o tipo de inferência, não uma nota de qualidade. Ausência de estudo no catálogo não prova ausência de efeito ou de pesquisa.",
+  "studies": [
+    {
+      "id": "bolsa-familia-quinze-anos",
+      "title": "Os efeitos do Programa Bolsa Família sobre a pobreza e a desigualdade: um balanço dos primeiros quinze anos",
+      "authors": [
+        "Pedro Herculano Guimarães Ferreira de Souza",
+        "Rafael Guerreiro Osorio",
+        "Luis Henrique Paiva",
+        "Sergei Soares"
+      ],
+      "year": 2019,
+      "publisher": "Ipea — Texto para Discussão 2499",
+      "kind": "evaluation",
+      "publication_status": "working-paper",
+      "question": "Como as transferências participam da renda e de sua distribuição?",
+      "geography": "Brasil",
+      "population": "Domicílios das PNADs de 2001–2015 e da PNAD Contínua de 2016–2017.",
+      "period": {
+        "start": "2001-01-01",
+        "end": "2017-12-31"
+      },
+      "method": "Comparação da renda com e sem as transferências e decomposição do coeficiente de Gini.",
+      "assessment": {
+        "classification": "descriptive",
+        "rationale": "Classificação editorial: a retirada contábil do benefício não identifica todas as mudanças comportamentais de um mundo sem o programa."
+      },
+      "finding": "Os autores encontram contribuição das transferências para reduzir a pobreza e a desigualdade de renda.",
+      "limitations": [
+        "Não é uma avaliação da lei de 2023.",
+        "Comparações dependem das linhas de pobreza, das pesquisas e da identificação dos benefícios. A classificação não substitui a leitura do estudo."
+      ],
+      "sources": [
+        {
+          "label": "Ipea — TD 2499",
+          "url": "https://www.ipea.gov.br/portal/images/stories/PDFs/TDs/td_2499.pdf",
+          "locator": "Resumo; seções 5 e 6 (pobreza e desigualdade)."
+        }
+      ],
+      "policies": [
+        {
+          "policy": "bolsa-familia-2023",
+          "applicability": "historical-program",
+          "note": "Estuda o programa anterior à Lei nº 14.601/2023; não avalia a lei de 2023 nem seus benefícios atuais."
+        }
+      ],
+      "indicators": [
+        {
+          "indicator": "pobreza",
+          "outcome": "Pobreza monetária",
+          "note": "Métodos, linhas de pobreza e períodos podem diferir da série publicada pelo Margem."
+        },
+        {
+          "indicator": "desigualdade",
+          "outcome": "Desigualdade da renda domiciliar",
+          "note": "Métodos, linhas de pobreza e períodos podem diferir da série publicada pelo Margem."
+        }
+      ]
+    },
+    {
+      "id": "bolsa-familia-inseguranca-2009-2013",
+      "title": "The “Bolsa-Família” Program and the Food Insecurity in Brazilian household between 2009 and 2013",
+      "authors": ["Andrea S. S. de A. Melo", "Christophe Starzec", "François Gardes"],
+      "year": 2016,
+      "publisher": "ANPEC — Encontro Nacional de Economia 2016",
+      "kind": "impact-study",
+      "publication_status": "working-paper",
+      "question": "A participação no programa reduz a insegurança alimentar domiciliar?",
+      "geography": "Brasil",
+      "population": "Domicílios da PNAD de 2009 e 2013; cortes transversais repetidos.",
+      "period": {
+        "start": "2009-01-01",
+        "end": "2013-12-31"
+      },
+      "method": "Diferenças em diferenças com e sem pareamento; comparação com logit ordenado.",
+      "assessment": {
+        "classification": "causal-estimate",
+        "rationale": "Os autores propõem identificar impacto com grupo de comparação; a interpretação depende das hipóteses do desenho.",
+        "counterfactual": "Mudança no grupo de não beneficiários comparáveis, após pareamento.",
+        "assumptions": [
+          "Tendências paralelas entre grupos na ausência do programa.",
+          "Comparabilidade após ajustes e ausência de choques diferenciais não controlados."
+        ]
+      },
+      "finding": "Os autores estimam redução da insegurança alimentar no modelo com diferenças em diferenças e pareamento.",
+      "limitations": [
+        "Participação no programa é inferida; há risco de erro de classificação.",
+        "Dois cortes não acompanham as mesmas famílias nem bastam para verificar tendências anteriores.",
+        "O índice do estudo não equivale automaticamente à taxa do Margem; não avalia a lei de 2023."
+      ],
+      "sources": [
+        {
+          "label": "ANPEC — texto dos autores",
+          "url": "https://www.anpec.org.br/encontro/2016/submissao/files_I/i5-15947443edc6e1498446b776165267a7.pdf",
+          "locator": "Resumo; seção 3 (método e dados); seção 4 (resultados)."
+        }
+      ],
+      "policies": [
+        {
+          "policy": "bolsa-familia-2023",
+          "applicability": "historical-program",
+          "note": "Estuda o programa anterior à Lei nº 14.601/2023; não avalia a lei de 2023 nem seus benefícios atuais."
+        }
+      ],
+      "indicators": [
+        {
+          "indicator": "inseguranca-alimentar",
+          "outcome": "Índice de insegurança alimentar domiciliar",
+          "note": "Desfecho relacionado à EBIA, com escala e período próprios; não transfere o efeito à série atual."
+        }
+      ]
+    },
+    {
+      "id": "avaliacao-impacto-na-pratica",
+      "title": "Impact Evaluation in Practice — segunda edição",
+      "authors": [
+        "Paul J. Gertler",
+        "Sebastian Martinez",
+        "Patrick Premand",
+        "Laura B. Rawlings",
+        "Christel M. J. Vermeersch"
+      ],
+      "year": 2016,
+      "publisher": "Banco Mundial e Banco Interamericano de Desenvolvimento",
+      "kind": "methodology",
+      "publication_status": "institutional",
+      "question": "O que é necessário para interpretar uma diferença como efeito de uma política?",
+      "geography": "Referência internacional; sem estimativa para um recorte brasileiro.",
+      "population": "Manual de desenho e interpretação de avaliações; sem população avaliada nesta ficha.",
+      "period": null,
+      "method": "Apresentação de contrafactuais e desenhos de avaliação de impacto.",
+      "assessment": {
+        "classification": "methodological",
+        "rationale": "Orienta a leitura dos desenhos; não constitui evidência empírica de efeito de uma política catalogada."
+      },
+      "finding": "Uma avaliação de impacto precisa estimar o que teria ocorrido sem a intervenção, por meio de comparação justificada.",
+      "limitations": [
+        "O nome de um método não garante que suas hipóteses sejam satisfeitas em um estudo.",
+        "O manual não demonstra efeito das políticas do catálogo."
+      ],
+      "sources": [
+        {
+          "label": "BID — publicação e acesso ao manual",
+          "url": "https://publications.iadb.org/en/impact-evaluation-practice-second-edition",
+          "locator": "Segunda edição; parte II, métodos de avaliação de impacto."
+        }
+      ],
+      "policies": [
+        {
+          "policy": "bolsa-familia-2023",
+          "applicability": "methodological",
+          "note": "Referência para perguntas causais; não é avaliação desta política."
+        },
+        {
+          "policy": "reforma-trabalhista-2017",
+          "applicability": "methodological",
+          "note": "Referência para perguntas causais; não é avaliação desta política."
+        },
+        {
+          "policy": "reforma-previdenciaria-2019",
+          "applicability": "methodological",
+          "note": "Referência para perguntas causais; não é avaliação desta política."
+        },
+        {
+          "policy": "valorizacao-salario-minimo-2024",
+          "applicability": "methodological",
+          "note": "Referência para perguntas causais; não é avaliação desta política."
+        }
+      ],
+      "indicators": []
+    }
+  ]
+}

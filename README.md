@@ -87,8 +87,11 @@ versionados com auditoria. A fase 17 implementa a tradução de [preços em temp
 cesta em reais, percentual do salário mínimo bruto e horas/minutos, com referência de 220 horas
 mensais, mesma edição/mês e auditoria. A fase 18 implementa [políticas públicas e linha histórica](docs/systems/policy-history.md):
 catálogo editorial de políticas, legislação, governos e vigências, com fontes, relações
-investigáveis e faixas no mesmo eixo temporal dos indicadores. A próxima etapa é evidência
-e causalidade, na fase 19; implantação Railway/R2 permanece posterior.
+investigáveis e faixas no mesmo eixo temporal dos indicadores. A fase 19 implementa
+[evidência e causalidade](docs/systems/evidence.md): estudos, métodos, contrafactuais,
+hipóteses e limites, associados às políticas e aos indicadores sem atribuição automática
+de efeitos. A próxima etapa é a calculadora socioeconômica, na fase 20;
+implantação Railway/R2 permanece posterior.
 
 ```bash
 MARGEM_API_URL=http://127.0.0.1:8080 pnpm build  # API já operando, origem sem caminho

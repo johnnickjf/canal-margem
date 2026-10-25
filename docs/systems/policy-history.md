@@ -105,6 +105,8 @@ vigências e fontes permanecem disponíveis, acompanhadas do aviso de ausência 
   teclado, faixas no mesmo eixo, acessibilidade e capturas em desktop/celular.
 
 Essas verificações são locais. Não comprovam compreensão por usuários, indexação externa,
-operação Railway/R2 ou efeitos de políticas. Estudos e avaliações de impacto pertencem à
-fase 19; integração ao comparador por seleção de governo permanece uma evolução posterior.
+operação Railway/R2 ou efeitos de políticas. A [fase 19](evidence.md) acrescenta estudos,
+avaliações e referências metodológicas com critérios e limites, preservando o caráter
+contextual das relações desta linha histórica. Integração ao comparador por seleção de
+governo permanece uma evolução posterior.
 A [regra permanente de SEO e descoberta por IA](../../AGENTS.md) continua obrigatória.

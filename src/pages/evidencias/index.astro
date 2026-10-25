@@ -1,0 +1,31 @@
+---
+import PlatformLayout from '@/layouts/PlatformLayout.astro';
+import { evidenceCatalog } from '@/data/evidence';
+import { evidenceClasses, evidenceKinds } from '@/lib/evidence-catalog';
+---
+<PlatformLayout title="Evidência e causalidade" description="Estudos, métodos e limites para distinguir contexto temporal de efeito causal de políticas públicas.">
+  <section><h2>Aconteceu durante ou foi causado por?</h2>
+    <p>Um indicador mudar durante um governo ou após uma lei descreve uma sequência temporal. Para atribuir efeito, é necessário estimar o contrafactual: o que teria ocorrido sem a intervenção. Comparar apenas antes e depois não separa outras causas.</p>
+    <p>Exemplo hipotético: se a pobreza cai após uma política, o resultado também pode refletir emprego, preços e outras transferências. Esse exemplo não é uma estimativa observada.</p>
+  </section>
+  <section><h2>Como classificamos a inferência</h2>
+    <dl><dt>Análise descritiva ou contábil</dt><dd>Organiza associações ou decompõe resultados. Não identifica, por si só, o efeito causal total.</dd>
+      <dt>Estimativa causal condicionada</dt><dd>O estudo propõe uma comparação contrafactual. Leia o desenho, as hipóteses e os limites; a classificação não certifica sua validade nem transfere resultados a outro período.</dd>
+      <dt>Referência metodológica</dt><dd>Explica como avaliar uma relação. Não demonstra efeito de uma política.</dd></dl>
+    <p>Tipo de documento e tipo de inferência são campos distintos. Uma pesquisa acadêmica, um estudo de impacto, uma nota técnica ou uma avaliação não recebe automaticamente uma classificação causal pelo título, pela instituição ou pelo método declarado. Não há score, hierarquia automática de qualidade ou recomendação de voto.</p>
+  </section>
+  <section><h2>Catálogo de estudos e metodologias</h2>
+    <p>{evidenceCatalog.scope}</p>
+    <div class="platform-grid">{evidenceCatalog.studies.map((study) => <article class="platform-card">
+      <h3><a href={`/evidencias/${study.id}`}>{study.title}</a></h3>
+      <p>{evidenceKinds[study.kind]} · {study.year} · {evidenceClasses[study.assessment.classification]}</p>
+      <p>{study.question}</p><p>{study.assessment.rationale}</p>
+    </article>)}</div>
+  </section>
+  <section><h2>Curadoria e reprodução da leitura</h2>
+    <p>Curadoria: {evidenceCatalog.author} · Conferência das fontes: <time datetime={evidenceCatalog.reviewed_at}>{evidenceCatalog.reviewed_at}</time> · Revisão {evidenceCatalog.revision}.</p>
+    <p>A revisão editorial é separada da publicação dos indicadores. Guarde ambas para identificar a leitura. O catálogo acompanha o deploy; versões editoriais antigas são preservadas no repositório.</p>
+    <a href="/evidencias/catalogo.json">Consultar estudos, classificação, vínculos e fontes (JSON)</a>
+    <p><a href="/politicas">Explorar políticas e linha histórica</a> · <a href="/comparar">Comparar períodos</a></p>
+  </section>
+</PlatformLayout>

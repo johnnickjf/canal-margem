@@ -45,6 +45,9 @@ A [tradução em tempo de trabalho da fase 17](work-time.md) apresenta cesta em 
 do mínimo bruto e horas/minutos, com referência explícita, mesma publicação/mês e auditoria.
 A [fase 18](policy-history.md) acrescenta políticas, legislação, governos e vigências,
 com fontes e contexto no mesmo eixo temporal dos indicadores, sem atribuição causal.
-A próxima etapa é evidência e causalidade, na fase 19.
+A [fase 19](evidence.md) associa estudos e referências metodológicas às políticas e aos
+indicadores, com classificação editorial da inferência, contrafactuais, hipóteses,
+aplicabilidade histórica e limites explícitos. A próxima etapa é a calculadora
+socioeconômica da fase 20.
 
 Cada documento deve distinguir estado atual de proposta e descrever responsabilidade, entradas e saídas, dependências, fluxos, configuração, falhas, validação e operação relevantes. Requisitos gerais permanecem na [arquitetura técnica](../03-technical-architecture.md); decisões ficam em [adr](../adr/README.md).

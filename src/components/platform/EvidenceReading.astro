@@ -1,0 +1,21 @@
+---
+import { evidenceCatalog } from '@/data/evidence';
+import { evidenceClasses, relatedStudies } from '@/lib/evidence-catalog';
+interface Props {
+  kind: 'policy' | 'indicator';
+  id: string;
+}
+const { kind, id } = Astro.props;
+const studies = relatedStudies(evidenceCatalog, kind, id);
+---
+<section id="evidencias">
+  <h2>Estudos e limites da evidência</h2>
+  <p>Aconteceu durante não significa foi causado por. Estudos têm populações, períodos e hipóteses próprios; seus resultados não são efeitos calculados a partir deste gráfico.</p>
+  {studies.length === 0 ? <p>Nenhum estudo relacionado nesta curadoria inicial. Isso não significa ausência de pesquisa ou de efeito.</p> : <ul>{studies.map((study) => <li>
+    <a href={`/evidencias/${study.id}`}>{study.title}</a> · {evidenceClasses[study.assessment.classification]} · {study.year}.
+    <p>{kind === 'policy' ? study.policies.find((relation) => relation.policy === id)?.note : study.indicators.find((relation) => relation.indicator === id)?.note}</p>
+    {study.policies.some((relation) => relation.applicability === 'historical-program') && <p>Programa histórico: não avalia a lei de 2023 nem seus benefícios atuais.</p>}
+  </li>)}</ul>}
+  <p>Curadoria {evidenceCatalog.author} · Revisão de evidências {evidenceCatalog.revision}. Independente da edição numérica.</p>
+  <a href="/evidencias">Como distinguir contexto, associação e estimativa causal</a>
+</section>

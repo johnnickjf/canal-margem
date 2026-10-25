@@ -87,6 +87,11 @@ test('build da plataforma fixa publicação no HTML, preserva decimais e explici
       'indicador/tempo-por-cesta',
       'comparar',
       'politicas',
+      'politicas/bolsa-familia-2023',
+      'evidencias',
+      'evidencias/bolsa-familia-quinze-anos',
+      'evidencias/bolsa-familia-inseguranca-2009-2013',
+      'evidencias/avaliacao-impacto-na-pratica',
       'politicas/reforma-trabalhista-2017',
       'politicas/valorizacao-salario-minimo-2024',
       'entenda/como-ler-os-dados',
@@ -129,6 +134,15 @@ test('build da plataforma fixa publicação no HTML, preserva decimais e explici
         ]) {
           expect(content.links).toContain(`/tema/${theme}`);
         }
+      }
+      if (route === 'politicas/bolsa-familia-2023') {
+        expect(content.links).toContain('/evidencias/bolsa-familia-quinze-anos');
+        expect(content.text).toContain('não avalia a lei de 2023');
+      }
+      if (route === 'evidencias/bolsa-familia-inseguranca-2009-2013') {
+        expect(content.text).toContain('Tendências paralelas');
+        expect(content.text).toContain('Programa histórico');
+        expect(content.links).toContain('/indicador/inseguranca-alimentar');
       }
       for (const link of content.links) {
         if (link.includes('/api/v1/'))

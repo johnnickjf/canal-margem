@@ -1,4 +1,10 @@
-import { indexSearchItems, type SearchFilter, type SearchItem, searchItems } from '@/lib/search';
+import {
+  indexSearchItems,
+  type SearchFilter,
+  type SearchItem,
+  searchItems,
+  searchTypes,
+} from '@/lib/search';
 
 /** Um índice por página; falhas permitem nova tentativa no próximo envio. */
 export function createSearch(endpoint: string) {
@@ -13,15 +19,7 @@ export function createSearch(endpoint: string) {
           items.some(
             (item) =>
               !item ||
-              ![
-                'Episódio',
-                'Corte',
-                'Análise',
-                'Tema',
-                'Indicador',
-                'Entenda',
-                'Política',
-              ].includes(item.type) ||
+              !searchTypes.includes(item.type) ||
               ['title', 'text', 'url', 'meta'].some((key) => typeof item[key] !== 'string') ||
               !/^\/(?![\\/])/.test(item.url) ||
               Array.from(item.url as string).some(

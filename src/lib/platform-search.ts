@@ -1,6 +1,8 @@
 import { concepts } from '@/data/concepts';
+import { evidenceCatalog } from '@/data/evidence';
 import { policies } from '@/data/policies';
 import { conceptAliases, indicatorAliases } from '@/data/search-aliases';
+import { evidenceClasses } from './evidence-catalog';
 import type { Platform } from './platform-build';
 import type { SearchItem } from './search';
 
@@ -8,6 +10,13 @@ import type { SearchItem } from './search';
 export function platformSearchItems(platform: Platform): SearchItem[] {
   const themes = new Map(platform.themes.map((theme) => [theme.slug, theme.name]));
   return [
+    ...evidenceCatalog.studies.map((study) => ({
+      type: 'Estudo' as const,
+      title: study.title,
+      text: `${study.question} ${study.method} ${study.finding} ${study.authors.join(' ')}`,
+      url: `/evidencias/${study.id}`,
+      meta: `${study.year} / ${evidenceClasses[study.assessment.classification]}`,
+    })),
     ...policies.map((policy) => ({
       type: 'Política' as const,
       title: policy.name,

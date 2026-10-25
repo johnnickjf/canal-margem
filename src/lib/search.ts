@@ -1,6 +1,17 @@
 /** Item do índice de busca gerado em /busca.json. */
+export const searchTypes = [
+  'Episódio',
+  'Corte',
+  'Análise',
+  'Tema',
+  'Indicador',
+  'Entenda',
+  'Política',
+  'Estudo',
+] as const;
+
 export type SearchItem = {
-  type: 'Episódio' | 'Corte' | 'Análise' | 'Tema' | 'Indicador' | 'Entenda' | 'Política';
+  type: (typeof searchTypes)[number];
   title: string;
   text: string;
   url: string;
@@ -23,14 +34,22 @@ const stopWords = new Set(
   ),
 );
 
-export type SearchFilter = '' | 'indicadores' | 'entenda' | 'acervo' | 'temas' | 'politicas';
+export type SearchFilter =
+  | ''
+  | 'indicadores'
+  | 'entenda'
+  | 'acervo'
+  | 'temas'
+  | 'politicas'
+  | 'estudos';
 
 export function searchFilter(value: string | null): SearchFilter {
   return value === 'indicadores' ||
     value === 'entenda' ||
     value === 'acervo' ||
     value === 'temas' ||
-    value === 'politicas'
+    value === 'politicas' ||
+    value === 'estudos'
     ? value
     : '';
 }
@@ -64,6 +83,7 @@ export function searchItems(index: IndexedItem[], query: string, filter: SearchF
       if (filter === 'entenda') return item.type === 'Entenda';
       if (filter === 'temas') return item.type === 'Tema';
       if (filter === 'politicas') return item.type === 'Política';
+      if (filter === 'estudos') return item.type === 'Estudo';
       if (filter === 'acervo') return ['Episódio', 'Corte', 'Análise'].includes(item.type);
       return true;
     })

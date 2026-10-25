@@ -6,6 +6,7 @@ import IndicatorDetail from '@/components/platform/IndicatorDetail.astro';
 import { indicatorGuides } from '@/data/indicator-guides';
 import IndicatorExplanation from '@/components/platform/IndicatorExplanation.astro';
 import { policies } from '@/data/policies';
+import EvidenceReading from '@/components/platform/EvidenceReading.astro';
 export function getStaticPaths() {
   return platform.indicators.map((indicator) => ({
     params: { slug: indicator.slug },
@@ -63,6 +64,7 @@ const changes = selections.filter(
     {contextPolicies.length === 0 ? <p>Nenhuma política relacionada neste catálogo inicial. Isso não significa ausência de políticas ou de efeitos.</p> : <ul>{contextPolicies.map((policy) => <li><a href={`/politicas/${policy.id}`}>{policy.name}</a> · {policy.affected_indicators.find((item) => item.indicator === indicator.slug)?.note}</li>)}</ul>}
     <a href="/politicas">Explorar políticas, legislação e governos</a>
   </section>
+  <EvidenceReading kind="indicator" id={indicator.slug} />
   <section><h2>Limites de interpretação</h2><p>{indicator.limitations}</p><p>Uma mudança no indicador, por si só, não identifica sua causa.</p></section>
   <section id="relacionados"><h2>Indicadores relacionados</h2><p>Leia outras medidas em conjunto para ampliar o contexto. Uma relação entre medidas não demonstra causalidade.</p><ul>{related.map((item) => <li><a href={`/indicador/${item.slug}`}>{item.name}</a> · {item.question}</li>)}</ul></section>
   <p><a href="/comparar">Comparar períodos e indicadores</a></p>

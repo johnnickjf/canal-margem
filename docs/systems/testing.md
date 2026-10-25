@@ -146,3 +146,13 @@ aceitação, cálculo, publicação, ativação e revisão, preservando a leitur
 A captura estática rejeita conversões de outro recorte ou sem referências; o build isolado
 verifica reais, percentual, horas/minutos, ausência explícita, auditoria por teclado e links
 da publicação, em desktop/celular sem JavaScript, com SEO, axe e capturas.
+
+## Evidência e causalidade
+
+A [fase 19](evidence.md) acrescenta validação de estudos, vínculos e classificação da inferência:
+estimativas causais exigem contrafactual e hipóteses; estudos históricos não são atribuídos
+à lei de 2023. Testes unitários cobrem referências, períodos, campos obrigatórios, duplicações,
+fontes e seleção explícita. Playwright verifica fichas, navegação indicador/estudo/política,
+busca filtrada, JSON, ausência de estudo, SEO e acessibilidade automática em desktop/celular,
+inclusive sem JavaScript. O build com API controlada também verifica edição fixada e links
+nas novas rotas. Esses testes verificam o produto e seu contrato, não a validade causal dos estudos.

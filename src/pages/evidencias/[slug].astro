@@ -1,0 +1,54 @@
+---
+import PlatformLayout from '@/layouts/PlatformLayout.astro';
+import { evidenceCatalog } from '@/data/evidence';
+import { policyCatalog } from '@/data/policies';
+import { evidenceClasses, evidenceKinds } from '@/lib/evidence-catalog';
+import { platform } from '@/lib/platform';
+export function getStaticPaths() {
+  return evidenceCatalog.studies.map((study) => ({ params: { slug: study.id }, props: { study } }));
+}
+const { study } = Astro.props;
+const assessment = study.assessment;
+const statuses = {
+  'working-paper':
+    'Texto para discussão ou trabalho de encontro; revisão por pares não afirmada nesta ficha',
+  'peer-reviewed': 'Artigo com revisão por pares',
+  institutional: 'Publicação institucional',
+};
+---
+<PlatformLayout title={study.title} description={study.question}>
+  <p><a href="/evidencias">Evidência e causalidade</a> / {evidenceKinds[study.kind]}</p>
+  <nav class="indicator-nav" aria-label="Nesta página"><a href="#estudo">Estudo</a><a href="#metodo">Método e inferência</a><a href="#limites">Resultado e limites</a><a href="#vinculos">Políticas e indicadores</a><a href="#fontes">Fontes</a></nav>
+  <section id="estudo"><h2>Qual pergunta o estudo responde?</h2>
+    <p>{study.question}</p>
+    <dl><dt>Autores</dt><dd>{study.authors.join('; ')}</dd><dt>Publicação</dt><dd>{study.publisher} · {study.year}</dd><dt>Situação editorial da fonte</dt><dd>{statuses[study.publication_status]}</dd><dt>Geografia</dt><dd>{study.geography}</dd><dt>População e dados</dt><dd>{study.population}</dd><dt>Período estudado</dt><dd>{study.period ? <Fragment><time datetime={study.period.start}>{study.period.start}</time> a <time datetime={study.period.end}>{study.period.end}</time></Fragment> : 'Não se aplica: referência metodológica.'}</dd></dl>
+  </section>
+  <section id="metodo"><h2>Método e alcance da inferência</h2>
+    <p>{study.method}</p><p><strong>{evidenceClasses[assessment.classification]}</strong></p><p>{assessment.rationale}</p>
+    {assessment.classification === 'causal-estimate' ? <Fragment>
+      <h3>Qual é o contrafactual?</h3><p>{assessment.counterfactual}</p>
+      <h3>Hipóteses necessárias à interpretação causal</h3><ul>{assessment.assumptions.map((assumption) => <li>{assumption}</li>)}</ul>
+      <p>Estimativa dos autores, condicionada ao desenho e às hipóteses. O Margem não reproduziu a estimação nem certifica que as hipóteses foram satisfeitas.</p>
+    </Fragment> : <p>Esta ficha não apresenta uma estimativa causal identificada para a política catalogada.</p>}
+    <a href="/evidencias">Consultar os critérios de classificação editorial</a>
+  </section>
+  <section id="limites"><h2>O que os autores encontram e o que não podemos concluir?</h2>
+    <p>{study.finding}</p><ul>{study.limitations.map((limit) => <li>{limit}</li>)}</ul>
+    <p>Aconteceu durante não significa foi causado por. Nenhum resultado desta ficha é aplicado automaticamente aos indicadores, a governos ou a famílias.</p>
+  </section>
+  <section id="vinculos"><h2>Relação com políticas e indicadores</h2>
+    <h3>Políticas</h3><ul>{study.policies.map((relation) => <li>
+      <a href={`/politicas/${relation.policy}`}>{policyCatalog.policies.find((policy) => policy.id === relation.policy)?.name}</a>
+      <p><strong>{relation.applicability === 'historical-program' ? 'Programa histórico' : relation.applicability === 'methodological' ? 'Referência metodológica' : 'Política avaliada'}</strong> · {relation.note}</p>
+    </li>)}</ul>
+    <h3>Desfechos relacionados</h3>
+    {study.indicators.length === 0 ? <p>Sem desfecho empírico: o manual não estima o efeito sobre os indicadores.</p> : <ul>{study.indicators.map((relation) => <li>
+      <a href={`/indicador/${relation.indicator}`}>{platform.indicators.find((indicator) => indicator.slug === relation.indicator)?.name}</a> · Desfecho do estudo: {relation.outcome}.<p>{relation.note}</p>
+    </li>)}</ul>}
+  </section>
+  <section id="fontes"><h2>Fontes e responsabilidade editorial</h2>
+    <ul>{study.sources.map((source) => <li><a href={source.url}>{source.label}</a> · {source.locator}</li>)}</ul>
+    <p>Síntese e classificação editorial: {evidenceCatalog.author} · Conferência: <time datetime={evidenceCatalog.reviewed_at}>{evidenceCatalog.reviewed_at}</time> · Revisão {evidenceCatalog.revision}. Esta revisão não é a data do estudo nem a edição numérica.</p>
+    <a href="/evidencias/catalogo.json">Consultar a ficha completa e os vínculos (JSON)</a>
+  </section>
+</PlatformLayout>

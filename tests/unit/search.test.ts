@@ -77,6 +77,10 @@ describe('descoberta em linguagem cotidiana', () => {
     expect(searchFilter(null)).toBe('');
     expect(searchFilter('entenda')).toBe('entenda');
     expect(searchFilter('politicas')).toBe('politicas');
+    expect(searchFilter('estudos')).toBe('estudos');
+    const studies = searchItems(index, 'Bolsa Família', 'estudos');
+    expect(studies).toHaveLength(2);
+    expect(studies.every((item) => item.type === 'Estudo')).toBe(true);
     expect(urls('reforma trabalhista')).toContain('/politicas/reforma-trabalhista-2017');
   });
 

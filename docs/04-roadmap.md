@@ -1016,6 +1016,18 @@ Usuário consegue visualizar política e dados na mesma linha histórica.
 
 ## Fase 19 — Evidência e causalidade
 
+### Estado
+
+Implementada em [Evidência e causalidade](systems/evidence.md): catálogo editorial validado
+de estudos e metodologias, fichas estáticas e JSON, vínculos às políticas e aos indicadores,
+busca e critérios de inferência. A classificação distingue análise descritiva/contábil,
+estimativa causal condicionada e referência metodológica; contrafactual, hipóteses,
+resultados e limites são explícitos. Os estudos empíricos iniciais tratam do programa
+Bolsa Família anterior a 2023, sem atribuir seus resultados à nova lei. Não há reprodução
+das estimações, score ou aplicação automática de efeitos às séries. Verificação local
+cobre contrato, build com API controlada, navegação sem JavaScript, desktop/celular,
+SEO e acessibilidade automática. Indexação externa e compreensão por usuários não verificadas.
+
 ### Objetivo
 
 Distinguir claramente:
