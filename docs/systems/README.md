@@ -58,4 +58,7 @@ prontidão do canal, monitoramento de frescor e orientação para alertas e resp
 A [fase 23](audit-transparency.md) publica o histórico de edições ativadas e uma trilha por
 indicador até série, dataset e fonte, com consultas JSON fixadas na mesma publicação.
 
+A [fase 24](deployment-check.md) acrescenta uma checagem pós-publicação independente de provedor
+para robots.txt, sitemaps, HTML indexável, metadados públicos e prontidão opcional da API.
+
 Cada documento deve distinguir estado atual de proposta e descrever responsabilidade, entradas e saídas, dependências, fluxos, configuração, falhas, validação e operação relevantes. Requisitos gerais permanecem na [arquitetura técnica](../03-technical-architecture.md); decisões ficam em [adr](../adr/README.md).

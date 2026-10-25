@@ -7,7 +7,7 @@ O Canal Margem está preparando a evolução do site editorial para uma platafor
 1. [Visão e fundamentos](01-project-vision.md): propósito, princípios e dimensões de análise.
 2. [Product Design e UX](02-product-design.md): experiência pretendida, navegação e interpretação dos indicadores.
 3. [Arquitetura técnica](03-technical-architecture.md): requisitos futuros para dados, proveniência e distribuição.
-4. [Roadmap](04-roadmap.md): fases 0–23 e critérios do futuro MVP.
+4. [Roadmap](04-roadmap.md): fases 0–24 e critérios do futuro MVP.
 5. [Auditoria do frontend atual](systems/frontend.md): implementação observada, identidade reutilizável, limitações e próximo passo.
 6. [Design system](systems/design-system.md): tokens, componentes básicos e de indicadores, estados e validação da fase 1.
 7. [Testes e cobertura](systems/testing.md): suíte unitária, navegador, build editorial, medição por módulo e CI.
@@ -41,6 +41,8 @@ O Canal Margem está preparando a evolução do site editorial para uma platafor
 
 32. [Auditoria e transparência pública](systems/audit-transparency.md): histórico de edições ativadas, trilha de proveniência por indicador e acesso aos datasets JSON da fase 23.
 
+33. [Verificação pós-publicação](systems/deployment-check.md): checagem independente de provedor para site, sitemap, SEO e prontidão da API na fase 24.
+
 Os quatro documentos numerados partem dos textos fornecidos pelo responsável pelo projeto e receberam ajustes de clareza e precisão. Definem o produto planejado; a auditoria do frontend registra a fase 0, e os documentos de sistemas registram as entregas posteriores. Exemplos do modelo e do design system são ilustrativos. As amostras em `data-sources/evidence/` são dados oficiais consultados na fase 4, com proveniência, sem integração ao site.
 
 ## Estado e limites
@@ -69,6 +71,7 @@ Os quatro documentos numerados partem dos textos fornecidos pelo responsável pe
 | Escala e performance | Fase 21 implementada e medida localmente: cache de projeções limitado por edição/tamanho/TTL, expiração de IPs por fila e avaliação de infraestrutura; sem capacidade de produção comprovada |
 | Observabilidade e operação | Fase 22 implementada localmente: endpoint Prometheus, métricas do cache, liveness/readiness, logs de duração de jobs e comando monitor com código de falha/webhook; coletor e notificações externas dependem de implantação |
 | Auditoria e transparência pública | Fase 23 implementada: histórico paginado de edições ativadas, página HTML com linhagem e links para observações, séries, manifestos e fontes; revisões de fonte aparecem quando incorporadas a uma edição |
+| Verificação pós-publicação | Fase 24 implementada localmente: comando verifica sitemap, páginas públicas, SEO, rastreamento e, opcionalmente, saúde e publicação atual da API; ainda sem execução contra serviço remoto |
 | Ingestão e persistência local | PoC da fase 5 retirada após substituição verificada na fase 9; 21 arquivos e 587 observações preservados |
 | Arquitetura de armazenamento | Fase 6 definida em cinco ADRs: PostgreSQL/Railway, R2, histórico/cache, backup nativo/reconstrução e portabilidade/custos; serviços ainda não implantados |
 | Pipeline do MVP | Fase 7 implementada e verificada localmente: cinco fontes, 6.375 observações, PostgreSQL e API compatível com S3 (R2 em produção), repetição, revisões, falhas e importação da PoC |
@@ -99,8 +102,7 @@ Manter detalhes de infraestrutura fora da visão e do documento de UX. Registrar
 
 ## Próxima entrega
 
-A fase 23 conclui as entregas previstas no roadmap local: o histórico público registra as
-edições ativadas e `/auditoria` liga cada valor publicado à série, dataset, fórmula e fonte.
-Publicação Railway/R2, alertas remotos, operação do frontend e indexação externa ainda dependem
-de implantação e observação. A [regra permanente de SEO e descoberta por IA](../AGENTS.md)
-continua obrigatória.
+A fase 24 acrescenta uma checagem executável para verificar o site e a API depois da publicação.
+Ela não substitui o deploy: publicação Railway/R2, alertas remotos, operação do frontend e
+indexação externa ainda dependem de implantação e observação. A [regra permanente de SEO e
+descoberta por IA](../AGENTS.md) continua obrigatória.

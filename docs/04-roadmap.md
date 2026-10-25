@@ -1208,6 +1208,34 @@ O Margem consegue demonstrar de onde cada afirmação quantitativa surgiu.
 
 ---
 
+## Fase 24 — Verificação pós-publicação
+
+### Estado
+
+Implementada localmente pelo comando [`pnpm deployment:check`](systems/deployment-check.md).
+O comando é independente de provedor e não publica serviços. A hospedagem do frontend e a
+operação Railway/R2 continuam sem validação remota.
+
+### Objetivo
+
+Conferir os requisitos públicos observáveis depois de publicar o site e a API.
+
+### Trabalho
+
+- ler `robots.txt` e percorrer os sitemaps anunciados;
+- solicitar as páginas listadas e conferir status HTTP, metadados, canonical, conteúdo HTML,
+  diretivas de indexação e JSON-LD;
+- conferir liveness, prontidão e publicação atual quando uma origem da API for informada;
+- falhar com código diferente de zero quando uma checagem não for atendida.
+
+### Resultado e limites
+
+Há uma verificação repetível antes e depois de uma publicação. Ela observa respostas no momento
+da execução; não publica o serviço, não comprova indexação externa, nem substitui os ensaios de
+cache, CORS, backup, alertas e recuperação previstos nos ADRs.
+
+---
+
 ## Linha crítica para o primeiro MVP
 
 Nem todas as fases anteriores são necessárias antes de lançar algo.
