@@ -9,6 +9,7 @@
   },
   "scripts": {
     "dev": "astro dev",
+    "dev:full": "node --env-file=backend/.env.example --env-file-if-exists=backend/.env scripts/dev-full.mjs",
     "build": "pnpm check && astro build",
     "preview": "astro preview",
     "check": "biome check . && astro check",

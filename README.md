@@ -21,6 +21,7 @@ ao reorganizar a documentação.
 ```bash
 pnpm install
 pnpm dev          # http://localhost:4321
+pnpm dev:full     # PostgreSQL + LocalStack + API + Astro
 pnpm check        # Biome + checagem do Astro
 pnpm build        # check + build estático em dist/
 pnpm preview      # serve o build localmente
@@ -28,6 +29,15 @@ pnpm preview      # serve o build localmente
 
 Requer Node 22.13 ou superior e pnpm 11.22.0, fixado em `packageManager`.
 Se o pnpm ainda não estiver instalado, use `npm install --global pnpm@11.22.0`.
+`pnpm dev:full` também requer Go 1.26.6 e Docker Compose. O comando inicia os serviços
+locais de `backend/compose.yaml`, aplica as migrações no PostgreSQL local e sobe a API em
+`http://127.0.0.1:8080` junto com o Astro. O frontend usa a API se a publicação ativa e sua
+projeção estiverem disponíveis; sem publicação ou projeção, mostra o catálogo sem observações
+e informa o problema no terminal. Pare o `pnpm dev` atual e qualquer API na porta 8080 antes
+de iniciar o comando completo.
+`Ctrl+C` encerra os servidores; PostgreSQL e
+LocalStack permanecem ativos e podem ser parados com `docker compose -f backend/compose.yaml stop`.
+O comando lê os padrões de `backend/.env.example` e aceita ajustes locais em `backend/.env`.
 
 O lockfile do projeto é `pnpm-lock.yaml`. Em CI, use `pnpm install --frozen-lockfile`.
 `pnpm-workspace.yaml` autoriza o script de instalação de `esbuild`, necessário à ferramenta de build.

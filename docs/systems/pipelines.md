@@ -155,6 +155,13 @@ Requer Go 1.26.6 (mesma versão da CI e da imagem), Docker e, para os comandos
 [`go.sum`](../../backend/go.sum). O compose usa portas locais 55437 e 59007. O bucket deve
 ser provisionado antes dos jobs; no LocalStack, o comando abaixo cria apenas o bucket local.
 
+Para iniciar a API e o frontend juntos, execute `pnpm dev:full` na raiz. O comando sobe
+PostgreSQL/LocalStack, aplica migrações locais e inicia os dois servidores. Se o banco ainda
+não tiver publicação ativa ou a projeção não estiver disponível no LocalStack, o frontend usa
+o catálogo local sem observações e informa o problema no terminal. O comando de desenvolvimento
+não provisiona buckets nem executa coleta; os comandos abaixo continuam necessários para
+preparar os dados dos pipelines.
+
 ```bash
 docker compose -f backend/compose.yaml up -d --wait
 go -C backend mod download
