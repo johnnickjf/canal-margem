@@ -10,6 +10,15 @@ indicators[0].definition += ' Catálogo da publicação de teste.';
 const publication = 'a'.repeat(64);
 const revision = 'c'.repeat(64);
 const cutoff = '2026-10-18T12:00:00Z';
+const edition = {
+  generation: 1,
+  publication,
+  previous_activation: 0,
+  activated_at: cutoff,
+  reason: 'Edição controlada para testes.',
+  catalog_revision: revision,
+  data_cutoff: cutoff,
+};
 const themes = [
   ['trabalho-e-renda', 'Trabalho e renda', 'O trabalho permite viver melhor?'],
   ['custo-de-vida', 'Custo de vida', 'Quanto custa viver no Brasil?'],
@@ -71,15 +80,19 @@ const server = createServer(async (request, response) => {
   if (path === '/api/v1/publications/current') {
     // A second alias resolution would mix editions and must never happen.
     body = {
+      ...edition,
       publication: resolutions++ === 0 ? publication : 'b'.repeat(64),
       catalog_revision: revision,
       data_cutoff: cutoff,
     };
+  } else if (path === '/api/v1/publications') {
+    body = { data: [edition], next_cursor: null };
   } else if (path === `/api/v1/publications/${publication}`) {
     body = {
       publication,
       catalog_revision: revision,
       data: {
+        selection_reason: edition.reason,
         data_cutoff: cutoff,
         catalog: {
           revision,

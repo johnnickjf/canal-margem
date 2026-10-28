@@ -90,6 +90,21 @@ export const photos = {
     credit: 'Paulo Mateus Oliveira Guerra',
     creditUrl: 'https://unsplash.com/@paulomateus',
   },
+  'mercado-paulista': {
+    src: unsplash('photo-1774127421469-1bc575001f9c'),
+    alt: 'Vista do alto de um mercado em São Paulo, com bancas e pessoas no corredor',
+    credit: 'Willian Reis',
+    creditUrl:
+      'https://unsplash.com/photos/bustling-indoor-market-with-stalls-and-shoppers-j8deK7ZkIOU',
+  },
+  'onibus-centro': {
+    src: unsplash('photo-1638280459638-c1186f39af32'),
+    alt: 'Ônibus atravessa um cruzamento cercado por edifícios no centro de São Paulo',
+    credit: 'Bianca Neves',
+    creditUrl:
+      'https://unsplash.com/photos/a-red-bus-driving-down-a-street-next-to-tall-buildings-mVBNdc1dKX0',
+    focus: '50% 70%',
+  },
   'morro-casas': {
     src: unsplash('photo-1545692770-f0029a91f3ba'),
     alt: 'Casas de alvenaria sem reboco empilhadas na encosta de um morro',

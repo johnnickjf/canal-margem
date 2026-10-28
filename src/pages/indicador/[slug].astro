@@ -7,6 +7,8 @@ import { indicatorGuides } from '@/data/indicator-guides';
 import IndicatorExplanation from '@/components/platform/IndicatorExplanation.astro';
 import { policies } from '@/data/policies';
 import EvidenceReading from '@/components/platform/EvidenceReading.astro';
+import Photo from '@/components/ui/Photo.astro';
+import { platformPhotos } from '@/data/platform-photos';
 export function getStaticPaths() {
   return platform.indicators.map((indicator) => ({
     params: { slug: indicator.slug },
@@ -40,9 +42,18 @@ const changes = selections.filter(
 <PlatformLayout title={indicator.name} description={indicator.question}>
   <p><a href={`/tema/${theme.slug}`}>{theme.name}</a> / {indicator.role === 'primary' ? 'Indicador principal' : 'Medida auxiliar'}</p>
   <nav class="indicator-nav" aria-label="Nesta página"><a href="#aconteceu">O que aconteceu</a><a href="#significa">O que significa</a><a href="#dados">Dados e metodologia</a><a href="#politicas">Políticas e história</a><a href="#relacionados">Indicadores relacionados</a><a href={`/auditoria#${indicator.slug}`}>Auditoria e fontes</a></nav>
-  <section id="aconteceu"><h2>O que aconteceu?</h2>
+  <section class="indicator-introduction" aria-label="Por que este indicador importa">
+    <div class="indicator-introduction__copy">
+      <p class="label">A vida por trás dos números</p>
+      <p class="indicator-introduction__question">{indicator.question}</p>
+      <p>{guide?.importance ?? indicator.definition}</p>
+      <a href="#aconteceu">Explorar os dados <span aria-hidden="true">↓</span></a>
+    </div>
+    {platformPhotos[theme.slug] && <Photo photo={platformPhotos[theme.slug]} ratio="3/2" sizes="(max-width: 760px) 100vw, 45vw" widths={[480, 800, 1200]} credit />}
+  </section>
+  <section id="aconteceu" class="indicator-section"><h2>O que aconteceu?</h2>
     <p>Os valores abaixo mostram o último período de cada recorte desta edição, inclusive quando indisponível. As datas de referência podem diferir entre séries.</p>
-    {selections.length === 0 && <p>Sem dados publicados para este indicador nesta edição.</p>}
+    {selections.length === 0 && <div class="indicator-empty"><p class="label">Disponibilidade nesta edição</p><p><strong>Sem dados publicados para este indicador nesta edição.</strong></p><p>Você ainda pode explorar o que este indicador mede, seus limites e as fontes disponíveis.</p><a href="#significa">Entender o indicador</a></div>}
     {changes.length === 0 && <p>Variação indisponível: não há comparação temporal publicada nesta edição. Isso não significa estabilidade.</p>}
     {changes.length > 0 && <p>As comparações publicadas aparecem junto aos respectivos recortes, com unidade e período de referência. Alta e queda descrevem a direção matemática; seu significado depende do indicador.</p>}
     <div class="platform-grid">{selections.map(({ series, latest }, index) => <article class="platform-card">
@@ -54,8 +65,8 @@ const changes = selections.filter(
       {latest.node && <CalculationContext node={latest.node} />}
     </article>)}</div>
   </section>
-  <section id="significa"><h2>O que isso significa?</h2><p>{guide?.meaning ?? indicator.definition}</p><p>{guide?.caution ?? indicator.limitations}</p><IndicatorExplanation indicator={indicator} /></section>
-  <section id="dados"><h2>Como sabemos disso?</h2><p>{indicator.definition}</p><p>Valor, série histórica, fonte e metodologia por recorte. A atualização de coleta consta nas origens e no corte da edição ao final da página; ela não é o período de referência nem a data de divulgação pela fonte.</p>
+  <section id="significa" class="indicator-section"><h2>O que isso significa?</h2><p>{guide?.meaning ?? indicator.definition}</p><p>{guide?.caution ?? indicator.limitations}</p><IndicatorExplanation indicator={indicator} /></section>
+  <section id="dados" class="indicator-section"><h2>Como sabemos disso?</h2><p>{indicator.definition}</p><p>Valor, série histórica, fonte e metodologia por recorte. A atualização de coleta consta nas origens e no corte da edição ao final da página; ela não é o período de referência nem a data de divulgação pela fonte.</p>
     {selections.length === 0 && <p>Sem cobertura nesta edição. Nenhum valor foi substituído por zero.</p>}
     <div class="indicator-series">{selections.map((selection, index) => <IndicatorDetail selection={selection} index={index} indicatorSlug={indicator.slug} />)}</div>
   </section>
@@ -69,3 +80,18 @@ const changes = selections.filter(
   <section id="relacionados"><h2>Indicadores relacionados</h2><p>Leia outras medidas em conjunto para ampliar o contexto. Uma relação entre medidas não demonstra causalidade.</p><ul>{related.map((item) => <li><a href={`/indicador/${item.slug}`}>{item.name}</a> · {item.question}</li>)}</ul></section>
   <p><a href="/comparar">Comparar períodos e indicadores</a></p>
 </PlatformLayout>
+<style>
+  .indicator-nav { display: flex; flex-wrap: wrap; gap: var(--space-sm) var(--space-md); }
+  .indicator-introduction { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem, 5vw, 5rem); align-items: center; border-block: var(--rule); padding-block: var(--space-lg); }
+  .indicator-introduction__copy { display: grid; align-content: center; gap: var(--space-md); }
+  .indicator-introduction__copy > p:not(.label) { max-width: var(--measure); }
+  .indicator-introduction__question { font-family: var(--font-display); font-size: clamp(2.3rem, 4vw, 4rem); line-height: 1; text-transform: uppercase; }
+  .indicator-introduction__copy > a { justify-self: start; font-family: var(--font-mono); font-size: var(--text-sm); text-underline-offset: .3em; }
+  .indicator-introduction__copy > a span { color: var(--red); }
+  .indicator-section { border-top: var(--rule); padding-top: var(--space-lg); scroll-margin-top: var(--space-xl); }
+  .indicator-section > p { max-width: var(--measure); }
+  .indicator-empty { display: grid; gap: var(--space-sm); padding: var(--space-md); border-left: 3px solid var(--red); background: var(--surface); }
+  .indicator-empty p { max-width: var(--measure); }
+  .indicator-current strong { font-family: var(--font-display); font-size: clamp(2.5rem, 4vw, 4rem); font-weight: 400; line-height: 1; }
+  @media (max-width: 760px) { .indicator-introduction { grid-template-columns: 1fr; } }
+</style>

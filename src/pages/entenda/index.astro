@@ -1,8 +1,13 @@
 ---
 import EntendaLayout from '@/layouts/EntendaLayout.astro';
 import { concepts } from '@/data/concepts';
+import Photo from '@/components/ui/Photo.astro';
 ---
 <EntendaLayout title="Entenda a economia" description="Inflação, renda, trabalho e contas públicas: conceitos para ler os indicadores sem precisar conhecer os termos econômicos.">
+  <section class="entenda-intro" aria-label="Economia no cotidiano">
+    <div><p class="label">Economia é gente</p><p class="entenda-intro__title">Toda pergunta começa na vida real.</p><p>Entender as palavras ajuda a enxergar o que os números contam sobre o dia a dia.</p><a href="#comecar-title">Explore os conceitos <span aria-hidden="true">↓</span></a></div>
+    <Photo photo="mercado-paulista" ratio="3/2" sizes="(max-width: 760px) 100vw, 45vw" widths={[480, 800, 1200]} credit />
+  </section>
   <section aria-labelledby="comecar-title">
     <h2 id="comecar-title">Comece pela sua dúvida</h2>
     <p>Escolha uma pergunta para conhecer o conceito, ver um exemplo e conferir os cuidados de interpretação. Os textos explicam medidas; não apresentam resultados de uma edição dos dados.</p>
@@ -14,3 +19,11 @@ import { concepts } from '@/data/concepts';
   <section aria-labelledby="guia-title"><h2 id="guia-title">Antes de ler um número</h2><p>Períodos, recortes, fontes e ausências também fazem parte da leitura.</p><a href="/entenda/como-ler-os-dados">Como ler os dados e suas limitações</a></section>
   <section><h2>Quando uma mudança pode ser atribuída a uma política?</h2><p>Contexto temporal, associações e estimativas causais têm alcances diferentes.</p><a href="/evidencias">Estudos e critérios para ler evidências</a></section>
 </EntendaLayout>
+<style>
+  .entenda-intro { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem, 5vw, 5rem); align-items: center; border-block: var(--rule); padding-block: var(--space-lg); }
+  .entenda-intro > div { display: grid; gap: var(--space-md); }
+  .entenda-intro__title { font-family: var(--font-display); font-size: clamp(2.3rem, 4vw, 4rem); text-transform: uppercase; line-height: 1; max-width: 15ch; }
+  .entenda-intro a { justify-self: start; font-family: var(--font-mono); font-size: var(--text-sm); text-underline-offset: .3em; }
+  .entenda-intro a span { color: var(--red); }
+  @media (max-width: 760px) { .entenda-intro { grid-template-columns: 1fr; } }
+</style>

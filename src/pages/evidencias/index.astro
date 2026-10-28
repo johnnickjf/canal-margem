@@ -2,8 +2,10 @@
 import PlatformLayout from '@/layouts/PlatformLayout.astro';
 import { evidenceCatalog } from '@/data/evidence';
 import { evidenceClasses, evidenceKinds } from '@/lib/evidence-catalog';
+import EditorialIntro from '@/components/platform/EditorialIntro.astro';
 ---
 <PlatformLayout title="Evidência e causalidade" description="Estudos, métodos e limites para distinguir contexto temporal de efeito causal de políticas públicas.">
+  <EditorialIntro label="Estudos e evidências" title="Antes da conclusão, a pergunta." description="Conheça pesquisas, seus métodos e os limites do que cada estudo permite afirmar." photo="multidao-rua" target="#estudos" action="Explorar estudos" />
   <section><h2>Aconteceu durante ou foi causado por?</h2>
     <p>Um indicador mudar durante um governo ou após uma lei descreve uma sequência temporal. Para atribuir efeito, é necessário estimar o contrafactual: o que teria ocorrido sem a intervenção. Comparar apenas antes e depois não separa outras causas.</p>
     <p>Exemplo hipotético: se a pobreza cai após uma política, o resultado também pode refletir emprego, preços e outras transferências. Esse exemplo não é uma estimativa observada.</p>
@@ -14,7 +16,7 @@ import { evidenceClasses, evidenceKinds } from '@/lib/evidence-catalog';
       <dt>Referência metodológica</dt><dd>Explica como avaliar uma relação. Não demonstra efeito de uma política.</dd></dl>
     <p>Tipo de documento e tipo de inferência são campos distintos. Uma pesquisa acadêmica, um estudo de impacto, uma nota técnica ou uma avaliação não recebe automaticamente uma classificação causal pelo título, pela instituição ou pelo método declarado. Não há score, hierarquia automática de qualidade ou recomendação de voto.</p>
   </section>
-  <section><h2>Catálogo de estudos e metodologias</h2>
+  <section id="estudos"><h2>Catálogo de estudos e metodologias</h2>
     <p>{evidenceCatalog.scope}</p>
     <div class="platform-grid">{evidenceCatalog.studies.map((study) => <article class="platform-card">
       <h3><a href={`/evidencias/${study.id}`}>{study.title}</a></h3>

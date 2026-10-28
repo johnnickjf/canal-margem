@@ -1,18 +1,20 @@
 ---
 import PlatformLayout from '@/layouts/PlatformLayout.astro';
 import { policyCatalog } from '@/data/policies';
+import EditorialIntro from '@/components/platform/EditorialIntro.astro';
 const ordered = [...policyCatalog.policies].sort((a, b) =>
   a.effective_periods[0].start.localeCompare(b.effective_periods[0].start),
 );
 ---
 <PlatformLayout title="Políticas públicas e linha histórica" description="Explore políticas federais, legislação, vigências e governos junto aos indicadores. Contexto temporal com fontes, sem atribuição automática de causalidade.">
+  <EditorialIntro label="Políticas e vida cotidiana" title="Decisões deixam marcas no tempo." description="Explore políticas, seus marcos legais e as perguntas que elas ajudam a investigar." photo="onibus-centro" target="#politicas-catalogo" action="Explorar políticas" />
   <section aria-labelledby="leitura"><h2 id="leitura">Aconteceu durante não significa foi causado por</h2>
     <p>{policyCatalog.scope}</p>
     <p>As datas de assinatura ou promulgação, publicação e vigência são distintas. Uma política pode atravessar vários governos e ter prazos diferentes por dispositivo. O vínculo com um governo descreve contexto de implementação, sem autoria exclusiva.</p>
     <p>Curadoria: {policyCatalog.author} · Conferência das fontes: <time datetime={policyCatalog.reviewed_at}>{policyCatalog.reviewed_at}</time> · Revisão {policyCatalog.revision}.</p>
     <a href="/politicas/catalogo.json">Consultar catálogo, relações e referências (JSON)</a>
   </section>
-  <section><h2>Políticas por início de vigência</h2>
+  <section id="politicas-catalogo"><h2>Políticas por início de vigência</h2>
     <div class="platform-grid">{ordered.map((policy) => <article class="platform-card">
       <h3><a href={`/politicas/${policy.id}`}>{policy.name}</a></h3>
       <p>{policy.description}</p>

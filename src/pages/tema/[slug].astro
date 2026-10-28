@@ -4,11 +4,14 @@ import ThemeReading from '@/components/platform/ThemeReading.astro';
 import { themeGuides } from '@/data/theme-guides';
 import { platform } from '@/lib/platform';
 import { concepts } from '@/data/concepts';
+import Photo from '@/components/ui/Photo.astro';
+import { platformPhotos } from '@/data/platform-photos';
 export function getStaticPaths() {
   return platform.themes.map((theme) => ({ params: { slug: theme.slug }, props: { theme } }));
 }
 const { theme } = Astro.props;
 const guide = themeGuides[theme.slug];
+const themePhoto = platformPhotos[theme.slug];
 const indicators = platform.indicators.filter(
   (indicator) => indicator.theme === theme.slug && indicator.role === 'primary',
 );
@@ -36,9 +39,15 @@ const changes = indicators.flatMap((indicator) =>
     <a href="#comparar">Comparar períodos</a>
   </nav>
   <section id="resumo" aria-labelledby="resumo-title">
-    <h2 id="resumo-title">O tema em poucas palavras</h2>
-    <p>{guide?.summary ?? theme.question}</p>
-    <p>Os recortes abaixo mostram o último período de cada série nesta edição. Eles podem ter datas e abrangências diferentes.</p>
+    <div class="theme-summary">
+      <div class="theme-summary__copy">
+        <p class="label">A vida por trás dos números</p>
+        <h2 id="resumo-title">O tema em poucas palavras</h2>
+        <p>{guide?.summary ?? theme.question}</p>
+        <p>Os recortes abaixo mostram o último período de cada série nesta edição. Eles podem ter datas e abrangências diferentes.</p>
+      </div>
+      {themePhoto && <Photo photo={themePhoto} ratio="3/2" sizes="(max-width: 760px) 100vw, 45vw" widths={[480, 800, 1200]} credit />}
+    </div>
   </section>
   <section id="mudancas" aria-labelledby="mudancas-title">
     <h2 id="mudancas-title">Principais mudanças</h2>
@@ -82,4 +91,8 @@ const changes = indicators.flatMap((indicator) =>
   .theme-navigation { display: flex; flex-wrap: wrap; gap: var(--space-md); }
   section { scroll-margin-top: var(--space-xl); }
   section > p { max-width: var(--measure); }
+  .theme-summary { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem, 5vw, 5rem); align-items: center; border-block: var(--rule); padding-block: var(--space-lg); }
+  .theme-summary__copy { display: grid; gap: var(--space-md); align-content: center; }
+  .theme-summary__copy p { max-width: var(--measure); }
+  @media (max-width: 760px) { .theme-summary { grid-template-columns: 1fr; } }
 </style>

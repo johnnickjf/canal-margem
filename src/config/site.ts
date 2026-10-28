@@ -38,7 +38,7 @@ export type NavItem = { label: string; href: string };
 export const primaryNav: NavItem[] = [
   { label: 'Vídeos', href: '/videos' },
   { label: 'Temas', href: '/temas' },
-  { label: 'Dados', href: '/auditoria' },
+  { label: 'Dados', href: '/dados' },
   { label: 'Análises', href: '/analises' },
   { label: 'Manifesto', href: '/manifesto' },
   { label: 'Sobre', href: '/sobre' },

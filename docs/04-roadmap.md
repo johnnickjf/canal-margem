@@ -1236,6 +1236,203 @@ cache, CORS, backup, alertas e recuperação previstos nos ADRs.
 
 ---
 
+## Fase 25 — Experiência editorial e dados publicados de ponta a ponta
+
+### Estado e objetivo
+
+**Proposta registrada em 27/10/2026; diagnóstico visual completo e implementação pendentes.**
+O responsável identificou uma diferença de qualidade entre a home e Sobre, mais trabalhadas
+visualmente, e telas com texto concentrado e pouco ritmo visual, incluindo a entrada Dados.
+Na análise inicial, somente a captura de Sobre estava disponível; as capturas de Dados e da
+home não puderam ser lidas. Portanto, a tabela abaixo é um inventário de inspeção, não um
+resultado de teste visual nem uma afirmação de que todas as rotas apresentam o mesmo problema.
+
+O objetivo é cobrir **todas as experiências públicas**, identificar e corrigir os problemas
+confirmados de UI/UX e tornar dados oficiais disponíveis e compreensíveis no percurso do
+usuário. As fases 0–24 registram entregas e evidências históricas; esta fase complementa essas
+entregas e não as reclassifica como ausentes ou concluídas em produção.
+
+**Primeiro avanço em 27/10/2026:** `/dados` foi implementada como entrada editorial por
+perguntas, com os cinco temas, caminhos de aprofundamento, estado da publicação e link para
+`/auditoria`; o menu principal aponta para ela. O inventário integral, o piloto de indicador
+e as demais famílias continuam pendentes. Inspeção inicial no navegador desktop confirmou
+home com imagens e páginas `/auditoria`, `/indicador/desemprego`, `/politicas`, `/entenda`,
+`/comparar`, `/calculadora` e `/evidencias` sem imagens no conteúdo principal; essa contagem
+não substitui avaliação visual e funcional de todos os estados e tamanhos.
+
+No ambiente local observado, PostgreSQL tinha 109 observações normalizadas e uma ativação;
+`/api/v1/publications/current` respondia, mas a consulta à edição retornava HTTP 503.
+O LocalStack não listava buckets e o build com `MARGEM_API_URL` falhou na captura da edição.
+Isso é compatível com projeção indisponível, mas a causa exata não foi comprovada. O build
+sem API permanece disponível e não mostra valores fictícios. Próximo passo: investigar a
+configuração e recuperação dos objetos locais preservando dados existentes; verificar a
+projeção e então repetir API → build → página com uma edição válida. Não confundir o
+`/readyz` bem-sucedido com verificação da projeção, pois ele não a baixa.
+
+**Avanço de UI posterior:** os indicadores receberam abertura editorial por dimensão,
+aviso de ausência e destaque para valores disponíveis; o índice Entenda, Políticas e
+Evidências receberam aberturas visuais e as páginas de conceitos, separação entre seções.
+Essas alterações não concluem a revisão de todas as rotas, tampouco comprovam operação de
+dados reais. Persistem a auditoria integral e as revisões de fichas de políticas e evidências,
+comparador, calculadora, auditoria, busca e páginas editoriais.
+
+### Evidências e limites conhecidos
+
+- O item “Dados” aponta para `/auditoria` em [`site.ts`](../src/config/site.ts); a
+  [página](../src/pages/auditoria.astro) apresenta edições e linhagem. Isso favorece a
+  verificação técnica, mas sua adequação como entrada de descoberta precisa ser testada.
+- [`PlatformLayout`](../src/layouts/PlatformLayout.astro) oferece um cabeçalho comum às
+  páginas da plataforma; [indicadores](../src/pages/indicador/%5Bslug%5D.astro),
+  [políticas](../src/pages/politicas/index.astro) e
+  [evidências](../src/pages/evidencias/index.astro) contêm várias seções explicativas.
+  A densidade percebida deve ser confirmada no navegador e não inferida apenas do código.
+- O [frontend da fase 0](systems/frontend.md) é uma fotografia histórica. Para o estado de
+  hoje, consultar também [shell](systems/platform-shell.md), [pipelines](systems/pipelines.md),
+  [engine](systems/indicator-engine.md) e [API](systems/api.md).
+- Já existem coleta para cinco fontes, normalização, cálculos, publicação e API, com
+  evidências locais. Isso não comprova execução recorrente nem implantação remota. Sem
+  `MARGEM_API_URL`, o build gera catálogo sem observações; com API configurada, falhas da
+  captura interrompem o build. Uma ativação posterior exige novo build e publicação do site
+  para aparecer nas páginas estáticas. Ver [publicação fixada](systems/platform-shell.md#publicação-fixada-no-build).
+
+### Fluxo a verificar
+
+```mermaid
+flowchart LR
+  A[Fontes oficiais] --> B[Coleta e validação]
+  B --> C[Observações e cálculos]
+  C --> D[Seleção e ativação da edição]
+  D --> E[API Margem]
+  E --> F[Build estático fixado]
+  F --> G[Páginas e auditoria]
+```
+
+Este fluxo existe em código; a tarefa é verificar cada fronteira no ambiente escolhido,
+resolver falhas reais e documentar a evidência. A seleção editorial é explícita: receber um
+lote não o publica automaticamente. O fluxo local não prova operação em produção.
+
+### 25.1 — Inventário e diagnóstico de UI/UX
+
+Antes de redesenhar, iniciar a aplicação e inspecionar as rotas abaixo em desktop e celular.
+Registrar URL, template e variantes de conteúdo, objetivo do usuário, problemas observados,
+severidade, evidência reproduzível, estado e destino da correção. Verificar navegação,
+hierarquia, concentração de texto, imagens, gráficos, legibilidade, interações, acessibilidade,
+desempenho e estados vazio, erro e carregamento quando aplicáveis. Conferir com e sem dados
+publicados; não depender de dados fictícios apresentados como observados.
+
+| Família e rotas | Escopo mínimo e hipótese a verificar | Prioridade inicial |
+|---|---|---|
+| Entrada `/` | Home e caminhos para conteúdo e plataforma; referência visual a preservar e também inspecionar. | Alta |
+| Dados `/auditoria` e eventual nova entrada | Descoberta orientada a perguntas versus consulta técnica de edição e linhagem. | Alta |
+| Plataforma `/tema/:slug`, `/indicador/:slug` | Todas as dimensões e indicadores; observar gráficos, dados, ausência, recortes e método. | Alta |
+| `/politicas`, `/politicas/:slug`, `/evidencias`, `/evidencias/:slug` | Catálogos e fichas; densidade, linhas do tempo, fontes e limites de causalidade. | Alta |
+| `/entenda`, `/entenda/:slug`, incluindo `/entenda/como-ler-os-dados` | Índice, conceitos e guia; hierarquia, exemplos e aprofundamento. | Alta |
+| `/comparar`, `/calculadora` | Formulários, resultados, erros e estados sem dados; tarefa principal e método. | Alta |
+| `/busca` | Busca vazia, resultados, ausência e erro; descoberta e navegação. | Média |
+| `/videos`, `/videos/:slug`, `/analises`, `/analises/:slug` | Índices e detalhes; mídias, texto, fontes, relacionados e estados vazios. | Média |
+| `/temas`, `/temas/:slug` | Índice e temas editoriais; não confundir com `/tema/:slug` da plataforma. | Média |
+| `/manifesto`, `/sobre` | Páginas institucionais e referência visual; leitura e adaptação móvel. | Média |
+| `/404`, `/design-system` | Recuperação de erro e referência de componentes; verificar o papel público e o uso real. | Média |
+
+Inventariar os slugs reais gerados, não apenas um exemplo por template. Agrupar variantes
+equivalentes somente após conferir conteúdo e estados; registrar exceções individuais. JSON,
+RSS e sitemap não são telas, mas seus contratos e links devem ser preservados ao mudar rotas.
+Reconciliar o inventário com `src/pages` no início e no encerramento para incluir rotas novas.
+Registrar em artefato versionado, vinculado aqui, as decisões, evidências, pendências e
+justificativas das telas sem alterações necessárias. Nenhuma linha desta tabela fica
+automaticamente concluída pela análise inicial.
+
+### 25.2 — Direção de produto e piloto visual
+
+1. Propor uma entrada de Dados voltada a perguntas do cotidiano, com indicadores, períodos,
+   fontes e estados de disponibilidade. Decidir sua URL e navegação após o inventário;
+   manter `/auditoria` acessível para proveniência, com links a partir dos indicadores.
+2. Escolher um indicador e seu tema como piloto. Mostrar primeiro a pergunta e a leitura
+   principal; apresentar visualização e contexto quando houver dados, seguidos de explicação,
+   fontes, método e limitações. Ausência deve ser compreensível e nunca parecer zero.
+3. Criar padrões reutilizáveis a partir do piloto: composição editorial, blocos visuais,
+   gráficos com alternativa textual/tabela, hierarquia de metadados e estados de dados.
+   Usar fotografia, ilustração e movimento quando ajudarem a compreensão; respeitar
+   `prefers-reduced-motion` e não sacrificar legibilidade ou desempenho.
+4. Aplicar e adaptar os padrões aos problemas confirmados em todas as famílias da tabela,
+   inclusive estados e variantes. Para ferramentas, priorizar a tarefa e o resultado;
+   para políticas e evidências, preservar as distinções entre contexto e causalidade.
+   Conteúdo aprofundado deve continuar acessível; não remover ressalvas essenciais.
+5. Revisar com navegação por teclado, tamanhos de tela, dados reais e sem JavaScript quando
+   aplicável. Registrar antes/depois e critérios de aceitação por família.
+
+Preservar URLs e links existentes; se uma URL pública precisar mudar, planejar redirecionamento.
+Cumprir a [regra permanente de SEO e descoberta por IA](../AGENTS.md): HTML semântico e
+rastreável, conteúdo principal e links sem dependência de JavaScript, metadados, canonical,
+dados estruturados adequados, sitemap, acessibilidade e desempenho. Não presumir que uma
+mudança visual tenha validado esses contratos.
+
+### 25.3 — Primeira publicação de dados utilizável
+
+1. Inventariar configuração e estado efetivo do ambiente escolhido, sem expor segredos;
+   identificar banco, armazenamento, API, publicação ativa e build. Registrar se a evidência
+   é local ou remota, e o que ainda não foi observado.
+2. Começar por recortes viáveis de IBGE/SIDRA e BCB/SGS já definidos nos
+   [indicadores do MVP](systems/mvp-indicators.md) e nas fichas
+   [IBGE](data-sources/ibge.md) e [BCB](data-sources/bcb.md). Selecionar indicadores e
+   períodos específicos após conferir disponibilidade, unidades, metodologia e cobertura;
+   não presumir que todas as séries tenham a mesma frequência ou histórico.
+3. Executar o fluxo documentado: provisionar dependências locais, migrar, coletar, verificar
+   lotes e proveniência, calcular derivadas quando aplicável, preparar manifesto com seleção
+   e justificativa, ativar edição, servir API e construir com `MARGEM_API_URL`. Consultar
+   [pipelines](systems/pipelines.md), [engine](systems/indicator-engine.md),
+   [API](systems/api.md) e [shell](systems/platform-shell.md) para comandos e contratos.
+   Confirmar que edição e recortes exibidos no HTML correspondem à publicação fixada.
+4. Verificar repetição, revisão, ausência, falha de fonte/API e recuperação de acordo com os
+   contratos existentes. Diferenciar período de referência, coleta, divulgação e corte da
+   edição; não inventar atualidade nem substituir silenciosamente um período ausente.
+5. Expandir por lotes para ANP, Conab/DIEESE e FJP e para os demais indicadores do catálogo,
+   respeitando arquivos, PDFs, lacunas e mudanças de metodologia descritos nas fichas.
+   Registrar cobertura e bloqueios por indicador e recorte, inclusive TR2/CV5 e seus inputs.
+   Arquivos oficiais não são necessariamente APIs; não criar adaptadores novos sem avaliar os existentes.
+6. Definir como uma nova edição provoca novo build e publicação do site, e verificar alertas,
+   disponibilidade, backups e recuperação no ambiente efetivamente escolhido. A automação
+   precisa manter seleção editorial, fixação da edição e falha explícita de build. Implantar
+   ou publicar externamente somente quando a ação e o destino forem autorizados.
+
+O piloto não altera o critério do MVP de pelo menos 10 indicadores relevantes disponíveis.
+Para a cobertura integral desta fase, revisar os 15 conceitos principais, seus recortes e
+dependências; registrar separadamente qualquer fonte indisponível ou impedimento metodológico
+com evidência, impacto e próximo passo, sem declarar o indicador disponível.
+
+### 25.4 — Sequência, acompanhamento e conclusão
+
+Executar 25.1 e a inspeção de ambiente de 25.3 primeiro. Em seguida, fazer o fluxo local de
+dados e o piloto visual em paralelo quando suas dependências permitirem; aplicar o resultado
+às demais famílias e ampliar fontes. Por fim, verificar operação e publicação no ambiente
+autorizado. Em cada entrega registrar **proposto, implementado, observado e pendente**, com
+data, arquivos, comandos, resultados, evidência e responsável/próxima ação. Uma proposta
+aprovada não é prova de implementação ou autorização de publicação externa.
+
+Para concluir a fase, exigir:
+
+- inventário reconciliado com todas as rotas e slugs, cada variante com diagnóstico e
+  correção verificada ou justificativa documentada de que não precisa de alteração;
+- piloto e demais correções verificados em desktop e celular, com e sem dados, teclado,
+  movimento reduzido, estados aplicáveis e conteúdo principal acessível sem JavaScript;
+- HTML gerado, SEO, links, canonicals, JSON-LD, sitemap e rastreamento verificados nas rotas
+  afetadas, além dos testes e build pertinentes; indexação externa só com evidência própria;
+- pelo menos 10 indicadores relevantes disponíveis para o MVP, com fonte, período, recorte,
+  unidade e limitações; os 15 conceitos e dependências auditados com cobertura explícita;
+- fluxo fonte → API → build → página comprovado, incluindo falha, repetição, revisão,
+  ausência, nova ativação e atualização do site; proveniência e seleção reproduzíveis;
+- operação recorrente, observabilidade e recuperação verificadas no ambiente alvo; se uma
+  implantação ou fonte não estiver autorizada ou disponível, registrar a fase como parcial,
+  sem confundir teste local com operação remota.
+
+Trade-offs: fotografias e gráficos exigem curadoria, créditos, acessibilidade e orçamento de
+carregamento; esconder detalhes demais prejudica transparência. Publicações fixadas tornam a
+edição reproduzível e isolam visitas das fontes externas, mas exigem rebuild após ativação e
+operação de coleta, revisão e publicação. Fontes heterogêneas e mudanças metodológicas podem
+impedir comparações contínuas ou atualização uniforme.
+
+---
+
 ## Linha crítica para o primeiro MVP
 
 Nem todas as fases anteriores são necessárias antes de lançar algo.
