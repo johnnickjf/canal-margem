@@ -2,14 +2,19 @@
 import PlatformLayout from '@/layouts/PlatformLayout.astro';
 import { comparisonCatalog } from '@/lib/comparison';
 import { platform } from '@/lib/platform';
+import { frequencyLabel, geographyLabel, unitLabel } from '@/lib/indicator-display';
 const catalog = comparisonCatalog(platform);
 ---
 <PlatformLayout title="Comparar períodos" description="O que mudou? Compare indicadores da vida no Brasil, com critérios explícitos, fontes e dados de cada período.">
   <section aria-labelledby="como-comparar">
     <h2 id="como-comparar">Escolha o que você quer entender</h2>
-    <p>Selecione um tema, os indicadores e um recorte de cada um. Informe o início do primeiro período e o fim do último: a comparação usa os valores desses dois períodos completos, sem somar ou tirar a média do intervalo.</p>
-    <p>Mensal, trimestral e anual têm calendários diferentes. Por exemplo, para comparar o primeiro trimestre de 2024 ao primeiro de 2025, use 01/01/2024 e 31/03/2025. Se o extremo não estiver publicado, o resultado será “sem dados suficientes”; não buscamos outro período.</p>
-    <p><a href="#catalogo">Consultar indicadores e cobertura</a> · <a href="#criterios">Entender os critérios de leitura</a></p>
+    <p>Escolha indicadores e recortes. Informe o início do primeiro período e o fim do último para comparar os dois valores publicados.</p>
+    <details class="comparison-help">
+      <summary>Como escolher as datas</summary>
+      <p>São comparados os dois períodos completos, sem somar ou tirar a média do intervalo. Mensal, trimestral e anual têm calendários diferentes. Para comparar o primeiro trimestre de 2024 ao primeiro de 2025, use 01/01/2024 e 31/03/2025.</p>
+      <p>Se um extremo não estiver publicado, o resultado será “sem dados suficientes”; não buscamos outro período.</p>
+      <p><a href="#catalogo">Consultar indicadores e cobertura</a> · <a href="#criterios">Entender os critérios de leitura</a></p>
+    </details>
     {!platform.publication && <p><strong>Comparação indisponível:</strong> ainda não há publicação de dados configurada. As definições e os critérios continuam disponíveis abaixo.</p>}
     <noscript><p>A seleção interativa precisa de JavaScript. Consulte os indicadores abaixo para ler valores, históricos, métodos e fontes em HTML.</p></noscript>
     <p data-comparison-init>Os controles interativos precisam de JavaScript. Se não carregarem, consulte os indicadores abaixo.</p>
@@ -30,7 +35,7 @@ const catalog = comparisonCatalog(platform);
             <label><input type="checkbox" name="indicator" value={indicator.slug} /> {indicator.name}</label>
             <div><label for={`selection-${indicator.slug}`}>Recorte de {indicator.name}</label><select id={`selection-${indicator.slug}`} name={`selection-${indicator.slug}`}>
               {indicator.selections.length === 0 && <option value="">Sem cobertura nesta publicação</option>}
-              {indicator.selections.map((selection, index) => <option value={index}>{selection.geography === 'BR' ? 'Brasil' : selection.geography} · {selection.unit} · {selection.frequency} · {selection.series}</option>)}
+              {indicator.selections.map((selection, index) => <option value={index}>{geographyLabel(selection.geography)} · {unitLabel(selection.unit)} · {frequencyLabel(selection.frequency)} · {selection.series}</option>)}
             </select></div>
           </div>)}
         </fieldset>)}
@@ -66,6 +71,8 @@ const catalog = comparisonCatalog(platform);
   form[data-comparison-form] { display: grid; gap: var(--space-md); min-width: 0; }
   form[data-comparison-form][hidden], fieldset[hidden] { display: none; }
   .comparison-dates > div, .comparison-dates > label, .comparison-choice { display: grid; gap: var(--space-xs); min-width: 0; }
+  .comparison-help summary { cursor: pointer; text-decoration: underline; text-underline-offset: .2em; }
+  .comparison-help p { max-width: var(--measure); margin-top: var(--space-sm); }
   fieldset { min-width: 0; border: var(--rule); padding: var(--space-md); }
   legend { font-weight: 700; padding-inline: var(--space-xs); }
   .comparison-choice { margin-bottom: var(--space-md); }

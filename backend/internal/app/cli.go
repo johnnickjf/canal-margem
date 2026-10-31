@@ -4,6 +4,7 @@ package app
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"flag"
 	"fmt"
 	"io"
@@ -221,6 +222,11 @@ func Run(ctx context.Context, args []string, stdout, stderr io.Writer) int {
 		case "verify":
 			r, e := (observations.Queries{Pool: pool, Store: store}).Verify(ctx)
 			if e != nil {
+				var integrity *observations.IntegrityError
+				if errors.As(e, &integrity) {
+					json.NewEncoder(stderr).Encode(r)
+					return 1
+				}
 				return fail(e)
 			}
 			result = r

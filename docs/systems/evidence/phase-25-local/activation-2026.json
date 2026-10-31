@@ -1,0 +1,8 @@
+{
+  "actor": "ensaio-local",
+  "key": "fase25-multifonte-2026-1",
+  "publication": "a3788015cca9d1630036f44c07bb46486f6dfaa148b5bf23c1b54ace1b053943",
+  "expected_generation": 5,
+  "reason": "Ampliação local com recortes coletados em 2026 e cálculos conferidos; períodos variam por fonte.",
+  "return": false
+}

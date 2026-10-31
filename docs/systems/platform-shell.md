@@ -71,8 +71,32 @@ fontes, datasets, URLs de origem e datas de coleta, com links JSON fixados na pu
 O navegador não resolve o alias atual nem dispara ingestão.
 
 Uma nova ativação da API não altera páginas já geradas: é necessário outro build e publicação
-do site. O snapshot de trabalho fica ignorado pelo Git. A integração não provisiona Railway,
-R2, CDN ou uma automação de rebuild.
+do site. Para preparar um artefato local após uma ativação editorial bem-sucedida:
+
+```bash
+MARGEM_API_URL=http://127.0.0.1:8080 pnpm build:publication
+```
+
+O comando consulta a geração ativa, executa as checagens e cria uma cópia temporária do projeto
+no mesmo volume da saída para o build, evitando compartilhar o snapshot com outro build do
+checkout. A saída fica em um diretório novo sob `.data/publication-builds/`. O comando confere
+o ID no HTML de auditoria, rejeita IDs diferentes nas demais notas de publicação e consulta
+novamente a geração. O workspace temporário é removido após o build.
+Só grava `ready.json` se as duas consultas e o HTML concordarem. Falha do build, API indisponível
+ou troca de geração deixa o diretório sem marcador; repita o comando para a edição vigente.
+Uma ativação já efetuada não é revertida por uma falha posterior no build. Os diretórios e o
+snapshot de trabalho são ignorados pelo Git e precisam de limpeza operacional planejada.
+O Astro dev ignora `.data/publication-builds/**` no watcher para que a criação do workspace e
+do artefato não reinicie a configuração nem interrompa a navegação local durante o build.
+
+O encadeamento proposto no ambiente alvo é executar esse build após confirmação da ativação,
+validar o artefato e então publicá-lo no destino autorizado. O comando não seleciona dados,
+não publica e não garante que a edição permaneça atual depois da segunda consulta: confira a
+geração imediatamente antes de promover o artefato e coordene ativações e deploys no ambiente
+alvo. As checagens iniciais ainda usam o checkout e não há controle de alterações de código
+durante a cópia; use uma revisão de código estável e coordene a operação. Ainda não há gatilho,
+coordenação ou publicação automática implantada; Railway, R2 e CDN não são provisionados por
+esse comando.
 
 ## SEO e validação
 

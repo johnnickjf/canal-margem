@@ -9,6 +9,7 @@ import { policies } from '@/data/policies';
 import EvidenceReading from '@/components/platform/EvidenceReading.astro';
 import Photo from '@/components/ui/Photo.astro';
 import { platformPhotos } from '@/data/platform-photos';
+import { decimalLabel, geographyLabel, unitLabel } from '@/lib/indicator-display';
 export function getStaticPaths() {
   return platform.indicators.map((indicator) => ({
     params: { slug: indicator.slug },
@@ -19,6 +20,7 @@ const { indicator } = Astro.props;
 const theme = platform.themes.find((item) => item.slug === indicator.theme);
 if (!theme) throw new Error('Tema do indicador ausente no catálogo.');
 const selections = platform.selections[indicator.slug] ?? [];
+const singleSelection = selections.length === 1 ? selections[0] : undefined;
 const guide = indicatorGuides[indicator.slug];
 const contextPolicies = policies.filter((policy) =>
   policy.affected_indicators.some((item) => item.indicator === indicator.slug),
@@ -41,6 +43,16 @@ const changes = selections.filter(
 ---
 <PlatformLayout title={indicator.name} description={indicator.question}>
   <p><a href={`/tema/${theme.slug}`}>{theme.name}</a> / {indicator.role === 'primary' ? 'Indicador principal' : 'Medida auxiliar'}</p>
+  <aside class="indicator-summary" aria-label="Resumo do indicador">
+    {singleSelection ? <Fragment>
+      <p class="label">Último período publicado · {geographyLabel(singleSelection.series.geography)}</p>
+      <p><time datetime={singleSelection.latest.start}>{singleSelection.latest.start}</time> a <time datetime={singleSelection.latest.end}>{singleSelection.latest.end}</time> · {singleSelection.series.series}</p>
+      {singleSelection.latest.status === 'observed' && singleSelection.latest.node?.observation.value != null
+        ? <p class="indicator-current"><strong>{decimalLabel(singleSelection.latest.node.observation.value)} {unitLabel(singleSelection.series.unit)}</strong></p>
+        : <p><strong>Dados indisponíveis</strong> · {singleSelection.latest.reason || singleSelection.latest.status}</p>}
+    </Fragment> : <p>{selections.length === 0 ? 'Sem dados publicados para este indicador nesta edição.' : `${selections.length} recortes publicados nesta edição; os períodos e a disponibilidade variam.`}</p>}
+    <a href="#aconteceu">Ver recortes e contexto</a>
+  </aside>
   <nav class="indicator-nav" aria-label="Nesta página"><a href="#aconteceu">O que aconteceu</a><a href="#significa">O que significa</a><a href="#dados">Dados e metodologia</a><a href="#politicas">Políticas e história</a><a href="#relacionados">Indicadores relacionados</a><a href={`/auditoria#${indicator.slug}`}>Auditoria e fontes</a></nav>
   <section class="indicator-introduction" aria-label="Por que este indicador importa">
     <div class="indicator-introduction__copy">
@@ -57,10 +69,10 @@ const changes = selections.filter(
     {changes.length === 0 && <p>Variação indisponível: não há comparação temporal publicada nesta edição. Isso não significa estabilidade.</p>}
     {changes.length > 0 && <p>As comparações publicadas aparecem junto aos respectivos recortes, com unidade e período de referência. Alta e queda descrevem a direção matemática; seu significado depende do indicador.</p>}
     <div class="platform-grid">{selections.map(({ series, latest }, index) => <article class="platform-card">
-      <h3><a href={`#recorte-${index}`}>{series.geography === 'BR' ? 'Brasil' : series.geography} · {series.series}</a></h3>
+      <h3><a href={`#recorte-${index}`}>{geographyLabel(series.geography)} · {series.series}</a></h3>
       <p><time datetime={latest.start}>{latest.start}</time> a <time datetime={latest.end}>{latest.end}</time></p>
       {latest.status === 'observed' && latest.node?.observation.value != null
-        ? <p class="indicator-current"><strong>{latest.node.observation.value.replace('.', ',')} {series.unit}</strong></p>
+        ? <p class="indicator-current"><strong>{decimalLabel(latest.node.observation.value)} {unitLabel(series.unit)}</strong></p>
         : <p><strong>Dados indisponíveis</strong> · {latest.reason || latest.status}</p>}
       {latest.node && <CalculationContext node={latest.node} />}
     </article>)}</div>
@@ -82,6 +94,8 @@ const changes = selections.filter(
 </PlatformLayout>
 <style>
   .indicator-nav { display: flex; flex-wrap: wrap; gap: var(--space-sm) var(--space-md); }
+  .indicator-summary { display: grid; gap: var(--space-xs); padding: var(--space-md); border-left: 3px solid var(--red); background: var(--surface); }
+  .indicator-summary a { justify-self: start; }
   .indicator-introduction { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem, 5vw, 5rem); align-items: center; border-block: var(--rule); padding-block: var(--space-lg); }
   .indicator-introduction__copy { display: grid; align-content: center; gap: var(--space-md); }
   .indicator-introduction__copy > p:not(.label) { max-width: var(--measure); }

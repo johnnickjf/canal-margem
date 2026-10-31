@@ -13,6 +13,13 @@ import { validatePolicyCatalog } from './src/lib/policy-catalog';
 export default defineConfig({
   site: 'https://margem.com.br',
   trailingSlash: 'ignore',
+  redirects: {
+    '/temas/renda': '/temas',
+    '/temas/servicos-publicos': '/temas',
+    '/temas/democracia': '/temas',
+    '/temas/desigualdade': '/temas',
+    '/temas/poder-economico': '/temas',
+  },
   integrations: [
     {
       name: 'margem-publication',
@@ -44,6 +51,11 @@ export default defineConfig({
   ],
   image: {
     domains: ['images.unsplash.com'],
+  },
+  vite: {
+    server: {
+      watch: { ignored: ['**/.data/publication-builds/**'] },
+    },
   },
   prefetch: {
     prefetchAll: false,

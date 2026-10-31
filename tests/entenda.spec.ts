@@ -23,6 +23,8 @@ test.describe('Entenda sem JavaScript', () => {
     page,
   }) => {
     await page.goto('/');
+    const mobileMenu = page.getByText('Explorar dados', { exact: true });
+    if (await mobileMenu.isVisible()) await mobileMenu.click();
     await page
       .getByRole('navigation', { name: 'Dados e indicadores' })
       .getByRole('link', { name: 'Entenda os dados' })

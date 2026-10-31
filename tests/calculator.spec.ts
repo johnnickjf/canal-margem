@@ -13,6 +13,11 @@ test('calculadora oferece métodos e fontes sem JavaScript, com SEO e navegaçã
   const rendered = await context.newPage();
   await rendered.goto('/calculadora');
   await expect(rendered.locator('h1')).toHaveText('Calculadora socioeconômica');
+  const help = rendered.locator('.calculator-help');
+  await help.locator('summary').focus();
+  await rendered.keyboard.press('Enter');
+  await expect(help).toContainText('Não multiplicamos seu preço pelo número de moradores');
+  await expect(help).toContainText('Não há previsão de benefício');
   await expect(rendered.locator('#metodo')).toContainText('profile-v1');
   await expect(rendered.locator('#referencias')).toContainText('anterior a 2023');
   await expect(rendered.locator('link[rel="canonical"]')).toHaveAttribute(

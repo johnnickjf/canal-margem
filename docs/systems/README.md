@@ -61,4 +61,8 @@ indicador até série, dataset e fonte, com consultas JSON fixadas na mesma publ
 A [fase 24](deployment-check.md) acrescenta uma checagem pós-publicação independente de provedor
 para robots.txt, sitemaps, HTML indexável, metadados públicos e prontidão opcional da API.
 
+A [fase 25](../04-roadmap.md) está parcial: experiência editorial e fluxo local da API
+ao HTML foram exercitados. As [evidências locais](evidence/phase-25-local/README.md) registram
+cobertura de 14 dos 15 conceitos, objetos históricos ausentes e pendências de operação remota.
+
 Cada documento deve distinguir estado atual de proposta e descrever responsabilidade, entradas e saídas, dependências, fluxos, configuração, falhas, validação e operação relevantes. Requisitos gerais permanecem na [arquitetura técnica](../03-technical-architecture.md); decisões ficam em [adr](../adr/README.md).

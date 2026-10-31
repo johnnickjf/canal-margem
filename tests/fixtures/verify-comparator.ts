@@ -17,6 +17,11 @@ export async function verifyComparator(
   );
   await expect(rendered.locator('#catalogo a')).toHaveCount(15);
   await expect(rendered.locator('[data-comparison-form]')).toBeHidden();
+  const help = rendered.locator('.comparison-help');
+  await help.locator('summary').focus();
+  await rendered.keyboard.press('Enter');
+  await expect(help).toContainText('01/01/2024 e 31/03/2025');
+  await expect(help.locator('a[href="#criterios"]')).toBeVisible();
   await page.goto('http://127.0.0.1:4323/comparar/');
   const form = page.locator('[data-comparison-form]');
   const results = page.locator('[data-comparison-results]');

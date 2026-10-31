@@ -23,7 +23,7 @@ const explanations = catalog.filter((item) => item.type === 'Entenda');
         name="q"
         type="search"
         class="search__input"
-        placeholder="Aluguel, jornada, imposto…"
+        placeholder="Ex.: aluguel"
         aria-describedby="search-hint"
         maxlength="200"
         autocomplete="off"
@@ -153,7 +153,7 @@ const explanations = catalog.filter((item) => item.type === 'Entenda');
     border: 0;
     background: transparent;
     font-family: var(--font-display);
-    font-size: var(--display-xl);
+    font-size: clamp(2rem, 7vw, 3.5rem);
     line-height: 1;
     text-transform: uppercase;
     color: var(--charcoal);

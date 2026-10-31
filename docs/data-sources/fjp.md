@@ -13,6 +13,13 @@ O [índice oficial](https://fjp.mg.gov.br/deficit-habitacional-no-brasil/) vincu
 | [2022](https://docs.google.com/spreadsheets/d/1OqAuggLve9HoPrI8jJcaAfSu1q5DCvdc/edit) — `Deficit_2022.xlsx` | `DH_Componentes!I56`; ano 2022, Brasil | 3.242.780,43138197 |
 | [2016–2019 reponderados](https://docs.google.com/spreadsheets/d/1y0c_oDcNpcq29fJyPAA4jtjDTAzij2MW/edit) — edição de 15/06/2023 | Aba `Ônus`, coluna D `Contagem`, C = Brasil, A = ano; linhas 55, 109, 163 e 217 | Quatro observações nacionais, preservadas em amostra |
 
+Em 27/10/2026, o índice oficial passou a apontar a série reponderada de 2016–2019 para
+[outra planilha](https://docs.google.com/spreadsheets/d/1JXmSxIz4Hvl8tua6E10OrvoMa6v6z-88/edit).
+O arquivo exportado tem a mesma aba e os mesmos recortes, mas sua representação numérica
+contém pequenas diferenças nas últimas casas decimais. A coleta usa o novo vínculo e
+preserva seus bytes e valores próprios; a amostra de 17/10 continua referindo-se ao arquivo
+anterior. Não se presume que os arquivos sejam byte a byte idênticos.
+
 Os valores e cabeçalhos são [extratos dos arquivos](evidence/files.json), com URL e hash no [manifesto](evidence/manifest.json). São estimativas ponderadas, por isso o original contém frações; não rejeitar como contagem inválida nem truncar antes de preservar. O relatório apresenta números arredondados.
 
 Obtenção observada de XLSX, sem autenticação:

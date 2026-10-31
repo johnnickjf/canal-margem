@@ -1,0 +1,4839 @@
+{
+  "actor": "ensaio-local",
+  "key": "fase25-multifonte-ampliada-2025-1",
+  "base_activation": 4,
+  "data_cutoff": "2026-10-28T01:01:52.732062+00:00",
+  "selection_reason": "Ensaio local: indicadores coletados de IBGE, BCB, ANP, Conab/DIEESE e FJP, com derivados e respectivos inputs; referência de 2023 a 2025 conforme recorte.",
+  "scope": [
+    {
+      "series": "cv1-12m",
+      "geography": "BR",
+      "start": "2025-01-01",
+      "end": "2025-01-31",
+      "id": "014931f00dfefc99fb7275454b1a506ad0212e58f294a4243b0526fc4d856b7f"
+    },
+    {
+      "series": "cv1-12m",
+      "geography": "BR",
+      "start": "2025-02-01",
+      "end": "2025-02-28",
+      "id": "8ed24f5d92cb37f165357399d996b79fa5a729c09532d00291da08957720373f"
+    },
+    {
+      "series": "cv1-12m",
+      "geography": "BR",
+      "start": "2025-03-01",
+      "end": "2025-03-31",
+      "id": "88e84aa4d2c688a7313fbdbc7e18b1cc8324cffc63ccb002787e4a43a1420515"
+    },
+    {
+      "series": "cv1-12m",
+      "geography": "BR",
+      "start": "2025-04-01",
+      "end": "2025-04-30",
+      "id": "0ff372f0589cefb9e906145d24f2b53a0f079b3b7f80d7daa25b0e475ce129e7"
+    },
+    {
+      "series": "cv1-12m",
+      "geography": "BR",
+      "start": "2025-05-01",
+      "end": "2025-05-31",
+      "id": "ecfce3d4444ea0975ca16b7d36be01de17c726d427f36acdf7dfd91a51b5efef"
+    },
+    {
+      "series": "cv1-12m",
+      "geography": "BR",
+      "start": "2025-06-01",
+      "end": "2025-06-30",
+      "id": "114b5009e89067a88b8b72f1ecf7226b8fa03b8e5599eb684ef989d59e853b6f"
+    },
+    {
+      "series": "cv1-12m",
+      "geography": "BR",
+      "start": "2025-07-01",
+      "end": "2025-07-31",
+      "id": "e19cc591a5814a505aeb23fc54cb9d305349d6401f0141ef935d8edac88bef4f"
+    },
+    {
+      "series": "cv1-12m",
+      "geography": "BR",
+      "start": "2025-08-01",
+      "end": "2025-08-31",
+      "id": "732981df01b352dcb3f024650b434d0b2b60c2b9ab46425baac12d83bacb2eed"
+    },
+    {
+      "series": "cv1-12m",
+      "geography": "BR",
+      "start": "2025-09-01",
+      "end": "2025-09-30",
+      "id": "c9bee7e88d48d35b39aebea72f4a335853397c08e240fe7aac9255250d5a03d1"
+    },
+    {
+      "series": "cv1-12m",
+      "geography": "BR",
+      "start": "2025-10-01",
+      "end": "2025-10-31",
+      "id": "a7382c23f8a5e8876bbaec6687a76eabdf3c5757f1de356d1c9fa7e76311b603"
+    },
+    {
+      "series": "cv1-12m",
+      "geography": "BR",
+      "start": "2025-11-01",
+      "end": "2025-11-30",
+      "id": "033fbccf9d3794cc7bd4cdec0af999b93c557277adfdc759314a475de7a9d465"
+    },
+    {
+      "series": "cv1-12m",
+      "geography": "BR",
+      "start": "2025-12-01",
+      "end": "2025-12-31",
+      "id": "1e76abb8ca5ac74ec806eae1e88cda8aa9e59c2cf9a6f96747ec655b470199d8"
+    },
+    {
+      "series": "cv1-monthly",
+      "geography": "BR",
+      "start": "2025-01-01",
+      "end": "2025-01-31",
+      "id": "df72d68585d7231252b70ae86aa1c95cfe425d596f8203beafd0550da81783bc"
+    },
+    {
+      "series": "cv1-monthly",
+      "geography": "BR",
+      "start": "2025-02-01",
+      "end": "2025-02-28",
+      "id": "dfb19096c0eae245106b7d81cd3aa01b8bad0a3324f18c70e4216be7d6f8956f"
+    },
+    {
+      "series": "cv1-monthly",
+      "geography": "BR",
+      "start": "2025-03-01",
+      "end": "2025-03-31",
+      "id": "0c8f5d6b98ab09547f77cee78fdcbea0a80ad20552703babc9207f3d18f4ef3c"
+    },
+    {
+      "series": "cv1-monthly",
+      "geography": "BR",
+      "start": "2025-04-01",
+      "end": "2025-04-30",
+      "id": "91f7ca571e5d4d80ec13339363a27612c41b08edeaea0256f28da5f001ebbff1"
+    },
+    {
+      "series": "cv1-monthly",
+      "geography": "BR",
+      "start": "2025-05-01",
+      "end": "2025-05-31",
+      "id": "ce372e72d64285e99a027f7b4c99a23d7806125e692b0cf21658029bfe04c7e2"
+    },
+    {
+      "series": "cv1-monthly",
+      "geography": "BR",
+      "start": "2025-06-01",
+      "end": "2025-06-30",
+      "id": "9b59415d6e882473be4989f5f33da0940ec20391cb66abf5268ab0f4eaf56746"
+    },
+    {
+      "series": "cv1-monthly",
+      "geography": "BR",
+      "start": "2025-07-01",
+      "end": "2025-07-31",
+      "id": "92c5626f469b5fe2025076870088891b3085341afdcab6e9d51456cb1239b58e"
+    },
+    {
+      "series": "cv1-monthly",
+      "geography": "BR",
+      "start": "2025-08-01",
+      "end": "2025-08-31",
+      "id": "319c8e987fb8fbdd758542c0e8a210ededc53c8ff583f92fda86f80ef7e8bce1"
+    },
+    {
+      "series": "cv1-monthly",
+      "geography": "BR",
+      "start": "2025-09-01",
+      "end": "2025-09-30",
+      "id": "8ef0f7cd1211d459e5ed7796c7c4f986fa024a0c844ba4c021d110f4820f022b"
+    },
+    {
+      "series": "cv1-monthly",
+      "geography": "BR",
+      "start": "2025-10-01",
+      "end": "2025-10-31",
+      "id": "88dbac18fdb577ddc4431869d6bb02f4b6fbc8672229b02a541882e9dc546e86"
+    },
+    {
+      "series": "cv1-monthly",
+      "geography": "BR",
+      "start": "2025-11-01",
+      "end": "2025-11-30",
+      "id": "ecc08b6b80229b133beb053f7007e86b9baec5011ae36ab2c53d9775efdca0b8"
+    },
+    {
+      "series": "cv1-monthly",
+      "geography": "BR",
+      "start": "2025-12-01",
+      "end": "2025-12-31",
+      "id": "93bd7f7ce2aa0199e5989c2a9619b7e1056eae71c6cf5c55d0946f607d9fc7de"
+    },
+    {
+      "series": "cv2-current-12m",
+      "geography": "BR",
+      "start": "2025-01-01",
+      "end": "2025-01-31",
+      "id": "217bcf2e038f2f64363c003a926e8b2c07acdbd581bc45e288748c8f603a4780"
+    },
+    {
+      "series": "cv2-current-12m",
+      "geography": "BR",
+      "start": "2025-02-01",
+      "end": "2025-02-28",
+      "id": "d559c2aa99c1d73fe85bdad0ef5b6c85e436b0e240c6a9e6785547bf128d33ea"
+    },
+    {
+      "series": "cv2-current-12m",
+      "geography": "BR",
+      "start": "2025-03-01",
+      "end": "2025-03-31",
+      "id": "6ded58ad8f8594e47910c82e922b57aa2505898faa1d83d6500697702d483002"
+    },
+    {
+      "series": "cv2-current-12m",
+      "geography": "BR",
+      "start": "2025-04-01",
+      "end": "2025-04-30",
+      "id": "3c1d87e77fe80852a4763f3fc143d58793fe059813ab78ba3fd996bc4702cbd8"
+    },
+    {
+      "series": "cv2-current-12m",
+      "geography": "BR",
+      "start": "2025-05-01",
+      "end": "2025-05-31",
+      "id": "6ba713c2cd5fc98aaedd9c1361f530a8538b8a1ecb85a33bf0376d9434ad5466"
+    },
+    {
+      "series": "cv2-current-12m",
+      "geography": "BR",
+      "start": "2025-06-01",
+      "end": "2025-06-30",
+      "id": "984235d3cf49bd872e737180eb5c1844d3ff2a96d2ad8d1d2db76ed0501d8c31"
+    },
+    {
+      "series": "cv2-current-12m",
+      "geography": "BR",
+      "start": "2025-07-01",
+      "end": "2025-07-31",
+      "id": "6485aee2a57a21c82e5200f6d4fadbc46bc51e635f5fc4eb3e0598cdc0d2c042"
+    },
+    {
+      "series": "cv2-current-12m",
+      "geography": "BR",
+      "start": "2025-08-01",
+      "end": "2025-08-31",
+      "id": "bc6db59c62adb2c7259e5ab7249ac69e966d8714d38f94bf567af0351f882792"
+    },
+    {
+      "series": "cv2-current-12m",
+      "geography": "BR",
+      "start": "2025-09-01",
+      "end": "2025-09-30",
+      "id": "1e2721dd61c89c005d90ec8863dd9d522e62482764dcfa09710e8461ef13c7d2"
+    },
+    {
+      "series": "cv2-current-12m",
+      "geography": "BR",
+      "start": "2025-10-01",
+      "end": "2025-10-31",
+      "id": "72900e55505ef088048f5830bf7db2f8ec1b275c9fc3c18dd732fd90e2863ac0"
+    },
+    {
+      "series": "cv2-current-12m",
+      "geography": "BR",
+      "start": "2025-11-01",
+      "end": "2025-11-30",
+      "id": "fbf431e5738ec41213015e67b9c61fbd1973aea27c722b3e3c33704aca04dd11"
+    },
+    {
+      "series": "cv2-current-12m",
+      "geography": "BR",
+      "start": "2025-12-01",
+      "end": "2025-12-31",
+      "id": "cac2b95aefb045ca792c541e23552729ae441e05e481815f6dc5570d400e67e7"
+    },
+    {
+      "series": "cv2-current-monthly",
+      "geography": "BR",
+      "start": "2025-01-01",
+      "end": "2025-01-31",
+      "id": "18e06556e0940543d5db82c9cb16fe8a0eec7c14219f5d64f5277ba5116481ac"
+    },
+    {
+      "series": "cv2-current-monthly",
+      "geography": "BR",
+      "start": "2025-02-01",
+      "end": "2025-02-28",
+      "id": "c9468bac1bd680241184739f1b0018ac4fa327ddd30bbeeea87c3b97a9a22382"
+    },
+    {
+      "series": "cv2-current-monthly",
+      "geography": "BR",
+      "start": "2025-03-01",
+      "end": "2025-03-31",
+      "id": "27871e7a073526c1d5d8235211edca641cac25373da4b5a6dfab31027f9cbdc8"
+    },
+    {
+      "series": "cv2-current-monthly",
+      "geography": "BR",
+      "start": "2025-04-01",
+      "end": "2025-04-30",
+      "id": "86260f591cec50dd4ea15f3b6de8e09512401d6d4f128250197e7e5d1a225de1"
+    },
+    {
+      "series": "cv2-current-monthly",
+      "geography": "BR",
+      "start": "2025-05-01",
+      "end": "2025-05-31",
+      "id": "a68578a6f7d2a6a1ac2afcb7ce59d5f14c8a9b5a31a316b288e09c45ad07fa82"
+    },
+    {
+      "series": "cv2-current-monthly",
+      "geography": "BR",
+      "start": "2025-06-01",
+      "end": "2025-06-30",
+      "id": "6ed96bfcf4f50445cd071170c34c77bd6da8091e50b58001122e174bf26d5d9a"
+    },
+    {
+      "series": "cv2-current-monthly",
+      "geography": "BR",
+      "start": "2025-07-01",
+      "end": "2025-07-31",
+      "id": "75fb879f32592a6125ce2aaf0e0674b695784b524cba9c48d240b8e4dac45d30"
+    },
+    {
+      "series": "cv2-current-monthly",
+      "geography": "BR",
+      "start": "2025-08-01",
+      "end": "2025-08-31",
+      "id": "bd78b2072c521e0235a79fe534dabe8c66a26e99989e16e57375c398b18dcf4c"
+    },
+    {
+      "series": "cv2-current-monthly",
+      "geography": "BR",
+      "start": "2025-09-01",
+      "end": "2025-09-30",
+      "id": "97cb63381157b5bba8539872293506dd9bb18ec5b1db9eff1bcb3511a154315c"
+    },
+    {
+      "series": "cv2-current-monthly",
+      "geography": "BR",
+      "start": "2025-10-01",
+      "end": "2025-10-31",
+      "id": "4c3e2960d6f467f9b60037668db9b447c8600bb2d6e37240f6fb15f45be1cda0"
+    },
+    {
+      "series": "cv2-current-monthly",
+      "geography": "BR",
+      "start": "2025-11-01",
+      "end": "2025-11-30",
+      "id": "80f6a51843cefdc1d9879fe59fba0f40031a7a088321e158ca28abc5f5fc5b5c"
+    },
+    {
+      "series": "cv2-current-monthly",
+      "geography": "BR",
+      "start": "2025-12-01",
+      "end": "2025-12-31",
+      "id": "28abddbe83eff21bdb49aaa077ee850648c4adebf1ac79ddbdc223301f6bfd4e"
+    },
+    {
+      "series": "cv3",
+      "geography": "BR",
+      "start": "2025-01-05",
+      "end": "2025-01-11",
+      "id": "4cbe944b29cf3870facdf1775a52998e695595fbdab3cd0a939cb82697dc678e"
+    },
+    {
+      "series": "cv3",
+      "geography": "BR",
+      "start": "2025-01-12",
+      "end": "2025-01-18",
+      "id": "df5232dca52561a2910a92737248e6d0e632c537536a2dfbe230c64ea41d84ac"
+    },
+    {
+      "series": "cv3",
+      "geography": "BR",
+      "start": "2025-01-19",
+      "end": "2025-01-25",
+      "id": "d9ef1a6a22d9c020f0109975b44dcd3fa2df51c9c56987237315c9ddd6b7e473"
+    },
+    {
+      "series": "cv3",
+      "geography": "BR",
+      "start": "2025-01-26",
+      "end": "2025-02-01",
+      "id": "6079bf54a687b188cb00e5d95dab4752730f879624ea9226187931204a6f0c03"
+    },
+    {
+      "series": "cv3",
+      "geography": "BR",
+      "start": "2025-02-02",
+      "end": "2025-02-08",
+      "id": "92d34f220b771491fa836246d01a8f7be58f60bd7f281062e65c52e28bc51853"
+    },
+    {
+      "series": "cv3",
+      "geography": "BR",
+      "start": "2025-02-09",
+      "end": "2025-02-15",
+      "id": "f0b3b5a5acde59c9e3dc446e336e659a78b3b6c4983009ac8652ce0b9347b397"
+    },
+    {
+      "series": "cv3",
+      "geography": "BR",
+      "start": "2025-02-16",
+      "end": "2025-02-22",
+      "id": "719f67681f1d9a4480942e44677d8222638220f25b0521787fd692f814f48822"
+    },
+    {
+      "series": "cv3",
+      "geography": "BR",
+      "start": "2025-02-23",
+      "end": "2025-03-01",
+      "id": "68b4144eb7d5846213b3c86fde519dcd6159d1b4d3cedae8ee9d5c3595e7121a"
+    },
+    {
+      "series": "cv3",
+      "geography": "BR",
+      "start": "2025-03-02",
+      "end": "2025-03-08",
+      "id": "9f76a2228b43ef0f75bd578357902ec1455ae7b1b2ae5e0d4fd341a71cfe4480"
+    },
+    {
+      "series": "cv3",
+      "geography": "BR",
+      "start": "2025-03-09",
+      "end": "2025-03-15",
+      "id": "12060b0b6d37b6976f74730500d364e574627ddf455b61b77de6bc32321dac8d"
+    },
+    {
+      "series": "cv3",
+      "geography": "BR",
+      "start": "2025-03-16",
+      "end": "2025-03-22",
+      "id": "e3c7d5f902da2cd3e72799aabb0eff7f73600a9a5ee82d24b7a34cd4b76983d6"
+    },
+    {
+      "series": "cv3",
+      "geography": "BR",
+      "start": "2025-03-23",
+      "end": "2025-03-29",
+      "id": "25065c53db3238a7568e6fc55612d68aed40bf3106ba784b910659bde4c12179"
+    },
+    {
+      "series": "cv3",
+      "geography": "BR",
+      "start": "2025-03-30",
+      "end": "2025-04-05",
+      "id": "f9cd10e8c4d1ad967693dc5e334b1087d29781051309a18d6c0c97284a0a7c3c"
+    },
+    {
+      "series": "cv3",
+      "geography": "BR",
+      "start": "2025-04-06",
+      "end": "2025-04-12",
+      "id": "386d3a178f83005aceb1c48b9cad664e92d95f9b3841180041f69f76c055063d"
+    },
+    {
+      "series": "cv3",
+      "geography": "BR",
+      "start": "2025-04-13",
+      "end": "2025-04-19",
+      "id": "d71df52cb62904251641d86eb13ab2bce3a388af8e34b03fb84c487b7f84ff11"
+    },
+    {
+      "series": "cv3",
+      "geography": "BR",
+      "start": "2025-04-20",
+      "end": "2025-04-26",
+      "id": "7ba400cdd1dbcc45c2b47a77894d3a2b5293a6dc268417256687b61765855f16"
+    },
+    {
+      "series": "cv3",
+      "geography": "BR",
+      "start": "2025-04-27",
+      "end": "2025-05-03",
+      "id": "96c4a697fce0ea064b7b1025c2884cb474d13f7581fe20730a3c1f8be77c6bf1"
+    },
+    {
+      "series": "cv3",
+      "geography": "BR",
+      "start": "2025-05-04",
+      "end": "2025-05-10",
+      "id": "b22eac530c02a17cd59e0dfbfd2b58d0f00a4b141ddd995a81d72b31ae2ff0df"
+    },
+    {
+      "series": "cv3",
+      "geography": "BR",
+      "start": "2025-05-11",
+      "end": "2025-05-17",
+      "id": "270401783ed2d65dfad6c28ad4676a7fd4c530614dde94ae208a13fc767467e5"
+    },
+    {
+      "series": "cv3",
+      "geography": "BR",
+      "start": "2025-05-18",
+      "end": "2025-05-24",
+      "id": "0ab027babbb1172689ca90db30c04ee3671ed7ff67af83133a6e3d3aad311cd4"
+    },
+    {
+      "series": "cv3",
+      "geography": "BR",
+      "start": "2025-05-25",
+      "end": "2025-05-31",
+      "id": "881b67feabf2f091d8800fcdf2c7ffad5f596a59d109c7cd0a06c3013e396014"
+    },
+    {
+      "series": "cv3",
+      "geography": "BR",
+      "start": "2025-06-01",
+      "end": "2025-06-07",
+      "id": "fbfa8517430c8ba476af7c334f2e5ea120e7de7034c46e0b4c1b6bfc81fe5843"
+    },
+    {
+      "series": "cv3",
+      "geography": "BR",
+      "start": "2025-06-08",
+      "end": "2025-06-14",
+      "id": "7f55bbbb6d65242b33ff0785a3a6aa53afd3b89596ee2d1144771bb5c4dd0638"
+    },
+    {
+      "series": "cv3",
+      "geography": "BR",
+      "start": "2025-06-15",
+      "end": "2025-06-21",
+      "id": "315dc7842815c4ba8c46a9ad2b988a720fdefced19c649e45fc1b77650bdc241"
+    },
+    {
+      "series": "cv3",
+      "geography": "BR",
+      "start": "2025-06-22",
+      "end": "2025-06-28",
+      "id": "12d9431baf3a64ffd356809685ce149b0fbb96b242f8069bbf5844e05b0987d3"
+    },
+    {
+      "series": "cv3",
+      "geography": "BR",
+      "start": "2025-06-29",
+      "end": "2025-07-05",
+      "id": "84cf9fdc17e323a1e0db25d0c266334d74a2da212bad2f44e2c9a912b3bc76f7"
+    },
+    {
+      "series": "cv3",
+      "geography": "BR",
+      "start": "2025-07-06",
+      "end": "2025-07-12",
+      "id": "f67c7006bf45d70472d39afe1e41768e58d5bfa49d3ab720c9a4475fe46fa3b4"
+    },
+    {
+      "series": "cv3",
+      "geography": "BR",
+      "start": "2025-07-13",
+      "end": "2025-07-19",
+      "id": "50b77d8361acd2ac73ac3fa1e3b1edec5f871b28943ca700f0908fe8359f9c01"
+    },
+    {
+      "series": "cv3",
+      "geography": "BR",
+      "start": "2025-07-20",
+      "end": "2025-07-26",
+      "id": "abbdb53708db24d221a229239e1e4cf390d18437a5d8083a657b209a79bd17d1"
+    },
+    {
+      "series": "cv3",
+      "geography": "BR",
+      "start": "2025-07-27",
+      "end": "2025-08-02",
+      "id": "9a44b029db1ee0780fc72025c6b79f262d03929630441c9f08926703cc570961"
+    },
+    {
+      "series": "cv3",
+      "geography": "BR",
+      "start": "2025-08-03",
+      "end": "2025-08-09",
+      "id": "3c6fccf865fc1842d6af9e544c3a8a60a14842c4764822e05bff6766d2451ae7"
+    },
+    {
+      "series": "cv3",
+      "geography": "BR",
+      "start": "2025-08-10",
+      "end": "2025-08-16",
+      "id": "13c924539c54b8e8e651c356a4f9a3707147f601f2c8f2620d86ab78a4bf20ab"
+    },
+    {
+      "series": "cv3",
+      "geography": "BR",
+      "start": "2025-08-17",
+      "end": "2025-08-23",
+      "id": "d347be843148678d51842a6c5aa61b6b4e448991278dbce355f431372d583dd4"
+    },
+    {
+      "series": "cv3",
+      "geography": "BR",
+      "start": "2025-08-24",
+      "end": "2025-08-30",
+      "id": "5245759bbf805669ee558b6c0d438a0561be6e2378c073d2d0a134a5bba40650"
+    },
+    {
+      "series": "cv3",
+      "geography": "BR",
+      "start": "2025-08-31",
+      "end": "2025-09-06",
+      "id": "64ce29a29fd71d5f353689e226c4b1a649e7fe0277fb0a2d4bca70ced72b72c2"
+    },
+    {
+      "series": "cv3",
+      "geography": "BR",
+      "start": "2025-09-07",
+      "end": "2025-09-13",
+      "id": "bfd15c2acaeca9ce345b1b0f1c1f88bf5c4d04e2c1297c6e548d3f2a2a78cfaf"
+    },
+    {
+      "series": "cv3",
+      "geography": "BR",
+      "start": "2025-09-14",
+      "end": "2025-09-20",
+      "id": "d9bbb5b44684cad33a770200c78112fc9d3ad7c7be5817f48c900a38b161c153"
+    },
+    {
+      "series": "cv3",
+      "geography": "BR",
+      "start": "2025-09-21",
+      "end": "2025-09-27",
+      "id": "29d4211dfd084d07fc5df1dd42e96505b45ec9fb3a1f28044d95302958a7b78e"
+    },
+    {
+      "series": "cv3",
+      "geography": "BR",
+      "start": "2025-09-28",
+      "end": "2025-10-04",
+      "id": "91f3e271d02ac3a6bbac3fed530584280095f767aa430b8cf3b5a2c45abded27"
+    },
+    {
+      "series": "cv3",
+      "geography": "BR",
+      "start": "2025-10-05",
+      "end": "2025-10-11",
+      "id": "2124f71bc8aa9f4a4c6e20d333ca260252db4d6c353ce2a250f460cca666c86d"
+    },
+    {
+      "series": "cv3",
+      "geography": "BR",
+      "start": "2025-10-12",
+      "end": "2025-10-18",
+      "id": "27649e1b7a564c82528d520a828d4aead67712aa4bb3d1a1b085bf224b5f21c6"
+    },
+    {
+      "series": "cv3",
+      "geography": "BR",
+      "start": "2025-10-19",
+      "end": "2025-10-25",
+      "id": "cabb843a62654aa64b9037c731e087580591fa74086c6805f10d0015b61c9773"
+    },
+    {
+      "series": "cv3",
+      "geography": "BR",
+      "start": "2025-10-26",
+      "end": "2025-11-01",
+      "id": "338b04a88806c8369761ff29cba690ab0cca6636afe31d82c998b46cd62f8944"
+    },
+    {
+      "series": "cv3",
+      "geography": "BR",
+      "start": "2025-11-02",
+      "end": "2025-11-08",
+      "id": "c8da9abd021f06ae719dc7967cf40f96ea9543b43c2d6726d2bf81d95cff3eae"
+    },
+    {
+      "series": "cv3",
+      "geography": "BR",
+      "start": "2025-11-09",
+      "end": "2025-11-15",
+      "id": "e7ba1282206ce2cc27c785fe1fce8eac0621cb1b59b1d740b7a0dab6bf539264"
+    },
+    {
+      "series": "cv3",
+      "geography": "BR",
+      "start": "2025-11-16",
+      "end": "2025-11-22",
+      "id": "cbb7088de2b8bdbe7aa97a84c57f9499dfa0fe1bac6c2e618998aa42d15a33a5"
+    },
+    {
+      "series": "cv3",
+      "geography": "BR",
+      "start": "2025-11-23",
+      "end": "2025-11-29",
+      "id": "185496f5d6f8f0287de38256b2ea8e30a1e7ce5b965177ea9c14100d80a15889"
+    },
+    {
+      "series": "cv3",
+      "geography": "BR",
+      "start": "2025-11-30",
+      "end": "2025-12-06",
+      "id": "0b4a08bea864f6b7c12f480c8a7ae48ba5a23ddf2b269b315900f135a35aad16"
+    },
+    {
+      "series": "cv3",
+      "geography": "BR",
+      "start": "2025-12-07",
+      "end": "2025-12-13",
+      "id": "6d61fbe6480d03c05a2e5d135aa5546dd3053b191f937edd04e113e2394a721a"
+    },
+    {
+      "series": "cv3",
+      "geography": "BR",
+      "start": "2025-12-14",
+      "end": "2025-12-20",
+      "id": "37b7af5037a7d74b835f40cc3e5fdd863af24db9c899207e21fe091989d28963"
+    },
+    {
+      "series": "cv3",
+      "geography": "BR",
+      "start": "2025-12-21",
+      "end": "2025-12-27",
+      "id": "cb17ba8014eab7f93e36185313331583bb7284a62ba455434523318039b9e494"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-1100205",
+      "start": "2025-07-01",
+      "end": "2025-07-31",
+      "id": "c2004fea1afda260605c7b1502c5b803fafd011769400e8b2a374693f535cb33"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-1100205",
+      "start": "2025-08-01",
+      "end": "2025-08-31",
+      "id": "f13ed555019a5f9243620251d6f5bdee233ab96c0bbcc8e3c2461158328e38bb"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-1100205",
+      "start": "2025-09-01",
+      "end": "2025-09-30",
+      "id": "93a15853b6ec4a7d36a45a02122f50871a72f13c3ec124420a7966b5cbc9cddf"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-1100205",
+      "start": "2025-10-01",
+      "end": "2025-10-31",
+      "id": "e32622ad5b566a7b9cd17f7b0843c04a42fd4081951477aa6d8d22751ead687f"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-1100205",
+      "start": "2025-11-01",
+      "end": "2025-11-30",
+      "id": "43dac6ccc60e610adfcb9c3b7112fad7b24fcc2532df800b9cf2936051bd9b77"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-1100205",
+      "start": "2025-12-01",
+      "end": "2025-12-31",
+      "id": "b26949e8a39ae7da510a82dac07056ce1c906b1cbcdc30c8dec7ccd0a9cb4e93"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-1200401",
+      "start": "2025-07-01",
+      "end": "2025-07-31",
+      "id": "189165f773a830b88ce337417beef995090793147dfc9c9ffaa23dbbe184eb7b"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-1200401",
+      "start": "2025-08-01",
+      "end": "2025-08-31",
+      "id": "e1e891a9a93a75272028b6b9971cbc121d912f763497c4f6b39d138843712cc5"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-1200401",
+      "start": "2025-09-01",
+      "end": "2025-09-30",
+      "id": "0f1a13a1210da462731b16bb2d1ca6f95c30dbafc3a7de7e84a28b92f4a10104"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-1200401",
+      "start": "2025-10-01",
+      "end": "2025-10-31",
+      "id": "6e6a6f2c2e146934df99586417c2ab28ff688b5046b1ae8f7f3c0538a89521de"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-1200401",
+      "start": "2025-11-01",
+      "end": "2025-11-30",
+      "id": "c5993e6fe45ee0182339f77df800c07ec319cdff1c54d22839dfe9005589177b"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-1200401",
+      "start": "2025-12-01",
+      "end": "2025-12-31",
+      "id": "89bcb78127cacf7691aec97aac8beb2c61c4d8bc148c7e3bbad94c59a94c1859"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-1302603",
+      "start": "2025-07-01",
+      "end": "2025-07-31",
+      "id": "420896938012ddad53021836db3005bd9dda835b6b13f40f66ae8e48825a3cad"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-1302603",
+      "start": "2025-08-01",
+      "end": "2025-08-31",
+      "id": "bd84accf6258b3a9fdfca46b8ca0ad32319a25ceb0ba1b1135e98175fc3f3241"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-1302603",
+      "start": "2025-09-01",
+      "end": "2025-09-30",
+      "id": "97d83e4e8bb0fa7c4ea77cc2208bc1816c73fc0018df31fc06218f61a96d8dc3"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-1302603",
+      "start": "2025-10-01",
+      "end": "2025-10-31",
+      "id": "c37f903788f247a2eb702a3cc1502c05d191b2b1c19035756b7b9766e523ff49"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-1302603",
+      "start": "2025-11-01",
+      "end": "2025-11-30",
+      "id": "b76830ebaaad87adaa2f897525196ec43990ace0bad2913324251f01bc794a40"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-1302603",
+      "start": "2025-12-01",
+      "end": "2025-12-31",
+      "id": "dc64838ff6da957374d9adcc7018c6f02f65c92e6c825b1e94c1ae4aaa1e88ea"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-1400100",
+      "start": "2025-07-01",
+      "end": "2025-07-31",
+      "id": "5d801092580ed500fe7e71b7b01fb5ac17585f1545da67498825b896510b725f"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-1400100",
+      "start": "2025-08-01",
+      "end": "2025-08-31",
+      "id": "564af441732cfb79c7ddde7878ab493011499d6e94b3bdbf3ca8c1b68fd61897"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-1400100",
+      "start": "2025-09-01",
+      "end": "2025-09-30",
+      "id": "38ce8cc0b2e25a86b8cd36319d3c71e4d4ea1f0e5b456a1b578b7fc30c18fec9"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-1400100",
+      "start": "2025-10-01",
+      "end": "2025-10-31",
+      "id": "4ce7ce65eee28fb950abbb2e070abd797617d2a50b9a2f0c62ccf1fbf66688ee"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-1400100",
+      "start": "2025-11-01",
+      "end": "2025-11-30",
+      "id": "8b69e37a29b2931ab07665e7aa2309d0f85ff754f1a9d9238c6094919800bdd2"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-1400100",
+      "start": "2025-12-01",
+      "end": "2025-12-31",
+      "id": "a248365e9944c76fac2b44d7c94ea5eb69b10bffe6586f287deeb37ec8abba0a"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-1501402",
+      "start": "2025-01-01",
+      "end": "2025-01-31",
+      "id": "0d831adfc2764afa14e4104def452197aaca43e1ae295b4270bce0531cb909af"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-1501402",
+      "start": "2025-02-01",
+      "end": "2025-02-28",
+      "id": "5a847d3d9c612ed29edf607f57fbc8dc01378c11743a390c8bd1a2be05db0c76"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-1501402",
+      "start": "2025-03-01",
+      "end": "2025-03-31",
+      "id": "3388b47e69ff2b5fff704d934cded81ab98c8518de701ba9fef152712cce50fe"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-1501402",
+      "start": "2025-04-01",
+      "end": "2025-04-30",
+      "id": "89f0f4f59a628841e94e5cc51a8bed03ce22831cc777a9d4429335ab31d5b50d"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-1501402",
+      "start": "2025-05-01",
+      "end": "2025-05-31",
+      "id": "0e06c40439b1e819333fc28ce2efbdd990abf93972bafd9debf0fcbf7226d32f"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-1501402",
+      "start": "2025-06-01",
+      "end": "2025-06-30",
+      "id": "00a374ce02ec2f383a92e0caafd206e044b142e9446626984d25292e52fb6dce"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-1501402",
+      "start": "2025-07-01",
+      "end": "2025-07-31",
+      "id": "5d350e8ba8ed70da10b1dcd7540f8f13227689428ca81be99eb0c126ed330e35"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-1501402",
+      "start": "2025-08-01",
+      "end": "2025-08-31",
+      "id": "5c4501e82262159e67208ad2166883b1c401cb1a86ad3e299fd645bd47f42acc"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-1501402",
+      "start": "2025-09-01",
+      "end": "2025-09-30",
+      "id": "6b810f4e1a162950024d28a6f1f2c2d1c4063f16917c7f6e6fbf2b131309d170"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-1501402",
+      "start": "2025-10-01",
+      "end": "2025-10-31",
+      "id": "3ae134fb3088421f25499fa978311d447695eae6d9fbca78802f1b29a69954d7"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-1501402",
+      "start": "2025-11-01",
+      "end": "2025-11-30",
+      "id": "5381cdae7018fa262e9b5171482dc7d2ea3cbb253ebaf68802952bee3f883796"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-1501402",
+      "start": "2025-12-01",
+      "end": "2025-12-31",
+      "id": "897896df2c8c9934b0639eff763dfafe4333c03e8e8459f257d2054ecf0ea58c"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-1600303",
+      "start": "2025-07-01",
+      "end": "2025-07-31",
+      "id": "8135b5158bbe4b6f7c9318785b02b6f0b261d268884899bf11a6b0417a3aa87c"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-1600303",
+      "start": "2025-08-01",
+      "end": "2025-08-31",
+      "id": "a61cf4fd1890dd3b3aef367e7f840565b49271e50b0f08438ca7dacbad30c5a9"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-1600303",
+      "start": "2025-09-01",
+      "end": "2025-09-30",
+      "id": "fd03641b347958eba6605a63be29bb3470190132059695526a12d2cba283c879"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-1600303",
+      "start": "2025-10-01",
+      "end": "2025-10-31",
+      "id": "4e05946d10882c9f073a61746fa7d8f6aa2e85bc61744e7951d05649142e5d07"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-1600303",
+      "start": "2025-11-01",
+      "end": "2025-11-30",
+      "id": "8689b6df54b6920996a58540730e889d6d9c7ac74d78a9e80f6017f5467d6a0b"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-1600303",
+      "start": "2025-12-01",
+      "end": "2025-12-31",
+      "id": "2e3a629d484ed27dd4668aaba6304abffd7b75c3427e1b4f4f12fb7d65ca2ad2"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-1721000",
+      "start": "2025-07-01",
+      "end": "2025-07-31",
+      "id": "5cd7d43fde8c0b91fdf1042dc95bbc07cb594908fc204b3ddd562121bfe11e26"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-1721000",
+      "start": "2025-08-01",
+      "end": "2025-08-31",
+      "id": "e8b141175df6faaa6d09a991964793d718ccfcc1f04aebcaa0b5487e4733d013"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-1721000",
+      "start": "2025-09-01",
+      "end": "2025-09-30",
+      "id": "7939cff166871ff7c92784642f253a3d310a583561424baa00becf064133eeab"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-1721000",
+      "start": "2025-10-01",
+      "end": "2025-10-31",
+      "id": "849a684849da872e31d15a20eb89df53b56b81d3dda3e7c52917188fbea2fe02"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-1721000",
+      "start": "2025-11-01",
+      "end": "2025-11-30",
+      "id": "8661f45b92b672aa15d14cb5409f60f8a848a39d5ba1d5479cae38f3b8ed4fe6"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-1721000",
+      "start": "2025-12-01",
+      "end": "2025-12-31",
+      "id": "278da0b48db35054c22718487bad547bb43e969a0bdd9a2a0d4baa2522a156ac"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-2111300",
+      "start": "2025-07-01",
+      "end": "2025-07-31",
+      "id": "302e31eebf7e57486ab1bf458d2ff0dd05fa92b4e674f868801e605e615eda87"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-2111300",
+      "start": "2025-08-01",
+      "end": "2025-08-31",
+      "id": "417de317e5718c166fc9553a06428d8cd4fdf052a45fe3981b85e44446b89c1c"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-2111300",
+      "start": "2025-09-01",
+      "end": "2025-09-30",
+      "id": "52a95524342bff229d77e3f8be5c81895a78f3eb77687f7912eb0624242577f1"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-2111300",
+      "start": "2025-10-01",
+      "end": "2025-10-31",
+      "id": "d4ea53285700ee0be9a4cc524b9d30efbe00f389e4a41a4b0103b3b24f69e898"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-2111300",
+      "start": "2025-11-01",
+      "end": "2025-11-30",
+      "id": "4143d8cf67f69d979c950df860f7585154e057f357eb83bfedcdfe7f2b42d272"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-2111300",
+      "start": "2025-12-01",
+      "end": "2025-12-31",
+      "id": "522a5db4ffc79c5958e313360c9b933c9fef43b2d6cd0e165d4dd3e1dddf7b62"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-2211001",
+      "start": "2025-07-01",
+      "end": "2025-07-31",
+      "id": "8d7351a17c2bbc748a4f75e04e7a2743547d07a551e518f3a1be3fe30cc3b19e"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-2211001",
+      "start": "2025-08-01",
+      "end": "2025-08-31",
+      "id": "73d55841de53124e3456d4c3e4a835e34f20f38ce7e7c862533759ccf3c63064"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-2211001",
+      "start": "2025-09-01",
+      "end": "2025-09-30",
+      "id": "0ad0d6dc1c00c2ac6481e7b9d5d6bc1698fdf4ad2a2aa954bcbaad2e8687e571"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-2211001",
+      "start": "2025-10-01",
+      "end": "2025-10-31",
+      "id": "aa178cd3ce7b2edad0970faa74e4b2d4f3ccfec14bc0ff70a595c1105775f963"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-2211001",
+      "start": "2025-11-01",
+      "end": "2025-11-30",
+      "id": "0d67d3bdf2983aaa32fb61ac160678fc14847b55b611f4b8cdf70628e8cd6717"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-2211001",
+      "start": "2025-12-01",
+      "end": "2025-12-31",
+      "id": "2138a27564acb2c5b45b7ac0160b7623883d3859bebb63393c9664b9026d7132"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-2304400",
+      "start": "2025-01-01",
+      "end": "2025-01-31",
+      "id": "0ee3f1dd5fa6d610ef123a7c35939386ec2a08bf8538e768d2be77e484dd9ce6"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-2304400",
+      "start": "2025-02-01",
+      "end": "2025-02-28",
+      "id": "50d2de0613b505ef2b361981e39ccc64a3e856f7e6aecdfa05d558d2541ce234"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-2304400",
+      "start": "2025-03-01",
+      "end": "2025-03-31",
+      "id": "e29336bcabfe1d63728cbf5321e6c84f2eff4f17ab932fe2cf87d82f35ed7b78"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-2304400",
+      "start": "2025-04-01",
+      "end": "2025-04-30",
+      "id": "e50f4bb9866b98fc01a5a60489cdf97870c3e3e578b78664eba780f2e2b9b693"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-2304400",
+      "start": "2025-05-01",
+      "end": "2025-05-31",
+      "id": "b52a9fac6cd3d72d283c6623b73400fecd4a5c967057bb8a07a387931bf0122b"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-2304400",
+      "start": "2025-06-01",
+      "end": "2025-06-30",
+      "id": "4c519b27cb45379d684382af162db82b01606b513dfcfaeff0a09e127350f9f7"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-2304400",
+      "start": "2025-07-01",
+      "end": "2025-07-31",
+      "id": "63865289e1cf2c3420175221158491af218ae27a0e0b2bd3bd6bdd6dfe07c10a"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-2304400",
+      "start": "2025-08-01",
+      "end": "2025-08-31",
+      "id": "373a0a446d4aaede00140fe62177d160e327e4941fbb2cdf1038deeb4b33babe"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-2304400",
+      "start": "2025-09-01",
+      "end": "2025-09-30",
+      "id": "11d6276c413baf0c256bf0289d8dd3d82ed1307cc6a71e3fedeae4c1e5bd8493"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-2304400",
+      "start": "2025-10-01",
+      "end": "2025-10-31",
+      "id": "ba6cbf8729128a607d16ce65334637ca94b826750e54fb38db734edb452bcba5"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-2304400",
+      "start": "2025-11-01",
+      "end": "2025-11-30",
+      "id": "105d7475d0be1df5328f5198c909d23281dc52a6cc83e7dcbe9510ea098b9915"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-2304400",
+      "start": "2025-12-01",
+      "end": "2025-12-31",
+      "id": "01397604c492157ef6a9406a67a7692c8cd943e900fc7d26a567376e3e263194"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-2408102",
+      "start": "2025-01-01",
+      "end": "2025-01-31",
+      "id": "b5531a8f17251390ba8d4877ed47295acc8f952e640e59b383c53ae50e91ee9f"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-2408102",
+      "start": "2025-02-01",
+      "end": "2025-02-28",
+      "id": "509ac77ab04fa0ae1adf4aefa1ef38e4b4f44ad5798aeed04012d1f31943815e"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-2408102",
+      "start": "2025-03-01",
+      "end": "2025-03-31",
+      "id": "8c925c0184958ecffc8b9f887e0b94c2d513fa8cd63b2a534362502dff7cdf4f"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-2408102",
+      "start": "2025-04-01",
+      "end": "2025-04-30",
+      "id": "7ea888a5ced8eaa30fb20bd69810534dcb059653ee089084656bdea2b2f22330"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-2408102",
+      "start": "2025-05-01",
+      "end": "2025-05-31",
+      "id": "47a0a22c2b6622f33cee4d901b3b0a95e7a39c188ce2ce7f6b9295cefed928a7"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-2408102",
+      "start": "2025-06-01",
+      "end": "2025-06-30",
+      "id": "07f98a270ebfcea3aab7eb2e74425bd20e2cdad17bc9f4843c9f15240b38dfa4"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-2408102",
+      "start": "2025-07-01",
+      "end": "2025-07-31",
+      "id": "6de3272b176a23674f8890bf6df0384a10fb675dbfcda4f058eceb462e7422b8"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-2408102",
+      "start": "2025-08-01",
+      "end": "2025-08-31",
+      "id": "3966e3c033bb3b3a144e61088b0fc1156f52c0d710a62ffb880e93d3fa19a99f"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-2408102",
+      "start": "2025-09-01",
+      "end": "2025-09-30",
+      "id": "65d448511921bc8ef1525083370b276a85744c3fbd1ea9f8b5413505532e46e3"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-2408102",
+      "start": "2025-10-01",
+      "end": "2025-10-31",
+      "id": "cad5b970d447472eff673dccb630b397e031b04c2e0d3c669a8da2afbee6c6e7"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-2408102",
+      "start": "2025-11-01",
+      "end": "2025-11-30",
+      "id": "65c89b74a5e234da52f42ddd6c621e3e29c91bae47bdb0b26d29d941b35bc8c1"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-2408102",
+      "start": "2025-12-01",
+      "end": "2025-12-31",
+      "id": "5d33b1c35cb221cede0001b8de7fa82e004891cd6e1c2e147e4c436b0e453e58"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-2507507",
+      "start": "2025-01-01",
+      "end": "2025-01-31",
+      "id": "a2dfb75849ea4cfdb82098b00d7d6acc41223c472a309f4743ed0a6fe443d49a"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-2507507",
+      "start": "2025-02-01",
+      "end": "2025-02-28",
+      "id": "43277f29bb844143fd1b93188fb8790f2647034ad3dbed40645573df12aa95df"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-2507507",
+      "start": "2025-03-01",
+      "end": "2025-03-31",
+      "id": "e3d0d096c403b3c65656b7a863f9de2e3b8952d5e2c1ad2367a04fd15529683d"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-2507507",
+      "start": "2025-04-01",
+      "end": "2025-04-30",
+      "id": "0a3cecacf6e547d92a62d401afa9ece24ec1ecb5272749026d1a3fe0abd73ea9"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-2507507",
+      "start": "2025-05-01",
+      "end": "2025-05-31",
+      "id": "0c71c47ad7ca15dba16bb71c3360860e062bf2c380d9289f5bcf97f96da74724"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-2507507",
+      "start": "2025-06-01",
+      "end": "2025-06-30",
+      "id": "4aa71307b237a5c7701e08b4b7d3ef1aa3f7d2f275da62958193585aadde384e"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-2507507",
+      "start": "2025-07-01",
+      "end": "2025-07-31",
+      "id": "c5c4b09212fe5157abd5520361f275389d90b90c96380ede158b97ae647746eb"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-2507507",
+      "start": "2025-08-01",
+      "end": "2025-08-31",
+      "id": "7bd9589456176efdfadc0e39633112753cde84da60279b49e4021a14f0afb7be"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-2507507",
+      "start": "2025-09-01",
+      "end": "2025-09-30",
+      "id": "8123dd98355cf4d2da8e89d2b8779bd6a4b933dd8dd49863f0305d924c97ef60"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-2507507",
+      "start": "2025-10-01",
+      "end": "2025-10-31",
+      "id": "dda0ddbe2c10835f798778926938bcb80c564f2357e1d2a23e48fa7334956727"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-2507507",
+      "start": "2025-11-01",
+      "end": "2025-11-30",
+      "id": "083d21c6f2769aac4b2261533fc23a2b36b26bd220d7caeb043996711a773937"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-2507507",
+      "start": "2025-12-01",
+      "end": "2025-12-31",
+      "id": "b869c744341c8d1a76c2a2ad213095778038812704e0be93dbdb80d5ccaf158a"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-2611606",
+      "start": "2025-01-01",
+      "end": "2025-01-31",
+      "id": "a28ade5dc90ada5fe0df77135f6e6ca4dcddf7160ddacfb30cccfc112d11ec3f"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-2611606",
+      "start": "2025-02-01",
+      "end": "2025-02-28",
+      "id": "6439d6a33e97f2ca2c4cf1ddfebaff3d90c231b58157aa997f01f5c751379965"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-2611606",
+      "start": "2025-03-01",
+      "end": "2025-03-31",
+      "id": "370a43e986a6f97a556f87fccf13915bd1ea51475809ac3df5f99c3b06fab29c"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-2611606",
+      "start": "2025-04-01",
+      "end": "2025-04-30",
+      "id": "d5925457e865e126fb6052211b8fec06d5f4a288057189fed7321aa1e4eb86c4"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-2611606",
+      "start": "2025-05-01",
+      "end": "2025-05-31",
+      "id": "ad39f174c0f55a8fa52a205e2b819e903fece72dd5b996041ca966048e169fbd"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-2611606",
+      "start": "2025-06-01",
+      "end": "2025-06-30",
+      "id": "39c553b10369586e5f438cfd0cb194196d63d8ac28771cb8fbb5b08c73a4c6b2"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-2611606",
+      "start": "2025-07-01",
+      "end": "2025-07-31",
+      "id": "dcd100b76d73f070906a449e71d21418dd7b47b7f35d5281a4a696797b3e2aff"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-2611606",
+      "start": "2025-08-01",
+      "end": "2025-08-31",
+      "id": "251d085a6e46e341a6eb5ef54d0efdfd2b7e8bfaab0a5132ef2a56c1b7dac0e0"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-2611606",
+      "start": "2025-09-01",
+      "end": "2025-09-30",
+      "id": "50ebf710103529833196326c24ac10344aa3093e2678825fd72159837450d3be"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-2611606",
+      "start": "2025-10-01",
+      "end": "2025-10-31",
+      "id": "ecd0ea4fe537bcd5e50e03d78067b45e0c2c3713fe112b90cbc52dcd1687715e"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-2611606",
+      "start": "2025-11-01",
+      "end": "2025-11-30",
+      "id": "951a4c8d1a970e435ca65d2a8c7dc21d725b96af49fdc64c6701b92f37896a8d"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-2611606",
+      "start": "2025-12-01",
+      "end": "2025-12-31",
+      "id": "351e79ed1334447eb804b5517f027b4b4c1bed02aec0f60b7b2fb00f8ba190a1"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-2704302",
+      "start": "2025-07-01",
+      "end": "2025-07-31",
+      "id": "d48646c4f52ce79ed39d4674a217b3537843712bcea22586b1efb09a8f70102d"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-2704302",
+      "start": "2025-08-01",
+      "end": "2025-08-31",
+      "id": "442b0791549806980fdebcc09d80dd18a9d81b753b7e588f1b9492bcd22bd772"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-2704302",
+      "start": "2025-09-01",
+      "end": "2025-09-30",
+      "id": "23f9f9da790a95c214e49687db7fac1acc5cd7faedcb05ed4c99aad58eed98fa"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-2704302",
+      "start": "2025-10-01",
+      "end": "2025-10-31",
+      "id": "ac5be7578dc26e663538040987141f352b488b4b87473a3776d7406cbbf8121d"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-2704302",
+      "start": "2025-11-01",
+      "end": "2025-11-30",
+      "id": "8ba16c09cf23753fbde050540cc62ed29dee121342ee3c9e5fcfe3a31163a342"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-2704302",
+      "start": "2025-12-01",
+      "end": "2025-12-31",
+      "id": "26dc2cfa648d2bd1946677d2c98fa554c8d8359f24391185cf42f91e0a578efe"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-2800308",
+      "start": "2025-01-01",
+      "end": "2025-01-31",
+      "id": "0dc343415b7921a4015982485c213aa76237cf5f33a0897181f3c4e48832dd49"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-2800308",
+      "start": "2025-02-01",
+      "end": "2025-02-28",
+      "id": "104d59875546ce10d69363bddd91c23326037e3806dd075d288cb6231a597b8a"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-2800308",
+      "start": "2025-03-01",
+      "end": "2025-03-31",
+      "id": "e428866d6b0515762d57f8e85f2d5a55c488aa396ba0860720a5a0d461bb076b"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-2800308",
+      "start": "2025-04-01",
+      "end": "2025-04-30",
+      "id": "c8605410cacf57eaca1836b9dbac31d37faa5d2a4eea4a8b80e52ee545c18537"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-2800308",
+      "start": "2025-05-01",
+      "end": "2025-05-31",
+      "id": "96d151ec32fb94cb0b37a9ac0a19646b43014ac00dec07a4d1e93359581434ce"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-2800308",
+      "start": "2025-06-01",
+      "end": "2025-06-30",
+      "id": "a09c54bf6ff5451a3a2d0eea792b61331fa71f0ad574f70d2d62ae398f63eaa3"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-2800308",
+      "start": "2025-07-01",
+      "end": "2025-07-31",
+      "id": "2e0b8303ccb7023a76ff666b55cf5a336b3978345cf686b6adaf95824919b637"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-2800308",
+      "start": "2025-08-01",
+      "end": "2025-08-31",
+      "id": "47ffedb104c7e356ff528fbfb27f550c32fb8de3deec0b419076ba4e518bc44c"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-2800308",
+      "start": "2025-09-01",
+      "end": "2025-09-30",
+      "id": "39d13e706f5162a090949d0bac9fd593e4852f3a283450af355b5ca563186d30"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-2800308",
+      "start": "2025-10-01",
+      "end": "2025-10-31",
+      "id": "83b5326198e05f6fdc6decfd8000a2fb9cb5b862de003d14488d9ef2221ec805"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-2800308",
+      "start": "2025-11-01",
+      "end": "2025-11-30",
+      "id": "44204b3f6b2c6bd9584dafb7272688dae2b0ea64798147be7310c505a91d124b"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-2800308",
+      "start": "2025-12-01",
+      "end": "2025-12-31",
+      "id": "5109dd83b87780a0d9e0c5171162d6df252f9a53df223d4fc0dc09fe068b2d80"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-2927408",
+      "start": "2025-01-01",
+      "end": "2025-01-31",
+      "id": "48c59ee8089a00059aa26bf453d104dc0896e0dc70ec734c78914f5ca487ba1b"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-2927408",
+      "start": "2025-02-01",
+      "end": "2025-02-28",
+      "id": "1035d6a78937a79029526fdb94841e87f7d7678a705b25148c5539393a660c79"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-2927408",
+      "start": "2025-03-01",
+      "end": "2025-03-31",
+      "id": "058bee702db415ad4216ab0a60c991eaaa31575795903d99cc610294b5a0589c"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-2927408",
+      "start": "2025-04-01",
+      "end": "2025-04-30",
+      "id": "831a1509ba7f8e05eee780085234bf0825a576771312ced53afe491c5c53e5d0"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-2927408",
+      "start": "2025-05-01",
+      "end": "2025-05-31",
+      "id": "79d7dbf253c56b8febb97319500a299888832e60fd6995c7866f7d7ce5ed8239"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-2927408",
+      "start": "2025-06-01",
+      "end": "2025-06-30",
+      "id": "c0c31953f8de56a4fac8d784a495402980b49b795780899176bc2e66b03dec43"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-2927408",
+      "start": "2025-07-01",
+      "end": "2025-07-31",
+      "id": "57e09f5d9483fcdfd4b2adc2aa97bab3d9fda9b340687ceffb6517ae6ad5ac0c"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-2927408",
+      "start": "2025-08-01",
+      "end": "2025-08-31",
+      "id": "14fbd6ee2ac8f035ba75524eff076bc8a022b445abe516b57631214d4e479fd2"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-2927408",
+      "start": "2025-09-01",
+      "end": "2025-09-30",
+      "id": "a752a0e7b0284ca30b0114da5cbba78aa492d42968d94c5bb44bf0c780db43e4"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-2927408",
+      "start": "2025-10-01",
+      "end": "2025-10-31",
+      "id": "2644a3c0ed7fce1484f4b2bcbf735426ef1a8bc86d25aa7ef219ade612cf4e1f"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-2927408",
+      "start": "2025-11-01",
+      "end": "2025-11-30",
+      "id": "d96565eb4e1bcbeaf0e383f8be2d3a487240acd5c51b814e9c4d00a91cf9dab9"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-2927408",
+      "start": "2025-12-01",
+      "end": "2025-12-31",
+      "id": "6725f0b6e4b818c1c37c1345a1f70a02ae04671f67e07e0dd421041c00c55c26"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-3106200",
+      "start": "2025-01-01",
+      "end": "2025-01-31",
+      "id": "c01377531459db3e762378c756083a1029110a7e2a6c71ad50bed014fbf21a41"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-3106200",
+      "start": "2025-02-01",
+      "end": "2025-02-28",
+      "id": "32a47e649c28869cc0eb00bc9524e72ec4bbc889e5492bcb96d17d6039f2068a"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-3106200",
+      "start": "2025-03-01",
+      "end": "2025-03-31",
+      "id": "b245e1deab52b18e742a0d6d395a556a9a2207e37403ac7319a9afd90d34251c"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-3106200",
+      "start": "2025-04-01",
+      "end": "2025-04-30",
+      "id": "7d3a42483980d18300a2c6e67ebd7ead8ae4f84512c88eb0065f3faa8bedf326"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-3106200",
+      "start": "2025-05-01",
+      "end": "2025-05-31",
+      "id": "8e772e3844658e5e2e5924d9bd68310e168854d2275a8b78abb1d1aecdca314e"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-3106200",
+      "start": "2025-06-01",
+      "end": "2025-06-30",
+      "id": "544e7774102bcab7722b53a4ffbebb5140ab68f0c2e3e3300c0113bf30021bcf"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-3106200",
+      "start": "2025-07-01",
+      "end": "2025-07-31",
+      "id": "5384ae68a48a51abf416e19020afd96b4455599802d6e461cedd5169fa8d3416"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-3106200",
+      "start": "2025-08-01",
+      "end": "2025-08-31",
+      "id": "1bec1486e5e3b1e9ae359578304bfdd1755e3cf98f4ba5f678eb25d9cb7f1a9e"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-3106200",
+      "start": "2025-09-01",
+      "end": "2025-09-30",
+      "id": "fe0e6453454705b4bedb99afadfa2db3db6798f702ad70d9bf2348e346f681df"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-3106200",
+      "start": "2025-10-01",
+      "end": "2025-10-31",
+      "id": "06221892936f2ac9dc558d81e2a04bdf24e07ab2af47a84e3a7f81428ba9d551"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-3106200",
+      "start": "2025-11-01",
+      "end": "2025-11-30",
+      "id": "f11b3da94ff6b67ceaa41a945bc2e05644c4f5c10e806b756fe9433d8516bf33"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-3106200",
+      "start": "2025-12-01",
+      "end": "2025-12-31",
+      "id": "a52846f982a6ea283d5ade4df4717210ccc7cdf7f5b61898b5c5c1bd461dd678"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-3205309",
+      "start": "2025-01-01",
+      "end": "2025-01-31",
+      "id": "8150dc7248cc8d9387d98f9be15610d383fd1705f61cd2738fcc63493bf3e1de"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-3205309",
+      "start": "2025-02-01",
+      "end": "2025-02-28",
+      "id": "3db783031b7cd0c1804ee2930ace8b40ea3c5f529aee5d06c819ee857875fcf8"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-3205309",
+      "start": "2025-03-01",
+      "end": "2025-03-31",
+      "id": "64dfcb7e7ea9eb893305be28834906773e305e4371ba487d6ad548685f42da95"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-3205309",
+      "start": "2025-04-01",
+      "end": "2025-04-30",
+      "id": "f0fb97fadc4b4a75dcdf166be34d4b4f4499dc0768050ac6684720fdb2c1ed89"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-3205309",
+      "start": "2025-05-01",
+      "end": "2025-05-31",
+      "id": "bb316439e6c5274ac8ea4faf725c5c29079231e25fb42da5854edfc2a31e6541"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-3205309",
+      "start": "2025-06-01",
+      "end": "2025-06-30",
+      "id": "adc620ae2da2a2a91e1abd8f01f50a89e5ef9433d6d1f5f6c88f4d00d79583cd"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-3205309",
+      "start": "2025-07-01",
+      "end": "2025-07-31",
+      "id": "c655f6182587b1d3c76d212a5b1784c550a292e1fb102b631a892e79e12a38f4"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-3205309",
+      "start": "2025-08-01",
+      "end": "2025-08-31",
+      "id": "54341002d0d21db05e07f1bcfaef4b39170b3953a92a6c72a393218f5f8ee6b2"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-3205309",
+      "start": "2025-09-01",
+      "end": "2025-09-30",
+      "id": "3cd8a98445e70074bf09e2d1bc4ab912ea2488ecfa6919caf14df2654f99737d"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-3205309",
+      "start": "2025-10-01",
+      "end": "2025-10-31",
+      "id": "1fc6e6d17e8c2df5ee4cec60f33ae378167667f59a92847e5f09bc4752eeb213"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-3205309",
+      "start": "2025-11-01",
+      "end": "2025-11-30",
+      "id": "78e92db9c4ce14b671eff2707542eacdbb4fba71bddec16606d64563d7c36b8c"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-3205309",
+      "start": "2025-12-01",
+      "end": "2025-12-31",
+      "id": "0bf32c078751d788f83fd2fa64317e627fb4380b0b7e37448c325523a1f87b97"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-3304557",
+      "start": "2025-01-01",
+      "end": "2025-01-31",
+      "id": "7c96b55f60ecb44662831b1f8dd49a3cce5de7e634186c9648380f3b8ae2e146"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-3304557",
+      "start": "2025-02-01",
+      "end": "2025-02-28",
+      "id": "299039077e9f619a5bcb687c01a8a99668af74c5b7455861c48dbfe15d7567f6"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-3304557",
+      "start": "2025-03-01",
+      "end": "2025-03-31",
+      "id": "c3bbf012b13fa1efd1ac4f6c33b8d143a1a1127bc5faf3b7fbf9ff070d4be3ae"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-3304557",
+      "start": "2025-04-01",
+      "end": "2025-04-30",
+      "id": "e90bef370ce16a1854bb2b72ab56e90533bcac2bbd23c09847039270066a3e63"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-3304557",
+      "start": "2025-05-01",
+      "end": "2025-05-31",
+      "id": "215a3c1e8f83dbbadb6fd68ac6382890f6c43bae2d0d3c268b13a2016ba3fde7"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-3304557",
+      "start": "2025-06-01",
+      "end": "2025-06-30",
+      "id": "7d464941fbcf7dd6c7cc1fbd865741618ab71136305c43eb6fd1a80a3792a1ad"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-3304557",
+      "start": "2025-07-01",
+      "end": "2025-07-31",
+      "id": "67fca1ffa507eccb99a85876d060366bc1f6b847f076ee9b0b47300a40d2a7f6"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-3304557",
+      "start": "2025-08-01",
+      "end": "2025-08-31",
+      "id": "331f3eb6cee710fd6428013a05957f129b14d938cb76b4a6fc668f92c7b96d6f"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-3304557",
+      "start": "2025-09-01",
+      "end": "2025-09-30",
+      "id": "0d674df2b7b4fc166ad41799a4f34d71acac369bc495ad56c3a362bbdd678586"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-3304557",
+      "start": "2025-10-01",
+      "end": "2025-10-31",
+      "id": "715cb8d9485a930d64949e953eb0b349e18d6e97690b61aae86408b2a1c449bf"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-3304557",
+      "start": "2025-11-01",
+      "end": "2025-11-30",
+      "id": "fdeadec23afebbd0ae7e431158fb4b8088c257b36b1b2377f432c76922072272"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-3304557",
+      "start": "2025-12-01",
+      "end": "2025-12-31",
+      "id": "5e4ad37cfe4bef913f9ae70c0be530a14d46966b896a3a56b62547056f009653"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-3550308",
+      "start": "2025-01-01",
+      "end": "2025-01-31",
+      "id": "fae37629137b6e9bae31661d79cbd5f14ebd95ce7c7621d9afc0070eff81a79e"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-3550308",
+      "start": "2025-02-01",
+      "end": "2025-02-28",
+      "id": "af0bfc730208d9f9979535357905a228c3e9f66531c402762ff7c9c11b33d27c"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-3550308",
+      "start": "2025-03-01",
+      "end": "2025-03-31",
+      "id": "f2ce31812538e4b43ac33da8ea5e956026d48ca8c16b3f7c99b67e1df3619242"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-3550308",
+      "start": "2025-04-01",
+      "end": "2025-04-30",
+      "id": "8805efda1c0d8a2ae328aab341dd44d27cde49b41b46ffc881da6fc26a77abe4"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-3550308",
+      "start": "2025-05-01",
+      "end": "2025-05-31",
+      "id": "596615914c7549a9d6f808e31505725d876dbdbf085a1d63d32ac92492959abf"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-3550308",
+      "start": "2025-06-01",
+      "end": "2025-06-30",
+      "id": "388acaa6c88309d9cc8cb92fa67142223f5687d9de87c3d6ffc18583e4f0850e"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-3550308",
+      "start": "2025-07-01",
+      "end": "2025-07-31",
+      "id": "3743d1fe3de617d3bef9b5b1a4e3bc69ebcd44c110a746c7ce652abcd11a1816"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-3550308",
+      "start": "2025-08-01",
+      "end": "2025-08-31",
+      "id": "6aa91feb4fd9c5916808690019e74b64c12ece086159ff2e810f2c028356dc52"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-3550308",
+      "start": "2025-09-01",
+      "end": "2025-09-30",
+      "id": "c1124e0d87e867cd2ee15e602e7a18a2c5b1cfa9b44aa758feba3739ee41b97e"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-3550308",
+      "start": "2025-10-01",
+      "end": "2025-10-31",
+      "id": "6a0f89187dc1e286294d1e7a7177d08c8090379669783abe47654f2ec85d7d27"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-3550308",
+      "start": "2025-11-01",
+      "end": "2025-11-30",
+      "id": "4034343df951420981add8e7664e077c93d15ad809c9aa5bc790da0428b9d022"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-3550308",
+      "start": "2025-12-01",
+      "end": "2025-12-31",
+      "id": "2112d968beaeeb993a52aa8b0b0057eff1b994d4ce99c717aa90426f24e714b8"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-4106902",
+      "start": "2025-01-01",
+      "end": "2025-01-31",
+      "id": "8d551dfade29f9c939802d37fe692ca3566b620565e6d121ab5d5266fb0eebba"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-4106902",
+      "start": "2025-02-01",
+      "end": "2025-02-28",
+      "id": "4b9c7dfa70e2234b0c125f65281251939728fdfb916d3974a947c7f07b0ad23b"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-4106902",
+      "start": "2025-03-01",
+      "end": "2025-03-31",
+      "id": "1bc854931b3aeaead9bf50679f77e31628e2ea98514b372dbe77745f2629c6e8"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-4106902",
+      "start": "2025-04-01",
+      "end": "2025-04-30",
+      "id": "6f13a5fe7d0890f0101e8d701c67172cdf4a0c3c2f3e5ad4d7b5643554e03fcc"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-4106902",
+      "start": "2025-05-01",
+      "end": "2025-05-31",
+      "id": "f9c1c4b9c0e806872f8986b47c2b6ec2244d6bcc6a5d5bcda0a0793c09b2e24c"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-4106902",
+      "start": "2025-06-01",
+      "end": "2025-06-30",
+      "id": "49e0a5e9169b64f9059bb01a1f58477eebeee68f1c0cb8fbf41b309fe167f3f7"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-4106902",
+      "start": "2025-07-01",
+      "end": "2025-07-31",
+      "id": "7ac7449f8e75662145710c532d6c7c376cf9533c613ccab8731495c9e7f86f03"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-4106902",
+      "start": "2025-08-01",
+      "end": "2025-08-31",
+      "id": "dca4218407b8fe0e22092222fdbdc7b5ca147794362355d7a70181e04c200992"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-4106902",
+      "start": "2025-09-01",
+      "end": "2025-09-30",
+      "id": "1bcf2dbe24a1fe07cddc3afd03e06e53fbc37a14623d5b2e1a59c5ed2ec82975"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-4106902",
+      "start": "2025-10-01",
+      "end": "2025-10-31",
+      "id": "8d3bdeb3373dc339097e6d54577ce408e2f36a66e0bdcf9dca929e618950b124"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-4106902",
+      "start": "2025-11-01",
+      "end": "2025-11-30",
+      "id": "7882ca2c0645edd688d931930ea3ef43fa401c61f77e2c3eed30f9cfa96e7412"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-4106902",
+      "start": "2025-12-01",
+      "end": "2025-12-31",
+      "id": "67ea7ea37ebe71486f04fdebee0a8f1bc8b52122d614eb164965dc1eceb98dfd"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-4205407",
+      "start": "2025-01-01",
+      "end": "2025-01-31",
+      "id": "45bf0fd89663e71df266caf24234a12b2a4b24eab1f63d04bad846056e94d825"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-4205407",
+      "start": "2025-02-01",
+      "end": "2025-02-28",
+      "id": "0b1c29f7caf4ff17436d4604f8210201c1247fd90cf80b30e0d60d91aef52b74"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-4205407",
+      "start": "2025-03-01",
+      "end": "2025-03-31",
+      "id": "4db05caf05d901350b3e0afa77732a965fa62b25aa25851f98dc3b3fa8b93e0a"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-4205407",
+      "start": "2025-04-01",
+      "end": "2025-04-30",
+      "id": "e544cdab2c9ed1ceb0657ce220a4ca82d1ab065b425de562c750fb340f42fd32"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-4205407",
+      "start": "2025-05-01",
+      "end": "2025-05-31",
+      "id": "158cb7a323b771e80721ca105dd75ffe26c9b0c1edbd0569aedf2a1ac5b3f571"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-4205407",
+      "start": "2025-06-01",
+      "end": "2025-06-30",
+      "id": "9954be83ba365eac98c2bb3a75b6e0048185e255f7e61bd4a985f0e58c1aa19c"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-4205407",
+      "start": "2025-07-01",
+      "end": "2025-07-31",
+      "id": "e4abb82732522b4629befb8a35064e7927df816958e4bc9417d328fba49a2b9e"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-4205407",
+      "start": "2025-08-01",
+      "end": "2025-08-31",
+      "id": "34f865948be98632e9c6d388badafcb69a92e3fb994121400ba619adf00f77c3"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-4205407",
+      "start": "2025-09-01",
+      "end": "2025-09-30",
+      "id": "3b2e267de73aae1e089af7592e97e1e3e73f92d5844a3084798e847bebcfc443"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-4205407",
+      "start": "2025-10-01",
+      "end": "2025-10-31",
+      "id": "db45a453bc5d5e08c94d72456184967b44e0711b4f53ac029c6d954b275d8c72"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-4205407",
+      "start": "2025-11-01",
+      "end": "2025-11-30",
+      "id": "c244ac3d4f43094e2ab3785f7d5ffc18fcb8e612806baeb63f702982fb60f53d"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-4205407",
+      "start": "2025-12-01",
+      "end": "2025-12-31",
+      "id": "893f23e90c026849d7bcc58b17ad9cf17ad64a1cd0f45c2d3c7b3219549e7487"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-4314902",
+      "start": "2025-01-01",
+      "end": "2025-01-31",
+      "id": "9bf4eb027ee350f96e4f030111be6edd6e5e7d9d655bda6a6ae37bfd41a6e792"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-4314902",
+      "start": "2025-02-01",
+      "end": "2025-02-28",
+      "id": "1f2de498d0dece92a6c53493fc0c49bdecdbeb4083355f5eb8a1a02e2f83ed3f"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-4314902",
+      "start": "2025-03-01",
+      "end": "2025-03-31",
+      "id": "5d4eee00c4b824cb7c0bc6515a60d09b02cd846baca7b28a91bb6a3f29f7e62d"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-4314902",
+      "start": "2025-04-01",
+      "end": "2025-04-30",
+      "id": "5bf42d9d6ca0cd62a93fa03dbb2746c9303a6e06623fb0eed101356014b7c1bc"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-4314902",
+      "start": "2025-05-01",
+      "end": "2025-05-31",
+      "id": "e0c9b16ca19066ad6e2d833514fa32060b421e0a4e1a2a486a75eedb9e3cb0de"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-4314902",
+      "start": "2025-06-01",
+      "end": "2025-06-30",
+      "id": "d95b323a969b51e07208d54f116ef31faf99524f46310b34b988eb736305350a"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-4314902",
+      "start": "2025-07-01",
+      "end": "2025-07-31",
+      "id": "4da57de2617715b11b749725fdc9e86cee04cbeb79263765e33fd16e5ed6234f"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-4314902",
+      "start": "2025-08-01",
+      "end": "2025-08-31",
+      "id": "a22a8aee0ce227077ed417f496fa7f8a41c76a42206973f47e0513a0358a9599"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-4314902",
+      "start": "2025-09-01",
+      "end": "2025-09-30",
+      "id": "cd0e69ad07e1d8086b8645e40246199c1a10bd36af04b94bf1a499d0c4875c04"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-4314902",
+      "start": "2025-10-01",
+      "end": "2025-10-31",
+      "id": "491c36b8d7f33ed96da74458b533dac0b6bc748c903f226d6d487ae5b2e7bf13"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-4314902",
+      "start": "2025-11-01",
+      "end": "2025-11-30",
+      "id": "ad46b735728728f37c84402af0c70b8439edeadacb3f0442ba9597a99fb40da8"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-4314902",
+      "start": "2025-12-01",
+      "end": "2025-12-31",
+      "id": "787702ffd86351f6739d0aa53a3ec38a04c3fc376b20845e75670132941b761e"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-5002704",
+      "start": "2025-01-01",
+      "end": "2025-01-31",
+      "id": "df4cc76d6d144885db7866cd94530d5ce960a827908c94b20098da98ce528442"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-5002704",
+      "start": "2025-02-01",
+      "end": "2025-02-28",
+      "id": "a389d9c9731515d4b6e87ab0136b07926fa69e2455620bc56a4a0f0d18307fa7"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-5002704",
+      "start": "2025-03-01",
+      "end": "2025-03-31",
+      "id": "42d8d3f182827f50581893eed18765fc9f926b057615dd8e49cc8215b0376259"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-5002704",
+      "start": "2025-04-01",
+      "end": "2025-04-30",
+      "id": "b081fc515b5990039e78dfd6b28713b9807c806a32c26b474446b16e7101715f"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-5002704",
+      "start": "2025-05-01",
+      "end": "2025-05-31",
+      "id": "d5acde8cc35347f1ce928460029ead1774a8f873dd7f1a0db9ef9dbca9f17eb4"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-5002704",
+      "start": "2025-06-01",
+      "end": "2025-06-30",
+      "id": "0d586589ba1bb9b98864d171af0ed0508d4637d1156ee5ca6410b593cda83afe"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-5002704",
+      "start": "2025-07-01",
+      "end": "2025-07-31",
+      "id": "c950ee8820b598bce8895efe6766199dfe6ae6896654563957f2ae7fa5f2f284"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-5002704",
+      "start": "2025-08-01",
+      "end": "2025-08-31",
+      "id": "8663ce7068cf5bd9a75ddccbb2eaf9064e1d15b75896140650aad1e00e75e493"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-5002704",
+      "start": "2025-09-01",
+      "end": "2025-09-30",
+      "id": "bcb85e365fa0bb95037581670d17b9d1fb61c33f6ea900a9358544b3e2f57a9f"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-5002704",
+      "start": "2025-10-01",
+      "end": "2025-10-31",
+      "id": "3335baf0b278f283218741ed5ffb0f35fca68cc84f1c967b60741c4ea0986b52"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-5002704",
+      "start": "2025-11-01",
+      "end": "2025-11-30",
+      "id": "c03769c8f01ceb1d24855438faddc2f37bf812bfe4a42c28659289bded001319"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-5002704",
+      "start": "2025-12-01",
+      "end": "2025-12-31",
+      "id": "8177f1294231859f09f9ca9a1b5f2d440e7e92e146e88679b9f28c535163b727"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-5103403",
+      "start": "2025-07-01",
+      "end": "2025-07-31",
+      "id": "2d6ad854ba4f95bdf49ecec5f314d5cf40eec62a0a0c0857b82b4f38d9caa3f7"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-5103403",
+      "start": "2025-08-01",
+      "end": "2025-08-31",
+      "id": "f26e0571372c60cc01e15e866f05dc8c1d2312745eec955bc23d6f55cbe06606"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-5103403",
+      "start": "2025-09-01",
+      "end": "2025-09-30",
+      "id": "e795d6891587b9321dde485ac95547a172c875992e8167b2e276bf59d6fce42c"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-5103403",
+      "start": "2025-10-01",
+      "end": "2025-10-31",
+      "id": "cc314483ef04eafda04f4ce650bbc77627c5ab2d19f6f85640b7259f16091858"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-5103403",
+      "start": "2025-11-01",
+      "end": "2025-11-30",
+      "id": "277281455bb89a7287baf6a88222fe145424e234a0f167f270dbcc294360733a"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-5103403",
+      "start": "2025-12-01",
+      "end": "2025-12-31",
+      "id": "682fd0d435b94957831879d228a74a8583a2beae594dfd48347e244774f275ca"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-5208707",
+      "start": "2025-01-01",
+      "end": "2025-01-31",
+      "id": "39174f9e23ac4b6f082c51eea73cf496cf237fe854239222aed2e960cce59487"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-5208707",
+      "start": "2025-02-01",
+      "end": "2025-02-28",
+      "id": "af0b38d09f0f2bd09126846b80059332093cdb5878e06e938da745acfa816707"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-5208707",
+      "start": "2025-03-01",
+      "end": "2025-03-31",
+      "id": "e01e7d0d4d318d785c8fe75abe80a05f8ff874065578191bf038afb656353a38"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-5208707",
+      "start": "2025-04-01",
+      "end": "2025-04-30",
+      "id": "672734f16b6b738ffacaddc281dae8ec497e51dff22a1da2722a92c2d0f24851"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-5208707",
+      "start": "2025-05-01",
+      "end": "2025-05-31",
+      "id": "6d571032ab6223366cbbd2b20cc77db1cd9bbf3758359ae7c23296e3672e15cf"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-5208707",
+      "start": "2025-06-01",
+      "end": "2025-06-30",
+      "id": "6c60787927911479febd2c6484130edbe91e5e7e6cada2a86ee26a5dc1f22bc4"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-5208707",
+      "start": "2025-07-01",
+      "end": "2025-07-31",
+      "id": "7f98c7572dd362b23a7f89e1f63647f3f22bf2b57722fcaf5257939e936c4c03"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-5208707",
+      "start": "2025-08-01",
+      "end": "2025-08-31",
+      "id": "f78f2b67f2dd80b2cf1eb511666dcd0eba97aa912a33be08256b55828a6c26c3"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-5208707",
+      "start": "2025-09-01",
+      "end": "2025-09-30",
+      "id": "fa4917dbe972c79b68fb3fcab500d5a80f9880809b05c0e27e710f1b1e080851"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-5208707",
+      "start": "2025-10-01",
+      "end": "2025-10-31",
+      "id": "3a92a502b5badb73a22b0f17c15bff2b2147976388bfc17c262d05317f2fced4"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-5208707",
+      "start": "2025-11-01",
+      "end": "2025-11-30",
+      "id": "3cab7534747e3e1257a27a07bf9d70f231c0dfb8f6cd13bd937264deefa73871"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-5208707",
+      "start": "2025-12-01",
+      "end": "2025-12-31",
+      "id": "9345a8f4f81f4eaf8954baf41fce62986690205db2dccbe73ae5a6c2aaa79a79"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-5300108",
+      "start": "2025-01-01",
+      "end": "2025-01-31",
+      "id": "0881411f942ac8a8cff11d32a5aab4a6b21bc6cd8622c29466aad61d5ab5c912"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-5300108",
+      "start": "2025-02-01",
+      "end": "2025-02-28",
+      "id": "d21d1518ede4e0f7c0e816249acc56b25e03a2050d2e06fcdd8cfbc096db66bb"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-5300108",
+      "start": "2025-03-01",
+      "end": "2025-03-31",
+      "id": "cc332d0cced223737edbf03314b91c874437c443a3e0da44d1c62e7d409a38e1"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-5300108",
+      "start": "2025-04-01",
+      "end": "2025-04-30",
+      "id": "e27d1581ecb43b9f60c7b464e469efb3cc3ba2f9a95853027bf5222f3fe005fc"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-5300108",
+      "start": "2025-05-01",
+      "end": "2025-05-31",
+      "id": "638db3342d1e0d86d350d6bafdcbced2694b28e2f1ef2fd11aba662479ad1f5b"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-5300108",
+      "start": "2025-06-01",
+      "end": "2025-06-30",
+      "id": "f5afd0eb7edf5fea28e923dd74fb0352dd231f1302af3408d3bf7e2adfb78bff"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-5300108",
+      "start": "2025-07-01",
+      "end": "2025-07-31",
+      "id": "4fa783de8f2a7ba5997358931481e63e9efed216474a0b9e9ee997ab1ff91360"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-5300108",
+      "start": "2025-08-01",
+      "end": "2025-08-31",
+      "id": "84424418c88cf72dfa346a9025e9f7b31153cb9366d42ac8d548b46a50c8067f"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-5300108",
+      "start": "2025-09-01",
+      "end": "2025-09-30",
+      "id": "c18f9a2d9a65342ebfcabe5e37cf610d1b21ccfbcddcd835376a1cd75a889a22"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-5300108",
+      "start": "2025-10-01",
+      "end": "2025-10-31",
+      "id": "abc624ebec2316e24ba20ffde5626dd3d87513b153c8393ffe5fb69e11ce217f"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-5300108",
+      "start": "2025-11-01",
+      "end": "2025-11-30",
+      "id": "15e7cf55adaca2cf4e1d8bc5130f2baec3c926cb9e88281f71ba99ffac197ec8"
+    },
+    {
+      "series": "cv4",
+      "geography": "BR-city-5300108",
+      "start": "2025-12-01",
+      "end": "2025-12-31",
+      "id": "8adcfc04fcf6b1749f4b84369e8e3c0c36448e4ad2cfee89f1def31c6be3f687"
+    },
+    {
+      "series": "inpc-index",
+      "geography": "BR",
+      "start": "2025-01-01",
+      "end": "2025-01-31",
+      "id": "a9d391c5b6f6a89ec9333b04c96ccac3ccefa1f8d735bc99ccd8a35056a0d272"
+    },
+    {
+      "series": "inpc-index",
+      "geography": "BR",
+      "start": "2025-02-01",
+      "end": "2025-02-28",
+      "id": "d3fd2ba8f4adcff2ddbe88d4e3048f029e6ad0d6da6094f5ffc69cec4561a0f0"
+    },
+    {
+      "series": "inpc-index",
+      "geography": "BR",
+      "start": "2025-03-01",
+      "end": "2025-03-31",
+      "id": "b680ab06d85695fadd36c860d9ff9d6f5a46bcd5dfd7ed05ec293ff4a081474c"
+    },
+    {
+      "series": "inpc-index",
+      "geography": "BR",
+      "start": "2025-04-01",
+      "end": "2025-04-30",
+      "id": "b37b3f2cb5353ffe9e4c527918aa7f7090c1685039f95493b4614ac51a5f096a"
+    },
+    {
+      "series": "inpc-index",
+      "geography": "BR",
+      "start": "2025-05-01",
+      "end": "2025-05-31",
+      "id": "9a00cfe59821232832d89d60d6740be985d4182dce5172f2f0802abe73b9f5b6"
+    },
+    {
+      "series": "inpc-index",
+      "geography": "BR",
+      "start": "2025-06-01",
+      "end": "2025-06-30",
+      "id": "cb98f436878f3a887c2c63a9c04d9e95d8fe383aaa675e0078f077efec9e761c"
+    },
+    {
+      "series": "inpc-index",
+      "geography": "BR",
+      "start": "2025-07-01",
+      "end": "2025-07-31",
+      "id": "3b42c0fefdad093c030bd559728a3eba7f983ebccc91fb6db963804d26ecdfcc"
+    },
+    {
+      "series": "inpc-index",
+      "geography": "BR",
+      "start": "2025-08-01",
+      "end": "2025-08-31",
+      "id": "71391902ab3b9b7331edf65e7de2e8986ea8714b44fc45838ab1f5caa997977c"
+    },
+    {
+      "series": "inpc-index",
+      "geography": "BR",
+      "start": "2025-09-01",
+      "end": "2025-09-30",
+      "id": "d8ba6cbb636daf2351669d05adbebf0f101b107d8fb90bc817caf980f0ff65c8"
+    },
+    {
+      "series": "inpc-index",
+      "geography": "BR",
+      "start": "2025-10-01",
+      "end": "2025-10-31",
+      "id": "b3d18c8f365cc1a4b810a31a4b8cdc402c99814e03b083615c616d91d563f43d"
+    },
+    {
+      "series": "inpc-index",
+      "geography": "BR",
+      "start": "2025-11-01",
+      "end": "2025-11-30",
+      "id": "11c6016c2e2e7d9fcee46e63d89296ae43be1e158e269ba57a15062eb78b4de9"
+    },
+    {
+      "series": "inpc-index",
+      "geography": "BR",
+      "start": "2025-12-01",
+      "end": "2025-12-31",
+      "id": "cda6b633013438a8a75e5972bc3f315d2c51ba4ab93d59294f60c281e2b7832f"
+    },
+    {
+      "series": "minimum-nominal",
+      "geography": "BR",
+      "start": "2025-01-01",
+      "end": "2025-01-31",
+      "id": "26f7488f1a85daebfb869bf8de8e0bc6f46c5e967e205c5707d042d4a8411b7f"
+    },
+    {
+      "series": "minimum-nominal",
+      "geography": "BR",
+      "start": "2025-02-01",
+      "end": "2025-02-28",
+      "id": "5ce78240787adf36edc9889993ffb385fcbe1b1ceac5a20ed6dcf14f7839dad7"
+    },
+    {
+      "series": "minimum-nominal",
+      "geography": "BR",
+      "start": "2025-03-01",
+      "end": "2025-03-31",
+      "id": "0903bae2c2549896335a6e9e88ea2930db57a3644bdd38d289905dd6e1d14413"
+    },
+    {
+      "series": "minimum-nominal",
+      "geography": "BR",
+      "start": "2025-04-01",
+      "end": "2025-04-30",
+      "id": "2b4a0027da06835cc730a48f543f6e0a690e7e485777683184a6ab2d553e78eb"
+    },
+    {
+      "series": "minimum-nominal",
+      "geography": "BR",
+      "start": "2025-05-01",
+      "end": "2025-05-31",
+      "id": "f50bc2a09d2f96972051d2072a0263dbf5bbe82176a35ecf4676612dc4214b6e"
+    },
+    {
+      "series": "minimum-nominal",
+      "geography": "BR",
+      "start": "2025-06-01",
+      "end": "2025-06-30",
+      "id": "67b35d4aac9ffeb7646b659be870c778d0ac8090f60b1191a1f149a59996856f"
+    },
+    {
+      "series": "minimum-nominal",
+      "geography": "BR",
+      "start": "2025-07-01",
+      "end": "2025-07-31",
+      "id": "e1e74ae88794c5614d4ca9a6204f187a87a83fcce59f9c8ed8b10a6d3be577b0"
+    },
+    {
+      "series": "minimum-nominal",
+      "geography": "BR",
+      "start": "2025-08-01",
+      "end": "2025-08-31",
+      "id": "f75f1f26e2e867051db66b6546ab743469cc7df037673052f3a29921970d38cf"
+    },
+    {
+      "series": "minimum-nominal",
+      "geography": "BR",
+      "start": "2025-09-01",
+      "end": "2025-09-30",
+      "id": "08729af7acc533fd8a864925b209ae1c212bfabb5476bba2d8a6ddf2a3b90e01"
+    },
+    {
+      "series": "minimum-nominal",
+      "geography": "BR",
+      "start": "2025-10-01",
+      "end": "2025-10-31",
+      "id": "80432b0c031f5fdf7c99b9ffa2a6f8d7f8d2ac49b95c0d28e4450cd8cda76fb5"
+    },
+    {
+      "series": "minimum-nominal",
+      "geography": "BR",
+      "start": "2025-11-01",
+      "end": "2025-11-30",
+      "id": "ebc2738e7d734f9b8b7c6cbaa09fc73f922c793ea07e4e0c6b7bc09c123c546b"
+    },
+    {
+      "series": "minimum-nominal",
+      "geography": "BR",
+      "start": "2025-12-01",
+      "end": "2025-12-31",
+      "id": "9993b6736e9f0f94d7abac3e2ee3047d173cfcc55f7ffb1e621e6d85a825e0cb"
+    },
+    {
+      "series": "qv2",
+      "geography": "BR",
+      "start": "2025-01-01",
+      "end": "2025-12-31",
+      "id": "7e8d3ce18d432105952bbafb67f1ed4824d8440f24d0b00f98479d62f49e5e88"
+    },
+    {
+      "series": "tr4",
+      "geography": "BR",
+      "start": "2025-01-01",
+      "end": "2025-03-31",
+      "id": "4bffe9fe672b61297a64810ff62c733912b969a358ecc15637d8f6744f77b33d"
+    },
+    {
+      "series": "tr4",
+      "geography": "BR",
+      "start": "2025-04-01",
+      "end": "2025-06-30",
+      "id": "6ceaadfa22a388d8f228ffc3c35b66ede93b2833d56f4cdd668999d798ba1bfa"
+    },
+    {
+      "series": "tr4",
+      "geography": "BR",
+      "start": "2025-07-01",
+      "end": "2025-09-30",
+      "id": "056c98fb475ab5b78ceb558b5b83255c83671c935f53820ddd4bc812cb645f6c"
+    },
+    {
+      "series": "tr4",
+      "geography": "BR",
+      "start": "2025-10-01",
+      "end": "2025-12-31",
+      "id": "54cafc85629530533ea58f54f1bab5bf09ba0e2f497ce1f0609ba7d2e5cb7dfe"
+    },
+    {
+      "series": "tr5",
+      "geography": "BR",
+      "start": "2025-01-01",
+      "end": "2025-03-31",
+      "id": "37008c4d36a80837c3c96b9924ac80088e79c0cab3ec82230f64423432426df9"
+    },
+    {
+      "series": "tr5",
+      "geography": "BR",
+      "start": "2025-04-01",
+      "end": "2025-06-30",
+      "id": "e1442372b2dc783f4026aa0228bdf4e628d5bcd0ba6364c0f6bac87f573e13af"
+    },
+    {
+      "series": "tr5",
+      "geography": "BR",
+      "start": "2025-07-01",
+      "end": "2025-09-30",
+      "id": "ee761ceea205620a2562ba87ae5d328c809c467408e3a6db4c1eb565406923aa"
+    },
+    {
+      "series": "tr5",
+      "geography": "BR",
+      "start": "2025-10-01",
+      "end": "2025-12-31",
+      "id": "da667330de6ca602a2bb39b65b4209239daaacaf6b42c96723ff387efb7824e1"
+    },
+    {
+      "series": "vf1",
+      "geography": "BR",
+      "start": "2025-01-01",
+      "end": "2025-01-31",
+      "id": "4a9acfed0772186384cdf1d72287d98daee7440c528b61e80df6403e078b0dc7"
+    },
+    {
+      "series": "vf1",
+      "geography": "BR",
+      "start": "2025-02-01",
+      "end": "2025-02-28",
+      "id": "159ab4cb4db0703a0b139d26c22c489dc5bb8878a386f00303646675b65c6bf2"
+    },
+    {
+      "series": "vf1",
+      "geography": "BR",
+      "start": "2025-03-01",
+      "end": "2025-03-31",
+      "id": "73cfd6ec609d0ee340260ed76420b1b8f5b3db268285b0231b52eb65e186df33"
+    },
+    {
+      "series": "vf1",
+      "geography": "BR",
+      "start": "2025-04-01",
+      "end": "2025-04-30",
+      "id": "2e3faaced29620334a60b7975461a730e677d7ccd00ecfe38c6b6ae7ae0b1d2d"
+    },
+    {
+      "series": "vf1",
+      "geography": "BR",
+      "start": "2025-05-01",
+      "end": "2025-05-31",
+      "id": "f019afc89b6adc6a797ce970364d8e34dbf8b1ba9b3ef2e70338ac15dd33295a"
+    },
+    {
+      "series": "vf1",
+      "geography": "BR",
+      "start": "2025-06-01",
+      "end": "2025-06-30",
+      "id": "55fcfe99b0c5b42302064989f2dcdde0171633d7e201585944e705e18cf4bc62"
+    },
+    {
+      "series": "vf1",
+      "geography": "BR",
+      "start": "2025-07-01",
+      "end": "2025-07-31",
+      "id": "6308ff43c57f0f706ef16ee63786f0b411e14aa44ee1c55312207fa4907096eb"
+    },
+    {
+      "series": "vf1",
+      "geography": "BR",
+      "start": "2025-08-01",
+      "end": "2025-08-31",
+      "id": "65dd0b208b01f9c1102f99e574b537c4b4299ddf1d8d094097cc0b8395e2d0e7"
+    },
+    {
+      "series": "vf1",
+      "geography": "BR",
+      "start": "2025-09-01",
+      "end": "2025-09-30",
+      "id": "4847e8c0dbdfa6792a6723e53e20887b8aa8d8bf8f7825159ab86ee802fbf1f5"
+    },
+    {
+      "series": "vf1",
+      "geography": "BR",
+      "start": "2025-10-01",
+      "end": "2025-10-31",
+      "id": "904310ee5c7b626e5b425d2557c10e283c52f00e59d685f5cde23299cfaaa2a7"
+    },
+    {
+      "series": "vf1",
+      "geography": "BR",
+      "start": "2025-11-01",
+      "end": "2025-11-30",
+      "id": "abb4ccfc741bc5ea37dbf3b98adeca9d62b6062977a6b2fc7246a414f7d0796e"
+    },
+    {
+      "series": "vf1",
+      "geography": "BR",
+      "start": "2025-12-01",
+      "end": "2025-12-31",
+      "id": "4cb6a316b3c156f4fba0b823d2a5c7da9f3a8fcf40a63f3758fe89c80b7e63ac"
+    },
+    {
+      "series": "cv6",
+      "geography": "BR",
+      "start": "2024-01-01",
+      "end": "2024-12-31",
+      "id": "f4755e1b9fc74810bfd3414c30be425255bb23663055f1c34f4e1949c6672d75"
+    },
+    {
+      "series": "tr2",
+      "geography": "BR",
+      "start": "2025-01-01",
+      "end": "2025-01-31",
+      "id": "0efe0363e1000f364e386bf05100ca171f1f11cd338be809dea9ecf682eaf1c4"
+    },
+    {
+      "series": "tr2",
+      "geography": "BR",
+      "start": "2025-02-01",
+      "end": "2025-02-28",
+      "id": "c0031726056fdd6972bd8ffcd04c16a22bd882f5a3bb2f75c043b74c3ac7872d"
+    },
+    {
+      "series": "tr2",
+      "geography": "BR",
+      "start": "2025-03-01",
+      "end": "2025-03-31",
+      "id": "f38bd44b3a16370eb8832fc33a9d3d1c84457bec94f8cc59e699bceebe25c9e4"
+    },
+    {
+      "series": "tr2",
+      "geography": "BR",
+      "start": "2025-04-01",
+      "end": "2025-04-30",
+      "id": "2e950449aaca223b6d75807c51d75677bbf3b898f70f7f1415eb8dd02b95b509"
+    },
+    {
+      "series": "tr2",
+      "geography": "BR",
+      "start": "2025-05-01",
+      "end": "2025-05-31",
+      "id": "c090212e0ac064075eaf4c89c91868f1b203cec82d31302d6bccf35f11b051b3"
+    },
+    {
+      "series": "tr2",
+      "geography": "BR",
+      "start": "2025-06-01",
+      "end": "2025-06-30",
+      "id": "5b8533f79d9f657829b81341f8f1ea382cd8e18f791e64cef2c532eb8b509ff7"
+    },
+    {
+      "series": "tr2",
+      "geography": "BR",
+      "start": "2025-07-01",
+      "end": "2025-07-31",
+      "id": "c713bbfe6faed79913ca4ebfb2a42ea8a2bb3230abafee0b044324f5c09d5772"
+    },
+    {
+      "series": "tr2",
+      "geography": "BR",
+      "start": "2025-08-01",
+      "end": "2025-08-31",
+      "id": "49d2cc1ede784243e04f3037d7f3cf5de0949457b9e9b211f73fa3bc21c14d59"
+    },
+    {
+      "series": "tr2",
+      "geography": "BR",
+      "start": "2025-09-01",
+      "end": "2025-09-30",
+      "id": "71dddf4f0c0c017b45ae6000099bfb4677a837717353fa82e5e1dba79c0c6967"
+    },
+    {
+      "series": "tr2",
+      "geography": "BR",
+      "start": "2025-10-01",
+      "end": "2025-10-31",
+      "id": "3080b907bf1d6260893ba578f46c86123bece22df1f48f081ad5da9c9b910f6f"
+    },
+    {
+      "series": "tr2",
+      "geography": "BR",
+      "start": "2025-11-01",
+      "end": "2025-11-30",
+      "id": "577cbcb526f9ec8560437974d5b57e03f666a5c80e0858cca9b9e6ce7df10ea4"
+    },
+    {
+      "series": "tr2",
+      "geography": "BR",
+      "start": "2025-12-01",
+      "end": "2025-12-31",
+      "id": "d0a3c72743c7ddc464136b65b0dbee8f21a5576dbebcc2443ab7a37d251acd38"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-1100205",
+      "start": "2025-07-01",
+      "end": "2025-07-31",
+      "id": "9a0a669861b862dfd9a9fc52d3ae54cbcda8895ff1d63693a5534d473f02c473"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-1100205",
+      "start": "2025-08-01",
+      "end": "2025-08-31",
+      "id": "1f7a8a587a654072145e530b3bfdeeea9468a4b7db5afa10a3356d173a318989"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-1100205",
+      "start": "2025-09-01",
+      "end": "2025-09-30",
+      "id": "e446b343b84e9e4e89e3485e85e54c10d2e4a01085cbd2f6eb44b3eab9b929d1"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-1100205",
+      "start": "2025-10-01",
+      "end": "2025-10-31",
+      "id": "9c20ba8f580efdc282248530ec12d6a3d01f2445d123a8da28889e5177603bd2"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-1100205",
+      "start": "2025-11-01",
+      "end": "2025-11-30",
+      "id": "fe328b3b39132e9128cf91e2288cbc072db4922f38d81eb6af4f75e12f014089"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-1100205",
+      "start": "2025-12-01",
+      "end": "2025-12-31",
+      "id": "8c78aa5509347907eb16d0726962e29f00a826a63bbdd88404dc6c7d86defdfd"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-1200401",
+      "start": "2025-07-01",
+      "end": "2025-07-31",
+      "id": "fad53f2b69731c0aa1d8181702c78b78bfb9b97d3dbaa08cc85d4ff24434094d"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-1200401",
+      "start": "2025-08-01",
+      "end": "2025-08-31",
+      "id": "bd55f1c7b53289db6d3510b5dbdd28f2d744a758f6eda34dd291d9ca21516614"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-1200401",
+      "start": "2025-09-01",
+      "end": "2025-09-30",
+      "id": "e41b54c5443b11041598b12e92da9db0991cee539eccaba8727c4891b69ffe1c"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-1200401",
+      "start": "2025-10-01",
+      "end": "2025-10-31",
+      "id": "0ce5b719ab041c3f49295a4e4ff719a7a418fbe4c58cfe5e4e5f9c1abef2d944"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-1200401",
+      "start": "2025-11-01",
+      "end": "2025-11-30",
+      "id": "19528bb2417a840f628711329c4f6db4ddb7439ea9397a5451ffdbe2b98554c2"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-1200401",
+      "start": "2025-12-01",
+      "end": "2025-12-31",
+      "id": "9518a93e0111ccb82a19c4b3f046a4990f04bc1c9004267763142383697934ae"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-1302603",
+      "start": "2025-07-01",
+      "end": "2025-07-31",
+      "id": "7a75868b5185f4dcbab40ceafb5808f9f3bd1d46cebcde7e421772cd2048954b"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-1302603",
+      "start": "2025-08-01",
+      "end": "2025-08-31",
+      "id": "b211cb7806f1024692626850b5562f9e52f736228b894dbd9f2801db6bffe90e"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-1302603",
+      "start": "2025-09-01",
+      "end": "2025-09-30",
+      "id": "42093ef2fec0b45bbd4211fe85422209b4de4b7ce070878a17fc5989ad594115"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-1302603",
+      "start": "2025-10-01",
+      "end": "2025-10-31",
+      "id": "de63c3a92ffa503a46dde113a6598886e8d4455b41e4f427697f7e56dbda378e"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-1302603",
+      "start": "2025-11-01",
+      "end": "2025-11-30",
+      "id": "ab81c8ed842ebf7a8139e6d268dbbf7d372572dbc351531f155cf479ec4a221e"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-1302603",
+      "start": "2025-12-01",
+      "end": "2025-12-31",
+      "id": "8c2f6ec39c4891f3a3c472468c878da955547e6a8577ed4c93ebda95df8b2d98"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-1400100",
+      "start": "2025-07-01",
+      "end": "2025-07-31",
+      "id": "94a08c7522255379f23a568bf980a0731d0d11877c352bacc6b00eba04f56005"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-1400100",
+      "start": "2025-08-01",
+      "end": "2025-08-31",
+      "id": "ca26e3e6a32758951e3742af2c99a4b6ea068de0362ba505386d6dfcbab37b35"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-1400100",
+      "start": "2025-09-01",
+      "end": "2025-09-30",
+      "id": "912977d39fcebb535f1308cea6efb309723a1930b1e5684b26a9ff137efaf542"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-1400100",
+      "start": "2025-10-01",
+      "end": "2025-10-31",
+      "id": "2dd3893b7f685fb2940cb17142882d23a1338ca8c6f2714a5f0296814ed5b0f5"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-1400100",
+      "start": "2025-11-01",
+      "end": "2025-11-30",
+      "id": "dd1c540f2e70e1cb42932ed9425cf2bd95a3d85fbab4ebb4fd1f481f5c06deb8"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-1400100",
+      "start": "2025-12-01",
+      "end": "2025-12-31",
+      "id": "2a9fc1f7f868d8af4d1e74c8bfc642fb9731ef4eed75b53053e2f6d1dd79dd4b"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-1501402",
+      "start": "2025-01-01",
+      "end": "2025-01-31",
+      "id": "e367f829c0725e80d92e5030017eba9551ec717fa6bd751609a2685b8a329d75"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-1501402",
+      "start": "2025-02-01",
+      "end": "2025-02-28",
+      "id": "f5d5df348166fd07fed1c23ee048f472e5734ecb76c5177536a6b2d0533d6f08"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-1501402",
+      "start": "2025-03-01",
+      "end": "2025-03-31",
+      "id": "8b85d9a48a0ab102121266d9ecbe50d28b67dcfa37ea590ef127807665114be8"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-1501402",
+      "start": "2025-04-01",
+      "end": "2025-04-30",
+      "id": "044ba7810593220d736c9ff6e0f8c95501480a90ff31cb86f2b9c0431b9c2711"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-1501402",
+      "start": "2025-05-01",
+      "end": "2025-05-31",
+      "id": "1105d5182d7087d86a67887312af841a011569b04c5bafaadb94e6bdd0d9465d"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-1501402",
+      "start": "2025-06-01",
+      "end": "2025-06-30",
+      "id": "f6e4553ae238dc2f1a537b7a56f23b70f52991355ffa367981bb7e60bba01b2b"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-1501402",
+      "start": "2025-07-01",
+      "end": "2025-07-31",
+      "id": "fef3c5a3006b4836ad4b6c73edb0b9ff525da242aa04dab47576465854555161"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-1501402",
+      "start": "2025-08-01",
+      "end": "2025-08-31",
+      "id": "0a5f7f26650bffaa68eeba27340d730c1a370d25ac0dccb3bff679610a60deb9"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-1501402",
+      "start": "2025-09-01",
+      "end": "2025-09-30",
+      "id": "1fa1abc5c61694a91c17dc2b4a656c8fe977ccf3b146c830ef2e8ce3e24e85ef"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-1501402",
+      "start": "2025-10-01",
+      "end": "2025-10-31",
+      "id": "9f5b8f373b961aee9ea45eb74145841f674d3ecb144e7d7e13dff2ebddc5eb61"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-1501402",
+      "start": "2025-11-01",
+      "end": "2025-11-30",
+      "id": "da3469ee99546ac56799f05526f81282b9d439ddae20beb109859457c9c5a09d"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-1501402",
+      "start": "2025-12-01",
+      "end": "2025-12-31",
+      "id": "7941c99921084bb39d42ff9d72a9593837e79155e602be882d3f91b929ece628"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-1600303",
+      "start": "2025-07-01",
+      "end": "2025-07-31",
+      "id": "364a32e4fcf5e50bb9983c565125c13a1538995bfb3259b850da44878b3b0748"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-1600303",
+      "start": "2025-08-01",
+      "end": "2025-08-31",
+      "id": "285dc4bddfbbffcf51abc31ff3aeed9078159582654de16df6d16c3a8a717c54"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-1600303",
+      "start": "2025-09-01",
+      "end": "2025-09-30",
+      "id": "0a5647c07adbce38e067d413e300f6722641ab5db92569e4f8cfc2a7b29be583"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-1600303",
+      "start": "2025-10-01",
+      "end": "2025-10-31",
+      "id": "12688134e06f071c9f0910026a15c4db8886ff4bccbb38d0df64728eb4c25756"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-1600303",
+      "start": "2025-11-01",
+      "end": "2025-11-30",
+      "id": "1505b3ccba19d79d7cfa252e64ada1142d205f42df6578983986e041337647fd"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-1600303",
+      "start": "2025-12-01",
+      "end": "2025-12-31",
+      "id": "39e659d1c2e7a93331b4f5c7ffbcc56785a509814bae0a12e460ad262a66fb55"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-1721000",
+      "start": "2025-07-01",
+      "end": "2025-07-31",
+      "id": "b08626e5436dd9e8b60752698c87ac051d70d2af2a9c2133aec39cf26049f08f"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-1721000",
+      "start": "2025-08-01",
+      "end": "2025-08-31",
+      "id": "1cab519a48f945735573e2ff3fbbb9e30534f3467c7de2a19bb217a4be5ca1cc"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-1721000",
+      "start": "2025-09-01",
+      "end": "2025-09-30",
+      "id": "7c5bed07121a73a3bc67372c3e9e7275f5e7345af89d97309c02bcf9183ce0eb"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-1721000",
+      "start": "2025-10-01",
+      "end": "2025-10-31",
+      "id": "6408ae18178cbb4c09b985275ee76206d418102d9bf79d76a04280a575c64b97"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-1721000",
+      "start": "2025-11-01",
+      "end": "2025-11-30",
+      "id": "4c3b0fc7365799e4a2e8ad9e00841a6ea4aacacdab5a1a892590ee28e4f36e01"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-1721000",
+      "start": "2025-12-01",
+      "end": "2025-12-31",
+      "id": "677cf5651bd31d8ec69091bcc214381fc4272baebc16e4fd78d0db86a638b395"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-2111300",
+      "start": "2025-07-01",
+      "end": "2025-07-31",
+      "id": "a411cbe1e32386268d42b2bbffc4095ef95116b0d9ec8351b6e744c088f97f12"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-2111300",
+      "start": "2025-08-01",
+      "end": "2025-08-31",
+      "id": "2d4a209f715abd5b142e0d592dd97ae2432f3d3b310a1c2bc4224081ff320183"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-2111300",
+      "start": "2025-09-01",
+      "end": "2025-09-30",
+      "id": "cda05a0537ac330922f240152dd1ac7f37b54beac47e3a03c209177107a3d19f"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-2111300",
+      "start": "2025-10-01",
+      "end": "2025-10-31",
+      "id": "2609a05bdcfdb8f9cbbcff7a4a751ba838e8b337a88b3ee2918a8ff727149fd0"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-2111300",
+      "start": "2025-11-01",
+      "end": "2025-11-30",
+      "id": "0e05a6a570f83f7fee6bd8430b9f44a84bff6a287a2566520c66b70bc2490d7c"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-2111300",
+      "start": "2025-12-01",
+      "end": "2025-12-31",
+      "id": "a38dac8bbc0d56cb3fb513f3051bd74033cf7dc7aa2bd856766aef216c512fb5"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-2211001",
+      "start": "2025-07-01",
+      "end": "2025-07-31",
+      "id": "69297ff06196108c5fccac3bb89cf38c51ce53cc7e134bd8e0f89f6002c6d1c7"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-2211001",
+      "start": "2025-08-01",
+      "end": "2025-08-31",
+      "id": "e0d8098efa855e74f9423ff036526319e76f61aa1c361a0920e0f49e2fe7ed4a"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-2211001",
+      "start": "2025-09-01",
+      "end": "2025-09-30",
+      "id": "d51718712025e68e85c7d86b997871d65090f39f4f2621f4561303a5f0eebe21"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-2211001",
+      "start": "2025-10-01",
+      "end": "2025-10-31",
+      "id": "ec388e1ce1e26759dc56736295584e69ab1c9cced4a61cc88f6beceb85db76d8"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-2211001",
+      "start": "2025-11-01",
+      "end": "2025-11-30",
+      "id": "00f63a96b45a6fdfed2e7a69bb0dd2b6d5951c9f4477ed8db082ce3b87711053"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-2211001",
+      "start": "2025-12-01",
+      "end": "2025-12-31",
+      "id": "e2cf4ddd069b4eff90a10258b908b3cccb8d6a0d6666416e781c19bc765ba81f"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-2304400",
+      "start": "2025-01-01",
+      "end": "2025-01-31",
+      "id": "a37fcce25c62b1567c9b7dc77f42f182f7f9b209948bb5ecdf94a5ab5b99d923"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-2304400",
+      "start": "2025-02-01",
+      "end": "2025-02-28",
+      "id": "a7d3d0462220c5c000b8906b57ff0dbcbc783bb345813ab7f2cdd78b53066653"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-2304400",
+      "start": "2025-03-01",
+      "end": "2025-03-31",
+      "id": "1b7e81efd59cf1ec721f04fe40ef933e977c40d103590d09ba56885f08cfaea4"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-2304400",
+      "start": "2025-04-01",
+      "end": "2025-04-30",
+      "id": "cf9e58bc6322b37136ef44b2f8b337c1076f614bfaca0914c853daecdc0f5e40"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-2304400",
+      "start": "2025-05-01",
+      "end": "2025-05-31",
+      "id": "19b4a5967738b6451f3abc6b32ec23e759e76c83b52e1209181d9aece6b84838"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-2304400",
+      "start": "2025-06-01",
+      "end": "2025-06-30",
+      "id": "bf5a70f54eb5c80676553b3f8f1d36ae82b79a1271afd01fec5a19c8cd8ade3a"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-2304400",
+      "start": "2025-07-01",
+      "end": "2025-07-31",
+      "id": "2c36c1d8dd801b1488585b889291651e9ed5bd258847eba29a80992f313e0c94"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-2304400",
+      "start": "2025-08-01",
+      "end": "2025-08-31",
+      "id": "4610260acdf61e2237a571e1a57a02779068a49fcdfd643bc7f644c1f52bd92c"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-2304400",
+      "start": "2025-09-01",
+      "end": "2025-09-30",
+      "id": "f9a9f6f6e6a1b3bb36795bb2a305ce8bb9d43b23319ee1155d91fecdb9dd9205"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-2304400",
+      "start": "2025-10-01",
+      "end": "2025-10-31",
+      "id": "f57e2919539eb41d35f3fddb37962c2bf4c30310463775ced52d105c129f8f5b"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-2304400",
+      "start": "2025-11-01",
+      "end": "2025-11-30",
+      "id": "0d5b8c9a7c4da7fe6927ca22376e37f2d830ff6ebf3111ed716e41be8a2d3ceb"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-2304400",
+      "start": "2025-12-01",
+      "end": "2025-12-31",
+      "id": "a0507b2b22860515c4d40d40dabf336cd5e75221c8118330b912eaea8193f1f3"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-2408102",
+      "start": "2025-01-01",
+      "end": "2025-01-31",
+      "id": "e4fb4b0f1dc0ed5659cc3fed18cc204aefb6733649d9d1aeb3a6b59ee863e957"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-2408102",
+      "start": "2025-02-01",
+      "end": "2025-02-28",
+      "id": "5f0e6ba5f01439a67568ba852a34002df97a4a67cd97e260734d83e9f053c3a2"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-2408102",
+      "start": "2025-03-01",
+      "end": "2025-03-31",
+      "id": "fdf898af65a93e9b6c3d804b847bf957d2798d2b1ab1c0f7ab456526ff8f5511"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-2408102",
+      "start": "2025-04-01",
+      "end": "2025-04-30",
+      "id": "b7941647b80f407d7c3dd774c4d6025c90b3acc6865f04c11ed57477c8312baa"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-2408102",
+      "start": "2025-05-01",
+      "end": "2025-05-31",
+      "id": "892d28dd3f04d95cc5a716ea83736e2c39fb3ec13e1b47031a274dd2c2e4fd3d"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-2408102",
+      "start": "2025-06-01",
+      "end": "2025-06-30",
+      "id": "47b8091a6e6fc78f266ce5f5ff9b12bea8efe02afb599990b0a925b83c9d35ec"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-2408102",
+      "start": "2025-07-01",
+      "end": "2025-07-31",
+      "id": "bcd861544f5fdcb73f9b24872efbdf664453a3692bd173332d662bf78b45e088"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-2408102",
+      "start": "2025-08-01",
+      "end": "2025-08-31",
+      "id": "b16f50a484cc2bffa3e304cdf7f81eae169c229c6d93174cf30700076e6dc71a"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-2408102",
+      "start": "2025-09-01",
+      "end": "2025-09-30",
+      "id": "7b5029cb0f345f4df59313749f528f92dc79c176f5b14a60817a4b4c487597a9"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-2408102",
+      "start": "2025-10-01",
+      "end": "2025-10-31",
+      "id": "3a094f917d000f3a4bfa285ec5fc47a5401dddd28e3a0f6f74b81c073154a71b"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-2408102",
+      "start": "2025-11-01",
+      "end": "2025-11-30",
+      "id": "5b91e0585ec1e15cd9211119f283d882eb0014434d345111a2730a2b9e711ba8"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-2408102",
+      "start": "2025-12-01",
+      "end": "2025-12-31",
+      "id": "b1ae8780b057fa0509b0d206f626e9e2e4fc188bc709d44eaa3508034719d84f"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-2507507",
+      "start": "2025-01-01",
+      "end": "2025-01-31",
+      "id": "f5ab9d54f6803ccf4afa3b010bb7b1e0885b39d8118a77488b4039e6d04147d1"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-2507507",
+      "start": "2025-02-01",
+      "end": "2025-02-28",
+      "id": "8fc301f7a4b7caf1d9dd423013ebd146e8477b0b464072fb45a375e76890b82b"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-2507507",
+      "start": "2025-03-01",
+      "end": "2025-03-31",
+      "id": "86c6fb945963b6b29e1c36b9c484561aab336a4bd95c314467d52409f93a1e69"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-2507507",
+      "start": "2025-04-01",
+      "end": "2025-04-30",
+      "id": "08b0db2838c6c3628d1edfd20493c0f8ac70436148f90f350c1d36a0c61a4062"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-2507507",
+      "start": "2025-05-01",
+      "end": "2025-05-31",
+      "id": "ed99a965615e30d0e9a749bf55f6732b50c49bc3ad18629498699dcb7cb03e4a"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-2507507",
+      "start": "2025-06-01",
+      "end": "2025-06-30",
+      "id": "086340760d33ea74925dbe86e17280e86b183db19fb49ec90e1732c8ed8cc39f"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-2507507",
+      "start": "2025-07-01",
+      "end": "2025-07-31",
+      "id": "b6fe8fe0ab79a5100282b8a7661ed431957f271d212e22f21bafa878084341b0"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-2507507",
+      "start": "2025-08-01",
+      "end": "2025-08-31",
+      "id": "5e9775cc22c0188840dd2eab0bc2a270af9c349425c9000b0b623b972e0c6cd4"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-2507507",
+      "start": "2025-09-01",
+      "end": "2025-09-30",
+      "id": "131b4483ee0d1af788b1216cd9e539065500218a39de5c9d9d50f559844865cd"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-2507507",
+      "start": "2025-10-01",
+      "end": "2025-10-31",
+      "id": "224c98bacfea2645a4b1de049309b765b4148261fa4dfdba5ede027be95f7a66"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-2507507",
+      "start": "2025-11-01",
+      "end": "2025-11-30",
+      "id": "2baf7574c5e94a22795df1218bd8cb4252826e40c9c352f28a6b6d4a037dd56d"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-2507507",
+      "start": "2025-12-01",
+      "end": "2025-12-31",
+      "id": "0db2d866315cb298ca997d4bc09f48b30caf6da35f0b6c910a501681894c56c5"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-2611606",
+      "start": "2025-01-01",
+      "end": "2025-01-31",
+      "id": "c9cbb6766b69bfd81ddc2df135cf85ebd145576887bfe43e11ff7a8248168b06"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-2611606",
+      "start": "2025-02-01",
+      "end": "2025-02-28",
+      "id": "96c88c5404a661154c22501eafbf59111558d16e16f5414d27a2bbe6067896fc"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-2611606",
+      "start": "2025-03-01",
+      "end": "2025-03-31",
+      "id": "e33157c922345f175a67d4071fd0bfdfec82ee95f6077860f44a13dcd7acf664"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-2611606",
+      "start": "2025-04-01",
+      "end": "2025-04-30",
+      "id": "83b50532858ef668b57aa96efb87cbc5eb1542ce1ade56fb21fc765f88adccc7"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-2611606",
+      "start": "2025-05-01",
+      "end": "2025-05-31",
+      "id": "a9732c48b7f9a85927199a08987268882a4ec217bb5376bcf78ac3da37eaf528"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-2611606",
+      "start": "2025-06-01",
+      "end": "2025-06-30",
+      "id": "5194949acb0c4a60f04460d516e07dfd8287dc0d54544cfdc725e291b4e6d72a"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-2611606",
+      "start": "2025-07-01",
+      "end": "2025-07-31",
+      "id": "47c949af97d0a7fa172f9c9e3ac4a3d4eb1efac329ef46276d6950a45d236bc9"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-2611606",
+      "start": "2025-08-01",
+      "end": "2025-08-31",
+      "id": "5308c657bd6b63e3083fbe47e71d35c1cb996ffb932146a60565c53221f3c624"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-2611606",
+      "start": "2025-09-01",
+      "end": "2025-09-30",
+      "id": "ef609559000cc91b20ab8db09d61e6425f06bc42cacb4cd85969212b6f5f57d8"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-2611606",
+      "start": "2025-10-01",
+      "end": "2025-10-31",
+      "id": "d0383fe3f9171955d43e9ff3cfed0870f88082b89a009ea98fbdf0e1ef6e2b47"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-2611606",
+      "start": "2025-11-01",
+      "end": "2025-11-30",
+      "id": "7e392072fb3fe49171b26b24a164a1aac67b100dd6dedac9ecc190e952e4cdf8"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-2611606",
+      "start": "2025-12-01",
+      "end": "2025-12-31",
+      "id": "cad1e276eefd926f10dab6ccd8ebea30ce8a368e6cb7762971d4e201ab47afcd"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-2704302",
+      "start": "2025-07-01",
+      "end": "2025-07-31",
+      "id": "6b8c1032b95431e12a0a41f89c7a79fca1a094a617c9cbd3364d26d043016586"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-2704302",
+      "start": "2025-08-01",
+      "end": "2025-08-31",
+      "id": "5396b47c88c85a794863e12fbb31136afc2df4e52b15700c6543ec25013d15bd"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-2704302",
+      "start": "2025-09-01",
+      "end": "2025-09-30",
+      "id": "fad2c9a617ca53e8ee36e7319d619ba1020765eee9e5bc26856f4a6067e989c9"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-2704302",
+      "start": "2025-10-01",
+      "end": "2025-10-31",
+      "id": "3869f1442d66abd37bb75c0f8f62301e7f1adbdefe0bd74e0656b725fa92d779"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-2704302",
+      "start": "2025-11-01",
+      "end": "2025-11-30",
+      "id": "3afc9e5ec7c7e517136e9f7cd3d1a0a8806e0c49eee96db7a1dd96fb3c34fb4f"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-2704302",
+      "start": "2025-12-01",
+      "end": "2025-12-31",
+      "id": "598cfabd21058a71791f8efb8d2bceff5747f6146af915bd1d9a71137ffd8c2e"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-2800308",
+      "start": "2025-01-01",
+      "end": "2025-01-31",
+      "id": "3a82d97d1bc1d5e21ade7e9abef68d229bfff13f391d3ffdaf7bb862b8b7182d"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-2800308",
+      "start": "2025-02-01",
+      "end": "2025-02-28",
+      "id": "2d6402ce243651bfbf1bf7bf7d69ea033e0536be141c8524a8a6fefde27e7230"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-2800308",
+      "start": "2025-03-01",
+      "end": "2025-03-31",
+      "id": "ebcc6291a352187c2428851472ed0ae798da25d6428ce5b7e7cf3bd13225572e"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-2800308",
+      "start": "2025-04-01",
+      "end": "2025-04-30",
+      "id": "aafd1e864681dd4d7ec2f7e6164fa1e131838786474565a8486a8b7b4060cb89"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-2800308",
+      "start": "2025-05-01",
+      "end": "2025-05-31",
+      "id": "3aa119fb18ee545d878ee3e399601f9251d0a845a4189cbab0acd64436e3027f"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-2800308",
+      "start": "2025-06-01",
+      "end": "2025-06-30",
+      "id": "e0545df3de7f9eed17e2541511ad94b7978cb3c4d05861df6b3066b901f81177"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-2800308",
+      "start": "2025-07-01",
+      "end": "2025-07-31",
+      "id": "199ed0913845f260283048d0a13cc4c5c76299058f7b5112a0d07fc06206375b"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-2800308",
+      "start": "2025-08-01",
+      "end": "2025-08-31",
+      "id": "290544dd71136b87094de728b270e82b44d00aa32fbcc17bac82bf2962f8af16"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-2800308",
+      "start": "2025-09-01",
+      "end": "2025-09-30",
+      "id": "79b42611e84ed77881767cad28a165ff15d47a2fa55398d94bb71da6dad65c63"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-2800308",
+      "start": "2025-10-01",
+      "end": "2025-10-31",
+      "id": "a9ad60488eddbf3be8db99fc60428f99237034908336b535903a4bc8d2d37686"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-2800308",
+      "start": "2025-11-01",
+      "end": "2025-11-30",
+      "id": "eb0302a0cd1e39fffa89991b4fb63e1443b6bf9c765eaad70a6c59f2cdd00ee0"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-2800308",
+      "start": "2025-12-01",
+      "end": "2025-12-31",
+      "id": "64556e193adb0a0472144e0695938e2b8e1a3ab2e3b7003259d41affe3e5cbea"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-2927408",
+      "start": "2025-01-01",
+      "end": "2025-01-31",
+      "id": "1a1afd94a900e5ada01f8ce9251dfd985a5904ff982dcc7de88683dc0495c132"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-2927408",
+      "start": "2025-02-01",
+      "end": "2025-02-28",
+      "id": "85cddba54ac36cf1877516ee458b145579edf472b7cb1c850524340e013ec7e1"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-2927408",
+      "start": "2025-03-01",
+      "end": "2025-03-31",
+      "id": "4c87f624b9b83ef8fcf2f03878c90803fa85592ec9f75284040079db502a82f6"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-2927408",
+      "start": "2025-04-01",
+      "end": "2025-04-30",
+      "id": "9c29ebe8b859f0fa91f19e0048b7c5a2bbecb04751a5c7c0e8d3fc7050d46553"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-2927408",
+      "start": "2025-05-01",
+      "end": "2025-05-31",
+      "id": "0255b2355569f7655f3cccf8723b0022ead0e6608c07499b2536d978f2ad4b9e"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-2927408",
+      "start": "2025-06-01",
+      "end": "2025-06-30",
+      "id": "903b1cbb6931cfae880600f51d732aa7f4f4f1c194bcda6174bdd344f3133891"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-2927408",
+      "start": "2025-07-01",
+      "end": "2025-07-31",
+      "id": "0002454816ef045e1b7affdba0145aef862d177cbac8b4c2d59d09c6b54cb01d"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-2927408",
+      "start": "2025-08-01",
+      "end": "2025-08-31",
+      "id": "6b606a094bc0b17ec8f2ba73831bdf33845aeefacfe7d4a0561e6dd6965d622d"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-2927408",
+      "start": "2025-09-01",
+      "end": "2025-09-30",
+      "id": "511570b3717bbdc8436972906d935b16b6d03d45f00af5ee110edede424d51fb"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-2927408",
+      "start": "2025-10-01",
+      "end": "2025-10-31",
+      "id": "4663c5af0c93c4c3a08a6449eac117c66ba0e8720e12dbe42dc899fbda833cdf"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-2927408",
+      "start": "2025-11-01",
+      "end": "2025-11-30",
+      "id": "7def9cca6683b792d7ac261c640256efd5a17c4884cfa1bab07ab4f928c9ee52"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-2927408",
+      "start": "2025-12-01",
+      "end": "2025-12-31",
+      "id": "74ddb78373dad68c42c854737e3ea4f34f36da682ca5333587caaae47d4c0881"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-3106200",
+      "start": "2025-01-01",
+      "end": "2025-01-31",
+      "id": "897b160cef4438a23c04cbe9e73ad28fc22c74da0cf6923edc93632621dbfb59"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-3106200",
+      "start": "2025-02-01",
+      "end": "2025-02-28",
+      "id": "10880c7ff1c0966579947bb268affcbd902d0dac54e168a4d48fa87aa25c8279"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-3106200",
+      "start": "2025-03-01",
+      "end": "2025-03-31",
+      "id": "20f26fc74415315883f170b1905dfb422994db8b0a51b8e1b8fdfa73c3c8fc5f"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-3106200",
+      "start": "2025-04-01",
+      "end": "2025-04-30",
+      "id": "8dde7957027cd1a1cddebb959f2633ff8d3aab17e9a304a14a587c7833c307b2"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-3106200",
+      "start": "2025-05-01",
+      "end": "2025-05-31",
+      "id": "8d9801c09239a5f60e538e3817017e07ec0c4b8968eb71c1824eb04bfd8da4ea"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-3106200",
+      "start": "2025-06-01",
+      "end": "2025-06-30",
+      "id": "bef6929ff21f86755c2b2f3b6aac292ae4ca8e383ce6b4e7375f80d8f6be9464"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-3106200",
+      "start": "2025-07-01",
+      "end": "2025-07-31",
+      "id": "7e0fd4956e41e3d5c4672a28ea2ad82373af8fefd6600cc6b64e81ef5bc416c8"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-3106200",
+      "start": "2025-08-01",
+      "end": "2025-08-31",
+      "id": "eda66a0b50e56f10c370a0ba04c0e49214036c623157b30a415eb3c4b1a404de"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-3106200",
+      "start": "2025-09-01",
+      "end": "2025-09-30",
+      "id": "8b07661befef0409bb1001bfb57b1b3b2b9692691b8ba9afdc99e008c0742441"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-3106200",
+      "start": "2025-10-01",
+      "end": "2025-10-31",
+      "id": "08c0b419c5e1425678a5bf2a66f4be6e329941d7e95730cd44aa9efc6350d522"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-3106200",
+      "start": "2025-11-01",
+      "end": "2025-11-30",
+      "id": "d4c8a116467db1eb80f161e5046cece866ecc85613c6809f5c4938f66fd2f8ac"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-3106200",
+      "start": "2025-12-01",
+      "end": "2025-12-31",
+      "id": "f81cc0af58cfc48e7d013689bbb324450e316bffdfba6389f12dd990d6881a9e"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-3205309",
+      "start": "2025-01-01",
+      "end": "2025-01-31",
+      "id": "77afdbf70bba67876d80467225e9c5dbc785fd29c8cd9b02956fc6c89ee2736a"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-3205309",
+      "start": "2025-02-01",
+      "end": "2025-02-28",
+      "id": "8323ccc8ff55664b99745287390e63f2660c160c34cbdd3467047bdce0a69afb"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-3205309",
+      "start": "2025-03-01",
+      "end": "2025-03-31",
+      "id": "681ea42c3ba74e732e8bfa1aaa283dc7fdc3d6adc594e4431b5a4c31f7c57a40"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-3205309",
+      "start": "2025-04-01",
+      "end": "2025-04-30",
+      "id": "13ffead6f4973ecc7723765f353a700ad5c373a447ddb6560c4fbe560cb86e5b"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-3205309",
+      "start": "2025-05-01",
+      "end": "2025-05-31",
+      "id": "ec515aede15b3a9dab307f2ee524f22f61f4d5eec63143e2e6968fc0381d3a65"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-3205309",
+      "start": "2025-06-01",
+      "end": "2025-06-30",
+      "id": "f17a5f4269b9f5bf5b1b02b6769f848cfd2045b4aa5af1c44322123c1ce1111d"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-3205309",
+      "start": "2025-07-01",
+      "end": "2025-07-31",
+      "id": "af202535e49a194d7eb9b807f460ae2db9d24a8f0a7f42418893da399303a3b7"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-3205309",
+      "start": "2025-08-01",
+      "end": "2025-08-31",
+      "id": "50c8d6e583e864346fbad28ceea0fdbfbb5a702d09f072bab7d8ccc905d002ff"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-3205309",
+      "start": "2025-09-01",
+      "end": "2025-09-30",
+      "id": "046edb1b91c2b64807bd4f231510f0d25c597b986b5347c9209ffad37c00c2df"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-3205309",
+      "start": "2025-10-01",
+      "end": "2025-10-31",
+      "id": "6e81be59911a165cff4aa81d05203091042fae931d10a35824caf5593e0a376a"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-3205309",
+      "start": "2025-11-01",
+      "end": "2025-11-30",
+      "id": "dcca343a4610a6fbbfbb1f09b7dc567fa2d3a6b4160bcec3351799e47be616f9"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-3205309",
+      "start": "2025-12-01",
+      "end": "2025-12-31",
+      "id": "cedcb7179ca2aef9f64c8cafc5d2ecf390056792bf914a46e391036e683b56cc"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-3304557",
+      "start": "2025-01-01",
+      "end": "2025-01-31",
+      "id": "e84b38997e4d8ae6f088467c2e6155ad27b35e86ec2325b3b4f559ce41b35178"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-3304557",
+      "start": "2025-02-01",
+      "end": "2025-02-28",
+      "id": "51a3693ef1f2b39750b3499d814dcbeb2bec41576333f026a9fb34baf37027f3"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-3304557",
+      "start": "2025-03-01",
+      "end": "2025-03-31",
+      "id": "45d5ab4e40bf2a3abc51ca02b4ca2e21f8c6c9f5465555237676ab2d5c41646c"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-3304557",
+      "start": "2025-04-01",
+      "end": "2025-04-30",
+      "id": "fba6d858759d5eac4f141311826a8a54eb6447cd3c6cee767de23cf123327a3a"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-3304557",
+      "start": "2025-05-01",
+      "end": "2025-05-31",
+      "id": "ced785dd5876c32d123c97aa8b0b17e6d5dfbef0a22e968baec16549eb046004"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-3304557",
+      "start": "2025-06-01",
+      "end": "2025-06-30",
+      "id": "c157fd6cf90bc7421023a60bd3863aab2f9c67ea63264b3bcf861088c62e8bbd"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-3304557",
+      "start": "2025-07-01",
+      "end": "2025-07-31",
+      "id": "9a05b47ad4ae337d4474cd04b703735e41fe5bfb2641f9b9bd7ec2a98ad89aad"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-3304557",
+      "start": "2025-08-01",
+      "end": "2025-08-31",
+      "id": "e0feb30f91d31ac1a5917b37ba5ea827664611267066c29881b5ca16a77f0d94"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-3304557",
+      "start": "2025-09-01",
+      "end": "2025-09-30",
+      "id": "5d1d9f5c0818655234071e4e4c6d18d1b52f12b04e426aaf6075c54c37466ba3"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-3304557",
+      "start": "2025-10-01",
+      "end": "2025-10-31",
+      "id": "153755c30fec2b18c74e5f5527640648bee4c395391f9d52a631b30deb127251"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-3304557",
+      "start": "2025-11-01",
+      "end": "2025-11-30",
+      "id": "90263bf7e9fb7d49854c3ef78ce26cad169f82ad7ea0d236232d5d1a1422cab5"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-3304557",
+      "start": "2025-12-01",
+      "end": "2025-12-31",
+      "id": "fe86636cee2f82820ce6f61c3bf909c8cff82dc455cc25431152c7e1128404e9"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-3550308",
+      "start": "2025-01-01",
+      "end": "2025-01-31",
+      "id": "06aae6cdfe01b45eab2adc70b8c38a1a485b913d452b099f9abb2f69ffe5d788"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-3550308",
+      "start": "2025-02-01",
+      "end": "2025-02-28",
+      "id": "76c772a6c018056dcf64fea3172b5d7bd8411e8809bf5cc9b88e7cacd73ff301"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-3550308",
+      "start": "2025-03-01",
+      "end": "2025-03-31",
+      "id": "3218f2d5377934a0c30ee1a4fe92adbed6bb74f5b9b7d576db75bf9a33aedfcb"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-3550308",
+      "start": "2025-04-01",
+      "end": "2025-04-30",
+      "id": "6610dddfe50587c2f08deb2f18190a6e93d072fd810b2c67f4ac9b5ba5dcb5d8"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-3550308",
+      "start": "2025-05-01",
+      "end": "2025-05-31",
+      "id": "68096a3e9fffe8412816674a0432c04eea0177466e513ea19ecb6c81b59395e5"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-3550308",
+      "start": "2025-06-01",
+      "end": "2025-06-30",
+      "id": "407f21aebd75119c30b4f83110ae4188209bb171f4fff6f14af486873d463b5e"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-3550308",
+      "start": "2025-07-01",
+      "end": "2025-07-31",
+      "id": "81bdb24a004168b4ec7df46cc4d8e276c1e27fcc33374d719df69f891ebda59a"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-3550308",
+      "start": "2025-08-01",
+      "end": "2025-08-31",
+      "id": "8aa9cd3dccdb896dbdc27c63657b24e0f7ccb30e41587404a4506c556c10a30d"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-3550308",
+      "start": "2025-09-01",
+      "end": "2025-09-30",
+      "id": "07fa5fb793d4d52b83e49091542fb464dac7fde439d77fb5886ca013d1f94f31"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-3550308",
+      "start": "2025-10-01",
+      "end": "2025-10-31",
+      "id": "3e091e163d86c12f2bfea172a5f7a55c98b7463583826f061902aa6778cd0222"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-3550308",
+      "start": "2025-11-01",
+      "end": "2025-11-30",
+      "id": "501aa1b2c3f476105ba74d3205a19d96a4bb488c625e6f4b331ef4e550ba10f2"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-3550308",
+      "start": "2025-12-01",
+      "end": "2025-12-31",
+      "id": "4d9008604ef6eb5e4965f7573048860e69bddfc4465af9e15aeb25a28033b46a"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-4106902",
+      "start": "2025-01-01",
+      "end": "2025-01-31",
+      "id": "ee87eb4e44be24432dc90754f5ce3bd11d92cd91d122819d851bfbf369b17ac6"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-4106902",
+      "start": "2025-02-01",
+      "end": "2025-02-28",
+      "id": "73076e40d14752817d42dd86fcc5275960ac0b3bad9d86f1bed72a661fbc7328"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-4106902",
+      "start": "2025-03-01",
+      "end": "2025-03-31",
+      "id": "21fffb6f19e7379a83c8919176f4e65cac13dacc2818fd673dabcb8b16a5b50c"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-4106902",
+      "start": "2025-04-01",
+      "end": "2025-04-30",
+      "id": "a94d25f694d7b5803c89b0a162532f0c30cba1a9e924b77e562f43ad073a3f3f"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-4106902",
+      "start": "2025-05-01",
+      "end": "2025-05-31",
+      "id": "ba72b8842bdbacaaf2c96299b45c64322454873a08488eadb769fcecf741b3fb"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-4106902",
+      "start": "2025-06-01",
+      "end": "2025-06-30",
+      "id": "643cf2e3b5124e5952647efc6ca6e28701070072bd343f3552a138ad8b1c9f91"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-4106902",
+      "start": "2025-07-01",
+      "end": "2025-07-31",
+      "id": "0bef40fd01df03bd4d6f5c8276466ddb885ba61c446b9af2735d25af98df4b42"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-4106902",
+      "start": "2025-08-01",
+      "end": "2025-08-31",
+      "id": "1574da0b1392320caaf27ab29187b08a022c0cb7673316a753d7ad0ac4242f12"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-4106902",
+      "start": "2025-09-01",
+      "end": "2025-09-30",
+      "id": "ca66c8a6fa5b52650dca97507c85f225f954aa4edaa6f6371c1e7c7db4d36e69"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-4106902",
+      "start": "2025-10-01",
+      "end": "2025-10-31",
+      "id": "d72c90842bbe8c3a99ab9fa89c253d8075d06018735db278e12e52cd1995cedc"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-4106902",
+      "start": "2025-11-01",
+      "end": "2025-11-30",
+      "id": "88511d3ef0021a0641ace5fb3cad50f1852bcd1ab054a682dd8cce6fbbdbc027"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-4106902",
+      "start": "2025-12-01",
+      "end": "2025-12-31",
+      "id": "352ca6931d5f6b72f3ac19ddfd9119c0089528d2dbdbdbec829e41e896241bfc"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-4205407",
+      "start": "2025-01-01",
+      "end": "2025-01-31",
+      "id": "5825e0fadb8bbcd6797c308ac810c925fd20e882bd3c9aa0b793b1881d0164d2"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-4205407",
+      "start": "2025-02-01",
+      "end": "2025-02-28",
+      "id": "64a12034829cee07fa0d9b37bec665207e18616a6d5b164d6904914f1e81541c"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-4205407",
+      "start": "2025-03-01",
+      "end": "2025-03-31",
+      "id": "bcd0137013c89306323374695f9df0fafb66297b5967947cf5a3dbd4f71b353c"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-4205407",
+      "start": "2025-04-01",
+      "end": "2025-04-30",
+      "id": "e3adb25612a7fe3b2bf316e3150aa43ebf41530448d46c165d4462293aebee3c"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-4205407",
+      "start": "2025-05-01",
+      "end": "2025-05-31",
+      "id": "3e462912de9ccb40f0844c820f123514aed37122e32e202531e1d1d89467a1b7"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-4205407",
+      "start": "2025-06-01",
+      "end": "2025-06-30",
+      "id": "adb8e1e255d328b642bb6f2de216148a7e15ffcd9b02a0f1cc8aa7b9d556767d"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-4205407",
+      "start": "2025-07-01",
+      "end": "2025-07-31",
+      "id": "a067ab938b1aa7dcde095c7bfc3f5869c8a56463884c6c2dcc736fb71a827e05"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-4205407",
+      "start": "2025-08-01",
+      "end": "2025-08-31",
+      "id": "9967ed64b2abd9e493a21ddd8263110780e07bab446ccccbb806d936d3026e78"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-4205407",
+      "start": "2025-09-01",
+      "end": "2025-09-30",
+      "id": "9d3d02e927dcd2f5d3461ba6a34dc78750aa4115310ecf1e30819e5ff5d5839b"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-4205407",
+      "start": "2025-10-01",
+      "end": "2025-10-31",
+      "id": "cd31d97e7ca905efc19165ef15178bd97cc16db79c3c07ba853ec64e6ba6780a"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-4205407",
+      "start": "2025-11-01",
+      "end": "2025-11-30",
+      "id": "73d82abdc5dfb73f86f92d4e1a2d1a14f3add6cb5e25d4af00931adbbfa5df1b"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-4205407",
+      "start": "2025-12-01",
+      "end": "2025-12-31",
+      "id": "9bedfaf39355eee1ab629c8bbbe78955949143ab4ef2551286cb4871723e0266"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-4314902",
+      "start": "2025-01-01",
+      "end": "2025-01-31",
+      "id": "89e15892dd6851b4c03d3efe6884ab5c387ee0a7e72edbc7bc3851ee278bc2be"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-4314902",
+      "start": "2025-02-01",
+      "end": "2025-02-28",
+      "id": "cef1e85c3ec3a003a858ba116570f5bee65ab66b4a7b622c76f6e51e6a4625de"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-4314902",
+      "start": "2025-03-01",
+      "end": "2025-03-31",
+      "id": "1cd88ba4f83406c9f2227d52f39ca9c04d4031c8e4b116b14028b32048e8634c"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-4314902",
+      "start": "2025-04-01",
+      "end": "2025-04-30",
+      "id": "56f6763b62c34858ad87b585e01096922da4d28f6bb98f6db256d02ec35b390e"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-4314902",
+      "start": "2025-05-01",
+      "end": "2025-05-31",
+      "id": "fa3b857a39f6036622720d470fec6ab055d2dc0c9669a89f9235f7c503c74e94"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-4314902",
+      "start": "2025-06-01",
+      "end": "2025-06-30",
+      "id": "4f87b461d06d1a51ea806780625881406554ee0f0cf8f1f1e111f19139a3f469"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-4314902",
+      "start": "2025-07-01",
+      "end": "2025-07-31",
+      "id": "ced6a22df74b2b59dfb88c749ce7ffc1e0e7fa81ca150f60b3b95825152aaa38"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-4314902",
+      "start": "2025-08-01",
+      "end": "2025-08-31",
+      "id": "c84a479ce16e5ebadecdd598f99cf804f89375eccff8fcf097d6340130b5c7dc"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-4314902",
+      "start": "2025-09-01",
+      "end": "2025-09-30",
+      "id": "986fead7d8e3030ac2de6aeb12a630dbbe14f2835dbcc7ca896d30c7e146213e"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-4314902",
+      "start": "2025-10-01",
+      "end": "2025-10-31",
+      "id": "3857ba6c119272ede94af16cbf74d7801c8a7a7c54363e6f942ea521e61c2467"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-4314902",
+      "start": "2025-11-01",
+      "end": "2025-11-30",
+      "id": "7e21d217ee996833382bd7d122a7d65071c5b0167f6dbd9ea73667a540164b33"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-4314902",
+      "start": "2025-12-01",
+      "end": "2025-12-31",
+      "id": "053298b6ce515209c35e173ad4928cdfe84005cb1b4b48917df27c0ec5614a2c"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-5002704",
+      "start": "2025-01-01",
+      "end": "2025-01-31",
+      "id": "6e8c8182bb77ef630e1b6b9335aa0eaaf3f39e9a666f96913df3d115c9d6e9b3"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-5002704",
+      "start": "2025-02-01",
+      "end": "2025-02-28",
+      "id": "5c5169a0a7098005ef4af83e81d524d78ed9e8b173d910c2718e052d56752c05"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-5002704",
+      "start": "2025-03-01",
+      "end": "2025-03-31",
+      "id": "70607a0d4cac4c9bf6f17d6375e86b4cc0a4d56e6fee469fa5636f269add0e83"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-5002704",
+      "start": "2025-04-01",
+      "end": "2025-04-30",
+      "id": "82a4f742efd80132069c229ecb14250bc4af7610f242bcdb4d008178b932b64b"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-5002704",
+      "start": "2025-05-01",
+      "end": "2025-05-31",
+      "id": "7798b6ececcb2f9464454bee7e89bf41a0ee4fec9386bf410ead99c38265c31d"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-5002704",
+      "start": "2025-06-01",
+      "end": "2025-06-30",
+      "id": "b1adaa1b583c5c9aee8db994fe83b0635c73a931d5fd1bb9b51811dbf9865f91"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-5002704",
+      "start": "2025-07-01",
+      "end": "2025-07-31",
+      "id": "ab4fbc3b93ffa9e41e00d00d37e66e7e9a5826fed98c2d35840bc06608f60747"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-5002704",
+      "start": "2025-08-01",
+      "end": "2025-08-31",
+      "id": "acfa6afa02e1d9b31613d82d77779157bd2c348b4a00e5675e2cc1074dcfd91f"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-5002704",
+      "start": "2025-09-01",
+      "end": "2025-09-30",
+      "id": "0e84c71407590319d708ca81e9f37d0cb81a63a5803742efb0cb2e9f35e80e41"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-5002704",
+      "start": "2025-10-01",
+      "end": "2025-10-31",
+      "id": "22a5e073c04796ae084547b469d4879d4fe5be6505942808eccd49e4a7eedbe6"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-5002704",
+      "start": "2025-11-01",
+      "end": "2025-11-30",
+      "id": "642b726dd13762595adabe32754a610737d9b667adc7d9a80c0642e4f5afe2f5"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-5002704",
+      "start": "2025-12-01",
+      "end": "2025-12-31",
+      "id": "426e0b4fdacad7b63fab05e1b82abd4c9e0dc45139d1cdf91e0df56423535396"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-5103403",
+      "start": "2025-07-01",
+      "end": "2025-07-31",
+      "id": "fee5bd0ece010643cb49181876b8be6f6df91657f9c66689e91f9eaa4b9b6dd6"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-5103403",
+      "start": "2025-08-01",
+      "end": "2025-08-31",
+      "id": "30d0a65f7658b19fca6a9f85ed3f23042ebf66baf641a18e7dcb8dfda766aae3"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-5103403",
+      "start": "2025-09-01",
+      "end": "2025-09-30",
+      "id": "196ab7bc3cb6d29ff8ce0380b93f11a0d8d0743d496ea3f3169475c7c49ba741"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-5103403",
+      "start": "2025-10-01",
+      "end": "2025-10-31",
+      "id": "41901c73dd48b4bb4a1de8f7e38a4873e8239b9ca441de338f9573917978c557"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-5103403",
+      "start": "2025-11-01",
+      "end": "2025-11-30",
+      "id": "56078046f7cfe3e91fc84bfd487fca4ffba83e967db755857cac08f1a0c882fd"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-5103403",
+      "start": "2025-12-01",
+      "end": "2025-12-31",
+      "id": "1b7bbf5b6bdfe262e02e4e721e41c2b46a8917418362535bd6bb4f0454807881"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-5208707",
+      "start": "2025-01-01",
+      "end": "2025-01-31",
+      "id": "042636859db6c60d6753919eb1f3ee5b4f152027843234f0be5d9f9004b46006"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-5208707",
+      "start": "2025-02-01",
+      "end": "2025-02-28",
+      "id": "7cd8273e835efd4940ced2eaf738d1152bb8fdf9db3243364d70a2ba940177ac"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-5208707",
+      "start": "2025-03-01",
+      "end": "2025-03-31",
+      "id": "f6dcb3671b35a46bd5a274b646624b7e9fce0a2b4361e7aceb1bf1f1127123b1"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-5208707",
+      "start": "2025-04-01",
+      "end": "2025-04-30",
+      "id": "52af9d578b71d1db76646a8106cf1cdc29065826fb0afae80cf8904053a1962f"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-5208707",
+      "start": "2025-05-01",
+      "end": "2025-05-31",
+      "id": "c74d45ad0a60119a90725f86eeb4a5416056d418e459db049926424f9a44773a"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-5208707",
+      "start": "2025-06-01",
+      "end": "2025-06-30",
+      "id": "a970b4bd89d800d2d22d3aa95987c1abfc5a61a5980dc7f0f029391039b9f83d"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-5208707",
+      "start": "2025-07-01",
+      "end": "2025-07-31",
+      "id": "d527cd964bb518d1a097cb1f06f5057052fb62cb031c96e2d7356aca300e6ecf"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-5208707",
+      "start": "2025-08-01",
+      "end": "2025-08-31",
+      "id": "dc105fe1e69ba89c6fcf5db117b0d5f52e3904eeb2443425bf50b279c45a9ada"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-5208707",
+      "start": "2025-09-01",
+      "end": "2025-09-30",
+      "id": "54dcf03c0d72b098d75fcbaf4d84fbe10b2a2a25589a8b5dbb808b4ada6f00cf"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-5208707",
+      "start": "2025-10-01",
+      "end": "2025-10-31",
+      "id": "86f863bc44f9240a59a680c7c868dd9ddf8c130b33fe8b60c3167e3aae9d2af5"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-5208707",
+      "start": "2025-11-01",
+      "end": "2025-11-30",
+      "id": "eeb26b391ba0ed9333e11da2828baf81fa7c99426216d4950d834b68645bc23e"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-5208707",
+      "start": "2025-12-01",
+      "end": "2025-12-31",
+      "id": "3f79065872293c8d44db48f2c12b71b05415a0f60bf753e4bf1d65036e5717f1"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-5300108",
+      "start": "2025-01-01",
+      "end": "2025-01-31",
+      "id": "13dfc75f54889778938d784a6a0db2fd5ea3aaa1d6ab076722fc09f96c5a8a8f"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-5300108",
+      "start": "2025-02-01",
+      "end": "2025-02-28",
+      "id": "74680d288d10a7ed8a862f370ba7bb5d9bd9a8d969d2c0106e2d03985539f919"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-5300108",
+      "start": "2025-03-01",
+      "end": "2025-03-31",
+      "id": "1589260b8dc27640dc04fc0594dd8272f52ed00ca88bc9d6ea2f916818099be3"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-5300108",
+      "start": "2025-04-01",
+      "end": "2025-04-30",
+      "id": "eda2382df3306e5988dcddd67c9287eed023c5eac0248831463f9a39604f6536"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-5300108",
+      "start": "2025-05-01",
+      "end": "2025-05-31",
+      "id": "ac3db311a7f2ffdd2740562da403d2a6f8cac6d3f5cff8f31da6d90a149cf0ea"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-5300108",
+      "start": "2025-06-01",
+      "end": "2025-06-30",
+      "id": "4d934041f8e3ebf06d4ad20b58e91719f215cc8e5627e5037dfaf1fe905e708a"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-5300108",
+      "start": "2025-07-01",
+      "end": "2025-07-31",
+      "id": "38ed6b6a2fc902173d04fdcb738ec06482bbd91f5587ba3e3ef055f1192371a1"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-5300108",
+      "start": "2025-08-01",
+      "end": "2025-08-31",
+      "id": "e4c09fdf43c249c08cfe71922e93a3464169d503f31dc0111742d2442f745db9"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-5300108",
+      "start": "2025-09-01",
+      "end": "2025-09-30",
+      "id": "3892a07698a4de7a491cbaf25c849fd946ba39b26e7695fec6c402e8eb203860"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-5300108",
+      "start": "2025-10-01",
+      "end": "2025-10-31",
+      "id": "9f00cbb2d58bf1461cd7ce52f3ceafa8f7ee01abef4d5d1fd0f1b1bdc42ff2d1"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-5300108",
+      "start": "2025-11-01",
+      "end": "2025-11-30",
+      "id": "cc31f5840d7a80afdaebb29aaaa40f1f689e0400097396d18a4a7b70cdf4fa82"
+    },
+    {
+      "series": "cv5",
+      "geography": "BR-city-5300108",
+      "start": "2025-12-01",
+      "end": "2025-12-31",
+      "id": "516452ea7cfe8582bf26314b418474e4897142b487f793b946b303638807b9fd"
+    },
+    {
+      "series": "ee1",
+      "geography": "BR",
+      "start": "2023-01-01",
+      "end": "2023-12-31",
+      "id": "28449f67f366f4f670b97da443a9a0611dcc1856edf486ca464187893d81db64"
+    },
+    {
+      "series": "qv1",
+      "geography": "BR",
+      "start": "2023-01-01",
+      "end": "2023-12-31",
+      "id": "9a8a73fc79002d1381f653b58e31d2dedecdaa7b44c387662634cf304efc87e3"
+    },
+    {
+      "series": "qv1",
+      "geography": "BR",
+      "start": "2024-01-01",
+      "end": "2024-12-31",
+      "id": "09e7925936e3895438aee82dd505c896953bf6d20c1fd6e49858f80da33b910a"
+    },
+    {
+      "series": "qv3",
+      "geography": "BR",
+      "start": "2023-01-01",
+      "end": "2023-12-31",
+      "id": "413dd4406ddb03f93254af85d5d574a6fa139104e7a95e90d8d98a024777c6df"
+    },
+    {
+      "series": "qv3",
+      "geography": "BR",
+      "start": "2024-01-01",
+      "end": "2024-12-31",
+      "id": "0b2b9460e01843a0873580a8738a3ccc31d26fa7640f2451cb1d9fed116da430"
+    }
+  ]
+}

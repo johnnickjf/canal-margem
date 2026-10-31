@@ -8,16 +8,8 @@
     "cover": "obra"
   },
   {
-    "id": "renda",
-    "order": 2,
-    "name": "Renda",
-    "question": "Para onde vai o valor que você produz?",
-    "summary": "Salário mínimo, endividamento, transferências e a distância entre o que se ganha e o que se precisa.",
-    "cover": "maos"
-  },
-  {
     "id": "custo-de-vida",
-    "order": 3,
+    "order": 2,
     "name": "Custo de vida",
     "question": "Por que subiu — e quem sente primeiro?",
     "summary": "Inflação de comida, energia e transporte lida a partir do carrinho de compras, não do gráfico.",
@@ -25,7 +17,7 @@
   },
   {
     "id": "habitacao",
-    "order": 4,
+    "order": 3,
     "name": "Habitação",
     "question": "Quem pode morar onde?",
     "summary": "Aluguel, periferia, especulação, despejos e o peso da moradia no orçamento das famílias.",
@@ -33,39 +25,15 @@
   },
   {
     "id": "cidade",
-    "order": 5,
+    "order": 4,
     "name": "Cidade",
     "question": "A cidade é desenhada para quem?",
     "summary": "Mobilidade, tempo de deslocamento, espaço público e as decisões que moldam a rotina urbana.",
     "cover": "avenida-paulista"
   },
   {
-    "id": "servicos-publicos",
-    "order": 6,
-    "name": "Serviços públicos",
-    "question": "O que acontece quando o serviço falha?",
-    "summary": "Saúde, educação, transporte e assistência — financiamento, gestão e quem fica sem atendimento.",
-    "cover": "ponto-onibus-chuva"
-  },
-  {
-    "id": "democracia",
-    "order": 7,
-    "name": "Democracia",
-    "question": "Quem realmente influencia essa decisão?",
-    "summary": "Eleições, Congresso, lobby, participação e os caminhos pelos quais uma demanda vira política.",
-    "cover": "multidao-rua"
-  },
-  {
-    "id": "desigualdade",
-    "order": 8,
-    "name": "Desigualdade",
-    "question": "Não é acaso: quem fica com o quê?",
-    "summary": "Renda, patrimônio, raça, gênero e território: as diferenças que se repetem de geração em geração.",
-    "cover": "fachada-trabalho"
-  },
-  {
     "id": "tecnologia-e-trabalho",
-    "order": 9,
+    "order": 5,
     "name": "Tecnologia e trabalho",
     "question": "Quem controla o algoritmo que controla o turno?",
     "summary": "Plataformas, automação e inteligência artificial vistas pelo lado de quem executa o serviço.",
@@ -73,23 +41,15 @@
   },
   {
     "id": "tributacao",
-    "order": 10,
+    "order": 6,
     "name": "Tributação",
     "question": "Quem paga a conta?",
     "summary": "Impostos sobre consumo, renda e patrimônio — e por que a mesma alíquota pesa diferente em cada bolso.",
     "cover": "loterica-noite"
   },
   {
-    "id": "poder-economico",
-    "order": 11,
-    "name": "Poder econômico",
-    "question": "Quem ganha quando o mercado decide?",
-    "summary": "Concentração de setores, juros, crédito e a relação entre grandes empresas e decisões públicas.",
-    "cover": "transito"
-  },
-  {
     "id": "vida-cotidiana",
-    "order": 12,
+    "order": 7,
     "name": "Vida cotidiana",
     "question": "Onde a política aparece no seu dia?",
     "summary": "Fila, ônibus, conta de luz, almoço fora: a economia que acontece longe de Brasília.",

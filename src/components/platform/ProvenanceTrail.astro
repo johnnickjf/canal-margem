@@ -1,5 +1,6 @@
 ---
 import { apiLink, platform } from '@/lib/platform';
+import { decimalLabel, geographyLabel, unitLabel } from '@/lib/indicator-display';
 import type { Indicator, ObservationNode, Selection } from '@/lib/platform-build';
 interface Props {
   indicator: Indicator;
@@ -41,7 +42,7 @@ const uniqueOrigins = [
 ---
 
 <article class="audit-trail" id={`${indicator.slug}-${index}`}>
-  <h3><a href={`/indicador/${indicator.slug}`}>{indicator.name}</a> · {series.geography === 'BR' ? 'Brasil' : series.geography} · {series.series}</h3>
+  <h4><a href={`/indicador/${indicator.slug}`}>{indicator.name}</a> · {geographyLabel(series.geography)} · {series.series}</h4>
   <ol class="audit-trail__chain">
     <li>
       <strong>Indicador</strong>
@@ -62,7 +63,7 @@ const uniqueOrigins = [
     </li>
     <li>
       <strong>Série e observação</strong>
-      <p>{series.series} · {series.geography} · {latest.start} a {latest.end} · {latest.status === 'observed' && node?.observation.value != null ? `${node.observation.value} ${series.unit}` : `indisponível (${latest.reason ?? latest.status})`}</p>
+      <p>{series.series} · {geographyLabel(series.geography)} ({series.geography}) · {latest.start} a {latest.end} · {latest.status === 'observed' && node?.observation.value != null ? `${decimalLabel(node.observation.value)} ${unitLabel(series.unit)}` : `indisponível (${latest.reason ?? latest.status})`}</p>
       {node && <p>ID da observação: <a href={observationURL}><code>{node.observation.id}</code> (JSON)</a></p>}
     </li>
     <li>
@@ -77,13 +78,13 @@ const uniqueOrigins = [
     </li>
   </ol>
 
-  {uniqueOrigins.length > 0 && <section class="audit-trail__sources" aria-label="Capturas de origem">
-    <h4>Capturas de origem</h4>
+  {uniqueOrigins.length > 0 && <div class="audit-trail__sources">
+    <h5>Capturas de origem</h5>
     <ul>{uniqueOrigins.map((origin) => <li>
       {safeExternal(origin.url) ? <a href={safeExternal(origin.url)} rel="noopener noreferrer">Consulta original</a> : <span>URL original indisponível como link seguro</span>}
       <span> · coletada em <time datetime={origin.retrieved_at}>{origin.retrieved_at}</time> · SHA-256 <code>{origin.sha256}</code></span>
     </li>)}</ul>
-  </section>}
+  </div>}
 
   {inputs.length > 0 && <details class="audit-trail__inputs">
     <summary>Ver observações usadas no cálculo ({inputs.length})</summary>
@@ -118,7 +119,7 @@ const uniqueOrigins = [
   .audit-trail__chain { display: grid; gap: var(--space-md); padding-left: 1.5rem; }
   .audit-trail__chain li { padding-left: 0.35rem; }
   .audit-trail__chain li::marker { color: var(--red); font-family: var(--font-mono); }
-  .audit-trail__chain strong, .audit-trail h4 { font-family: var(--font-mono); }
+  .audit-trail__chain strong, .audit-trail h5 { font-family: var(--font-mono); }
   .audit-trail p { margin-block: 0.35rem; }
   .audit-trail code { overflow-wrap: anywhere; }
   .audit-trail__sources, .audit-trail__inputs { margin-top: var(--space-md); }

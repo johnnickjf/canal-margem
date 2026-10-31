@@ -26,6 +26,16 @@ for (const { word, slugs } of queries) {
 
 test('filtros, exemplos e envio pelo teclado mantêm consulta e URL coerentes', async ({ page }) => {
   await page.goto('/busca');
+  await page.evaluate(() => document.fonts.ready);
+  const placeholderFits = await page.getByRole('searchbox').evaluate((input: HTMLInputElement) => {
+    const style = getComputedStyle(input);
+    const canvas = document.createElement('canvas');
+    const context = canvas.getContext('2d');
+    if (!context) return false;
+    context.font = `${style.fontWeight} ${style.fontSize} ${style.fontFamily}`;
+    return context.measureText(input.placeholder.toUpperCase()).width <= input.clientWidth;
+  });
+  expect(placeholderFits).toBe(true);
   await page.getByRole('link', { name: 'dívida', exact: true }).click();
   await expect(page.getByRole('searchbox')).toHaveValue('dívida');
   const type = page.getByLabel('Buscar em', { exact: true });

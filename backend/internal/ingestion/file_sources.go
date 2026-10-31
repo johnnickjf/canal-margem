@@ -93,7 +93,7 @@ func FJP(ctx context.Context, f Fetcher, w period.Window) ([]observations.Observ
 			return nil, observations.Invalid("FJP: vínculos selecionados mudaram")
 		}
 	}
-	for _, id := range []string{"157eNPVoJPRowVBNQobAK1weRLnajftCI", "1CzNCJm5f4aNR3BY28FPUcaMlkKpC5MLK", "1Qg5DSnJRrsvqoZeCItJ-KPHNtuMf_JE6", "1dun9qQm73z33IGH_07MHAhGrLru5dyoV"} {
+	for _, id := range []string{"157eNPVoJPRowVBNQobAK1weRLnajftCI", "1CzNCJm5f4aNR3BY28FPUcaMlkKpC5MLK", "1Qg5DSnJRrsvqoZeCItJ-KPHNtuMf_JE6", "1dun9qQm73z33IGH_07MHAhGrLru5dyoV", "18D1UwSU4SkmGhdEpqA-5INN9TUzGfn2e"} {
 		known[id] = true
 	}
 	for id := range sheets {

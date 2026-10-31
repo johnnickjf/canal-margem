@@ -10,14 +10,14 @@ const [temas, counts] = await Promise.all([getTemas(), getTemaCounts()]);
 
 <BaseLayout
   title="Temas"
-  description="Os doze pilares editoriais da MARGEM: trabalho, renda, custo de vida, habitação, cidade, serviços públicos, democracia, desigualdade, tecnologia, tributação, poder econômico e vida cotidiana."
+  description="Os temas editoriais da MARGEM: trabalho, custo de vida, habitação, cidade, tecnologia, tributação e vida cotidiana."
   image="avenida-paulista"
 >
   <PageHeader
     label="Temas"
     title="Política começa na [vida real]"
-    lede="Doze pilares para entender o Brasil a partir do que se vive todo dia. Cada tema parte de uma pergunta concreta — e não de uma conclusão pronta."
-    aside={`${padIndex(temas.length)} pilares`}
+    lede="Temas para entender o Brasil a partir do que se vive todo dia. Cada um parte de uma pergunta concreta — e não de uma conclusão pronta."
+    aside={`${padIndex(temas.length)} temas`}
   />
 
   <section class="section" aria-label="Lista de temas">

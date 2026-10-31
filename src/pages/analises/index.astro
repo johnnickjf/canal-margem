@@ -4,7 +4,6 @@ import PageHeader from '@/components/layout/PageHeader.astro';
 import SectionHeader from '@/components/ui/SectionHeader.astro';
 import TemaFilter from '@/components/ui/TemaFilter.astro';
 import ArticleCard from '@/components/cards/ArticleCard.astro';
-import Newsletter from '@/components/sections/Newsletter.astro';
 import { getHomeArticles, getTemas } from '@/lib/content';
 import { padIndex } from '@/lib/format';
 
@@ -55,7 +54,6 @@ const [lead, ...rest] = articles;
     )
   }
 
-  <Newsletter index={null} />
 </BaseLayout>
 
 <style>

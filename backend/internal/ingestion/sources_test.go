@@ -2,6 +2,7 @@ package ingestion
 
 import (
 	"bytes"
+	"context"
 	_ "embed"
 	"encoding/json"
 	"fmt"
@@ -156,6 +157,43 @@ func TestFJPFractionalEstimatesAndScope(t *testing.T) {
 		if _, e := NormalizeFJP(workbook(t, "DH_Componentes", copy), "2024", testWindow()); e == nil {
 			t.Fatal(edit)
 		}
+	}
+}
+
+type fjpFetcher map[string][]byte
+
+func (f fjpFetcher) Get(_ context.Context, url string) ([]byte, error) {
+	body, ok := f[url]
+	if !ok {
+		return nil, fmt.Errorf("unexpected URL %s", url)
+	}
+	return body, nil
+}
+
+func TestFJPCurrentIndexAndUnexpectedSpreadsheet(t *testing.T) {
+	ids := []string{"1JXmSxIz4Hvl8tua6E10OrvoMa6v6z-88", "1OqAuggLve9HoPrI8jJcaAfSu1q5DCvdc", "1lQzsAuzhRCEJufiIEI_tVzO4vllcBT38", "1AwlL17JBmASv8Jurnkb6zhfXc0fzGQwp", "18D1UwSU4SkmGhdEpqA-5INN9TUzGfn2e"}
+	index := "Déficit"
+	for _, id := range ids {
+		index += `<a href="https://docs.google.com/spreadsheets/d/` + id + `/edit">arquivo</a>`
+	}
+	legacy := map[string]any{"A1": "Ano", "B1": "DH", "C1": "Região", "D1": "Contagem"}
+	for i, row := range []int{55, 109, 163, 217} {
+		legacy[fmt.Sprintf("A%d", row)] = 2016 + i
+		legacy[fmt.Sprintf("C%d", row)] = "Brasil"
+	}
+	fetcher := fjpFetcher{
+		FJPIndex:                 []byte(index),
+		fileURLs["fjp2016.xlsx"]: workbook(t, "Ônus", legacy),
+		fileURLs["fjp2024.xlsx"]: workbook(t, "DH_Componentes", map[string]any{"A1": "Ano", "I1": "Ônus", "A56": 2024, "B56": "Brasil", "I56": 123}),
+	}
+	w, _ := period.NewWindow("2024-01-01", "2024-12-31", time.Now())
+	rows, err := FJP(context.Background(), fetcher, w)
+	if err != nil || len(rows) != 1 || *rows[0].Value != "123" {
+		t.Fatal(rows, err)
+	}
+	fetcher[FJPIndex] = []byte(index + `<a href="https://docs.google.com/spreadsheets/d/unknown/edit">nova</a>`)
+	if _, err := FJP(context.Background(), fetcher, w); err == nil || !strings.Contains(err.Error(), "nova planilha") {
+		t.Fatal("planilha desconhecida não foi rejeitada", err)
 	}
 }
 func TestDiscoveryAndAllowedURLs(t *testing.T) {

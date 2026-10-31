@@ -132,6 +132,22 @@ describe('captura da publicação para HTML estático', () => {
       ),
     ).rejects.toThrow('contexto');
   });
+  it('aceita fusos diferentes para o mesmo corte e rejeita diferenças inferiores a um milissegundo', async () => {
+    const request = fixture((path, body) => {
+      if (path.endsWith('/current')) body.data_cutoff = '2026-10-18T09:00:00.123456-03:00';
+      else if (path.includes('/publications/') && !path.endsWith('/current'))
+        (body.data as Record<string, unknown>).data_cutoff = '2026-10-18T12:00:00.123456Z';
+    });
+    await expect(capturePlatform('http://api.test', request)).resolves.toBeDefined();
+    const different = fixture((path, body) => {
+      if (path.endsWith('/current')) body.data_cutoff = '2026-10-18T09:00:00.123456-03:00';
+      else if (path.includes('/publications/') && !path.endsWith('/current'))
+        (body.data as Record<string, unknown>).data_cutoff = '2026-10-18T12:00:00.123457Z';
+    });
+    await expect(capturePlatform('http://api.test', different)).rejects.toThrow(
+      'Manifesto e ativação divergem',
+    );
+  });
   it('interrompe o build quando a API configurada falha', async () => {
     await expect(
       capturePlatform(

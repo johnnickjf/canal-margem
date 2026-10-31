@@ -45,76 +45,38 @@ export const primaryNav: NavItem[] = [
 ];
 
 export type SocialChannel = {
-  id: 'youtube' | 'instagram' | 'tiktok' | 'x' | 'bluesky' | 'linkedin';
+  id: 'youtube' | 'instagram' | 'tiktok';
   label: string;
   href: string;
   description: string;
 };
 
-/** Substitua os `href` pelos perfis oficiais quando estiverem ativos. */
 export const socials: SocialChannel[] = [
   {
     id: 'youtube',
     label: 'YouTube',
-    href: 'https://www.youtube.com/@margem',
+    href: 'https://www.youtube.com/channel/UCiuYaTHW5WLhCbAN86v4PRw',
     description:
       'Política, economia e pessoas. Análises críticas do Brasil real, com contexto, dados e olhar humano.',
   },
   {
     id: 'instagram',
     label: 'Instagram',
-    href: 'https://www.instagram.com/margem',
+    href: 'https://www.instagram.com/canalmargem',
     description:
       'Política, economia e vida real. Cortes, análises e ideias para entender o Brasil além do óbvio.',
   },
   {
     id: 'tiktok',
     label: 'TikTok',
-    href: 'https://www.tiktok.com/@margem',
+    href: 'https://www.tiktok.com/@canalmargem',
     description:
       'Política, economia e vida real. Cortes, análises e ideias para entender o Brasil além do óbvio.',
-  },
-  {
-    id: 'x',
-    label: 'X',
-    href: 'https://x.com/margem',
-    description:
-      'Política, economia, trabalho e vida cotidiana. Dados, contexto e opinião. Outro ponto de vista é possível.',
-  },
-  {
-    id: 'bluesky',
-    label: 'Bluesky',
-    href: 'https://bsky.app/profile/margem.com.br',
-    description:
-      'Política, economia, trabalho e vida cotidiana. Dados, contexto e opinião. Outro ponto de vista é possível.',
-  },
-  {
-    id: 'linkedin',
-    label: 'LinkedIn',
-    href: 'https://www.linkedin.com/company/margem',
-    description:
-      'Economia, trabalho, renda, tecnologia e política vistas pela vida real. Análises com contexto, dados e perspectiva humana.',
   },
 ];
 
 export const contact = {
-  email: 'contato@margem.com.br',
-  pautas: 'pautas@margem.com.br',
-} as const;
-
-/**
- * Newsletter: aponte `action` para o endpoint do provedor (Buttondown, Substack,
- * Mailchimp, formulário próprio). Enquanto estiver vazio, o JavaScript intercepta
- * o envio e informa que as inscrições ainda não estão abertas. Sem JavaScript,
- * o formulário pode enviar um POST para a página atual.
- */
-export const newsletter = {
-  action: '',
-  method: 'post',
-  fieldName: 'email',
-  title: 'Uma carta [por semana]',
-  pitch:
-    'Toda sexta, o que importou na semana em política e economia — com contexto, sem barulho. Leitura de cinco minutos.',
+  email: 'contato.canalmargem@gmail.com',
 } as const;
 
 /** CTAs aprovados pelo manual (seção 16). */

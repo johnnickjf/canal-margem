@@ -2,6 +2,7 @@
 import CalculationContext from './CalculationContext.astro';
 import { apiLink, platform } from '@/lib/platform';
 import type { Selection } from '@/lib/platform-build';
+import { decimalLabel, geographyLabel, unitLabel } from '@/lib/indicator-display';
 interface Props {
   selection: Selection;
 }
@@ -12,10 +13,10 @@ const source = platform.sources.find((item) => item.id === series.source);
 const value = latest.node?.observation.value;
 ---
 <div class="theme-reading">
-  <p><strong>{series.geography === 'BR' ? 'Brasil' : series.geography}</strong> · <code>{series.series}</code></p>
+  <p><strong>{geographyLabel(series.geography)}</strong> · <code>{series.series}</code></p>
   <p>Período: <time datetime={latest.start}>{latest.start}</time> a <time datetime={latest.end}>{latest.end}</time></p>
   {latest.status === 'observed' && value != null
-    ? <p class="platform-value">{value.replace('.', ',')} <span>{series.unit}</span></p>
+    ? <p class="platform-value">{decimalLabel(value)} <span>{unitLabel(series.unit)}</span></p>
     : <p><strong>Dados indisponíveis</strong> · {latest.reason || latest.status}</p>}
   {latest.node && <CalculationContext node={latest.node} />}
   {source && <p>Fonte: <a href={source.url}>{source.name}</a></p>}

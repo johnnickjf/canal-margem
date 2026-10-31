@@ -10,6 +10,7 @@ import (
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/config"
 	"github.com/aws/aws-sdk-go-v2/service/s3"
+	"github.com/aws/smithy-go"
 	smithyhttp "github.com/aws/smithy-go/transport/http"
 	"io"
 	"margem/backend/internal/platform/canonical"
@@ -22,6 +23,10 @@ type Store interface {
 	Save(context.Context, []byte) (string, string, error)
 	Verify(context.Context, string, string, int64) error
 }
+
+var ErrMissing = errors.New("objeto raw ausente")
+var ErrCorrupt = errors.New("objeto raw corrompido")
+
 type S3 struct {
 	Client *s3.Client
 	Bucket string
@@ -69,6 +74,10 @@ func (s *S3) Verify(ctx context.Context, key, sha string, size int64) error {
 	}
 	r, e := s.Client.GetObject(ctx, &s3.GetObjectInput{Bucket: &s.Bucket, Key: &key})
 	if e != nil {
+		var apiError smithy.APIError
+		if errors.As(e, &apiError) && apiError.ErrorCode() == "NoSuchKey" {
+			return ErrMissing
+		}
 		return e
 	}
 	defer r.Body.Close()
@@ -77,7 +86,7 @@ func (s *S3) Verify(ctx context.Context, key, sha string, size int64) error {
 		return e
 	}
 	if int64(len(b)) != size || canonical.Hash(b) != sha {
-		return fmt.Errorf("raw ausente ou corrompido")
+		return ErrCorrupt
 	}
 	return nil
 }

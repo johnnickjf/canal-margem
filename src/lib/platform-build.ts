@@ -107,6 +107,19 @@ const themes: Theme[] = [
   },
 ];
 
+// RFC 3339 timestamps may describe the same instant with different offsets.
+// Preserve fractional precision when checking the immutable publication cutoff.
+function timestampNanoseconds(value: unknown): bigint | null {
+  if (typeof value !== 'string') return null;
+  const match = /^(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2})(?:\.(\d{1,9}))?(Z|[+-]\d{2}:\d{2})$/.exec(
+    value,
+  );
+  if (!match) return null;
+  const milliseconds = Date.parse(`${match[1]}${match[3]}`);
+  if (!Number.isFinite(milliseconds)) return null;
+  return BigInt(milliseconds) * 1_000_000n + BigInt((match[2] ?? '').padEnd(9, '0'));
+}
+
 /** Capture once before route generation. A configured API failure must stop the build. */
 export async function capturePlatform(
   api?: string,
@@ -209,7 +222,12 @@ export async function capturePlatform(
   if (typeof manifest.selection_reason !== 'string')
     throw new Error('Motivo da seleção da publicação inválido.');
   const catalog = manifest.catalog;
-  if (catalog.revision !== current.catalog_revision || manifest.data_cutoff !== current.data_cutoff)
+  const cutoff = timestampNanoseconds(current.data_cutoff);
+  if (
+    catalog.revision !== current.catalog_revision ||
+    cutoff === null ||
+    cutoff !== timestampNanoseconds(manifest.data_cutoff)
+  )
     throw new Error('Manifesto e ativação divergem.');
   for (const list of [catalog.themes, catalog.indicators]) {
     if (

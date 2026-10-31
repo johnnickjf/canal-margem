@@ -15,10 +15,10 @@ Esta auditoria registra a fase 0. A fase 1 acrescenta tokens, primitives, compon
 | Tipos e imports | [tsconfig.json](../../tsconfig.json): configuração strict do Astro e alias `@/*` para `src/*` |
 | Conteúdo | [content.config.ts](../../src/content.config.ts): coleções Astro com loaders `file`/`glob`, schemas Zod e referências entre temas, vídeos e análises |
 | Consultas | [lib/content.ts](../../src/lib/content.ts): filtragem de drafts em produção, ordenação, destaques, relações e helpers de URL |
-| Configuração editorial | [site.ts](../../src/config/site.ts): marca, navegação, redes, contato, CTAs e newsletter |
+| Configuração editorial | [site.ts](../../src/config/site.ts): marca, navegação, redes, contato e CTAs |
 | Componentes | `src/components/{brand,layout,ui,cards,video,sections}`; componentes `.astro`, Props tipadas, imports por alias, estilos locais e tokens compartilhados |
 | Estilos | [base.css](../../src/styles/base.css): cascade layers `reset, tokens, base, layout, components, utilities`; sem Tailwind ou biblioteca de UI instalada |
-| Cliente | Scripts TypeScript para busca e reveal; scripts locais nos componentes para menu, filtros, player e newsletter; sem React ou framework de estado |
+| Cliente | Scripts TypeScript para busca e reveal; scripts locais nos componentes para menu, filtros e player; sem React ou framework de estado |
 | Assets | [photos.ts](../../src/data/photos.ts) centraliza imagens remotas, alt, créditos e enquadramento; `public/` contém favicon e robots; `posts/` guarda imagens sociais com URLs públicas que precisam ser preservadas |
 | Formatação | [.editorconfig](../../.editorconfig): UTF-8, LF, dois espaços e newline final; Markdown preserva espaços finais |
 | Git | Histórico recente usa mensagens descritivas em português. Não foram encontrados template de PR, commit lint, hooks ativos, configuração própria de branches ou instruções Claude no repositório; `.git/hooks` contém apenas exemplos. Esta entrega não cria commit |
@@ -44,10 +44,10 @@ As rotas derivam de [src/pages](../../src/pages). As páginas dinâmicas usam `g
 
 | Rota atual | Responsabilidade |
 |---|---|
-| `/` | Hero, vídeos em destaque, cortes, temas, manifesto, análises, newsletter e contato |
+| `/` | Entrada por perguntas, vídeos em destaque, cortes, temas, manifesto, análises e contato |
 | `/videos`, `/videos/:slug` | Acervo de episódios e cortes, player, capítulos, fontes e conteúdo relacionado |
 | `/analises`, `/analises/:slug` | Índice e leitura dos artigos Markdown |
-| `/temas`, `/temas/:slug` | 12 pilares editoriais e conteúdo associado |
+| `/temas`, `/temas/:slug` | Temas editoriais publicados e conteúdo associado |
 | `/manifesto`, `/sobre` | Conteúdo institucional e créditos |
 | `/busca`, `/busca.json` | Interface de busca e índice estático de episódios, cortes, análises e temas |
 | `/rss.xml` | Feed de episódios longos e análises |
@@ -107,12 +107,12 @@ O domínio está repetido em `astro.config.mjs`, `src/config/site.ts` e `public/
 
 Há fundamentos de acessibilidade em código: skip link, foco visível, alt de imagens, labels, live regions, `dialog` e movimento reduzido. O player solicita legendas ao YouTube, mas isso não comprova a existência de legendas no vídeo. O manual exige contraste AA; a cobertura de todos os estados ainda requer validação visual e assistiva na fase 1.
 
-Dependências externas atuais no navegador são imagens Unsplash, YouTube após clique e links para redes. A newsletter está sem endpoint (`action: ''`); o JS intercepta o envio e informa indisponibilidade. Sem JS, essa interceptação não existe: revisar o estado desabilitado antes de ativar/publicar o formulário. Conteúdo, perfis, contatos e IDs de vídeo precisam da revisão editorial já prevista no README.
+Dependências externas atuais no navegador são imagens Unsplash, YouTube após clique e links para redes. O cadastro de newsletter não faz parte da interface atual. Perfis e contatos estão configurados em [site.ts](../../src/config/site.ts); IDs de vídeo ainda dependem de confirmação editorial antes de a reprodução ficar disponível.
 
 ## Limitações e questões abertas
 
 1. **Modelo editorial versus dados:** coleções atuais descrevem temas, vídeos e análises; não incluem observações, unidades, geografia, vintages ou metadados completos de indicadores. Definir isso na fase 2, antes de escolher banco.
-2. **Taxonomia e rotas:** mapear os 12 pilares às cinco dimensões futuras; decidir convivência de `/temas/:slug` e `/tema/:slug`, links e possíveis redirects antes de mudar URLs. Não substituir silenciosamente o acervo editorial.
+2. **Taxonomia e rotas:** mapear os temas editoriais publicados às cinco dimensões da plataforma; decidir convivência de `/temas/:slug` e `/tema/:slug`, links e redirects antes de mudar URLs. Não substituir silenciosamente o acervo editorial.
 3. **Componentes de dados:** definir estados de falta de dados, atualização, revisão, erro e quebra metodológica. Uma cor ou seta sozinha não prova melhora ou piora.
 4. **Cálculos:** não há engine de indicadores. Fórmulas, versões e inputs deverão ficar fora dos componentes, com unidades e recortes comparáveis, nas fases 2 e 8.
 5. **Atualização:** o acervo depende de rebuild. Política de publicação dos futuros indicadores, cache e convivência com páginas estáticas continuam abertas.

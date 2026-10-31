@@ -10,7 +10,6 @@ import ShareBar from '@/components/ui/ShareBar.astro';
 import SectionHeader from '@/components/ui/SectionHeader.astro';
 import VideoCard from '@/components/cards/VideoCard.astro';
 import ArticleCard from '@/components/cards/ArticleCard.astro';
-import Newsletter from '@/components/sections/Newsletter.astro';
 import { getArticles, getTema, routes, type Article } from '@/lib/content';
 import { formatDateLong, readingTime, toISODate } from '@/lib/format';
 import { plainHeadline } from '@/lib/headline';
@@ -162,7 +161,6 @@ const jsonLd = {
     )
   }
 
-  <Newsletter index={null} />
 </BaseLayout>
 
 <script>

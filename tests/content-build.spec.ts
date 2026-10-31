@@ -257,6 +257,25 @@ test('build da plataforma fixa publicação no HTML, preserva decimais e explici
       ]) {
         await rendered.goto(`http://127.0.0.1:4323/indicador/${slug}/`);
         await expect(rendered.locator('h1')).toHaveCount(1);
+        const summary = rendered.getByRole('complementary', { name: 'Resumo do indicador' });
+        if (slug === 'desemprego') {
+          await expect(summary).toContainText('4 recortes publicados');
+        } else if (slug === 'inflacao') {
+          await expect(summary).toContainText('Dados indisponíveis');
+          await expect(summary).toContainText('Input revisado');
+        } else if (slug === 'cesta-basica') {
+          await expect(summary).toContainText('2 recortes publicados');
+          await expect(summary).not.toContainText('800,123');
+        } else if (slug === 'rendimento-real') {
+          await expect(summary).toContainText('Sem dados publicados');
+        } else if (slug === 'tempo-por-cesta') {
+          await expect(summary).toContainText('São Paulo');
+          await expect(summary).toContainText('2025-12-01 a 2025-12-31');
+          await expect(summary).toContainText('117,351440329055 horas/cesta');
+        }
+        await expect(
+          summary.getByRole('link', { name: 'Ver recortes e contexto' }),
+        ).toHaveAttribute('href', '#aconteceu');
         const navigation = rendered.getByRole('navigation', { name: 'Nesta página' });
         for (const id of ['aconteceu', 'significa', 'dados', 'relacionados']) {
           await navigation.locator(`a[href="#${id}"]`).click();

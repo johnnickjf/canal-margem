@@ -35,8 +35,12 @@ locais de `backend/compose.yaml`, aplica as migrações no PostgreSQL local e so
 projeção estiverem disponíveis; sem publicação ou projeção, mostra o catálogo sem observações
 e informa o problema no terminal. Pare o `pnpm dev` atual e qualquer API na porta 8080 antes
 de iniciar o comando completo.
-`Ctrl+C` encerra os servidores; PostgreSQL e
-LocalStack permanecem ativos e podem ser parados com `docker compose -f backend/compose.yaml stop`.
+`Ctrl+C` encerra os servidores; PostgreSQL e LocalStack permanecem ativos. **O estado S3
+do LocalStack local é efêmero:** ao parar ou reiniciar o serviço, os buckets e objetos podem
+desaparecer mesmo que o banco mantenha referências a eles. Preserve e verifique uma cópia
+antes de interrompê-lo. O comando `pnpm backup:local` copia o banco e os dois buckets locais;
+consulte as [condições e limitações](docs/systems/pipelines.md#cópia-local-antes-de-interromper-os-serviços)
+e o [ensaio de recuperação](docs/systems/evidence/phase-25-local/recovery.md).
 O comando lê os padrões de `backend/.env.example` e aceita ajustes locais em `backend/.env`.
 
 O lockfile do projeto é `pnpm-lock.yaml`. Em CI, use `pnpm install --frozen-lockfile`.
@@ -116,10 +120,18 @@ indicador, cálculo, série, dataset e fonte; a API pagina as ativações e pres
 manifestos e séries JSON. Revisões oficiais só aparecem quando incorporadas a uma nova edição;
 os objetos raw continuam privados. A fase 24 acrescenta a [checagem pós-publicação](docs/systems/deployment-check.md)
 do sitemap, páginas públicas, SEO e, quando informada, prontidão da API; ela não realiza deploy.
+A fase 25 registra o [ensaio local da experiência editorial e da publicação](docs/04-roadmap.md):
+o fluxo API → HTML foi observado, mas a cobertura permanece parcial, há objetos históricos
+ausentes e a operação remota ainda não foi verificada.
 
 ```bash
 MARGEM_API_URL=http://127.0.0.1:8080 pnpm build  # API já operando, origem sem caminho
+MARGEM_API_URL=http://127.0.0.1:8080 pnpm build:publication  # artefato isolado com geração conferida
 ```
+
+O segundo comando prepara um artefato local após ativação, sem publicar o site. Consulte as
+[condições de uso e limites](docs/systems/platform-shell.md#publicação-fixada-no-build),
+inclusive a necessidade de coordenar builds e conferir a geração antes da promoção.
 
 ```bash
 pnpm pipeline run --source ibge --from 2025-01-01 --to 2025-12-31
@@ -185,10 +197,10 @@ docs/                       Visão, UX, arquitetura, roadmap e índice de docume
   systems/                  Auditoria do frontend e documentação dos sistemas
 public/                     favicon (M|), robots.txt
 src/
-  config/site.ts            Textos institucionais, navegação, canais, contato, newsletter, CTAs
+  config/site.ts            Textos institucionais, navegação, canais, contato e CTAs
   content.config.ts         Schemas das coleções (validação no build)
   content/
-    temas.json              Os 12 pilares editoriais
+    temas.json              Os 7 temas editoriais publicados
     videos/*.md             Episódios (16:9) e cortes (9:16)
     analises/*.md           Artigos e análises
   data/
@@ -295,11 +307,8 @@ As fotos atuais vêm do Unsplash (licença Unsplash) e os créditos aparecem em 
 
 1. Domínio definitivo em `astro.config.mjs` (`site`), `src/config/site.ts` (`url`) e `public/robots.txt`.
 2. Perfis oficiais em `socials` e e-mails em `contact` (`src/config/site.ts`).
-3. Endpoint da newsletter em `newsletter.action` (Buttondown, Substack, Mailchimp ou próprio). Enquanto vazio,
-   o JavaScript bloqueia o envio e informa que as inscrições abrem em breve. Sem JavaScript, o formulário
-   pode enviar um POST para a página atual; revisar esse estado antes de publicar.
-4. `youtubeId` de cada episódio publicado.
-5. Revisar os textos de exemplo em `src/content/` — eles ilustram o formato e o tom, não são pautas apuradas.
+3. `youtubeId` de cada episódio publicado.
+4. Revisar os textos de exemplo em `src/content/` — eles ilustram o formato e o tom, não são pautas apuradas.
 
 ## Acessibilidade
 

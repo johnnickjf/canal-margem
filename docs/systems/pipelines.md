@@ -185,8 +185,43 @@ pnpm pipeline verify
 
 `--from` e `--to` recebem datas ISO, por exemplo `--from 2025-01-01 --to 2025-12-31`.
 Janelas mensais começam no dia 01. Janelas sem observações elegíveis falham explicitamente.
-O compose não cria volumes persistentes: serve a testes, não a backup. Não usar suas senhas
-locais em serviços externos. Segredos ficam no ambiente; nunca vão para o frontend ou o Git.
+O compose não configura persistência para o estado S3: parar ou reiniciar o LocalStack pode
+perder buckets e objetos, mesmo quando o PostgreSQL ainda conserva as referências. O volume
+anônimo por si só não é backup. Preserve e confira uma cópia antes de interromper os serviços;
+veja o [ensaio local](evidence/phase-25-local/recovery.md). Não usar senhas locais em serviços
+externos. Segredos ficam no ambiente; nunca vão para o frontend ou o Git.
+
+`verify` confere tamanho e SHA-256 de cada objeto raw registrado e, se todos estiverem
+íntegros, procura observações aceitas sem vínculo de captura. No sucesso retorna `verified`,
+quantidade e bytes verificados. Para chaves ausentes ou bytes divergentes, retorna código 1
+e JSON em stderr com o total de falhas e até 100 hashes com motivo `missing` ou `corrupt`;
+`objects` e `bytes` contam somente objetos íntegros. Quando há falhas raw, a etapa de vínculos
+não é executada. Falhas de conexão, autenticação ou bucket não são classificadas como perda
+individual de objetos e interrompem a execução. O comando não altera nem restaura dados.
+
+### Cópia local antes de interromper os serviços
+
+Com PostgreSQL e LocalStack do `backend/compose.yaml` ativos, pare os jobs, ativações e outros
+escritores e execute `pnpm backup:local`. O comando usa exclusivamente o banco local `margem`
+e os buckets locais `margem-raw` e `margem-public`: não usa nem faz backup de Railway ou R2.
+Ele salva um dump `pg_dump -Fc`, confere sua leitura com `pg_restore -l`, copia os dois buckets
+e compara tamanho e SHA-256 de cada objeto registrado no banco. Objetos não registrados também
+são copiados e listados com hashes. A saída fica sob `.data/local-backups/` com diretório 0700
+e manifesto local; trate a cópia como dado privado e proteja-a também ao transferi-la.
+
+O manifesto registra `objects_verified` quando as referências examinadas existem e coincidem,
+ou `partial` quando faltam objetos ou há divergências. Uma cópia parcial fica disponível para
+investigação, mas o comando retorna código 1; falhas de execução também retornam 1 e podem
+deixar um diretório sem manifesto. Confira `manifest.json` e não interprete a mera existência
+do diretório como sucesso. Se houver jobs em execução no início ou no fim, ou o inventário de
+objetos e a geração mudarem durante a cópia, a execução não valida o artefato.
+
+As consultas antes e depois detectam algumas mudanças, mas **não bloqueiam escritores** nem
+tornam a captura transacional entre PostgreSQL e S3. Desligar os escritores durante todo o
+procedimento continua obrigatório. O comando não restaura nem agenda cópias; `pg_restore -l`
+não substitui um ensaio de restauração, e uma cópia no mesmo disco não é backup independente.
+O [ensaio local](evidence/phase-25-local/recovery.md) registra a restauração e as ausências
+conhecidas.
 
 ## Agendamento e observabilidade
 

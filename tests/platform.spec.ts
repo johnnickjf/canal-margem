@@ -1,6 +1,34 @@
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from '@playwright/test';
 
+test('navegação da plataforma funciona sem JavaScript e com teclado', async ({ page, browser }) => {
+  const context = await browser.newContext({
+    javaScriptEnabled: false,
+    viewport: page.viewportSize(),
+    reducedMotion: 'reduce',
+  });
+  const rendered = await context.newPage();
+  await rendered.goto('/indicador/desemprego');
+  const navigation = rendered.getByRole('navigation', { name: 'Dados e indicadores' });
+  const mobileMenu = navigation.getByText('Explorar dados', { exact: true });
+  if (await mobileMenu.isVisible()) {
+    const summary = navigation.locator('summary');
+    await expect(navigation.getByRole('link', { name: 'Custo de vida', exact: true })).toBeHidden();
+    await summary.focus();
+    await rendered.keyboard.press('Enter');
+    await expect(navigation.locator('details')).toHaveAttribute('open', '');
+    await expect(
+      navigation.getByRole('link', { name: 'Custo de vida', exact: true }),
+    ).toBeVisible();
+    await rendered.keyboard.press('Enter');
+    await expect(navigation.locator('details')).not.toHaveAttribute('open', '');
+    await rendered.keyboard.press('Enter');
+  }
+  await navigation.getByRole('link', { name: 'Custo de vida', exact: true }).click();
+  await expect(rendered).toHaveURL(/\/tema\/custo-de-vida\/?$/);
+  await context.close();
+});
+
 test('shell navega da home ao tema e ao indicador sem JavaScript', async ({ browser }) => {
   const context = await browser.newContext({ javaScriptEnabled: false });
   const page = await context.newPage();

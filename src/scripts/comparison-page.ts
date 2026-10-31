@@ -7,6 +7,7 @@ import {
   fetchComparison,
   reasonLabels,
 } from '@/lib/comparison';
+import { frequencyLabel, geographyLabel, unitLabel } from '@/lib/indicator-display';
 import type { HistoryPoint } from '@/lib/platform-build';
 
 function element<K extends keyof HTMLElementTagNameMap>(tag: K, text = '') {
@@ -19,10 +20,6 @@ function link(text: string, href: string) {
   node.href = href;
   return node;
 }
-function unitLabel(unit: string) {
-  return unit === 'percentage_points' ? 'pontos percentuais' : unit;
-}
-
 export function mountComparison() {
   const form = document.querySelector<HTMLFormElement>('[data-comparison-form]');
   const status = document.querySelector<HTMLElement>('[data-comparison-status]');
@@ -254,7 +251,7 @@ function mountControls(
           article.append(
             element(
               'p',
-              `Recorte: ${selection.geography} · ${selection.series} · ${unitLabel(selection.unit)} · ${selection.frequency ?? ''}`,
+              `Recorte: ${geographyLabel(selection.geography)} · ${selection.series} · ${unitLabel(selection.unit)} · ${frequencyLabel(selection.frequency)}`,
             ),
           );
           article.append(

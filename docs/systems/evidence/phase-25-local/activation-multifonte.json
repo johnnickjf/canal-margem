@@ -1,0 +1,8 @@
+{
+  "actor": "ensaio-local",
+  "key": "fase25-multifonte-2025-1",
+  "publication": "4998923786ec3a9ea09ae26b2cc2247ef0391d01aadeb2a4fc689c0a01c1377b",
+  "expected_generation": 3,
+  "reason": "Ensaio local de recortes de cinco fontes e derivados com inputs explícitos.",
+  "return": false
+}

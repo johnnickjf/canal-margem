@@ -12,6 +12,7 @@ import (
 	"github.com/jackc/pgx/v5/pgtype"
 	"github.com/jackc/pgx/v5/pgxpool"
 	"io"
+	"margem/backend/internal/app"
 	"margem/backend/internal/catalog"
 	"margem/backend/internal/ingestion"
 	"margem/backend/internal/legacy"
@@ -342,8 +343,23 @@ func TestPipelineIntegration(t *testing.T) {
 		if _, e = store.Client.DeleteObject(ctx, &s3.DeleteObjectInput{Bucket: &store.Bucket, Key: &key}); e != nil {
 			t.Fatal(e)
 		}
-		if _, e = (observations.Queries{Pool: pool, Store: store}).Verify(ctx); e == nil {
-			t.Fatal("raw ausente não detectado")
+		integrity, e := (observations.Queries{Pool: pool, Store: store}).Verify(ctx)
+		if e == nil || integrity.Status != "failed" || integrity.FailedObjects != 1 || len(integrity.Failures) != 1 || integrity.Failures[0].SHA256 != canonical.Hash(s.body) || integrity.Failures[0].Reason != "missing" {
+			t.Fatalf("raw ausente não identificado: %+v, %v", integrity, e)
+		}
+		databaseURL, e := url.Parse(os.Getenv("TEST_DATABASE_URL"))
+		if e != nil {
+			t.Fatal(e)
+		}
+		databaseURL.Path = "/" + pool.Config().ConnConfig.Database
+		t.Setenv("DATABASE_URL", databaseURL.String())
+		var stdout, stderr bytes.Buffer
+		if code := app.Run(ctx, []string{"verify"}, &stdout, &stderr); code != 1 || stdout.Len() != 0 {
+			t.Fatalf("verify CLI retornou %d, stdout %q", code, stdout.String())
+		}
+		var report observations.Integrity
+		if e = json.Unmarshal(stderr.Bytes(), &report); e != nil || report.FailedObjects != 1 || len(report.Failures) != 1 || report.Failures[0].SHA256 != canonical.Hash(s.body) || strings.Contains(stderr.String(), key) {
+			t.Fatalf("diagnóstico CLI inválido: %+v, %v", report, e)
 		}
 	})
 	t.Run("runtime cannot mutate history", func(t *testing.T) {

@@ -3,8 +3,8 @@ import BaseLayout from './BaseLayout.astro';
 import PublicationNote from '@/components/platform/PublicationNote.astro';
 import type { SeoProps } from '@/components/layout/Seo.astro';
 import { site } from '@/config/site';
-type Props = SeoProps & { title: string; description: string };
-const { title, description, ...seo } = Astro.props;
+type Props = SeoProps & { title: string; description: string; compactTitle?: boolean };
+const { title, description, compactTitle = false, ...seo } = Astro.props;
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'BreadcrumbList',
@@ -22,8 +22,11 @@ const jsonLd = {
 <BaseLayout title={title} description={description} jsonLd={jsonLd} {...seo}>
   <div class="container platform-page">
     <nav aria-label="Caminho"><a href="/">Início</a> / <span aria-current="page">{title}</span></nav>
-    <header><p class="label">Margem / Vida em números</p><h1>{title}</h1><p class="platform-intro">{description}</p></header>
+    <header class:list={{ 'compact-title': compactTitle }}><p class="label">Margem / Vida em números</p><h1>{title}</h1><p class="platform-intro">{description}</p></header>
     <slot />
     <PublicationNote />
   </div>
 </BaseLayout>
+<style>
+  .compact-title h1 { font-size: clamp(2.25rem, 4vw, 4rem); max-width: 32ch; }
+</style>

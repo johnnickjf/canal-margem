@@ -70,8 +70,9 @@ func (a *API) Handler() http.Handler {
 	metrics := observability.New()
 	root := chi.NewRouter()
 	root.Use(metrics.Middleware)
+	// Rewrite HEAD before chi chooses a method-specific route in the mounted router.
+	root.Use(a.guard)
 	r := chi.NewRouter()
-	r.Use(a.guard)
 	r.Method(http.MethodGet, "/metrics", metrics.Handler(a.cacheStats))
 	r.Get("/healthz", func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Cache-Control", "no-store")

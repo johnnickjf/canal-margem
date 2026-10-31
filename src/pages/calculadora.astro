@@ -8,9 +8,12 @@ const catalog = calculatorCatalog(platform);
 ---
 <PlatformLayout title="Calculadora socioeconômica" description="Explore seu orçamento familiar, compare um cenário de renda e conheça políticas e evidências relacionadas às suas prioridades.">
   <section aria-labelledby="como-funciona"><h2 id="como-funciona">Como a renda encontra a vida cotidiana</h2>
-    <p>Informe valores mensais em reais do mês escolhido. A calculadora mostra renda por pessoa, despesas declaradas e saldo. Uma mudança de renda cria um cenário hipotético com as mesmas despesas.</p>
-    <p>A cesta básica é uma referência de alimentos para um adulto na capital selecionada, não o custo completo de vida da família. Não multiplicamos seu preço pelo número de moradores. Capitais não representam automaticamente o interior ou o estado inteiro.</p>
-    <p>Políticas e estudos são apresentados pelas prioridades e pelo vínculo declarados, com fontes, resultados históricos e limites. Não há previsão de benefício, elegibilidade, efeito individual ou recomendação de voto.</p>
+    <p>Informe valores mensais para explorar seu orçamento e um cenário hipotético. A cesta é uma referência, não o custo completo da família.</p>
+    <details class="calculator-help"><summary>Entenda o cenário e as referências</summary>
+      <p>A calculadora mostra renda por pessoa, despesas declaradas e saldo. Uma mudança de renda cria um cenário hipotético com as mesmas despesas.</p>
+      <p>A cesta básica é uma referência de alimentos para um adulto na capital selecionada. Não multiplicamos seu preço pelo número de moradores. Capitais não representam automaticamente o interior ou o estado inteiro.</p>
+      <p>Políticas e estudos são apresentados pelas prioridades e pelo vínculo declarados, com fontes, resultados históricos e limites. Não há previsão de benefício, elegibilidade, efeito individual ou recomendação de voto.</p>
+    </details>
   </section>
   <section aria-labelledby="seu-perfil"><h2 id="seu-perfil">Seu perfil e cenário</h2>
     <p>Seus valores são enviados à API Margem somente ao calcular. A aplicação não os grava, não cria links com o perfil e não usa armazenamento do navegador. Use valores aproximados se preferir. Infraestrutura de rede pode registrar metadados da conexão.</p>
@@ -63,6 +66,8 @@ const catalog = calculatorCatalog(platform);
 </script>
 <style>
   form { display: grid; gap: var(--space-md); }
+  .calculator-help summary { cursor: pointer; text-decoration: underline; text-underline-offset: .2em; }
+  .calculator-help p { max-width: var(--measure); margin-top: var(--space-sm); }
   form[hidden] { display: none; }
   fieldset { min-width: 0; padding: var(--space-md); border: var(--rule); }
   legend { font-weight: 700; padding-inline: var(--space-xs); }

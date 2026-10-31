@@ -1,0 +1,289 @@
+{
+  "actor": "ensaio-local",
+  "key": "fase25-ibge-bcb-2025-2",
+  "base_activation": 2,
+  "data_cutoff": "2026-10-28T00:55:33.018515+00:00",
+  "selection_reason": "Ensaio local: desemprego, inflação e comprometimento da renda com dívidas em 2025 recoletados das fontes oficiais; demais recortes não incluídos.",
+  "scope": [
+    {
+      "series": "cv1-12m",
+      "geography": "BR",
+      "start": "2025-01-01",
+      "end": "2025-01-31",
+      "id": "014931f00dfefc99fb7275454b1a506ad0212e58f294a4243b0526fc4d856b7f"
+    },
+    {
+      "series": "cv1-12m",
+      "geography": "BR",
+      "start": "2025-02-01",
+      "end": "2025-02-28",
+      "id": "8ed24f5d92cb37f165357399d996b79fa5a729c09532d00291da08957720373f"
+    },
+    {
+      "series": "cv1-12m",
+      "geography": "BR",
+      "start": "2025-03-01",
+      "end": "2025-03-31",
+      "id": "88e84aa4d2c688a7313fbdbc7e18b1cc8324cffc63ccb002787e4a43a1420515"
+    },
+    {
+      "series": "cv1-12m",
+      "geography": "BR",
+      "start": "2025-04-01",
+      "end": "2025-04-30",
+      "id": "0ff372f0589cefb9e906145d24f2b53a0f079b3b7f80d7daa25b0e475ce129e7"
+    },
+    {
+      "series": "cv1-12m",
+      "geography": "BR",
+      "start": "2025-05-01",
+      "end": "2025-05-31",
+      "id": "ecfce3d4444ea0975ca16b7d36be01de17c726d427f36acdf7dfd91a51b5efef"
+    },
+    {
+      "series": "cv1-12m",
+      "geography": "BR",
+      "start": "2025-06-01",
+      "end": "2025-06-30",
+      "id": "114b5009e89067a88b8b72f1ecf7226b8fa03b8e5599eb684ef989d59e853b6f"
+    },
+    {
+      "series": "cv1-12m",
+      "geography": "BR",
+      "start": "2025-07-01",
+      "end": "2025-07-31",
+      "id": "e19cc591a5814a505aeb23fc54cb9d305349d6401f0141ef935d8edac88bef4f"
+    },
+    {
+      "series": "cv1-12m",
+      "geography": "BR",
+      "start": "2025-08-01",
+      "end": "2025-08-31",
+      "id": "732981df01b352dcb3f024650b434d0b2b60c2b9ab46425baac12d83bacb2eed"
+    },
+    {
+      "series": "cv1-12m",
+      "geography": "BR",
+      "start": "2025-09-01",
+      "end": "2025-09-30",
+      "id": "c9bee7e88d48d35b39aebea72f4a335853397c08e240fe7aac9255250d5a03d1"
+    },
+    {
+      "series": "cv1-12m",
+      "geography": "BR",
+      "start": "2025-10-01",
+      "end": "2025-10-31",
+      "id": "a7382c23f8a5e8876bbaec6687a76eabdf3c5757f1de356d1c9fa7e76311b603"
+    },
+    {
+      "series": "cv1-12m",
+      "geography": "BR",
+      "start": "2025-11-01",
+      "end": "2025-11-30",
+      "id": "033fbccf9d3794cc7bd4cdec0af999b93c557277adfdc759314a475de7a9d465"
+    },
+    {
+      "series": "cv1-12m",
+      "geography": "BR",
+      "start": "2025-12-01",
+      "end": "2025-12-31",
+      "id": "1e76abb8ca5ac74ec806eae1e88cda8aa9e59c2cf9a6f96747ec655b470199d8"
+    },
+    {
+      "series": "cv1-monthly",
+      "geography": "BR",
+      "start": "2025-01-01",
+      "end": "2025-01-31",
+      "id": "df72d68585d7231252b70ae86aa1c95cfe425d596f8203beafd0550da81783bc"
+    },
+    {
+      "series": "cv1-monthly",
+      "geography": "BR",
+      "start": "2025-02-01",
+      "end": "2025-02-28",
+      "id": "dfb19096c0eae245106b7d81cd3aa01b8bad0a3324f18c70e4216be7d6f8956f"
+    },
+    {
+      "series": "cv1-monthly",
+      "geography": "BR",
+      "start": "2025-03-01",
+      "end": "2025-03-31",
+      "id": "0c8f5d6b98ab09547f77cee78fdcbea0a80ad20552703babc9207f3d18f4ef3c"
+    },
+    {
+      "series": "cv1-monthly",
+      "geography": "BR",
+      "start": "2025-04-01",
+      "end": "2025-04-30",
+      "id": "91f7ca571e5d4d80ec13339363a27612c41b08edeaea0256f28da5f001ebbff1"
+    },
+    {
+      "series": "cv1-monthly",
+      "geography": "BR",
+      "start": "2025-05-01",
+      "end": "2025-05-31",
+      "id": "ce372e72d64285e99a027f7b4c99a23d7806125e692b0cf21658029bfe04c7e2"
+    },
+    {
+      "series": "cv1-monthly",
+      "geography": "BR",
+      "start": "2025-06-01",
+      "end": "2025-06-30",
+      "id": "9b59415d6e882473be4989f5f33da0940ec20391cb66abf5268ab0f4eaf56746"
+    },
+    {
+      "series": "cv1-monthly",
+      "geography": "BR",
+      "start": "2025-07-01",
+      "end": "2025-07-31",
+      "id": "92c5626f469b5fe2025076870088891b3085341afdcab6e9d51456cb1239b58e"
+    },
+    {
+      "series": "cv1-monthly",
+      "geography": "BR",
+      "start": "2025-08-01",
+      "end": "2025-08-31",
+      "id": "319c8e987fb8fbdd758542c0e8a210ededc53c8ff583f92fda86f80ef7e8bce1"
+    },
+    {
+      "series": "cv1-monthly",
+      "geography": "BR",
+      "start": "2025-09-01",
+      "end": "2025-09-30",
+      "id": "8ef0f7cd1211d459e5ed7796c7c4f986fa024a0c844ba4c021d110f4820f022b"
+    },
+    {
+      "series": "cv1-monthly",
+      "geography": "BR",
+      "start": "2025-10-01",
+      "end": "2025-10-31",
+      "id": "88dbac18fdb577ddc4431869d6bb02f4b6fbc8672229b02a541882e9dc546e86"
+    },
+    {
+      "series": "cv1-monthly",
+      "geography": "BR",
+      "start": "2025-11-01",
+      "end": "2025-11-30",
+      "id": "ecc08b6b80229b133beb053f7007e86b9baec5011ae36ab2c53d9775efdca0b8"
+    },
+    {
+      "series": "cv1-monthly",
+      "geography": "BR",
+      "start": "2025-12-01",
+      "end": "2025-12-31",
+      "id": "93bd7f7ce2aa0199e5989c2a9619b7e1056eae71c6cf5c55d0946f607d9fc7de"
+    },
+    {
+      "series": "tr4",
+      "geography": "BR",
+      "start": "2025-01-01",
+      "end": "2025-03-31",
+      "id": "4bffe9fe672b61297a64810ff62c733912b969a358ecc15637d8f6744f77b33d"
+    },
+    {
+      "series": "tr4",
+      "geography": "BR",
+      "start": "2025-04-01",
+      "end": "2025-06-30",
+      "id": "6ceaadfa22a388d8f228ffc3c35b66ede93b2833d56f4cdd668999d798ba1bfa"
+    },
+    {
+      "series": "tr4",
+      "geography": "BR",
+      "start": "2025-07-01",
+      "end": "2025-09-30",
+      "id": "056c98fb475ab5b78ceb558b5b83255c83671c935f53820ddd4bc812cb645f6c"
+    },
+    {
+      "series": "tr4",
+      "geography": "BR",
+      "start": "2025-10-01",
+      "end": "2025-12-31",
+      "id": "54cafc85629530533ea58f54f1bab5bf09ba0e2f497ce1f0609ba7d2e5cb7dfe"
+    },
+    {
+      "series": "vf1",
+      "geography": "BR",
+      "start": "2025-01-01",
+      "end": "2025-01-31",
+      "id": "4a9acfed0772186384cdf1d72287d98daee7440c528b61e80df6403e078b0dc7"
+    },
+    {
+      "series": "vf1",
+      "geography": "BR",
+      "start": "2025-02-01",
+      "end": "2025-02-28",
+      "id": "159ab4cb4db0703a0b139d26c22c489dc5bb8878a386f00303646675b65c6bf2"
+    },
+    {
+      "series": "vf1",
+      "geography": "BR",
+      "start": "2025-03-01",
+      "end": "2025-03-31",
+      "id": "73cfd6ec609d0ee340260ed76420b1b8f5b3db268285b0231b52eb65e186df33"
+    },
+    {
+      "series": "vf1",
+      "geography": "BR",
+      "start": "2025-04-01",
+      "end": "2025-04-30",
+      "id": "2e3faaced29620334a60b7975461a730e677d7ccd00ecfe38c6b6ae7ae0b1d2d"
+    },
+    {
+      "series": "vf1",
+      "geography": "BR",
+      "start": "2025-05-01",
+      "end": "2025-05-31",
+      "id": "f019afc89b6adc6a797ce970364d8e34dbf8b1ba9b3ef2e70338ac15dd33295a"
+    },
+    {
+      "series": "vf1",
+      "geography": "BR",
+      "start": "2025-06-01",
+      "end": "2025-06-30",
+      "id": "55fcfe99b0c5b42302064989f2dcdde0171633d7e201585944e705e18cf4bc62"
+    },
+    {
+      "series": "vf1",
+      "geography": "BR",
+      "start": "2025-07-01",
+      "end": "2025-07-31",
+      "id": "6308ff43c57f0f706ef16ee63786f0b411e14aa44ee1c55312207fa4907096eb"
+    },
+    {
+      "series": "vf1",
+      "geography": "BR",
+      "start": "2025-08-01",
+      "end": "2025-08-31",
+      "id": "65dd0b208b01f9c1102f99e574b537c4b4299ddf1d8d094097cc0b8395e2d0e7"
+    },
+    {
+      "series": "vf1",
+      "geography": "BR",
+      "start": "2025-09-01",
+      "end": "2025-09-30",
+      "id": "4847e8c0dbdfa6792a6723e53e20887b8aa8d8bf8f7825159ab86ee802fbf1f5"
+    },
+    {
+      "series": "vf1",
+      "geography": "BR",
+      "start": "2025-10-01",
+      "end": "2025-10-31",
+      "id": "904310ee5c7b626e5b425d2557c10e283c52f00e59d685f5cde23299cfaaa2a7"
+    },
+    {
+      "series": "vf1",
+      "geography": "BR",
+      "start": "2025-11-01",
+      "end": "2025-11-30",
+      "id": "abb4ccfc741bc5ea37dbf3b98adeca9d62b6062977a6b2fc7246a414f7d0796e"
+    },
+    {
+      "series": "vf1",
+      "geography": "BR",
+      "start": "2025-12-01",
+      "end": "2025-12-31",
+      "id": "4cb6a316b3c156f4fba0b823d2a5c7da9f3a8fcf40a63f3758fe89c80b7e63ac"
+    }
+  ]
+}

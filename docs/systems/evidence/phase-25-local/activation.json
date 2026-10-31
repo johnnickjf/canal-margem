@@ -1,0 +1,8 @@
+{
+  "actor": "ensaio-local",
+  "key": "fase25-ibge-bcb-2025-2",
+  "publication": "b1689197f519510456d527adb4b565fdbf779b5830bf8e51be20852115e33689",
+  "expected_generation": 2,
+  "reason": "Correção da descrição da seleção: a série do BCB é comprometimento da renda com dívidas.",
+  "return": false
+}

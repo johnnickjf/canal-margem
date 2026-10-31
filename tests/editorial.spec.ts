@@ -10,7 +10,7 @@ test('menu mobile permite navegar por teclado e fechar com retorno de foco', asy
   await expect(menu).toBeVisible();
   await expect(trigger).toHaveAttribute('aria-expanded', 'true');
   await expect(menu.getByRole('button', { name: 'Fechar menu' })).toBeFocused();
-  for (const name of ['Vídeos', 'Temas', 'Análises', 'Manifesto', 'Sobre', 'Busca']) {
+  for (const name of ['Vídeos', 'Temas', 'Dados', 'Análises', 'Manifesto', 'Sobre', 'Busca']) {
     await page.keyboard.press('Tab');
     await expect(menu.getByRole('link', { name: new RegExp(name) })).toBeFocused();
   }

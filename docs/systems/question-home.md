@@ -21,7 +21,7 @@ uma navegação identificada, com foco visível e uma, duas ou três colunas con
 Os links e o conteúdo principal estão no HTML gerado, sem depender de JavaScript.
 
 [index.astro](../../src/pages/index.astro) coloca essa entrada antes dos vídeos, cortes, temas
-editoriais, manifesto, análises, newsletter e contato. A abertura anterior deixa de ser
+editoriais, manifesto, análises e contato. A abertura anterior deixa de ser
 renderizada na home. As URLs editoriais permanecem acessíveis. Há também links diretos para
 vídeos, análises e o guia de leitura dos dados.
 

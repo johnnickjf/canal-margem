@@ -1240,7 +1240,21 @@ cache, CORS, backup, alertas e recuperação previstos nos ADRs.
 
 ### Estado e objetivo
 
-**Proposta registrada em 27/10/2026; diagnóstico visual completo e implementação pendentes.**
+**Estado em 31/10/2026: parcial.** O fluxo local da geração 6 foi reconstruído e observado
+da API ao HTML; o build isolado gerou 89 páginas e as auditorias automatizadas cobriram 88
+rotas. Foram capturadas 19 rotas em desktop e celular; a inspeção visual manual detalhada
+cobriu 11 delas, não todas as variantes nem tecnologias assistivas. A cobertura local contém 14 dos 15 conceitos
+principais; TR1 continua sem valor por impedimento de base monetária. O backup mais recente
+está parcial: faltam 17 objetos raw e uma projeção histórica, e `pipeline verify` retorna
+código 1. Um armazenamento SeaweedFS local passou por reinício e integração Go, sem validar
+o ambiente de publicação. Operação recorrente, alertas, restauração no ambiente alvo e
+publicação externa seguem pendentes. Evidências detalhadas: [rotas](systems/evidence/phase-25-local/routes.md),
+[cobertura](systems/evidence/phase-25-local/coverage.md),
+[recortes de 2026](systems/evidence/phase-25-local/coverage-2026.md),
+[recuperação](systems/evidence/phase-25-local/recovery.md) e
+[build](systems/evidence/phase-25-local/README.md).
+
+**Proposta registrada em 27/10/2026; diagnóstico visual completo e implementação pendentes naquela data.**
 O responsável identificou uma diferença de qualidade entre a home e Sobre, mais trabalhadas
 visualmente, e telas com texto concentrado e pouco ritmo visual, incluindo a entrada Dados.
 Na análise inicial, somente a captura de Sobre estava disponível; as capturas de Dados e da
@@ -1273,14 +1287,38 @@ projeção e então repetir API → build → página com uma edição válida. 
 aviso de ausência e destaque para valores disponíveis; o índice Entenda, Políticas e
 Evidências receberam aberturas visuais e as páginas de conceitos, separação entre seções.
 Essas alterações não concluem a revisão de todas as rotas, tampouco comprovam operação de
-dados reais. Persistem a auditoria integral e as revisões de fichas de políticas e evidências,
-comparador, calculadora, auditoria, busca e páginas editoriais.
+dados reais. Continua pendente a revisão visual manual integral, incluindo fichas de políticas
+e evidências, comparador, calculadora, auditoria, busca e páginas editoriais.
+
+**Ensaio local de dados:** uma nova edição com recortes de 2025 do IBGE e do BCB foi
+ativada e construída no site; o HTML de desemprego foi conferido contra o banco. O build
+exigiu corrigir a comparação entre timestamps equivalentes em fusos distintos. Ainda faltam
+objetos raw históricos; esse primeiro ensaio não comprovou operação remota nem os dez
+indicadores do MVP. Comandos, manifestos e limites estão na [evidência local](systems/evidence/phase-25-local/README.md).
+
+**Ampliação local posterior:** os jobs das cinco fontes aceitaram novos lotes; uma edição
+ampliada inclui 14 conceitos principais e deixa TR1 sem valor por causa da base monetária.
+Uma edição posterior incorporou [recortes disponíveis de 2026](systems/evidence/phase-25-local/coverage-2026.md);
+os períodos variam por fonte e não são uma afirmação uniforme de atualidade. A
+[cobertura dos 15 conceitos](systems/evidence/phase-25-local/coverage.md) e a
+[triagem técnica de rotas](systems/evidence/phase-25-local/routes.md) registram recortes e
+limites. Um [ensaio de backup e restauração isolados](systems/evidence/phase-25-local/recovery.md)
+reconstruiu as gerações 5 e 6, mas herdou 17 objetos ausentes. A [revisão inicial dos fluxos](systems/evidence/phase-25-local/flows.md)
+inclui simulações com dados e falha da API. A auditoria automatizada das rotas passou no
+artefato mais recente; a revisão visual de todas as variantes, os fluxos assistivos, a
+recuperação dos objetos históricos e a operação recorrente no ambiente alvo continuam pendentes.
+
+**Preparação de build:** `pnpm build:publication` gera um artefato local isolado e só o marca
+pronto quando a geração permanece igual e o HTML corresponde à edição. O [procedimento](systems/platform-shell.md#publicação-fixada-no-build)
+descreve o encadeamento proposto após ativação e a necessidade de coordenar a promoção. O
+gatilho, a publicação e a operação no ambiente alvo continuam pendentes.
 
 ### Evidências e limites conhecidos
 
-- O item “Dados” aponta para `/auditoria` em [`site.ts`](../src/config/site.ts); a
-  [página](../src/pages/auditoria.astro) apresenta edições e linhagem. Isso favorece a
-  verificação técnica, mas sua adequação como entrada de descoberta precisa ser testada.
+- O item “Dados” aponta para [`/dados`](../src/pages/dados.astro) em
+  [`site.ts`](../src/config/site.ts). A entrada conduz à
+  [auditoria](../src/pages/auditoria.astro), que apresenta edições e linhagem; a eficácia
+  dos dois caminhos de descoberta e verificação ainda precisa ser testada.
 - [`PlatformLayout`](../src/layouts/PlatformLayout.astro) oferece um cabeçalho comum às
   páginas da plataforma; [indicadores](../src/pages/indicador/%5Bslug%5D.astro),
   [políticas](../src/pages/politicas/index.astro) e
@@ -1323,7 +1361,7 @@ publicados; não depender de dados fictícios apresentados como observados.
 | Família e rotas | Escopo mínimo e hipótese a verificar | Prioridade inicial |
 |---|---|---|
 | Entrada `/` | Home e caminhos para conteúdo e plataforma; referência visual a preservar e também inspecionar. | Alta |
-| Dados `/auditoria` e eventual nova entrada | Descoberta orientada a perguntas versus consulta técnica de edição e linhagem. | Alta |
+| Dados `/dados` e `/auditoria` | Descoberta orientada a perguntas e consulta técnica de edição e linhagem. | Alta |
 | Plataforma `/tema/:slug`, `/indicador/:slug` | Todas as dimensões e indicadores; observar gráficos, dados, ausência, recortes e método. | Alta |
 | `/politicas`, `/politicas/:slug`, `/evidencias`, `/evidencias/:slug` | Catálogos e fichas; densidade, linhas do tempo, fontes e limites de causalidade. | Alta |
 | `/entenda`, `/entenda/:slug`, incluindo `/entenda/como-ler-os-dados` | Índice, conceitos e guia; hierarquia, exemplos e aprofundamento. | Alta |

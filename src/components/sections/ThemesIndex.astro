@@ -6,7 +6,7 @@ import { getTemaCounts, getTemas, routes } from '@/lib/content';
 import { padIndex } from '@/lib/format';
 
 /**
- * Índice dos 12 pilares. No desktop, a foto ao lado acompanha o tema em foco
+ * Índice dos temas. No desktop, a foto ao lado acompanha o tema em foco
  * (hover ou teclado) — como folhear o sumário de uma revista.
  */
 interface Props {
@@ -30,8 +30,7 @@ const [temas, counts] = await Promise.all([getTemas(), getTemaCounts()]);
           na <span class="hl">vida real</span>
         </h2>
         <p class="temas__lede">
-          Doze pilares para olhar o Brasil a partir das condições materiais do dia a dia: trabalho, renda,
-          moradia, cidade, poder.
+          Temas para olhar o Brasil a partir das condições materiais do dia a dia: trabalho, moradia, cidade e vida cotidiana.
         </p>
 
         <div class="temas__preview" aria-hidden="true">

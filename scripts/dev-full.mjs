@@ -38,6 +38,9 @@ function stop(signal, exitCode) {
 
 process.on('SIGINT', () => {
   console.log('\nEncerrando front e API...');
+  console.log(
+    'PostgreSQL e LocalStack continuam ativos. O S3 local pode perder os objetos ao reiniciar; preserve uma cópia antes de pará-lo.',
+  );
   stop('SIGINT', 0);
 });
 process.on('SIGTERM', () => stop('SIGTERM', 0));
